@@ -2,6 +2,7 @@ function MeowJS()
 {
   function Meow_Base()
   {
+    var Meow_Index;
     var Meow_Predict = function()
     {
       Meow_PredictNumRepDist = 4;
@@ -9,12 +10,10 @@ function MeowJS()
     };
     var Meow_InitPredictStates = function()
     {
-      int Meow_Index;
       return 0;
     };
     var Meow_UpdatePredictStates = function()
     {
-      int Meow_Index;
       if(Meow_Index <= 4)
         {
           return 0;
@@ -28,7 +27,6 @@ function MeowJS()
     };
     var Meow_UpdatePredictStateMatches = function()
     {
-      int Meow_Index;
       Meow = Meow_Index < 7 ? 7 : 10;
       return Meow;
     };
