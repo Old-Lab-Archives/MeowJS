@@ -30,8 +30,20 @@ function MeowJS()
       Meow = Meow_Index < 7 ? 7 : 10;
       return Meow;
     };
-    
+    var Meow_PredictStateIsChar = function()
+    {
+      if(index < 7)
+        {
+          return;
+        }
+    };
+    var Meow_PredictPosNumOfBits = 6;
+    var Meow_PredictMinLogSize = 0;
+    var Meow_PredictPosNumBitsStatesLen = 2;
+    var Meow_PredictPosNumStatesLen = 1 << Meow_PredictPosNumBitsStatesLen;
+    var Meow_PredictMinMatchLen = 2;
+
     // Still coding... will be updated soon!
-    
+
   }
 }
