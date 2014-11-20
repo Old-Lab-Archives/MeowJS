@@ -42,6 +42,22 @@ function MeowJS()
     var Meow_PredictPosNumBitsStatesLen = 2;
     var Meow_PredictPosNumStatesLen = 1 << Meow_PredictPosNumBitsStatesLen;
     var Meow_PredictMinMatchLen = 2;
+    var Meow_GetPredictPosStatesLen = function()
+    {
+      var Meow_Len;
+      Meow_Len -= Meow_PredictMinMatchLen;
+      if(Meow_Len < Meow_PredictPosNumStatesLen)
+      {
+        return Meow_Len;
+      }
+      return (Meow_PredictPosNumStatesLen - 1);
+    }
+    var Meow_PredictAlignNumOfBits = 4;
+    var Meow_PredictAlignTableSize = 1 << Meow_PredictAlignNumOfBits;
+    var Meow_PredictAlignMask = (Meow_PredictAlignTableSize - 1);
+    var Meow_PredictBeginPosModelIndex = 4;
+    var Meow_PredictFinishPosModelIndex = 14;
+    var Meow_PredictPosNumOfModels = Meow_PredictFinishPosModelIndex - Meow_PredictBeginPosModelIndex;
 
     // Still coding... will be updated soon!
 
