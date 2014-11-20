@@ -58,8 +58,20 @@ function MeowJS()
     var Meow_PredictBeginPosModelIndex = 4;
     var Meow_PredictFinishPosModelIndex = 14;
     var Meow_PredictPosNumOfModels = Meow_PredictFinishPosModelIndex - Meow_PredictBeginPosModelIndex;
-
-    // Still coding... will be updated soon!
-
+    var Meow_PredictOverallDist = 1 << (Meow_PredictFinishPosModelIndex / 2);
+    var Meow_PredictLitPosNumBitsStates_EncodeMax = 4;
+    var Meow_PredictLitNumContextBits_Max = 8;
+    var Meow_PredictPosNumBitsStates_Max = (1 << Meow_PredictLitPosNumBitsStates_EncodeMax);
+    var Meow_PredictNumOfLowLenBits = 3;
+    var Meow_PredictNumOfMidLenBits = 3;
+    var Meow_PredictNumOfHighLenBits = 8;
+    var Meow_PredictNumOfLowLenSymbols = 1 << Meow_PredictNumOfLowLenBits;
+    var Meow_PredictNumOfMidLenSymbols = 1 << Meow_PredictNumOfMidLenBits;
+    var Meow_PredictNumOfHighLenSymbols = 1 << Meow_PredictNumOfHighLenBits;
+    var Meow_PredictNumOfLenSymbols = Meow_PredictNumOfLowLenSymbols + Meow_PredictNumOfMidLenSymbols + Meow_PredictNumOfHighLenSymbols;
+    var Meow_PredictMaxMatchLen = Meow_PredictMinMatchLen + Meow_PredictNumOfLenSymbols - 1;
   }
+
+  // Still coding... will be updated soon!
+  
 }
