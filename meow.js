@@ -71,7 +71,18 @@ function MeowJS()
     var Meow_PredictNumOfLenSymbols = Meow_PredictNumOfLowLenSymbols + Meow_PredictNumOfMidLenSymbols + Meow_PredictNumOfHighLenSymbols;
     var Meow_PredictMaxMatchLen = Meow_PredictMinMatchLen + Meow_PredictNumOfLenSymbols - 1;
   }
+  function Meow_Encode()
+  {
+    var Meow_PredictMatchFindType = 0
+    var Meow_PredictMatchFindType2 = 1;
+    var Meow_PredictInfinityVal = 0XFFFFFFF;
+    var Meow_Byte[] Meow_PredictFastPos = new Meow_Byte[1 << 11];
+    var Meow_PredictFastSlots = 22;
+    var Meow_Def = 2;
+    Meow_PredictFastPos[0] = 0;
+    Meow_PredictFastPos[1] = 1;
 
-  // Still coding... will be updated soon!
-  
+    // Still coding... will be updated soon!
+
+  }
 }
