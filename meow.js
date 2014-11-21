@@ -127,8 +127,43 @@ function MeowJS()
     }
     var Meow_DefDictLogSize = 22;
     var Meow_NumOfFastBytesDef = 0X20;
+    function class Meow_LitEncode()
+    {
+      function class Meow_Encode2()
+      {
+        Meow_Short[] Meow_mEncode = new Meow_Short[0X300];
+        function Meow_Init()
+        {
+          Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_mEncode);
+        }
+        int Meow_Context = 1;
+        for(Meow_Def4 = 7; Meow_Def4 >= 0; Meow_Def4--)
+        {
+          var Meow_Bit = ((Meow_Symbol >> Meow_Def4) & 1);
+          Meow_Ranger.Meow_Encode(Meow_mEncode, Meow_Context, Meow_Bit);
+          Meow_Context = (Meow_Context << 1) | Meow_Bit;
+        }
+      }
+    }
+    var Meow_PredictMatchedEncode = function(Meow_Power.Meow_Compress.Meow_Range.Meow_Encode Meow_Ranger, Meow_Byte Meow_PredictByteMatch, Meow_Byte Meow_Symbol)
+    {
+      int Meow_Context = 1;
+      var Meow_dup = true;
+      for(Meow_Def4 = 7; Meow_Def4 >= 0; Meow_Def4--)
+      {
+        var Meow_Bit = ((Meow_Symbol >> Meow_Def4) & 1);
+        var Meow_PredictState = Meow_Context;
+        if(Meow_dup)
+        {
+          var Meow_PredictBitMatch = ((Meow_PredictByteMatch >> Meow_Def4) & 1);
+          var Meow_PredictState += ((1 + Meow_PredictBitMatch) << 8);
+          Meow_dup = (Meow_PredictBitMatch == Meow_Bit);
+        }
+        Meow_Ranger.Meow_Encode(Meow_mEncode, Meow_PredictState, Meow_Bit);
+        Meow_Context = (Meow_Context << 1) | Meow_Bit;
+      }
+    }
 
     // Still coding... will be updated soon!
-
   }
 }
