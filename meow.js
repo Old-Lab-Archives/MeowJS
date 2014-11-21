@@ -51,7 +51,7 @@ function MeowJS()
         return Meow_Len;
       }
       return (Meow_PredictPosNumStatesLen - 1);
-    }
+    };
     var Meow_PredictAlignNumOfBits = 4;
     var Meow_PredictAlignTableSize = 1 << Meow_PredictAlignNumOfBits;
     var Meow_PredictAlignMask = (Meow_PredictAlignTableSize - 1);
@@ -73,19 +73,21 @@ function MeowJS()
   }
   function Meow_Encode()
   {
-    var Meow_PredictMatchFindType = 0
+    var Meow_PredictMatchFindType = 0;
     var Meow_PredictMatchFindType2 = 1;
     var Meow_PredictInfinityVal = 0XFFFFFFF;
-    var Meow_Byte[] Meow_PredictFastPos = new Meow_Byte[1 << 11];
+    var Meow_Byte;
+    var Meow_PredictFastPos = new Meow_Byte(1 << 11);
     var Meow_PredictFastSlots = 22;
     var Meow_Def = 2;
     Meow_PredictFastPos[0] = 0;
     Meow_PredictFastPos[1] = 1;
-    for(int Meow_SlotisFast =2; Meow_SlotisFast < Meow_PredictFastSlots; Meow_SlotisFast++)
+    var Meow_SlotisFast;
+    for(Meow_SlotisFast =2; Meow_SlotisFast < Meow_PredictFastSlots; Meow_SlotisFast++)
     {
-      int Meow_Def2 = (1 << ((Meow_SlotisFast >> 1) - 1));
-      for(int Meow_Def3 = 0; Meow_Def3 < Meow_Def2; Meow_Def3++, Meow_Def++)
-        Meow_PredictFastPos[Meow_Def] = (Meow_Byte) Meow_SlotisFast;
+      var Meow_Def2 = (1 << ((Meow_SlotisFast >> 1) - 1));
+      for(var Meow_Def3 = 0; Meow_Def3 < Meow_Def2; Meow_Def3++, Meow_Def++)
+        Meow_PredictFastPos[Meow_Def] = (Meow_Byte) + Meow_SlotisFast;
     }
     var Meow_PredictSlotPos = function()
     {
@@ -99,7 +101,7 @@ function MeowJS()
         return (Meow_PredictFastPos[Meow_PredictPos >> 10] + 20);
       }
       return (Meow_PredictFastPos[Meow_PredictPos >> 20] + 40);
-    }
+    };
     var Meow_PredictSlotPos2 = function()
     {
       if(Meow_PredictPos < (1 << 17))
@@ -111,32 +113,32 @@ function MeowJS()
         return (Meow_PredictFastPos[Meow_PredictPos >> 16] + 32);
       }
       return (Meow_PredictFastPos[Meow_PredictPos >> 26] + 52);
-    }
+    };
     var Meow_PredictState = Meow_Base.Meow_PredictStateInit();
-    Meow_Byte Meow_PrevByte;
-    int[] Meow_PredictRepDist = new int [Meow_Base.Meow_PredictNumRepDist];
+    var Meow_PredictRepDist = new int (Meow_Base.Meow_PredictNumRepDist);
 
     function Meow_BaseInit()
     {
       Meow_PredictState = Meow_Base.Meow_PredictStateInit();
       Meow_PrevByte = 0;
-      for(int Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictNumRepDist; Meow_Def4++)
+      for(var Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictNumRepDist; Meow_Def4++)
       {
         Meow_PredictRepDist[Meow_Def4] = 0;
       }
     }
     var Meow_DefDictLogSize = 22;
     var Meow_NumOfFastBytesDef = 0X20;
-    function class Meow_LitEncode()
+    function Meow_LitEncode()
     {
-      function class Meow_Encode2()
+      function Meow_Encode2()
       {
-        Meow_Short[] Meow_mEncode = new Meow_Short[0X300];
+        var Meow_Short;
+        var Meow_mEncode = new Meow_Short(0X300);
         function Meow_Init()
         {
           Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_mEncode);
         }
-        int Meow_Context = 1;
+        var Meow_Context = 1;
         for(Meow_Def4 = 7; Meow_Def4 >= 0; Meow_Def4--)
         {
           var Meow_Bit = ((Meow_Symbol >> Meow_Def4) & 1);
@@ -145,9 +147,9 @@ function MeowJS()
         }
       }
     }
-    var Meow_PredictMatchedEncode = function(Meow_Power.Meow_Compress.Meow_Range.Meow_Encode Meow_Ranger, Meow_Byte Meow_PredictByteMatch, Meow_Byte Meow_Symbol)
+    var Meow_PredictMatchedEncode = function()
     {
-      int Meow_Context = 1;
+      var Meow_Context = 1;
       var Meow_dup = true;
       for(Meow_Def4 = 7; Meow_Def4 >= 0; Meow_Def4--)
       {
@@ -156,17 +158,17 @@ function MeowJS()
         if(Meow_dup)
         {
           var Meow_PredictBitMatch = ((Meow_PredictByteMatch >> Meow_Def4) & 1);
-          var Meow_PredictState += ((1 + Meow_PredictBitMatch) << 8);
+          Meow_PredictState = ((1 + Meow_PredictBitMatch) << 8);
           Meow_dup = (Meow_PredictBitMatch == Meow_Bit);
         }
         Meow_Ranger.Meow_Encode(Meow_mEncode, Meow_PredictState, Meow_Bit);
         Meow_Context = (Meow_Context << 1) | Meow_Bit;
       }
-    }
-    var Meow_PredictVal = function(int Meow_PredictMatchMode, Meow_Byte Meow_PredictByteMatch, Meow_Byte Meow_Symbol)
+    };
+    var Meow_PredictVal = function()
     {
 
       // Still coding... will be updated soon!
-    }
+    };
   }
 }
