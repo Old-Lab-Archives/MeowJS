@@ -187,17 +187,33 @@ function MeowJS()
       }
       for(; Meow_Def4 >= 0; Meow_Def4--)
       {
-        var Meow_Bit = (Meow_Symbol >> Meow_Def4) & 1;
+        Meow_Bit = (Meow_Symbol >> Meow_Def4) & 1;
         Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal(Meow_mEncode[Meow_Context], Meow_Bit);
         Meow_Context = (Meow_Context << 1) | Meow_Bit;
       }
       return Meow_Val;
     };
   }
-  var Meow_Encode2[] Meow_mCoders;
+  var Meow_mCoders;
   var Meow_PredictNumPrevBits;
   var Meow_PredictNumPosBits;
   var Meow_PredictPosMask;
+  var Meow_PredictCreate = function(Meow_PredictNumPosBits, Meow_PredictNumPrevBits)
+  {
+    if(Meow_mCoders != null && Meow_PredictNumPrevBits == Meow_PredictNumPrevBits && Meow_PredictPosNumOfBits == Meow_PredictNumPosBits)
+    {
+      return;
+    }
+    Meow_PredictNumPosBits = Meow_PredictPosNumOfBits;
+    Meow_PredictPosMask = (1 << Meow_PredictNumPosBits) - 1;
+    Meow_PredictNumPrevBits = Meow_PredictNumPrevBits;
+    var Meow_PredictNumStates = 1 << (Meow_PredictNumPrevBits + Meow_PredictPosNumOfBits);
+    Meow_mCoders = new Meow_Encode2(Meow_PredictNumStates);
+    for(Meow_Def4 = 0; Meow_Def4 < Meow_PredictNumStates; Meow_Def4++)
+    {
+      Meow_mCoders[Meow_Def4] = new Meow_Encode2();
+    }
+  };
 
   // Still coding... will be updated soon!
 }
