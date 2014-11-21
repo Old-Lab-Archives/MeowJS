@@ -163,7 +163,10 @@ function MeowJS()
         Meow_Context = (Meow_Context << 1) | Meow_Bit;
       }
     }
+    var Meow_PredictVal = function(int Meow_PredictMatchMode, Meow_Byte Meow_PredictByteMatch, Meow_Byte Meow_Symbol)
+    {
 
-    // Still coding... will be updated soon!
+      // Still coding... will be updated soon!
+    }
   }
 }
