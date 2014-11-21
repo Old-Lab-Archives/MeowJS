@@ -81,6 +81,37 @@ function MeowJS()
     var Meow_Def = 2;
     Meow_PredictFastPos[0] = 0;
     Meow_PredictFastPos[1] = 1;
+    for(int Meow_SlotisFast =2; Meow_SlotisFast < Meow_PredictFastSlots; Meow_SlotisFast++)
+    {
+      int Meow_Def2 = (1 << ((Meow_SlotisFast >> 1) - 1));
+      for(int Meow_Def3 = 0; Meow_Def3 < Meow_Def2; Meow_Def3++, Meow_Def++)
+        Meow_PredictFastPos[Meow_Def] = (Meow_Byte) Meow_SlotisFast;
+    }
+    var Meow_PredictSlotPos = function()
+    {
+      var Meow_PredictPos;
+      if(Meow_PredictPos < (1 << 11))
+      {
+        return (Meow_PredictFastPos[Meow_PredictPos]);
+      }
+      if(Meow_PredictPos < (1 << 21))
+      {
+        return (Meow_PredictFastPos[Meow_PredictPos >> 10] + 20);
+      }
+      return (Meow_PredictFastPos[Meow_PredictPos >> 20] + 40);
+    }
+    var Meow_PredictSlotPos2 = function()
+    {
+      if(Meow_PredictPos < (1 << 17))
+      {
+        return (Meow_PredictFastPos[Meow_PredictPos >> 6] + 12);
+      }
+      if(Meow_PredictPos < (1 << 27))
+      {
+        return (Meow_PredictFastPos[Meow_PredictPos >> 16] + 32);
+      }
+      return (Meow_PredictFastPos[Meow_PredictPos >> 26] + 52);
+    }
 
     // Still coding... will be updated soon!
 
