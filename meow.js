@@ -167,8 +167,37 @@ function MeowJS()
     };
     var Meow_PredictVal = function()
     {
-
-      // Still coding... will be updated soon!
+      var Meow_Val = 0;
+      var Meow_Context = 1;
+      var Meow_Def4 = 7;
+      if(Meow_PredictMatchMode)
+      {
+        for(; Meow_Def4 >= 0; Meow_Def4--)
+        {
+          var Meow_PredictMatchBit = (PredictMatchByte >> Meow_Def4) & 1;
+          var Meow_Bit = (Meow_Symbol >> Meow_Def4) & 1;
+          Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal(Meow_mEncode[((1 + Meow_Bit) << 8) + Meow_Context], Meow_Bit);
+          Meow_Context = (Meow_Context << 1) | Meow_Bit;
+          if(Meow_PredictBitMatch != Meow_Bit)
+          {
+            Meow_Def4--;
+            break;
+          }
+        }
+      }
+      for(; Meow_Def4 >= 0; Meow_Def4--)
+      {
+        var Meow_Bit = (Meow_Symbol >> Meow_Def4) & 1;
+        Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal(Meow_mEncode[Meow_Context], Meow_Bit);
+        Meow_Context = (Meow_Context << 1) | Meow_Bit;
+      }
+      return Meow_Val;
     };
   }
+  var Meow_Encode2[] Meow_mCoders;
+  var Meow_PredictNumPrevBits;
+  var Meow_PredictNumPosBits;
+  var Meow_PredictPosMask;
+
+  // Still coding... will be updated soon!
 }
