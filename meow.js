@@ -112,6 +112,21 @@ function MeowJS()
       }
       return (Meow_PredictFastPos[Meow_PredictPos >> 26] + 52);
     }
+    var Meow_PredictState = Meow_Base.Meow_PredictStateInit();
+    Meow_Byte Meow_PrevByte;
+    int[] Meow_PredictRepDist = new int [Meow_Base.Meow_PredictNumRepDist];
+
+    function Meow_BaseInit()
+    {
+      Meow_PredictState = Meow_Base.Meow_PredictStateInit();
+      Meow_PrevByte = 0;
+      for(int Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictNumRepDist; Meow_Def4++)
+      {
+        Meow_PredictRepDist[Meow_Def4] = 0;
+      }
+    }
+    var Meow_DefDictLogSize = 22;
+    var Meow_NumOfFastBytesDef = 0X20;
 
     // Still coding... will be updated soon!
 
