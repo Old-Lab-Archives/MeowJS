@@ -411,6 +411,43 @@ function MeowJS()
     Meow_PredictDictSizePrev = Meow_PredictDictSize;
     Meow_PredictNumFastBytesPrev = Meow_PredictNumFastBytes;
   }
+  for(Meow_Def4 = 0; Meow_Def4 < Meow_PredictNumOpts; Meow_Def4++)
+  {
+    Meow_Optimum[Meow_Def4] = new Meow_Optimal();
+  }
+  for(Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictPosNumStatesLen; Meow_Def4++)
+  {
+    Meow_EncodeSlotPos[Meow_Def4] = new Meow_EncodeBitTree(Meow_Base.Meow_PredictNumPosSlotBits);
+  }
+  function Meow_PredictWriteEndMarkMode(Meow_PredictWriteEndMark)
+  {
+    Meow_PredictWriteEndMark = Meow_PredictWriteEndMark;
+  }
+  Meow_Init()
+  {
+    Meow_BaseInit();
+    Meow_Ranger.Meow_Init();
+    Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_PredictMatch);
+    Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_PredictRepLong);
+    Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_PredictRep);
+    Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_PredictRep0);
+    Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_PredictRep1);
+    Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_PredictRep2);
+    Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictBitModelsInit(Meow_EncodePos);
+
+    Meow_LitEncode.Meow_Init();
+    for(Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictPosNumStatesLen; Meow_Def4++)
+    {
+      Meow_EncodeSlotPos[Meow_Def4].Meow_Init();
+    }
+    Meow_LitEncode.Meow_Init(1 << Meow_PredictPosBitsState);
+    Meow_EncodeLenMatchRep.Meow_Init(1 << Meow_PredictPosBitsState);
+    Meow_EncodeAlignPos.Meow_Init();
+    Meow_PredictLongMatchFound = false;
+    Meow_OptimumEndIndex = 0;
+    Meow_OptimumCurrentIndex = 0;
+    Meow_PredictOffsetAdd = 0;
+  }
 
   // Still coding now... Will be updated soon!
 }
