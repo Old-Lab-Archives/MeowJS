@@ -361,6 +361,17 @@ function MeowJS()
   Meow_EncodeBitTree[] Meow_EncodeSlotPos = new Meow_EncodeBitTree[Meow_Base.Meow_PredictPosNumStatesLen];
   Meow_Short[] Meow_EncodePos = new Meow_Short[Meow_Base.Meow_PredictOverallDist - Meow_Base.Meow_PredictFinishPosModelIndex];
   Meow_EncodeBitTree Meow_EncodeAlignPos = new Meow_EncodeBitTree(Meow_Base.Meow_PredictAlignNumOfBits);
+  Meow_EncodeLenTableVal Meow_EncodeLen = new Meow_EncodeLenTableVal();
+  Meow_EncodeLenTableVal Meow_EncodeLenMatchRep = new Meow_EncodeLenTableVal();
+  Meow_LitEncode Meow_LitEncode = new Meow_LitEncode();
+  int[] Meow_PredictMatchDist = new int[Meow_Base.Meow_PredictMaxMatchLen * 2 + 2];
+  var Meow_PredictNumFastBytes = Meow_NumOfFastBytesDef;
+  var Meow_PredictLongMatchLen;
+  var Meow_PredictOverallDistPairs;
+  var Meow_PredictOffsetAdd;
+  var Meow_OptimumEndIndex;
+  var Meow_OptimumCurrentIndex;
+  var Meow_PredictLongMatchFound;
 
   // Still coding now... Will be updated soon!
 }
