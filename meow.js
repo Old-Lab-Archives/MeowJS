@@ -290,6 +290,17 @@ function MeowJS()
     }
   };
   var Meow_PredictNumOfLenSymbolsSpec = Meow_Base.Meow_PredictNumOfLowLenSymbols + Meow_Base.Meow_PredictNumOfMidLenSymbols;
+  var Meow_EncodeLenTableVal = function(Meow_EncodeLen)
+  {
+    int[] Meow_Val = new int[Meow_Base.Meow_PredictNumOfLenSymbols << Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax];
+    var Meow_PredictTableSize;
+    int [] Meow_PredictCounters = new int[Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax];
+    function Meow_PredictSetTableSize()
+    {
+      Meow_PredictTableSize = Meow_PredictTableSize;
+    }
+  }
+  return Meow_Val[Meow_PredictPosStates * Meow_Base.Meow_PredictNumOfLenSymbols + Meow_Symbol];
 
   // Still coding... will be updated soon!
 }
