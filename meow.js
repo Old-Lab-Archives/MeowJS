@@ -348,6 +348,19 @@ function MeowJS()
       return (Meow_PredictPrevBack == 0);
     }
   }
+  Meow_Optimal[] Meow_Optimum = new Meow_Optimal[Meow_PredictNumOpts];
+  Meow_Power.Meow_Compress.Meow_lzbmhm.Meow_GarbageTree Meow_PredictMatchFind = null;
+  Meow_Power.Meow_Compress.Meow_Range.Meow_Encode Meow_Ranger = new Meow_Power.Meow_Compress.Meow_Range.Meow_Encode();
+
+  Meow_Short[] Meow_PredictMatch = new Meow_Short[Meow_Base.Meow_PredictNumStates << Meow_Base.Meow_PredictPosNumBitsStates_Max];
+  Meow_Short[] Meow_PredictRep = new Meow_Short[Meow_Base.Meow_PredictNumStates];
+  Meow_Short[] Meow_PredictRep0 = new Meow_Short[Meow_Base.Meow_PredictNumStates];
+  Meow_Short[] Meow_PredictRep1 = new Meow_Short[Meow_Base.Meow_PredictNumStates];
+  Meow_Short[] Meow_PredictRep2 = new Meow_Short[Meow_Base.Meow_PredictNumStates];
+  Meow_Short[] Meow_PredictRepLong = new Meow_Short[Meow_Base.Meow_PredictNumStates << Meow_Base.Meow_PredictPosNumBitsStates_Max];
+  Meow_EncodeBitTree[] Meow_EncodeSlotPos = new Meow_EncodeBitTree[Meow_Base.Meow_PredictPosNumStatesLen];
+  Meow_Short[] Meow_EncodePos = new Meow_Short[Meow_Base.Meow_PredictOverallDist - Meow_Base.Meow_PredictFinishPosModelIndex];
+  Meow_EncodeBitTree Meow_EncodeAlignPos = new Meow_EncodeBitTree(Meow_Base.Meow_PredictAlignNumOfBits);
 
   // Still coding now... Will be updated soon!
 }
