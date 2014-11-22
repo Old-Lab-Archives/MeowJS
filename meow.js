@@ -318,6 +318,36 @@ function MeowJS()
       Meow_UpdatePredictTable(Meow_PredictPosStates);
     }
   }
+  var Meow_PredictNumOpts = 1 << 12;
+  function Meow_Optimal()
+  {
+    var Meow_PredictState;
+    var Meow_PredictPrevChar;
+    var Meow_PredictPrevChar2;
+    var Meow_PredictPrevPos;
+    var Meow_PredictPrevPos2;
+    var Meow_PredictPrevBack;
+    var Meow_PredictPrevBack2;
+    var Meow_Val;
+    var Meow_PredictBk0;
+    var Meow_PredictBk1;
+    var Meow_PredictBk2;
+    var Meow_PredictBk3;
+    function Meow_ConvertToChar()
+    {
+      Meow_PredictPrevBack = -1;
+      Meow_PredictPrevChar = false;
+    }
+    function Meow_ConvertToShortRep()
+    {
+      Meow_PredictPrevBack = 0;
+      Meow_PredictPrevChar = false;
+    }
+    function Meow_ShortRep()
+    {
+      return (Meow_PredictPrevBack == 0);
+    }
+  }
 
   // Still coding now... Will be updated soon!
 }
