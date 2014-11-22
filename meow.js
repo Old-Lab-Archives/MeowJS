@@ -229,7 +229,41 @@ function MeowJS()
     Meow_EncodeBitTree[] Meow_LowCoder = new Meow_EncodeBitTree[Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax];
     Meow_EncodeBitTree[] Meow_MidCoder = new Meow_EncodeBitTree[Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax];
     Meow_EncodeBitTree[] Meow_HighCoder = new Meow_EncodeBitTree(Meow_Base.Meow_PredictNumOfHighLenBits);
+    for(var Meow_PredictPosStates = 0; Meow_PredictPosStates < Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax; Meow_PredictPosStates++)
+    {
+      Meow_LowCoder[Meow_PredictPosStates] = new Meow_EncodeBitTree(Meow_Base.Meow_PredictNumOfLowLenBits);
+      Meow_MidCoder[Meow_PredictPosStates] = new Meow_EncodeBitTree(Meow_Base.Meow_PredictNumOfMidLenBits);
+    }
+    for(Meow_PredictPosStates - 0; Meow_PredictPosStates < Meow_PredictNumStates; Meow_PredictPosStates++)
+    {
+      Meow_LowCoder[Meow_PredictPosStates].Meow_Init();
+      Meow_MidCoder[Meow_PredictPosStates].Meow_Init();
+    }
+    Meow_HighCoder.Meow_Init();
+    if(Meow_Symbol < Meow_Base.Meow_PredictNumOfLowLenSymbols)
+    {
+      Meow_Ranger.Meow_Encode(Meow_PredictChoice, 0, 0);
+      Meow_LowCoder[Meow_PredictPosStates].Meow_Encode(Meow_Ranger, Meow_Symbol);
+    }
+    else
+    {
+      Meow_Symbol -= Meow_Base.Meow_PredictNumOfLowLenSymbols;
+      Meow_Ranger.Meow_Encode(Meow_PredictChoice, 0, 1);
+      if(Meow_Symbol < Meow_PredictNumOfMidLenSymbols)
+      {
+        Meow_Ranger.Meow_Encode(Meow_PredictChoice, 1, 0);
+        Meow_MidCoder[Meow_PredictPosStates].Meow_Encode(Meow_Ranger, Meow_Symbol);
+      }
+      else
+      {
+        Meow_Ranger.Meow_Encode(Meow_PredictChoice, 1, 1);
+        Meow_HighCoder.Meow_Encode(Meow_Ranger, Meow_Symbol - Meow_Base.Meow_PredictNumOfMidLenSymbols);
+      }
+    }
+    var Meow_PredictSetVal = function(Meow_PredictPosStates, int Meow_PredictNumSymbols, Meow_PredictVal, int Meow_st)
+    {
 
-    // Still coding... will be updated soon!
+      // Still coding... will be updated soon!
+    }
   }
 }
