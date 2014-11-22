@@ -372,6 +372,23 @@ function MeowJS()
   var Meow_OptimumEndIndex;
   var Meow_OptimumCurrentIndex;
   var Meow_PredictLongMatchFound;
+  int[] Meow_PredictSlotPosVal = new int [1 << (Meow_Base.Meow_PredictNumPosBits + Meow_Base.Meow_PredictPosNumBitsStatesLen)];
+  int[] Meow_PredictDistVal = new int[Meow_Base.Meow_PredictOverallDist << Meow_Base.Meow_PredictPosNumBitsStatesLen];
+  int[] Meow_PredictAlignVal = new int[Meow_Base.Meow_PredictAlignTableSize];
+  var Meow_PredictAlignValCount;
+  var Meow_PredictTableSizeDist = (Meow_DefDictLogSize * 2);
+  var Meow_PredictPosBitsState = 2;
+  var Meow_PredictPosStateMask = (4 - 1);
+  var Meow_PredictLitNumContextBits = 3;
+  var Meow_PredictLitPosStateBits = 0;
+  var Meow_PredictDictSize = (1 << Meow_DefDictLogSize);
+  var Meow_PredictDictSizePrev = -1;
+  var Meow_PredictNumFastBytesPrev = -1;
+  var Meow_PosNow64;
+  var Meow_PredictEnd;
+  var Meow_PredictMatchFindType0 = Meow_PredictMatchFindType2;
+  var Meow_PredictWriteEndMark = false;
+  var Meow_ReleaseMFSStream = false;
 
   // Still coding now... Will be updated soon!
 }
