@@ -223,6 +223,13 @@ function MeowJS()
       return Meow_mCoders[((Meow_PredictPos & Meow_PredictPosMask) << Meow_PredictNumPrevBits) + ((Meow_PrevByte & 0XFF) >>> (8 - Meow_PredictNumPrevBits))];
     };
   }
+  function Meow_EncodeLen()
+  {
+    Meow_Short[] Meow_PredictChoice = new Meow_Short[2];
+    Meow_EncodeBitTree[] Meow_LowCoder = new Meow_EncodeBitTree[Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax];
+    Meow_EncodeBitTree[] Meow_MidCoder = new Meow_EncodeBitTree[Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax];
+    Meow_EncodeBitTree[] Meow_HighCoder = new Meow_EncodeBitTree(Meow_Base.Meow_PredictNumOfHighLenBits);
 
-  // Still coding... will be updated soon!
+    // Still coding... will be updated soon!
+  }
 }
