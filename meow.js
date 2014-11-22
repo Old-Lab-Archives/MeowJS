@@ -389,6 +389,28 @@ function MeowJS()
   var Meow_PredictMatchFindType0 = Meow_PredictMatchFindType2;
   var Meow_PredictWriteEndMark = false;
   var Meow_ReleaseMFSStream = false;
+  Meow_PredictCreate()
+  {
+    if(Meow_PredictMatchFind == null)
+    {
+      Meow_Power.Meow_Compress.Meow_lzbmhm.Meow_GarbageTree tryy = new Meow_Power.Meow_Compress.Meow_lzbmhm.Meow_GarbageTree();
+      var Meow_NumHashBytes = 4;
+      if(Meow_PredictMatchFindType0 == Meow_PredictMatchFindType)
+      {
+        Meow_NumHashBytes = 2;
+        tryy.Meow_PredictTypeSet(Meow_NumHashBytes);
+        Meow_PredictMatchFind = tryy;
+      }
+    }
+    Meow_LitEncode.Meow_PredictCreate(Meow_PredictLitPosNumBitsStates, Meow_PredictLitNumContextBits);
+    if(Meow_PredictDictSize == Meow_PredictDictSizePrev && Meow_PredictNumFastBytesPrev == Meow_PredictNumFastBytes)
+    {
+      return;
+    }
+    Meow_PredictMatchFind.Meow_PredictCreate(Meow_PredictDictSize, Meow_PredictNumOpts, Meow_PredictNumFastBytes, Meow_Base.Meow_PredictMaxMatchLen + 1);
+    Meow_PredictDictSizePrev = Meow_PredictDictSize;
+    Meow_PredictNumFastBytesPrev = Meow_PredictNumFastBytes;
+  }
 
   // Still coding now... Will be updated soon!
 }
