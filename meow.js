@@ -299,8 +299,25 @@ function MeowJS()
     {
       Meow_PredictTableSize = Meow_PredictTableSize;
     }
+    return Meow_Val[Meow_PredictPosStates * Meow_Base.Meow_PredictNumOfLenSymbols + Meow_Symbol];
+    var Meow_UpdatePredictTable = function(Meow_PredictPosStates)
+    {
+      Meow_PredictSetVal(Meow_PredictPosStates, Meow_PredictTableSize, Meow_Val, Meow_PredictPosStates * Meow_Base.Meow_PredictNumOfLenSymbols);
+      Meow_PredictCounters = Meow_PredictTableSize;
+    }
+    var Meow_UpdatePredictTables = function(Meow_PredictPosNumStates)
+    {
+      for(Meow_PredictPosStates = 0; Meow_PredictPosStates < Meow_PredictPosNumStates; Meow_PredictPosStates++)
+      {
+        Meow_UpdatePredictTable(Meow_PredictPosStates);
+      }
+    }
+    Meow_SuperPower.Meow_Encode(Meow_Ranger, Meow_Symbol, Meow_PredictPosStates);
+    if(--Meow_PredictCounters[Meow_PredictPosStates] == 0)
+    {
+      Meow_UpdatePredictTable(Meow_PredictPosStates);
+    }
   }
-  return Meow_Val[Meow_PredictPosStates * Meow_Base.Meow_PredictNumOfLenSymbols + Meow_Symbol];
 
-  // Still coding... will be updated soon!
+  // Still coding now... Will be updated soon!
 }
