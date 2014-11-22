@@ -262,8 +262,34 @@ function MeowJS()
     }
     var Meow_PredictSetVal = function(Meow_PredictPosStates, int Meow_PredictNumSymbols, Meow_PredictVal, int Meow_st)
     {
-
-      // Still coding... will be updated soon!
+      var Meow_Def00 = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictChoice[0]);
+      var Meow_Def01 = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictChoice[0]);
+      var Meow_Def10 = Meow_Def01 + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictChoice[1]);
+      var Meow_Def11 = Meow_Def01 + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictChoice[1]);
+      Meow_Def4 = 0;
+      for(Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictNumOfLowLenSymbols; Meow_Def4++)
+      {
+        if(Meow_Def4 >= Meow_PredictNumSymbols)
+        {
+          return;
+        }
+        Meow_Val[Meow_st + Meow_Def4] = Meow_Def00 + Meow_LowCoder[Meow_PredictPosStates].Meow_PredictVal(Meow_Def4);
+      }
+      for(; Meow_Def4 < Meow_Base.Meow_PredictNumOfLowLenSymbols + Meow_Base.Meow_PredictNumOfMidLenSymbols; Meow_Def4++)
+      {
+        if(Meow_Def4 >= Meow_PredictNumSymbols)
+        {
+          return;
+        }
+        Meow_Val[Meow_st + Meow_Def4] = Meow_Def10 + Meow_MidCoder[Meow_PredictPosStates].Meow_PredictVal(Meow_Def4 - Meow_Base.Meow_PredictNumOfLowLenSymbols);
+      }
+      for(; Meow_Def4 < Meow_Base.Meow_PredictNumSymbols; Meow_Def4++)
+      {
+        Meow_Val[Meow_st + Meow_Def4] = Meow_Def11 + Meow_HighCoder.Meow_PredictVal(Meow_Def4 - Meow_Base.Meow_PredictNumOfLowLenSymbols - Meow_Base.Meow_PredictNumOfMidLenSymbols);
+      }
     }
-  }
+  };
+  var Meow_PredictNumOfLenSymbolsSpec = Meow_Base.Meow_PredictNumOfLowLenSymbols + Meow_Base.Meow_PredictNumOfMidLenSymbols;
+
+  // Still coding... will be updated soon!
 }
