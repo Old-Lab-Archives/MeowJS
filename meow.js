@@ -479,6 +479,38 @@ function MeowJS()
   {
     if(Meow_RepIndex == 0)
     {
+      Meow_Val = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRep0[Meow_PredictState]);
+      Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRepLong[(Meow_PredictState < Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
+    }
+    else
+    {
+      Meow_Val = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRep0[Meow_PredictPosStates]);
+      if(Meow_RepIndex == 1)
+      {
+        Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRep1[Meow_PredictPosStates]);
+      }
+      else
+      {
+        Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRep1[Meow_PredictPosStates]);
+        Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal(Meow_PredictRep2[Meow_PredictPosStates], Meow_RepIndex - 2);
+      }
+    }
+    return Meow_Val;
+  }
+  var Meow_FetchRepVal = function(Meow_RepIndex, Meow_Len, Meow_PredictState, Meow_PredictPosStates)
+  {
+    var Meow_Val = Meow_EncodeLenMatchRep.Meow_PredictVal(Meow_Len - Meow_Base.Meow_PredictMinMatchLen, Meow_PredictPosStates);
+    return Meow_Val + Meow_GetOriginalRepVal(Meow_RepIndex, Meow_PredictState, Meow_PredictPosStates);
+  }
+  var Meow_FetchPosLenVal = function(Meow_PredictPos, Meow_Len, Meow_PredictPosStates)
+  {
+    var Meow_PredictPosStatesLen = Meow_Base.Meow_GetPredictPosStatesLen(Meow_Len);
+    if(Meow_PredictPos < Meow_Base.Meow_PredictOverallDist)
+    {
+      Meow_Val = Meow_PredictDistVal[(Meow_PredictPosStatesLen * Meow_Base.Meow_PredictOverallDist) + Meow_PredictPos];
+    }
+    else
+    {
 
       // Still coding now... Will be updated soon!
     }
