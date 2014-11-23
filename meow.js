@@ -664,7 +664,12 @@ function MeowJS()
       }
       while(--Meow_RepLen >= 2);
     }
+    var Meow_MatchNormalVal = Meow_PredictMatchVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_Rep[Meow_PredictState]);
+    Meow_Len = ((Meow_RepsLen[0] >= 2) ? Meow_RepsLen[0] + 1 : 2);
+    if(Meow_Len <= Meow_LenMain)
+    {
 
-    // Still coding now... Will be updated soon!
+      // Still coding now... Will be updated soon!
+    }
   };
 }
