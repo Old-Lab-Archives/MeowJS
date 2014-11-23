@@ -625,7 +625,24 @@ function MeowJS()
         Meow_Optimum[1].Meow_ConvertToShortRep();
       }
     }
-    
+    var Meow_LenEnd = ((Meow_LenMain >= Meow_RepsLen[Meow_RepIndex_Max]) ? Meow_LenMain : Meow_RepsLen[Meow_RepIndex_Max]);
+    if(Meow_LenEnd < 2)
+    {
+      Meow_BackRes = Meow_Optimum[1].Meow_PredictPrevBack;
+      return 1;
+    }
+    Meow_Optimum[1].Meow_PredictPrevPos = 0;
+    Meow_Optimum[0].Meow_PredictBk0 = Meow_Reps[0];
+    Meow_Optimum[0].Meow_PredictBk1 = Meow_Reps[1];
+    Meow_Optimum[0].Meow_PredictBk2 = Meow_Reps[2];
+    Meow_Optimum[0].Meow_PredictBk3 = Meow_Reps[3];
+    Meow_Len = Meow_LenEnd;
+    do
+    {
+      Meow_Optimum[Meow_Len--].Meow_PredictVal = Meow_PredictInfinityVal;
+    }
+    while(Meow_Len >= 2);
+
     // Still coding now... Will be updated soon!
   };
 }
