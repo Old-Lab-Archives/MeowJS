@@ -511,8 +511,43 @@ function MeowJS()
     }
     else
     {
-
-      // Still coding now... Will be updated soon!
+      Meow_Val = Meow_PredictSlotPosVal[(Meow_PredictPosStatesLen << Meow_Base.Meow_PredictNumPosSlotBits) + Meow_PredictSlotPos2(Meow_PredictPos)];
+    }
+    return Meow_Val + Meow_EncodeLen.Meow_PredictVal(Meow_Len - Meow_Base.Meow_PredictMinMatchLen, Meow_PredictPosStates);
+  }
+  var Meow_Backward = function(Meow_Cur)
+  {
+    Meow_OptimumEndIndex = Meow_Cur;
+    var Meow_PosMem = Meow_Optimum[Meow_Cur].Meow_PredictPrevPos;
+    var Meow_PosBackMem = Meow_Optimum[Meow_Cur].Meow_PredictPrevBack;
+    do
+    {
+      if(Meow_Optimum[Meow_Cur].Meow_PredictPrevChar)
+      {
+        Meow_Optimum[Meow_PosMem].Meow_ConvertToChar();
+        Meow_Optimum[Meow_PosMem].Meow_PredictPrevPos = Meow_PosMem - 1;
+        if(Meow_Optimum[Meow_Cur].Meow_PredictPrevChar2)
+        {
+          Meow_Optimum[Meow_PosMem - 1].Meow_PredictPrevChar = false;
+          Meow_Optimum[Meow_PosMem - 1].Meow_PredictPrevPos = Meow_Optimum[Meow_Cur].Meow_PredictPrevPos2;
+          Meow_Optimum[Meow_PosMem - 1].Meow_PredictPrevBack = Meow_Optimum[Meow_Cur].Meow_PredictPrevBack2;
+        }
+      }
+      var Meow_PredictPrevPos = Meow_PosMem;
+      var Meow_BackCur = Meow_BackMem;
+      Meow_BackMem = Meow_Optimum[Meow_PredictPrevPos].Meow_PredictPrevBack;
+      Meow_PosMem = Meow_Optimum[Meow_PredictPrevPos].Meow_PredictPrevPos;
+      Meow_Optimum[Meow_PredictPrevPos].Meow_PredictPrevBack = Meow_BackCur;
+      Meow_Optimum[Meow_PredictPrevPos].Meow_PredictPrevPos = Meow_Cur;
+      Meow_Cur = Meow_PredictPrevPos;
+    }
+    while(Meow_Cur > 0)
+    {
+      var Meow_BackRes = Meow_Optimum[0].Meow_PredictPrevBack;
+      Meow_OptimumCurrentIndex = Meow_Optimum[0].Meow_PredictPrevPos;
+      return Meow_OptimumCurrentIndex;
     }
   }
+
+  // Still coding now... Will be updated soon!
 }
