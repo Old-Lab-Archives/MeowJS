@@ -573,7 +573,26 @@ function MeowJS()
     }
     Meow_PredictNumDistPairs = Meow_PredictNumDistPairs;
     var Meow_NumAvailBytes = Meow_PredictMatchFind.FetchNumAvailBytes() + 1;
-
+    if(Meow_NumAvailBytes < 2)
+    {
+      Meow_BackRes = -1;
+      return 1;
+    }
+    if(Meow_NumAvailBytes > Meow_Base.Meow_PredictMaxMatchLen)
+    {
+      Meow_NumAvailBytes = Meow_Base.Meow_PredictMaxMatchLen;
+    }
+    var Meow_RepIndex_Max = 0;
+    for(Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictNumRepDist; Meow_Def4++)
+    {
+      Meow_Reps[Meow_Def4] = Meow_PredictRepDist[Meow_Def4];
+      Meow_RepsLen[Meow_Def4] = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0 - 1, Meow_Reps[Meow_Def4], Meow_Base.Meow_PredictMaxMatchLen);
+      if(Meow_RepsLen[Meow_Def4] > Meow_RepsLen[Meow_RepIndex_Max])
+      {
+        Meow_RepIndex_Max = Meow_Def4;
+      }
+    }
+    
     // Still coding now... Will be updated soon!
   }
 }
