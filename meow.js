@@ -477,7 +477,7 @@ function MeowJS()
   };
   var Meow_GetOriginalRepVal = function(Meow_RepIndex, Meow_PredictState, Meow_PredictPosStates)
   {
-    if(Meow_RepIndex == 0)
+    if(Meow_RepIndex === 0)
     {
       Meow_Val = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRep0[Meow_PredictState]);
       Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRepLong[(Meow_PredictState < Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
@@ -485,7 +485,7 @@ function MeowJS()
     else
     {
       Meow_Val = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRep0[Meow_PredictPosStates]);
-      if(Meow_RepIndex == 1)
+      if(Meow_RepIndex === 1)
       {
         Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRep1[Meow_PredictPosStates]);
       }
@@ -496,12 +496,12 @@ function MeowJS()
       }
     }
     return Meow_Val;
-  }
+  };
   var Meow_FetchRepVal = function(Meow_RepIndex, Meow_Len, Meow_PredictState, Meow_PredictPosStates)
   {
     var Meow_Val = Meow_EncodeLenMatchRep.Meow_PredictVal(Meow_Len - Meow_Base.Meow_PredictMinMatchLen, Meow_PredictPosStates);
     return Meow_Val + Meow_GetOriginalRepVal(Meow_RepIndex, Meow_PredictState, Meow_PredictPosStates);
-  }
+  };
   var Meow_FetchPosLenVal = function(Meow_PredictPos, Meow_Len, Meow_PredictPosStates)
   {
     var Meow_PredictPosStatesLen = Meow_Base.Meow_GetPredictPosStatesLen(Meow_Len);
@@ -514,7 +514,7 @@ function MeowJS()
       Meow_Val = Meow_PredictSlotPosVal[(Meow_PredictPosStatesLen << Meow_Base.Meow_PredictNumPosSlotBits) + Meow_PredictSlotPos2(Meow_PredictPos)];
     }
     return Meow_Val + Meow_EncodeLen.Meow_PredictVal(Meow_Len - Meow_Base.Meow_PredictMinMatchLen, Meow_PredictPosStates);
-  }
+  };
   var Meow_Backward = function(Meow_Cur)
   {
     Meow_OptimumEndIndex = Meow_Cur;
@@ -541,21 +541,20 @@ function MeowJS()
       Meow_Optimum[Meow_PredictPrevPos].Meow_PredictPrevPos = Meow_Cur;
       Meow_Cur = Meow_PredictPrevPos;
     }
-    while(Meow_Cur > 0)
-    {
-      var Meow_BackRes = Meow_Optimum[0].Meow_PredictPrevBack;
-      Meow_OptimumCurrentIndex = Meow_Optimum[0].Meow_PredictPrevPos;
-      return Meow_OptimumCurrentIndex;
-    }
-  }
+    while(Meow_Cur > 0);
+    var Meow_BackRes = Meow_Optimum[0].Meow_PredictPrevBack;
+    Meow_OptimumCurrentIndex = Meow_Optimum[0].Meow_PredictPrevPos;
+    return Meow_OptimumCurrentIndex;
+  };
   var Meow_Reps = new int(Meow_Base.Meow_PredictNumRepDist);
   var Meow_RepsLen = new int(Meow_Base.Meow_PredictNumRepDist);
   var Meow_BackRes;
+  var Meow_LenRes;
   var Meow_FetchOptimum = function(Meow_PredictPos)
   {
     if(Meow_OptimumEndIndex != Meow_OptimumCurrentIndex)
     {
-      var Meow_LenRes = Meow_Optimum[Meow_OptimumCurrentIndex].Meow_PredictPrevPos - Meow_OptimumCurrentIndex;
+      Meow_LenRes = Meow_Optimum[Meow_OptimumCurrentIndex].Meow_PredictPrevPos - Meow_OptimumCurrentIndex;
       Meow_BackRes = Meow_Optimum[Meow_OptimumCurrentIndex].Meow_PredictPrevBack;
       Meow_OptimumCurrentIndex = Meow_Optimum[Meow_OptimumCurrentIndex].Meow_PredictPrevPos;
       return Meow_LenRes;
@@ -592,7 +591,41 @@ function MeowJS()
         Meow_RepIndex_Max = Meow_Def4;
       }
     }
+    if(Meow_RepsLen[Meow_RepIndex_Max] >= Meow_PredictNumFastBytes)
+    {
+      Meow_BackRes = Meow_RepIndex_Max;
+      Meow_LenRes = Meow_RepsLen[Meow_RepIndex_Max];
+      Meow_MovePos(Meow_LenRes - 1);
+      return Meow_LenRes;
+    }
+    if(Meow_LenMain >= Meow_PredictNumFastBytes)
+    {
+      Meow_BackRes = Meow_PredictMatchDist[Meow_PredictNumDistPairs - 1] + Meow_Base.Meow_PredictNumRepDist;
+      Meow_MovePos(Meow_LenMain - 1);
+      return Meow_LenMain;
+    }
+    var Meow_CurrentByte = Meow_PredictMatchFind.Meow_FetchIndexByte(0 - 1);
+    var Meow_PredictMatchByte = Meow_PredictMatchFind.Meow_FetchIndexByte(0 - Meow_PredictRepDist[0] - 1 - 1);
+    if(Meow_LenMain < 2 && Meow_CurrentByte != PredictMatchByte && Meow_RepsLen[Meow_RepIndex_Max] < 2)
+    {
+      Meow_BackRes = -1;
+      return 1;
+    }
+    Meow_Optimum[0].Meow_PredictState = Meow_PredictState;
+    Meow_PredictPosStates = (Meow_PredictPos & Meow_PredictPosStateMask);
+    Meow_Optimum[1].Meow_PredictVal = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos, Meow_PrevByte).Meow_PredictVal(!Meow_Base.Meow_PredictStateIsChar(Meow_PredictState), PredictMatchByte, Meow_CurrentByte);
+    Meow_Optimum[1].Meow_ConvertToChar();
+    var Meow_PredictMatchVal = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
+    if(PredictMatchByte == Meow_CurrentByte)
+    {
+      var Meow_ShortRepVal = Meow_MatchRepVal + Meow_FetchRepLenVal(Meow_PredictState, Meow_PredictPosStates);
+      if(Meow_ShortRepVal < Meow_Optimum[1].Meow_PredictVal)
+      {
+        Meow_Optimum[1].Meow_PredictVal = Meow_ShortRepVal;
+        Meow_Optimum[1].Meow_ConvertToShortRep();
+      }
+    }
     
     // Still coding now... Will be updated soon!
-  }
+  };
 }
