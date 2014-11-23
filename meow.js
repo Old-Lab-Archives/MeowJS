@@ -816,6 +816,15 @@ function MeowJS()
       var Meow_CurLenVal = Meow_CurVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos, Meow_PredictMatchFind.Meow_FetchIndexByte(0 - 2)).Meow_PredictVal(!Meow_Base.Meow_PredictStateIsChar(Meow_PredictState), Meow_PredictMatchByte, Meow_CurrentByte);
       Meow_Optimal [Meow_NextOptimum] = Meow_Optimum [Meow_Cur + 1];
       boolean Meow_PredictNextChar = false;
+      if(Meow_CurLenVal < Meow_NextOptimum.Meow_Val)
+      {
+        Meow_NextOptimum.Meow_Val = Meow_CurLenVal;
+        Meow_NextOptimum.Meow_PredictPrevPos = Meow_Cur;
+        Meow_NextOptimum.Meow_ConvertToChar();
+        Meow_PredictNextChar = true;
+      }
+      Meow_PredictMatchVal = Meow_CurVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
+      Meow_MatchRepVal = Meow_PredictMatchVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRep[Meow_PredictState]);
 
       // Still coding now... Will be updated soon!
     }
