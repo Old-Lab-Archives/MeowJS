@@ -463,6 +463,18 @@ function MeowJS()
     Meow_PredictOffsetAdd++;
     return Meow_LenRes;
   };
+  var Meow_MovePos = function(Meow_Num)
+  {
+    if(Meow_Num > 0)
+    {
+      Meow_PredictMatchFind.Meow_Skip(Meow_Num);
+      Meow_PredictOffsetAdd += Meow_Num;
+    }
+  };
+  var Meow_FetchRepLenVal = function(Meow_PredictState, Meow_PredictPosStates)
+  {
+    return Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRep0[Meow_PredictState]) + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRepLong[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
+  };
 
   // Still coding now... Will be updated soon!
 }
