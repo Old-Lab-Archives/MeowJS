@@ -694,7 +694,116 @@ function MeowJS()
           }
         }
       }
-      Meow_Cur = 0;
+    }
+    Meow_Cur = 0;
+    while(true)
+    {
+      Meow_Cur++;
+      if(Meow_Cur == Meow_LenEnd)
+      {
+        return Meow_Backward(Meow_Cur);
+      }
+      var Meow_LenNew = Meow_ReadPredictedMatchDist();
+      Meow_PredictNumDistPairs = Meow_PredictNumDistPairs;
+      if(Meow_LenNew >= Meow_PredictNumFastBytes)
+      {
+        Meow_PredictLongMatchLen = Meow_LenNew;
+        Meow_PredictLongMatchFound = true;
+        return Meow_Backward(Meow_Cur);
+      }
+      Meow_PredictPos++;
+      var Meow_PredictPrevPos = Meow_Optimum[Meow_Cur].Meow_PredictPrevPos;
+      var Meow_PredictState;
+      if(Meow_Optimum[Meow_Cur].Meow_PredictPrevChar)
+      {
+        Meow_PredictPrevPos--;
+        if(Meow_Optimum[Meow_Cur].Meow_PredictPrevChar2)
+        {
+          Meow_PredictState = Meow_Optimum[Meow_Optimum[Meow_Cur].Meow_PredictPrevPos2]Meow_PredictState;
+          if(Meow_Optimum[Meow_Cur].Meow_PredictPrevBack2 < Meow_Base.Meow_PredictNumRepDist)
+          {
+            Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
+          }
+          else
+          {
+            Meow_PredictState = Meow_Base.Meow_UpdatePredictStateMatches(Meow_PredictState);
+          }
+        }
+        else
+        {
+          Meow_PredictState = Meow_Optimum[Meow_PredictPrevPos].Meow_PredictState;
+          Meow_PredictState = Meow_Base.Meow_UpdatePredictStateMatches(Meow_PredictState);
+        }
+      }
+      else
+      {
+        Meow_PredictState = Meow_Optimum[Meow_PredictPrevPos].Meow_PredictState;
+      }
+      if(Meow_PredictPrevPos == Meow_Cur - 1)
+      {
+        if(Meow_Optimum[Meow_Cur].Meow_ShortRep())
+        {
+          Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesShortRep(Meow_PredictState);
+        }
+        else
+        {
+          Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesChar(Meow_PredictState);
+        }
+      }
+      else
+      {
+        var Meow_PredictPos;
+        if(Meow_Optimum[Meow_Cur].Meow_PredictPrevChar && Meow_Optimum[Meow_Cur].Meow_PredictPrevChar2)
+        {
+          Meow_PredictPrevPos = Meow_Optimum[Meow_Cur].Meow_PredictPrevPos2;
+          Meow_PredictPos = Meow_Optimum[Meow_Cur].Meow_PredictPrevBack2;
+          Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
+        }
+        else
+        {
+          Meow_PredictPos = Meow_Optimum[Meow_Cur].Meow_PredictPrevBack;
+          if(Meow_PredictPos < Meow_Base.Meow_PredictNumRepDist)
+          {
+            Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
+          }
+          else
+          {
+            Meow_PredictState = Meow_Base.Meow_UpdatePredictStateMatches(Meow_PredictState);
+          }
+        }
+        Meow_Optimal [Meow_PredictOpt] = Meow_Optimum[Meow_PredictPrevPos];
+        if(Meow_PredictPos < Meow_Base.Meow_PredictNumRepDist)
+        {
+          if(Meow_PredictPos == 0)
+          {
+            Meow_Reps[0] = Meow_PredictOpt.Meow_PredictBk0;
+            Meow_Reps[1] = Meow_PredictOpt.Meow_PredictBk1;
+            Meow_Reps[2] = Meow_PredictOpt.Meow_PredictBk2;
+            Meow_Reps[3] = Meow_PredictOpt.Meow_PredictBk3;
+          }
+          else if(Meow_PredictPos == 1)
+          {
+            Meow_Reps[0] = Meow_PredictOpt.Meow_PredictBk1;
+            Meow_Reps[1] = Meow_PredictOpt.Meow_PredictBk0;
+            Meow_Reps[2] = Meow_PredictOpt.Meow_PredictBk2;
+            Meow_Reps[3] = Meow_PredictOpt.Meow_PredictBk3;
+          }
+          else if(Meow_PredictPos == 2)
+          {
+            Meow_Reps[0] = Meow_PredictOpt.Meow_PredictBk2;
+            Meow_Reps[1] = Meow_PredictOpt.Meow_PredictBk0;
+            Meow_Reps[2] = Meow_PredictOpt.Meow_PredictBk1;
+            Meow_Reps[3] = Meow_PredictOpt.Meow_PredictBk3;
+          }
+        }
+        else
+        {
+          Meow_Reps[0] = Meow_PredictOpt.Meow_PredictBk3;
+          Meow_Reps[1] = Meow_PredictOpt.Meow_PredictBk0;
+          Meow_Reps[2] = Meow_PredictOpt.Meow_PredictBk1;
+          Meow_Reps[3] = Meow_PredictOpt.Meow_PredictBk2;
+        }
+      }
 
       // Still coding now... Will be updated soon!
     }
