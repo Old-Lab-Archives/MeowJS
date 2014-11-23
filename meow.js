@@ -639,9 +639,31 @@ function MeowJS()
     Meow_Len = Meow_LenEnd;
     do
     {
-      Meow_Optimum[Meow_Len--].Meow_PredictVal = Meow_PredictInfinityVal;
+      Meow_Optimum[Meow_Len--].Meow_Val = Meow_PredictInfinityVal;
     }
     while(Meow_Len >= 2);
+    for(Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictNumRepDist; Meow_Def4++)
+    {
+      var Meow_RepLen = Meow_RepsLen[Meow_Def4];
+      if(Meow_RepLen < 2)
+      {
+        continue;
+      }
+      Meow_Val = Meow_MatchRepVal + Meow_GetOriginalRepVal(Meow_Def4, Meow_PredictState, Meow_PredictPosStates);
+      do
+      {
+        var Meow_CurLenVal = Meow_Val + Meow_EncodeLenMatchRep.Meow_PredictVal(Meow_RepLen - 2, Meow_PredictPosStates);
+        Meow_Optimal [Meow_Optimum] = Meow_Optimum [Meow_RepLen];
+        if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
+        {
+          Meow_Optimum.Meow_Val = Meow_CurLenVal;
+          Meow_Optimum.Meow_PredictPrevPos = 0;
+          Meow_Optimum.Meow_PredictPrevBack = Meow_Def4;
+          Meow_Optimum.Meow_PredictPrevChar = false;
+        }
+      }
+      while(--Meow_RepLen >= 2);
+    }
 
     // Still coding now... Will be updated soon!
   };
