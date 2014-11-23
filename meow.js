@@ -475,6 +475,12 @@ function MeowJS()
   {
     return Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRep0[Meow_PredictState]) + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictRepLong[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
   };
+  var Meow_GetOriginalRepVal = function(Meow_RepIndex, Meow_PredictState, Meow_PredictPosStates)
+  {
+    if(Meow_RepIndex == 0)
+    {
 
-  // Still coding now... Will be updated soon!
+      // Still coding now... Will be updated soon!
+    }
+  }
 }
