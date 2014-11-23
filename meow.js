@@ -448,6 +448,21 @@ function MeowJS()
     Meow_OptimumCurrentIndex = 0;
     Meow_PredictOffsetAdd = 0;
   }
+  var Meow_ReadPredictedMatchDist = function()
+  {
+    var Meow_LenRes = 0;
+    Meow_PredictMatchDist = Meow_PredictMatchFind.Meow_GetPredictedMatches(Meow_PredictMatchDist);
+    if(Meow_PredictNumDistPairs > 0)
+    {
+      Meow_LenRes = Meow_PredictMatchDist[Meow_PredictNumDistPairs - 2];
+      if(Meow_LenRes == Meow_PredictNumFastBytes)
+      {
+        Meow_LenRes += Meow_PredictMatchFind.Meow_PredictGetMatchLen((int) Meow_LenRes - 1, Meow_PredictMatchDist[Meow_PredictNumDistPairs - 1], Meow_Base.Meow_PredictMaxMatchLen - Meow_LenRes);
+      }
+    }
+    Meow_PredictOffsetAdd++;
+    return Meow_LenRes;
+  }
 
   // Still coding now... Will be updated soon!
 }
