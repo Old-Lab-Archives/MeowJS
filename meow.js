@@ -668,6 +668,33 @@ function MeowJS()
     Meow_Len = ((Meow_RepsLen[0] >= 2) ? Meow_RepsLen[0] + 1 : 2);
     if(Meow_Len <= Meow_LenMain)
     {
+      var Meow_PredictOffs = 0;
+      while(Meow_Len > Meow_PredictMatchDist[Meow_PredictOffs])
+      {
+        Meow_PredictOffs += 2;
+      }
+      for(; ; Meow_Len++)
+      {
+        var Meow_PredictDist = Meow_PredictMatchDist[Meow_PredictOffs + 1];
+        var Meow_CurLenVal = Meow_MatchNormalVal + Meow_FetchPosLenVal(Meow_PredictDist, Meow_Len, Meow_PredictPosStates);
+        Meow_Optimal [Meow_Optimum] = Meow_Optimum[Meow_Len];
+        if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
+        {
+          Meow_Optimum.Meow_Val = Meow_CurLenVal;
+          Meow_Optimum.Meow_PredictPrevPos = 0;
+          Meow_Optimum.Meow_PredictPrevBack = Meow_PredictDist + Meow_Base.Meow_PredictNumRepDist;
+          Meow_Optimum.Meow_PredictPrevChar = false;
+        }
+        if(Meow_Len == Meow_PredictMatchDist[Meow_PredictOffs])
+        {
+          Meow_PredictOffs += 2;
+          if(Meow_PredictOffs == Meow_PredictNumDistPairs)
+          {
+            break;
+          }
+        }
+      }
+      Meow_Cur = 0;
 
       // Still coding now... Will be updated soon!
     }
