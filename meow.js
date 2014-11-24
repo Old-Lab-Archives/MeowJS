@@ -871,10 +871,36 @@ function MeowJS()
           }
         }
       }
-      var LenStart = 2;
+      var Meow_LenStart = 2;
       for(var Meow_RepIndex = 0; Meow_RepIndex < Meow_Base.Meow_PredictNumRepDist; Meow_RepIndex++)
       {
         Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0 - 1, Meow_Reps[Meow_RepIndex], Meow_NumAvailBytes);
+
+        if(Meow_LenTest < 2)
+        {
+          continue;
+        }
+        var Meow_LenTestTemp = Meow_LenTest;
+        do
+        {
+          while(Meow_LenEnd < Meow_Cur + Meow_LenTest)
+          Meow_Optimum[++Meow_LenEnd].Meow_Val = Meow_PredictInfinityVal;
+          Meow_CurLenVal = Meow_MatchRepVal. Meow_FetchRepVal(Meow_RepIndex, Meow_LenTest, Meow_PredictState, Meow_PredictPosStates);
+          Meow_Optimal [Meow_Optimum] = Meow_Optimum[Meow_Cur + Meow_LenTest];
+          if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
+          {
+            Meow_Optimum.Meow_Val = Meow_CurLenVal;
+            Meow_Optimum.Meow_PredictPrevPos = Meow_Cur;
+            Meow_Optimum.Meow_PredictPrevBack = Meow_RepIndex;
+            Meow_Optimum.Meow_PredictPrevChar = false;
+          }
+        }
+        while(--Meow_LenTest >= 2);
+        Meow_LenTest = Meow_LenTestTemp;
+        if(Meow_RepIndex == 0)
+        {
+          Meow_LenStart = Meow_LenTest + 1;
+        }
 
         // Still coding now... Will be updated soon!
       }
