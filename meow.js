@@ -618,7 +618,7 @@ function MeowJS()
     var Meow_PredictMatchVal = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
     if(PredictMatchByte == Meow_CurrentByte)
     {
-      var Meow_ShortRepVal = Meow_MatchRepVal + Meow_FetchRepLenVal(Meow_PredictState, Meow_PredictPosStates);
+      Meow_ShortRepVal = Meow_MatchRepVal + Meow_FetchRepLenVal(Meow_PredictState, Meow_PredictPosStates);
       if(Meow_ShortRepVal < Meow_Optimum[1].Meow_PredictVal)
       {
         Meow_Optimum[1].Meow_PredictVal = Meow_ShortRepVal;
@@ -652,7 +652,7 @@ function MeowJS()
       Meow_Val = Meow_MatchRepVal + Meow_GetOriginalRepVal(Meow_Def4, Meow_PredictState, Meow_PredictPosStates);
       do
       {
-        var Meow_CurLenVal = Meow_Val + Meow_EncodeLenMatchRep.Meow_PredictVal(Meow_RepLen - 2, Meow_PredictPosStates);
+        Meow_CurLenVal = Meow_Val + Meow_EncodeLenMatchRep.Meow_PredictVal(Meow_RepLen - 2, Meow_PredictPosStates);
         Meow_Optimal [Meow_Optimum] = Meow_Optimum [Meow_RepLen];
         if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
         {
@@ -676,7 +676,7 @@ function MeowJS()
       for(; ; Meow_Len++)
       {
         var Meow_PredictDist = Meow_PredictMatchDist[Meow_PredictOffs + 1];
-        var Meow_CurLenVal = Meow_MatchNormalVal + Meow_FetchPosLenVal(Meow_PredictDist, Meow_Len, Meow_PredictPosStates);
+        Meow_CurLenVal = Meow_MatchNormalVal + Meow_FetchPosLenVal(Meow_PredictDist, Meow_Len, Meow_PredictPosStates);
         Meow_Optimal [Meow_Optimum] = Meow_Optimum[Meow_Len];
         if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
         {
@@ -719,7 +719,7 @@ function MeowJS()
         Meow_PredictPrevPos--;
         if(Meow_Optimum[Meow_Cur].Meow_PredictPrevChar2)
         {
-          Meow_PredictState = Meow_Optimum[Meow_Optimum[Meow_Cur].Meow_PredictPrevPos2]Meow_PredictState;
+          Meow_PredictState = Meow_Optimum[Meow_Optimum[Meow_Cur].Meow_PredictPrevPos2].Meow_PredictState;
           if(Meow_Optimum[Meow_Cur].Meow_PredictPrevBack2 < Meow_Base.Meow_PredictNumRepDist)
           {
             Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
@@ -752,7 +752,6 @@ function MeowJS()
       }
       else
       {
-        var Meow_PredictPos;
         if(Meow_Optimum[Meow_Cur].Meow_PredictPrevChar && Meow_Optimum[Meow_Cur].Meow_PredictPrevChar2)
         {
           Meow_PredictPrevPos = Meow_Optimum[Meow_Cur].Meow_PredictPrevPos2;
@@ -774,7 +773,7 @@ function MeowJS()
         Meow_Optimal [Meow_PredictOpt] = Meow_Optimum[Meow_PredictPrevPos];
         if(Meow_PredictPos < Meow_Base.Meow_PredictNumRepDist)
         {
-          if(Meow_PredictPos == 0)
+          if(Meow_PredictPos === 0)
           {
             Meow_Reps[0] = Meow_PredictOpt.Meow_PredictBk0;
             Meow_Reps[1] = Meow_PredictOpt.Meow_PredictBk1;
@@ -813,9 +812,9 @@ function MeowJS()
       Meow_CurrentByte = Meow_PredictMatchFind.Meow_FetchIndexByte(0 - 1);
       Meow_PredictMatchByte = Meow_PredictMatchFind.Meow_FetchIndexByte(0 - Meow_Reps[0] - 1 - 1);
       Meow_PredictPosStates = (Meow_PredictPos & Meow_PredictPosMask);
-      var Meow_CurLenVal = Meow_CurVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos, Meow_PredictMatchFind.Meow_FetchIndexByte(0 - 2)).Meow_PredictVal(!Meow_Base.Meow_PredictStateIsChar(Meow_PredictState), Meow_PredictMatchByte, Meow_CurrentByte);
+      Meow_CurLenVal = Meow_CurVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos, Meow_PredictMatchFind.Meow_FetchIndexByte(0 - 2)).Meow_PredictVal(!Meow_Base.Meow_PredictStateIsChar(Meow_PredictState), Meow_PredictMatchByte, Meow_CurrentByte);
       Meow_Optimal [Meow_NextOptimum] = Meow_Optimum [Meow_Cur + 1];
-      boolean Meow_PredictNextChar = false;
+      var Meow_PredictNextChar = false;
       if(Meow_CurLenVal < Meow_NextOptimum.Meow_Val)
       {
         Meow_NextOptimum.Meow_Val = Meow_CurLenVal;
@@ -826,9 +825,9 @@ function MeowJS()
       Meow_PredictMatchVal = Meow_CurVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
       Meow_MatchRepVal = Meow_PredictMatchVal + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRep[Meow_PredictState]);
 
-      if(Meow_PredictMatchByte == Meow_CurrentByte && !(Meow_NextOptimum.Meow_PredictPrevPos < Meow_Cur && Meow_NextOptimum.Meow_PredictPrevBack == 0))
+      if(Meow_PredictMatchByte == Meow_CurrentByte && !(Meow_NextOptimum.Meow_PredictPrevPos < Meow_Cur && Meow_NextOptimum.Meow_PredictPrevBack === 0))
       {
-        var Meow_ShortRepVal = Meow_MatchRepVal + Meow_FetchRepLenVal(Meow_PredictState, Meow_PredictPosStates);
+        Meow_ShortRepVal = Meow_MatchRepVal + Meow_FetchRepLenVal(Meow_PredictState, Meow_PredictPosStates);
         if(Meow_ShortRepVal <= Meow_NextOptimum.Meow_Val)
         {
           Meow_NextOptimum.Meow_Val = Meow_ShortRepVal;
@@ -851,7 +850,7 @@ function MeowJS()
       if(!Meow_PredictNextChar && Meow_PredictMatchByte != Meow_CurrentByte)
       {
         var Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1, Meow_PredictNumFastBytes);
-        var Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0, Meow_Reps[0], Meow_Def5);
+        Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0, Meow_Reps[0], Meow_Def5);
         if(Meow_LenTest >= 2)
         {
           var Meow_PredictState2 = Meow_Base.Meow_UpdatePredictStatesChar(Meow_PredictState);
@@ -860,7 +859,7 @@ function MeowJS()
           var Meow_Offset = Meow_Cur + 1 + Meow_LenTest;
           while(Meow_LenEnd < Meow_Offset)
           Meow_Optimum[++Meow_LenEnd].Meow_Val = Meow_PredictInfinityVal;
-          var Meow_CurLenVal = Meow_MatchRepValNext + Meow_FetchRepVal(0, Meow_LenTest, Meow_PredictState2, Meow_PredictPosStatesNext);
+          Meow_CurLenVal = Meow_MatchRepValNext + Meow_FetchRepVal(0, Meow_LenTest, Meow_PredictState2, Meow_PredictPosStatesNext);
           Meow_Optimal[Meow_Optimum] = Meow_Optimum[Meow_Offset];
           if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
           {
@@ -872,8 +871,13 @@ function MeowJS()
           }
         }
       }
+      var LenStart = 2;
+      for(var Meow_RepIndex = 0; Meow_RepIndex < Meow_Base.Meow_PredictNumRepDist; Meow_RepIndex++)
+      {
+        Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0 - 1, Meow_Reps[Meow_RepIndex], Meow_NumAvailBytes);
 
-      // Still coding now... Will be updated soon!
+        // Still coding now... Will be updated soon!
+      }
     }
   };
 }
