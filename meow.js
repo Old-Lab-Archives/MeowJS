@@ -931,8 +931,20 @@ function MeowJS()
           }
         }
       }
+      if(Meow_LenNew > Meow_NumAvailBytes)
+      {
+        Meow_LenNew = Meow_NumAvailBytes;
+        for(Meow_PredictNumDistPairs = 0; Meow_LenNew > Meow_PredictMatchDist[Meow_PredictNumDistPairs]; Meow_PredictNumDistPairs += 2)
+        {
+          Meow_PredictMatchDist[Meow_PredictNumDistPairs] = Meow_LenNew;
+          Meow_PredictNumDistPairs += 2;
+        }
+      }
+      if(Meow_LenNew >= Meow_LenStart)
+      {
 
-      // Still coding now... Will be updated soon!
+        // Still coding now... Will be updated soon!
+      }
     }
   };
 }
