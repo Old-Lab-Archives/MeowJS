@@ -874,19 +874,19 @@ function MeowJS()
       var Meow_LenStart = 2;
       for(var Meow_RepIndex = 0; Meow_RepIndex < Meow_Base.Meow_PredictNumRepDist; Meow_RepIndex++)
       {
-        Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0 - 1, Meow_Reps[Meow_RepIndex], Meow_NumAvailBytes);
+        Meow_LenTest2 = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0 - 1, Meow_Reps[Meow_RepIndex], Meow_NumAvailBytes);
 
-        if(Meow_LenTest < 2)
+        if(Meow_LenTest2 < 2)
         {
           continue;
         }
-        var Meow_LenTestTemp = Meow_LenTest;
+        var Meow_LenTestTemp = Meow_LenTest2;
         do
         {
-          while(Meow_LenEnd < Meow_Cur + Meow_LenTest)
+          while(Meow_LenEnd < Meow_Cur + Meow_LenTest2)
           Meow_Optimum[++Meow_LenEnd].Meow_Val = Meow_PredictInfinityVal;
-          Meow_CurLenVal = Meow_MatchRepVal. Meow_FetchRepVal(Meow_RepIndex, Meow_LenTest, Meow_PredictState, Meow_PredictPosStates);
-          Meow_Optimal [Meow_Optimum] = Meow_Optimum[Meow_Cur + Meow_LenTest];
+          Meow_CurLenVal = Meow_MatchRepVal. Meow_FetchRepVal(Meow_RepIndex, Meow_LenTest2, Meow_PredictState, Meow_PredictPosStates);
+          Meow_Optimal [Meow_Optimum] = Meow_Optimum[Meow_Cur + Meow_LenTest2];
           if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
           {
             Meow_Optimum.Meow_Val = Meow_CurLenVal;
@@ -895,15 +895,44 @@ function MeowJS()
             Meow_Optimum.Meow_PredictPrevChar = false;
           }
         }
-        while(--Meow_LenTest >= 2);
-        Meow_LenTest = Meow_LenTestTemp;
+        while(--Meow_LenTest2 >= 2);
+        Meow_LenTest2 = Meow_LenTestTemp;
         if(Meow_RepIndex == 0)
         {
-          Meow_LenStart = Meow_LenTest + 1;
+          Meow_LenStart = Meow_LenTest2 + 1;
         }
-
-        // Still coding now... Will be updated soon!
+        if(Meow_LenTest2 < Meow_NumAvailBytesFull)
+        {
+          var Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
+          var Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(Meow_LenTest2, Meow_Reps[Meow_RepIndex], Meow_Def5);
+          if(Meow_LenTest >= 2)
+          {
+            Meow_PredictState2 = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
+            var Meow_PredictPosStatesNext = (Meow_PredictPos + Meow_LenTest2) & Meow_PredictPosStateMask;
+            var Meow_CurLenValChar = Meow_MatchRepVal + Meow_FetchRepVal(Meow_RepIndex, Meow_LenTest2, Meow_PredictState, Meow_PredictPosStates) + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState2 << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStatesNext]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos + Meow_LenTest2, Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_LenTest2 - 1 - 1)).Meow_PredictVal(true, Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_LenTest2 - 1 -(Meow_Reps[Meow_RepIndex] + 1)), Meow_PredictMatchFind.FetchNumAvailBytes(Meow_LenTest2 - 1));
+            Meow_PredictState2 = Meow_Base.Meow_UpdatePredictStatesChar(Meow_PredictState2);
+            Meow_PredictPosStatesNext = (Meow_PredictPos + Meow_LenTest2 + 1) & Meow_PredictPosStateMask;
+            var Meow_PredictMatchValNext = Meow_CurLenValChar + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictMatch[(Meow_PredictState2 << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStatesNext]);
+            var Meow_MatchRepValNext = Meow_PredictMatchValNext + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictRep[Meow_PredictState2]);
+            Meow_Offset = Meow_LenTest2 + 1 + Meow_LenTest;
+            while(Meow_LenEnd < Meow_Cur + Meow_Offset)
+            Meow_Optimum[++Meow_LenEnd].Meow_Val = Meow_PredictInfinityVal;
+            Meow_CurLenVal = Meow_MatchRepValNext + Meow_FetchRepVal(0, Meow_LenTest, Meow_PredictState2, Meow_PredictPosStatesNext);
+            Meow_Optimal [Meow_Optimum] = Meow_Optimum[Meow_Cur + Meow_Offset];
+            if(Meow_CurLenVal < Meow_Optimum.Meow_Val)
+            {
+              Meow_Optimum.Meow_Val = Meow_CurLenVal;
+              Meow_Optimum.Meow_PredictPrevPos = Meow_Cur + Meow_LenTest2 + 1;
+              Meow_Optimum.Meow_PredictPrevBack = 0;
+              Meow_Optimum.Meow_PredictPrevChar = true;
+              Meow_Optimum.Meow_PredictPrevPos = Meow_Cur;
+              Meow_Optimum.Meow_PredictPrevBack2 = Meow_RepIndex;
+            }
+          }
+        }
       }
+
+      // Still coding now... Will be updated soon!
     }
   };
 }
