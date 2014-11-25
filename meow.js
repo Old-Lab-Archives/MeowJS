@@ -1027,6 +1027,13 @@ function MeowJS()
     Meow_Ranger.Meow_EncodeBitsDirect(Meow_PredictPosReduced >> Meow_Base.Meow_PredictAlignNumOfBits, Meow_PredictBitsFooter - Meow_Base.Meow_PredictAlignNumOfBits);
     Meow_EncodeAlignPos.Meow_EncodeReverse(Meow_Ranger, Meow_PredictPosReduced & Meow_Base.Meow_PredictAlignMask);
   }
+  var Meow_Flush = function(Meow_PosNow)
+  {
+    Meow_ReleaseMFSStream();
+    Meow_PredictWriteEndMark(Meow_PosNow & Meow_PredictPosStateMask);
+    Meow_Ranger.Meow_FlushData();
+    Meow_Ranger.Meow_FlushStream();
+  }
 
   // Still coding now... Will be updated soon!
 }
