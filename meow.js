@@ -1010,7 +1010,23 @@ function MeowJS()
   }
   function Meow_PredictWriteEndMark(Meow_PredictPosStates)
   {
-
-    // Still coding now... Will be updated soon!
+    if(!Meow_PredictWriteEndMark)
+    {
+      return;
+    }
+    Meow_Ranger.Meow_Encode(Meow_PredictMatch, (Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates, 1);
+    Meow_Ranger.Meow_Encode(Meow_PredictRep, Meow_PredictState, 0);
+    Meow_PredictState = Meow_Base.Meow_UpdatePredictStateMatches(Meow_PredictState);
+    Meow_Len = Meow_Base.Meow_PredictMinMatchLen;
+    Meow_EncodeLen.Meow_Encode(Meow_Ranger, Meow_Len - Meow_Base.Meow_PredictMinMatchLen,Meow_PredictPosStates);
+    Meow_PredictSlotPos = (1 << Meow_Base.Meow_PredictNumPosSlotBits) - 1;
+    Meow_PredictPosStatesLen = Meow_Base.Meow_GetPredictPosStatesLen(Meow_Len);
+    Meow_EncodeSlotPos[Meow_PredictSlotPosLenState].Meow_Encode(Meow_Ranger, Meow_PredictSlotPos);
+    var Meow_PredictBitsFooter = 30;
+    var Meow_PredictPosReduced = (1 << Meow_PredictBitsFooter) - 1;
+    Meow_Ranger.Meow_EncodeBitsDirect(Meow_PredictPosReduced >> Meow_Base.Meow_PredictAlignNumOfBits, Meow_PredictBitsFooter - Meow_Base.Meow_PredictAlignNumOfBits);
+    Meow_EncodeAlignPos.Meow_EncodeReverse(Meow_Ranger, Meow_PredictPosReduced & Meow_Base.Meow_PredictAlignMask);
   }
+
+  // Still coding now... Will be updated soon!
 }
