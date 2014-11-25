@@ -1056,7 +1056,7 @@ function MeowJS()
     {
       if(Meow_PredictMatchFind.Meow_FetchNumAvailBytes() === 0)
       {
-        Meow_Flush((int) [Meow_PosNow64]);
+        Meow_Flush((int)[Meow_PosNow64]);
         return;
       }
       Meow_ReadPredictedMatchDist();
@@ -1068,6 +1068,11 @@ function MeowJS()
       Meow_PrevByte = Meow_CurByte;
       Meow_PredictOffsetAdd--;
       Meow_PosNow64++;
+    }
+    if(Meow_PredictMatchFind.Meow_FetchNumAvailBytes() === 0)
+    {
+      Meow_Flush((int)[Meow_PosNow64]);
+      return;
     }
 
     // Still coding now... Will be updated soon! (^_^)
