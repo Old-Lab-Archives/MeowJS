@@ -1033,7 +1033,10 @@ function MeowJS()
     Meow_PredictWriteEndMark(Meow_PosNow & Meow_PredictPosStateMask);
     Meow_Ranger.Meow_FlushData();
     Meow_Ranger.Meow_FlushStream();
-  }
+  };
+  var Meow_CodeBlock = function()
+  {
 
-  // Still coding now... Will be updated soon!
+    // Still coding now... Will be updated soon!
+  };
 }
