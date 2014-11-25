@@ -571,7 +571,7 @@ function MeowJS()
       Meow_PredictLongMatchFound = false;
     }
     Meow_PredictNumDistPairs = Meow_PredictNumDistPairs;
-    var Meow_NumAvailBytes = Meow_PredictMatchFind.FetchNumAvailBytes() + 1;
+    var Meow_NumAvailBytes = Meow_PredictMatchFind.Meow_FetchNumAvailBytes() + 1;
     if(Meow_NumAvailBytes < 2)
     {
       Meow_BackRes = -1;
@@ -836,7 +836,7 @@ function MeowJS()
           Meow_PredictNextChar = true;
         }
       }
-      var Meow_NumAvailBytesFull = Meow_PredictMatchFind.FetchNumAvailBytes() + 1;
+      var Meow_NumAvailBytesFull = Meow_PredictMatchFind.Meow_FetchNumAvailBytes() + 1;
       Meow_NumAvailBytesFull = Meow_Math.Meow_Min(Meow_PredictNumOpts - 1 - Meow_Cur, Meow_NumAvailBytesFull);
       Meow_NumAvailBytes = Meow_NumAvailBytesFull;
       var Meow_Def5;
@@ -910,7 +910,7 @@ function MeowJS()
           {
             Meow_PredictState2 = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
             Meow_PredictPosStatesNext = (Meow_PredictPos + Meow_LenTest2) & Meow_PredictPosStateMask;
-            Meow_CurLenValChar = Meow_MatchRepVal + Meow_FetchRepVal(Meow_RepIndex, Meow_LenTest2, Meow_PredictState, Meow_PredictPosStates) + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState2 << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStatesNext]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos + Meow_LenTest2, Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_LenTest2 - 1 - 1)).Meow_PredictVal(true, Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_LenTest2 - 1 -(Meow_Reps[Meow_RepIndex] + 1)), Meow_PredictMatchFind.FetchNumAvailBytes(Meow_LenTest2 - 1));
+            Meow_CurLenValChar = Meow_MatchRepVal + Meow_FetchRepVal(Meow_RepIndex, Meow_LenTest2, Meow_PredictState, Meow_PredictPosStates) + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState2 << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStatesNext]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos + Meow_LenTest2, Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_LenTest2 - 1 - 1)).Meow_PredictVal(true, Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_LenTest2 - 1 -(Meow_Reps[Meow_RepIndex] + 1)), Meow_PredictMatchFind.Meow_FetchNumAvailBytes(Meow_LenTest2 - 1));
             Meow_PredictState2 = Meow_Base.Meow_UpdatePredictStatesChar(Meow_PredictState2);
             Meow_PredictPosStatesNext = (Meow_PredictPos + Meow_LenTest2 + 1) & Meow_PredictPosStateMask;
             Meow_PredictMatchValNext = Meow_CurLenValChar + Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictMatch[(Meow_PredictState2 << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStatesNext]);
@@ -1036,7 +1036,40 @@ function MeowJS()
   };
   var Meow_CodeBlock = function()
   {
+    Meow_InSize[0] = 0;
+    Meow_OutSize[0] = 0;
+    Meow_PredictEnd[0] = true;
+    if(Meow_InStream !== null)
+    {
+      Meow_PredictMatchFind.Meow_SetStream(Meow_InStream);
+      Meow_PredictMatchFind.Meow_Init();
+      Meow_ReleaseMFSStream = true;
+      Meow_InStream = null;
+    }
+    if(Meow_PredictEnd)
+    {
+      return;
+    }
+    Meow_PredictEnd = true;
+    Meow_PredictPrevPosValPerf = Meow_PosNow64;
+    if(Meow_PosNow64 === 0)
+    {
+      if(Meow_PredictMatchFind.Meow_FetchNumAvailBytes() === 0)
+      {
+        Meow_Flush((int) [Meow_PosNow64]);
+        return;
+      }
+      Meow_ReadPredictedMatchDist();
+      Meow_PredictPosStates = (int)(Meow_PosNow64) & Meow_PredictPosStateMask;
+      Meow_Ranger.Meow_Encode(Meow_PredictMatch, (Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates, 0);
+      Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesChar(Meow_PredictState);
+      byte [Meow_CurByte] = Meow_PredictMatchFind.Meow_FetchIndexByte(0 - Meow_PredictOffsetAdd);
+      Meow_LitEncode.Meow_PredictSubCoder = ((int)(Meow_PosNow64), Meow_PrevByte).Meow_Encode(Meow_Ranger, Meow_CurByte);
+      Meow_PrevByte = Meow_CurByte;
+      Meow_PredictOffsetAdd--;
+      Meow_PosNow64++;
+    }
 
-    // Still coding now... Will be updated soon!
+    // Still coding now... Will be updated soon! (^_^)
   };
 }
