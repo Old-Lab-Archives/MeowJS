@@ -1210,6 +1210,30 @@ function MeowJS()
       }
     }
   };
+  function Meow_ReleaseMFSStream()
+  {
+    if(Meow_PredictMatchFind != null && Meow_IncludeReleaseMFSStream)
+    {
+      Meow_PredictMatchFind.Meow_ReleaseMFSStream();
+      Meow_IncludeReleaseMFSStream = false;
+    }
+  }
+  var Meow_SetOutStream = function()
+  {
+    Meow_Ranger.Meow_SetStream(Meow_OutStream);
+  }
+  var Meow_ReleaseOutStream = function()
+  {
+    Meow_Ranger.Meow_ReleaseStream();
+  }
+  function Meow_ReleaseStreams()
+  {
+    Meow_ReleaseMFSStream();
+    Meow_ReleaseOutStream();
+  }
+  var Meow_SetStream = function()
+  {
 
-  // Still Coding Now... Will be updated! (^_^)
+    // Still Coding Now... Will be updated! (^_^)
+  }
 }
