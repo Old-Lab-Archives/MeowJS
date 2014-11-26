@@ -1097,8 +1097,62 @@ function MeowJS()
           Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesChar(Meow_PredictState);
         }
       }
+      else
+      {
+        Meow_Ranger.Meow_Encode(Meow_PredictMatch, Meow_PredictComplexState, 1);
+        if(Meow_PredictPos < Meow_Base.Meow_PredictNumRepDist)
+        {
+          Meow_Ranger.Meow_Encode(Meow_PredictRep, Meow_PredictState, 1);
+          if(Meow_PredictPos == 0)
+          {
+            Meow_Ranger.Meow_Encode(Meow_PredictRep0, Meow_PredictState, 0);
+            if(Meow_Len == 1)
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRepLong, Meow_PredictComplexState, 0);
+            }
+            else
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRepLong, Meow_PredictComplexState, 1);
+            }
+          }
+          else
+          {
+            Meow_Ranger.Meow_Encode(Meow_PredictRep0, Meow_PredictState, 1);
+            if(Meow_PredictPos == 1)
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRep1, Meow_PredictState, 0);
+            }
+            else
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRep1, Meow_PredictState, 1);
+              Meow_Ranger.Meow_Encode(Meow_PredictRep2, Meow_PredictState, Meow_PredictPos - 2);
+            }
+          }
+          if(Meow_Len == 1)
+          {
+            Meow_PredictState = Meow_UpdatePredictStatesShortRep(Meow_PredictState);
+          }
+          else
+          {
+            Meow_EncodeLenMatchRep.Meow_Encode(Meow_Ranger, Meow_Len - Meow_Base.Meow_PredictMinMatchLen, Meow_PredictPosStates);
+            Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
+          }
+          Meow_PredictDist = Meow_PredictRepDist[Meow_PredictPos];
+          if(Meow_PredictPos != 0)
+          {
+            for(Meow_Def4 = Meow_PredictPos; Meow_Def4 >= 1; Meow_Def4++)
+            {
+              Meow_PredictRepDist[Meow_Def4] = Meow_PredictRepDist[Meow_Def4 - 1];
+              Meow_PredictRepDist[0] = Meow_PredictDist;
+            }
+          }
+        }
+        else
+        {
 
-      // Still coding now... Will be updated soon! (^_^)
+          // Still coding now... Will be updated soon! (^_^)
+        }
+      }
     }
   };
 }
