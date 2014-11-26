@@ -1295,7 +1295,30 @@ function MeowJS()
       Meow_BaseVal = ((2 | (Meow_PredictSlotPos & 1)) << Meow_PredictBitsFooter);
       Meow_TempVal[Meow_Def4] = Meow_EncodeBitTree.Meow_FetchValReverse(Meow_EncodePos, Meow_BaseVal - Meow_PredictSlotPos - 1, Meow_PredictBitsFooter, Meow_Def4 - Meow_BaseVal);
     }
-
-    // Still Coding Now... Will be updated soon! (^_^)
+    for(Meow_PredictPosStatesLen = 0; Meow_PredictPosStatesLen < Meow_Base.Meow_PredictPosNumStatesLen; Meow_PredictPosStatesLen++)
+    {
+      Meow_EncodeBitTree [Meow_Encode] = Meow_EncodeSlotPos[Meow_PredictPosStatesLen];
+      Meow_st = (Meow_PredictPosStatesLen << Meow_Base.Meow_PredictNumPosSlotBits);
+      for(Meow_PredictSlotPos = 0; Meow_PredictSlotPos < Meow_PredictTableSizeDist; Meow_PredictSlotPos++)
+      {
+        Meow_PredictSlotPosVal[Meow_st + Meow_PredictSlotPos] = Meow_Encode.Meow_PredictVal(Meow_PredictSlotPos);
+      }
+      for(Meow_PredictSlotPos = Meow_Base.Meow_PredictFinishPosModelIndex; Meow_PredictSlotPos < Meow_PredictTableSizeDist; Meow_PredictSlotPos++)
+      {
+        Meow_PredictSlotPosVal[Meow_st + Meow_PredictSlotPos] += ((((Meow_PredictSlotPos >> 1) - 1) - Meow_Base.Meow_PredictAlignNumOfBits) << Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictShiftNumBitsVal);
+      }
+      Meow_st2 = Meow_PredictPosStatesLen * Meow_Base.Meow_PredictOverallDist;
+      for(Meow_Def4 = 0; Meow_Def4 < Meow_PredictBeginPosModelIndex; Meow_Def4++)
+      {
+        Meow_PredictDistVal[Meow_st2 + Meow_Def4] = Meow_PredictSlotPosVal[Meow_st + Meow_Def4];
+      }
+      for(; Meow_Def4 < Meow_Base.Meow_PredictOverallDist; Meow_Def4++)
+      {
+        Meow_PredictDistVal[Meow_st2 + Meow_Def4] = Meow_PredictSlotPosVal[Meow_st + Meow_FetchSlotPos(Meow_Def4)] + Meow_TempVal[Meow_Def4];
+      }
+    }
+    Meow_PredictMatchValCount = 0;
   }
+
+  // Still Coding Now... Will be updated soon! (^_^)
 }
