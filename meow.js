@@ -1319,6 +1319,29 @@ function MeowJS()
     }
     Meow_PredictMatchValCount = 0;
   }
+  function Meow_PredictAlignValAutoFill()
+  {
+    for(Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictAlignTableSize; Meow_Def4++)
+    {
+      Meow_PredictAlignVal[Meow_Def4] = Meow_EncodeAlignPos.Meow_FetchValReverse(Meow_Def4);
+      Meow_PredictAlignValCount = 0;
+    }
+  }
+  var Meow_SetAlgm = function(Meow_Algm)
+  {
+    Meow_FastPerfMode = (Meow_Algm == 0);
+    Meow_MaxPerfMode = (Meow_Algm >= 2);
+    return true;
+  }
+  var Meow_SetDictSize = function(Meow_PredictDictSize)
+  {
+    var Meow_DictLogSizeCompress_Max = 29;
+    if(Meow_PredictDictSize < (1 << Meow_Base.Meow_PredictMinLogSize) || Meow_PredictDictSize > (1 << Meow_DictLogSizeCompress_Max))
+    {
+      return false;
+    }
+    Meow_PredictDictSize = Meow_PredictDictSize;
 
-  // Still Coding Now... Will be updated soon! (^_^)
+    // Still Coding Now... Will be updated soon! (^_^)
+  }
 }
