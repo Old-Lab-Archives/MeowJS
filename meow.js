@@ -1284,6 +1284,18 @@ function MeowJS()
       Meow_OutStream.Meow_Write(Meow_Prop, 0, Meow_PropSize);
     }
   };
+  int [Meow_TempVal] = new int[Meow_Base.Meow_PredictOverallDist];
+  Meow_PredictMatchValCount++;
+  function Meow_PredictDistValAutoFill()
+  {
+    for(Meow_Def4 = Meow_Base.Meow_PredictBeginPosModelIndex; Meow_Def4 < Meow_PredictOverallDist; Meow_Def4++)
+    {
+      Meow_PredictSlotPos = Meow_FetchSlotPos(Meow_Def4);
+      Meow_PredictBitsFooter = (int)[(Meow_PredictSlotPos >> 1) - 1];
+      Meow_BaseVal = ((2 | (Meow_PredictSlotPos & 1)) << Meow_PredictBitsFooter);
+      Meow_TempVal[Meow_Def4] = Meow_EncodeBitTree.Meow_FetchValReverse(Meow_EncodePos, Meow_BaseVal - Meow_PredictSlotPos - 1, Meow_PredictBitsFooter, Meow_Def4 - Meow_BaseVal);
+    }
 
-   // Still Coding Now... Will be updated soon! (^_^)
+    // Still Coding Now... Will be updated soon! (^_^)
+  }
 }
