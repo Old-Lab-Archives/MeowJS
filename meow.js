@@ -1231,9 +1231,48 @@ function MeowJS()
     Meow_ReleaseMFSStream();
     Meow_ReleaseOutStream();
   }
-  var Meow_SetStream = function()
+  var Meow_SetStreams = function(Meow_InStream, Meow_OutStream, Meow_InSize, Meow_OutSize)
   {
-
-    // Still Coding Now... Will be updated! (^_^)
+    Meow_InStream = Meow_InStream;
+    Meow_PredictEnd = false;
+    Meow_PredictCreate();
+    Meow_SetOutStream(Meow_OutStream);
+    Meow_Init();
+    if(!Meow_FastPerfMode)
+    {
+      Meow_PredictDistValAutoFill();
+      Meow_PredictAlignValAutoFill();
+    }
+    Meow_EncodeLen.Meow_PredictSetTableSize(Meow_PredictNumFastBytes + 1 - Meow_Base.Meow_PredictMinMatchLen);
+    Meow_EncodeLen.Meow_UpdatePredictTables(1 << Meow_PredictPosBitsState);
+    Meow_EncodeLenMatchRep.Meow_PredictSetTableSize(Meow_PredictNumFastBytes + 1 - Meow_Base.Meow_PredictMinMatchLen);
+    Meow_EncodeLenMatchRep.Meow_UpdatePredictTables(1 << Meow_PredictPosBitsState);
+    Meow_PosNow64 = 0;
   }
+  var Meow_Code = function()
+  {
+    Meow_IncludeReleaseMFSStream = false;
+    try
+    {
+      Meow_SetStream(Meow_InStream, Meow_OutStream, Meow_InSize, Meow_OutSize);
+      while(true)
+      {
+        Meow_CodeBlock(Meow_InProcessedSize, Meow_OutProcessedSize, Meow_PredictEnd);
+        if(Meow_PredictEnd[0])
+        {
+          return;
+        }
+        if(Meow_Perf != null)
+        {
+          Meow_Perf.Meow_SetPerf(Meow_InProcessedSize[0], Meow_OutProcessedSize[0]);
+        }
+      }
+    }
+    finally
+    {
+      Meow_ReleaseStreams();
+    }
+  }
+
+  // Still Coding Now... Will be updated soon! (^_^)
 }
