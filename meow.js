@@ -1149,10 +1149,43 @@ function MeowJS()
         }
         else
         {
-
-          // Still coding now... Will be updated soon! (^_^)
+          Meow_Ranger.Meow_Encode(Meow_PredictRep, Meow_PredictState, 0);
+          Meow_PredictState = Meow_Base.Meow_UpdatePredictStateMatches(Meow_PredictState);
+          Meow_EncodeLen.Meow_Encode(Meow_Ranger, Meow_Len - Meow_PredictMinMatchLen, Meow_PredictPosStates);
+          Meow_PredictPos -= Meow_Base.Meow_PredictNumRepDist;
+          Meow_PredictSlotPos = Meow_FetchSlotPos(Meow_PredictPos);
+          Meow_PredictPosStatesLen = Meow_Base.Meow_GetPredictPosStatesLen(Meow_Len);
+          Meow_EncodeSlotPos[Meow_PredictPosStatesLen].Meow_Encode(Meow_Ranger, Meow_PredictSlotPos);
+          if(Meow_PredictSlotPos >= Meow_Base.Meow_PredictBeginPosModelIndex)
+          {
+            Meow_PredictBitsFooter = (int)((Meow_PredictSlotPos >> 1) - 1);
+            var Meow_BaseVal = ((2 | (Meow_PredictSlotPos & 1)) << Meow_PredictBitsFooter);
+            Meow_PredictPosReduced = Meow_PredictPos - Meow_BaseVal;
+            if(Meow_PredictSlotPos < Meow_Base.Meow_PredictFinishPosModelIndex)
+            {
+              Meow_EncodeBitTree.Meow_EncodeReverse(Meow_EncodePos, Meow_BaseVal - Meow_PredictSlotPos - 1, Meow_Ranger, Meow_PredictBitsFooter,Meow_PredictPosReduced);
+            }
+            else
+            {
+              Meow_Ranger.Meow_EncodeBitsDirect(Meow_PredictPosReduced >> Meow_Base.Meow_PredictAlignNumOfBits, Meow_PredictBitsFooter - Meow_Base.Meow_PredictAlignNumOfBits);
+              Meow_EncodeAlignPos.Meow_EncodeReverse(Meow_Ranger, Meow_PredictPosReduced & Meow_Base.Meow_PredictAlignMask);
+              Meow_PredictAlignValCount++;
+            }
+          }
+          Meow_PredictDist = Meow_PredictPos;
+          for(Meow_Def4 = Meow_Base.Meow_PredictNumRepDist - 1; Meow_Def4 >= 1; Meow_Def4--)
+          {
+            Meow_PredictRepDist[Meow_Def4] = Meow_PredictRepDist[Meow_Def4 - 1];
+            Meow_PredictRepDist[0] = Meow_PredictDist;
+            Meow_PredictMatchValCount++;
+          }
         }
+        Meow_PrevByte = Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_Len - 1 - Meow_PredictOffsetAdd);
       }
+      Meow_PredictOffsetAdd -= Meow_Len;
+      Meow_PosNow64 += Meow_Len;
+
+      // Still Coding Now... Will be updated! (^_^)
     }
   };
 }
