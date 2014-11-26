@@ -1373,6 +1373,20 @@ function MeowJS()
     }
     return true;
   };
-
-  // Still Coding Now... Will be updated soon! (^_^)
+  var Meow_SetNumLcbLpbPb = function(Meow_SetNumLcb, Meow_SetNumLpb, Meow_SetNumPb)
+  {
+    if((Meow_SetNumLpb < 0 || Meow_SetNumLpb > Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax) || (Meow_SetNumLcb < 0 || Meow_SetNumLcb > Meow_Base.Meow_PredictLitNumContextBits_Max) || (Meow_SetNumPb < 0 || Meow_SetNumPb > Meow_Base.Meow_PredictPosNumBitsStates_EncodeMax))
+    {
+      return false;
+    }
+    Meow_PredictLitPosStateBits = Meow_SetNumLpb;
+    Meow_PredictLitNumContextBits = Meow_SetNumLcb;
+    Meow_PredictPosBitsState = Meow_SetNumPb;
+    Meow_PredictPosStateMask = ((1) << Meow_PredictPosBitsState) - 1;
+    return true;
+  };
+  var Meow_PredictSetEndMarkMode = function(Meow_PredictEndMarkMode)
+  {
+    Meow_PredictWriteEndMark = Meow_PredictEndMarkMode;
+  };
 }
