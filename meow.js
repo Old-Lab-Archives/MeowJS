@@ -173,7 +173,7 @@ function MeowJS()
         {
           for(; Meow_Def4 >= 0; Meow_Def4--)
           {
-            var Meow_PredictMatchBit = (PredictMatchByte >> Meow_Def4) & 1;
+            var Meow_PredictMatchBit = (Meow_PredictMatchByte >> Meow_Def4) & 1;
             Meow_Bit = (Meow_Symbol >> Meow_Def4) & 1;
             Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal(Meow_mEncode[((1 + Meow_Bit) << 8) + Meow_Context], Meow_Bit);
             Meow_Context = (Meow_Context << 1) | Meow_Bit;
@@ -388,7 +388,7 @@ function MeowJS()
   var Meow_PredictEnd;
   var Meow_PredictMatchFindType0 = Meow_PredictMatchFindType2;
   Meow_PredictWriteEndMark = false;
-  var Meow_ReleaseMFSStream = false;
+  Meow_ReleaseMFSStream = false;
   function Meow_PredictCreate()
   {
     if(Meow_PredictMatchFind == null)
@@ -606,17 +606,17 @@ function MeowJS()
     }
     var Meow_CurrentByte = Meow_PredictMatchFind.Meow_FetchIndexByte(0 - 1);
     var Meow_PredictMatchByte = Meow_PredictMatchFind.Meow_FetchIndexByte(0 - Meow_PredictRepDist[0] - 1 - 1);
-    if(Meow_LenMain < 2 && Meow_CurrentByte != PredictMatchByte && Meow_RepsLen[Meow_RepIndex_Max] < 2)
+    if(Meow_LenMain < 2 && Meow_CurrentByte != Meow_PredictMatchByte && Meow_RepsLen[Meow_RepIndex_Max] < 2)
     {
       Meow_BackRes = -1;
       return 1;
     }
     Meow_Optimum[0].Meow_PredictState = Meow_PredictState;
     Meow_PredictPosStates = (Meow_PredictPos & Meow_PredictPosStateMask);
-    Meow_Optimum[1].Meow_PredictVal = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos, Meow_PrevByte).Meow_PredictVal(!Meow_Base.Meow_PredictStateIsChar(Meow_PredictState), PredictMatchByte, Meow_CurrentByte);
+    Meow_Optimum[1].Meow_PredictVal = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal0(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]) + Meow_LitEncode.Meow_PredictSubCoder(Meow_PredictPos, Meow_PrevByte).Meow_PredictVal(!Meow_Base.Meow_PredictStateIsChar(Meow_PredictState), Meow_PredictMatchByte, Meow_CurrentByte);
     Meow_Optimum[1].Meow_ConvertToChar();
     var Meow_PredictMatchVal = Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal1(Meow_PredictMatch[(Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates]);
-    if(PredictMatchByte == Meow_CurrentByte)
+    if(Meow_PredictMatchByte == Meow_CurrentByte)
     {
       Meow_ShortRepVal = Meow_MatchRepVal + Meow_FetchRepLenVal(Meow_PredictState, Meow_PredictPosStates);
       if(Meow_ShortRepVal < Meow_Optimum[1].Meow_PredictVal)
@@ -1056,7 +1056,7 @@ function MeowJS()
     {
       if(Meow_PredictMatchFind.Meow_FetchNumAvailBytes() === 0)
       {
-        Meow_Flush((int) [Meow_PosNow64]);
+        Meow_Flush((int)[Meow_PosNow64]);
         return;
       }
       Meow_ReadPredictedMatchDist();
@@ -1069,7 +1069,324 @@ function MeowJS()
       Meow_PredictOffsetAdd--;
       Meow_PosNow64++;
     }
-
-    // Still coding now... Will be updated soon! (^_^)
+    if(Meow_PredictMatchFind.Meow_FetchNumAvailBytes() === 0)
+    {
+      Meow_Flush((int)[Meow_PosNow64]);
+      return;
+    }
+    while(true)
+    {
+      Meow_Len = Meow_FetchOptimum((int)[Meow_PosNow64]);
+      Meow_PredictPos = Meow_BackRes;
+      Meow_PredictPosStates = ((int)[Meow_PosNow64]) & Meow_PredictPosStateMask;
+      var Meow_PredictComplexState = (Meow_PredictState << Meow_Base.Meow_PredictPosNumBitsStates_Max) + Meow_PredictPosStates;
+      if(Meow_Len == 1 && Meow_PredictPos == -1)
+      {
+        Meow_Ranger.Meow_Encode(Meow_PredictMatch, Meow_PredictComplexState, 0);
+        byte [Meow_CurByte] = Meow_PredictMatchByte.Meow_FetchIndexByte((int)(0 - Meow_PredictOffsetAdd));
+        Meow_LitEncode.Meow_Encode2 [Meow_PredictSubCoder] = Meow_LitEncode.Meow_FetchSubCoder((int)[Meow_PosNow64], Meow_PrevByte);
+        if(!Meow_Base.Meow_PredictStateIsChar(Meow_PredictState))
+        {
+          byte [Meow_PredictMatchByte] = Meow_PredictMatchFind.Meow_FetchIndexByte((int)(0 - Meow_PredictRepDist[0] - 1 - Meow_PredictOffsetAdd));
+          Meow_PredictSubCoder.Meow_EncodedMatches(Meow_Ranger, Meow_PredictMatchByte, Meow_CurByte);
+        }
+        else
+        {
+          Meow_PredictSubCoder.Meow_Encode(Meow_Ranger, Meow_CurByte);
+          Meow_PrevByte = Meow_CurByte;
+          Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesChar(Meow_PredictState);
+        }
+      }
+      else
+      {
+        Meow_Ranger.Meow_Encode(Meow_PredictMatch, Meow_PredictComplexState, 1);
+        if(Meow_PredictPos < Meow_Base.Meow_PredictNumRepDist)
+        {
+          Meow_Ranger.Meow_Encode(Meow_PredictRep, Meow_PredictState, 1);
+          if(Meow_PredictPos === 0)
+          {
+            Meow_Ranger.Meow_Encode(Meow_PredictRep0, Meow_PredictState, 0);
+            if(Meow_Len == 1)
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRepLong, Meow_PredictComplexState, 0);
+            }
+            else
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRepLong, Meow_PredictComplexState, 1);
+            }
+          }
+          else
+          {
+            Meow_Ranger.Meow_Encode(Meow_PredictRep0, Meow_PredictState, 1);
+            if(Meow_PredictPos == 1)
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRep1, Meow_PredictState, 0);
+            }
+            else
+            {
+              Meow_Ranger.Meow_Encode(Meow_PredictRep1, Meow_PredictState, 1);
+              Meow_Ranger.Meow_Encode(Meow_PredictRep2, Meow_PredictState, Meow_PredictPos - 2);
+            }
+          }
+          if(Meow_Len == 1)
+          {
+            Meow_PredictState = Meow_UpdatePredictStatesShortRep(Meow_PredictState);
+          }
+          else
+          {
+            Meow_EncodeLenMatchRep.Meow_Encode(Meow_Ranger, Meow_Len - Meow_Base.Meow_PredictMinMatchLen, Meow_PredictPosStates);
+            Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
+          }
+          Meow_PredictDist = Meow_PredictRepDist[Meow_PredictPos];
+          if(Meow_PredictPos !== 0)
+          {
+            for(Meow_Def4 = Meow_PredictPos; Meow_Def4 >= 1; Meow_Def4++)
+            {
+              Meow_PredictRepDist[Meow_Def4] = Meow_PredictRepDist[Meow_Def4 - 1];
+              Meow_PredictRepDist[0] = Meow_PredictDist;
+            }
+          }
+        }
+        else
+        {
+          Meow_Ranger.Meow_Encode(Meow_PredictRep, Meow_PredictState, 0);
+          Meow_PredictState = Meow_Base.Meow_UpdatePredictStateMatches(Meow_PredictState);
+          Meow_EncodeLen.Meow_Encode(Meow_Ranger, Meow_Len - Meow_PredictMinMatchLen, Meow_PredictPosStates);
+          Meow_PredictPos -= Meow_Base.Meow_PredictNumRepDist;
+          Meow_PredictSlotPos = Meow_FetchSlotPos(Meow_PredictPos);
+          Meow_PredictPosStatesLen = Meow_Base.Meow_GetPredictPosStatesLen(Meow_Len);
+          Meow_EncodeSlotPos[Meow_PredictPosStatesLen].Meow_Encode(Meow_Ranger, Meow_PredictSlotPos);
+          if(Meow_PredictSlotPos >= Meow_Base.Meow_PredictBeginPosModelIndex)
+          {
+            Meow_PredictBitsFooter = (int)((Meow_PredictSlotPos >> 1) - 1);
+            var Meow_BaseVal = ((2 | (Meow_PredictSlotPos & 1)) << Meow_PredictBitsFooter);
+            Meow_PredictPosReduced = Meow_PredictPos - Meow_BaseVal;
+            if(Meow_PredictSlotPos < Meow_Base.Meow_PredictFinishPosModelIndex)
+            {
+              Meow_EncodeBitTree.Meow_EncodeReverse(Meow_EncodePos, Meow_BaseVal - Meow_PredictSlotPos - 1, Meow_Ranger, Meow_PredictBitsFooter,Meow_PredictPosReduced);
+            }
+            else
+            {
+              Meow_Ranger.Meow_EncodeBitsDirect(Meow_PredictPosReduced >> Meow_Base.Meow_PredictAlignNumOfBits, Meow_PredictBitsFooter - Meow_Base.Meow_PredictAlignNumOfBits);
+              Meow_EncodeAlignPos.Meow_EncodeReverse(Meow_Ranger, Meow_PredictPosReduced & Meow_Base.Meow_PredictAlignMask);
+              Meow_PredictAlignValCount++;
+            }
+          }
+          Meow_PredictDist = Meow_PredictPos;
+          for(Meow_Def4 = Meow_Base.Meow_PredictNumRepDist - 1; Meow_Def4 >= 1; Meow_Def4--)
+          {
+            Meow_PredictRepDist[Meow_Def4] = Meow_PredictRepDist[Meow_Def4 - 1];
+            Meow_PredictRepDist[0] = Meow_PredictDist;
+            Meow_PredictMatchValCount++;
+          }
+        }
+        Meow_PrevByte = Meow_PredictMatchFind.Meow_FetchIndexByte(Meow_Len - 1 - Meow_PredictOffsetAdd);
+      }
+      Meow_PredictOffsetAdd -= Meow_Len;
+      Meow_PosNow64 += Meow_Len;
+      if(Meow_PredictOffsetAdd === 0)
+      {
+        if(Meow_PredictMatchValCount >= (1 << 7))
+        {
+          Meow_PredictDistValAutoFill();
+        }
+        if(Meow_PredictAlignValCount >= Meow_Base.Meow_PredictAlignTableSize)
+        {
+          Meow_PredictAlignValAutoFill();
+        }
+        Meow_InSize[0] = Meow_PosNow64;
+        Meow_OutSize[0] = Meow_Ranger.FetchProcessedSize();
+        if(Meow_PredictMatchFind.Meow_FetchNumAvailBytes() === 0)
+        {
+          Meow_Flush((int)[Meow_PosNow64]);
+          return;
+        }
+        if(Meow_PosNow64 - Meow_PredictPrevPosValPerf >= (1 << 12))
+        {
+          Meow_PredictEnd = false;
+          Meow_PredictEnd[0] = false;
+          return;
+        }
+      }
+    }
+  };
+  function Meow_ReleaseMFSStream()
+  {
+    if(Meow_PredictMatchFind != null && Meow_IncludeReleaseMFSStream)
+    {
+      Meow_PredictMatchFind.Meow_ReleaseMFSStream();
+      Meow_IncludeReleaseMFSStream = false;
+    }
+  }
+  var Meow_SetOutStream = function()
+  {
+    Meow_Ranger.Meow_SetStream(Meow_OutStream);
+  };
+  var Meow_ReleaseOutStream = function()
+  {
+    Meow_Ranger.Meow_ReleaseStream();
+  };
+  function Meow_ReleaseStreams()
+  {
+    Meow_ReleaseMFSStream();
+    Meow_ReleaseOutStream();
+  }
+  var Meow_SetStreams = function(Meow_InStream, Meow_OutStream, Meow_InSize, Meow_OutSize)
+  {
+    Meow_InStream = Meow_InStream;
+    Meow_PredictEnd = false;
+    Meow_PredictCreate();
+    Meow_SetOutStream(Meow_OutStream);
+    Meow_Init();
+    if(!Meow_FastPerfMode)
+    {
+      Meow_PredictDistValAutoFill();
+      Meow_PredictAlignValAutoFill();
+    }
+    Meow_EncodeLen.Meow_PredictSetTableSize(Meow_PredictNumFastBytes + 1 - Meow_Base.Meow_PredictMinMatchLen);
+    Meow_EncodeLen.Meow_UpdatePredictTables(1 << Meow_PredictPosBitsState);
+    Meow_EncodeLenMatchRep.Meow_PredictSetTableSize(Meow_PredictNumFastBytes + 1 - Meow_Base.Meow_PredictMinMatchLen);
+    Meow_EncodeLenMatchRep.Meow_UpdatePredictTables(1 << Meow_PredictPosBitsState);
+    Meow_PosNow64 = 0;
+  };
+  var Meow_Code = function()
+  {
+    Meow_IncludeReleaseMFSStream = false;
+    try
+    {
+      Meow_SetStream(Meow_InStream, Meow_OutStream, Meow_InSize, Meow_OutSize);
+      while(true)
+      {
+        Meow_CodeBlock(Meow_InProcessedSize, Meow_OutProcessedSize, Meow_PredictEnd);
+        if(Meow_PredictEnd[0])
+        {
+          return;
+        }
+        if(Meow_Perf != null)
+        {
+          Meow_Perf.Meow_SetPerf(Meow_InProcessedSize[0], Meow_OutProcessedSize[0]);
+        }
+      }
+    }
+    finally
+    {
+      Meow_ReleaseStreams();
+    }
+  };
+  var Meow_PropSize = 5;
+  byte[Meow_Prop] = new Meow_Byte(Meow_PropSize);
+  var MeowCodeWriteProp = function(Meow_OutStream)
+  {
+    Meow_Prop[0] = (byte)((Meow_PredictPosBitsState * 5 + Meow_PredictLitPosStateBits) * 9 + Meow_PredictLitNumContextBits);
+    for(Meow_Def4 = 0; Meow_Def4 < 4; Meow_Def4++)
+    {
+      Meow_Prop[1 + Meow_Def4] = (byte)(Meow_PredictDictSize >> (8 * Meow_Def4));
+      Meow_OutStream.Meow_Write(Meow_Prop, 0, Meow_PropSize);
+    }
+  };
+  int [Meow_TempVal] = new int(Meow_Base.Meow_PredictOverallDist);
+  Meow_PredictMatchValCount++;
+  function Meow_PredictDistValAutoFill()
+  {
+    for(Meow_Def4 = Meow_Base.Meow_PredictBeginPosModelIndex; Meow_Def4 < Meow_PredictOverallDist; Meow_Def4++)
+    {
+      Meow_PredictSlotPos = Meow_FetchSlotPos(Meow_Def4);
+      Meow_PredictBitsFooter = (int)[(Meow_PredictSlotPos >> 1) - 1];
+      Meow_BaseVal = ((2 | (Meow_PredictSlotPos & 1)) << Meow_PredictBitsFooter);
+      Meow_TempVal[Meow_Def4] = Meow_EncodeBitTree.Meow_FetchValReverse(Meow_EncodePos, Meow_BaseVal - Meow_PredictSlotPos - 1, Meow_PredictBitsFooter, Meow_Def4 - Meow_BaseVal);
+    }
+    for(Meow_PredictPosStatesLen = 0; Meow_PredictPosStatesLen < Meow_Base.Meow_PredictPosNumStatesLen; Meow_PredictPosStatesLen++)
+    {
+      Meow_EncodeBitTree [Meow_Encode] = Meow_EncodeSlotPos[Meow_PredictPosStatesLen];
+      Meow_st = (Meow_PredictPosStatesLen << Meow_Base.Meow_PredictNumPosSlotBits);
+      for(Meow_PredictSlotPos = 0; Meow_PredictSlotPos < Meow_PredictTableSizeDist; Meow_PredictSlotPos++)
+      {
+        Meow_PredictSlotPosVal[Meow_st + Meow_PredictSlotPos] = Meow_Encode.Meow_PredictVal(Meow_PredictSlotPos);
+      }
+      for(Meow_PredictSlotPos = Meow_Base.Meow_PredictFinishPosModelIndex; Meow_PredictSlotPos < Meow_PredictTableSizeDist; Meow_PredictSlotPos++)
+      {
+        Meow_PredictSlotPosVal[Meow_st + Meow_PredictSlotPos] += ((((Meow_PredictSlotPos >> 1) - 1) - Meow_Base.Meow_PredictAlignNumOfBits) << Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictShiftNumBitsVal);
+      }
+      Meow_st2 = Meow_PredictPosStatesLen * Meow_Base.Meow_PredictOverallDist;
+      for(Meow_Def4 = 0; Meow_Def4 < Meow_PredictBeginPosModelIndex; Meow_Def4++)
+      {
+        Meow_PredictDistVal[Meow_st2 + Meow_Def4] = Meow_PredictSlotPosVal[Meow_st + Meow_Def4];
+      }
+      for(; Meow_Def4 < Meow_Base.Meow_PredictOverallDist; Meow_Def4++)
+      {
+        Meow_PredictDistVal[Meow_st2 + Meow_Def4] = Meow_PredictSlotPosVal[Meow_st + Meow_FetchSlotPos(Meow_Def4)] + Meow_TempVal[Meow_Def4];
+      }
+    }
+    Meow_PredictMatchValCount = 0;
+  }
+  function Meow_PredictAlignValAutoFill()
+  {
+    for(Meow_Def4 = 0; Meow_Def4 < Meow_Base.Meow_PredictAlignTableSize; Meow_Def4++)
+    {
+      Meow_PredictAlignVal[Meow_Def4] = Meow_EncodeAlignPos.Meow_FetchValReverse(Meow_Def4);
+      Meow_PredictAlignValCount = 0;
+    }
+  }
+  var Meow_SetAlgm = function(Meow_Algm)
+  {
+    Meow_FastPerfMode = (Meow_Algm === 0);
+    Meow_MaxPerfMode = (Meow_Algm >= 2);
+    return true;
+  };
+  var Meow_SetDictSize = function(Meow_PredictDictSize)
+  {
+    var Meow_DictLogSizeCompress_Max = 29;
+    if(Meow_PredictDictSize < (1 << Meow_Base.Meow_PredictMinLogSize) || Meow_PredictDictSize > (1 << Meow_DictLogSizeCompress_Max))
+    {
+      return false;
+    }
+    Meow_PredictDictSize = Meow_PredictDictSize;
+    for(Meow_DictLogSize = 0; Meow_PredictDictSize > (1 << Meow_DictLogSize); Meow_DictLogSize++)
+    {
+      Meow_PredictTableSizeDist = Meow_DictLogSize * 2;
+      return true;
+    }
+  };
+  var Meow_PredictSetNumFastBytes = function(Meow_PredictNumFastBytes)
+  {
+    if(Meow_PredictNumFastBytes < 5 || Meow_PredictNumFastBytes > Meow_Base.Meow_PredictMaxMatchLen)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  };
+  var Meow_PredictSetMatchFind = function(Meow_PredictMatchFindIndex)
+  {
+    if(Meow_PredictMatchFindIndex < 0 || Meow_PredictMatchFindIndex > 2)
+    {
+      return false;
+    }
+    var Meow_PredictMatchFindIndexPrev = Meow_PredictMatchFindType;
+    Meow_PredictMatchFindType = Meow_PredictMatchFindIndex;
+    if(Meow_PredictMatchFind != null && Meow_PredictMatchFindIndexPrev != Meow_PredictMatchFindType)
+    {
+      Meow_PredictDictSizePrev = -1;
+      Meow_PredictMatchFind = null;
+    }
+    return true;
+  };
+  var Meow_SetNumLcbLpbPb = function(Meow_SetNumLcb, Meow_SetNumLpb, Meow_SetNumPb)
+  {
+    if((Meow_SetNumLpb < 0 || Meow_SetNumLpb > Meow_Base.Meow_PredictLitPosNumBitsStates_EncodeMax) || (Meow_SetNumLcb < 0 || Meow_SetNumLcb > Meow_Base.Meow_PredictLitNumContextBits_Max) || (Meow_SetNumPb < 0 || Meow_SetNumPb > Meow_Base.Meow_PredictPosNumBitsStates_EncodeMax))
+    {
+      return false;
+    }
+    Meow_PredictLitPosStateBits = Meow_SetNumLpb;
+    Meow_PredictLitNumContextBits = Meow_SetNumLcb;
+    Meow_PredictPosBitsState = Meow_SetNumPb;
+    Meow_PredictPosStateMask = ((1) << Meow_PredictPosBitsState) - 1;
+    return true;
+  };
+  var Meow_PredictSetEndMarkMode = function(Meow_PredictEndMarkMode)
+  {
+    Meow_PredictWriteEndMark = Meow_PredictEndMarkMode;
   };
 }
