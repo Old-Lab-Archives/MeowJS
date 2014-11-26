@@ -1284,7 +1284,7 @@ function MeowJS()
       Meow_OutStream.Meow_Write(Meow_Prop, 0, Meow_PropSize);
     }
   };
-  int [Meow_TempVal] = new int[Meow_Base.Meow_PredictOverallDist];
+  int [Meow_TempVal] = new int(Meow_Base.Meow_PredictOverallDist);
   Meow_PredictMatchValCount++;
   function Meow_PredictDistValAutoFill()
   {
@@ -1329,10 +1329,10 @@ function MeowJS()
   }
   var Meow_SetAlgm = function(Meow_Algm)
   {
-    Meow_FastPerfMode = (Meow_Algm == 0);
+    Meow_FastPerfMode = (Meow_Algm === 0);
     Meow_MaxPerfMode = (Meow_Algm >= 2);
     return true;
-  }
+  };
   var Meow_SetDictSize = function(Meow_PredictDictSize)
   {
     var Meow_DictLogSizeCompress_Max = 29;
@@ -1341,7 +1341,38 @@ function MeowJS()
       return false;
     }
     Meow_PredictDictSize = Meow_PredictDictSize;
+    for(Meow_DictLogSize = 0; Meow_PredictDictSize > (1 << Meow_DictLogSize); Meow_DictLogSize++)
+    {
+      Meow_PredictTableSizeDist = Meow_DictLogSize * 2;
+      return true;
+    }
+  };
+  var Meow_PredictSetNumFastBytes = function(Meow_PredictNumFastBytes)
+  {
+    if(Meow_PredictNumFastBytes < 5 || Meow_PredictNumFastBytes > Meow_Base.Meow_PredictMaxMatchLen)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  };
+  var Meow_PredictSetMatchFind = function(Meow_PredictMatchFindIndex)
+  {
+    if(Meow_PredictMatchFindIndex < 0 || Meow_PredictMatchFindIndex > 2)
+    {
+      return false;
+    }
+    var Meow_PredictMatchFindIndexPrev = Meow_PredictMatchFindType;
+    Meow_PredictMatchFindType = Meow_PredictMatchFindIndex;
+    if(Meow_PredictMatchFind != null && Meow_PredictMatchFindIndexPrev != Meow_PredictMatchFindType)
+    {
+      Meow_PredictDictSizePrev = -1;
+      Meow_PredictMatchFind = null;
+    }
+    return true;
+  };
 
-    // Still Coding Now... Will be updated soon! (^_^)
-  }
+  // Still Coding Now... Will be updated soon! (^_^)
 }
