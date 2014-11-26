@@ -1103,7 +1103,7 @@ function MeowJS()
         if(Meow_PredictPos < Meow_Base.Meow_PredictNumRepDist)
         {
           Meow_Ranger.Meow_Encode(Meow_PredictRep, Meow_PredictState, 1);
-          if(Meow_PredictPos == 0)
+          if(Meow_PredictPos === 0)
           {
             Meow_Ranger.Meow_Encode(Meow_PredictRep0, Meow_PredictState, 0);
             if(Meow_Len == 1)
@@ -1138,7 +1138,7 @@ function MeowJS()
             Meow_PredictState = Meow_Base.Meow_UpdatePredictStatesRep(Meow_PredictState);
           }
           Meow_PredictDist = Meow_PredictRepDist[Meow_PredictPos];
-          if(Meow_PredictPos != 0)
+          if(Meow_PredictPos !== 0)
           {
             for(Meow_Def4 = Meow_PredictPos; Meow_Def4 >= 1; Meow_Def4++)
             {
@@ -1184,8 +1184,32 @@ function MeowJS()
       }
       Meow_PredictOffsetAdd -= Meow_Len;
       Meow_PosNow64 += Meow_Len;
-
-      // Still Coding Now... Will be updated! (^_^)
+      if(Meow_PredictOffsetAdd === 0)
+      {
+        if(Meow_PredictMatchValCount >= (1 << 7))
+        {
+          Meow_PredictDistValAutoFill();
+        }
+        if(Meow_PredictAlignValCount >= Meow_Base.Meow_PredictAlignTableSize)
+        {
+          Meow_PredictAlignValAutoFill();
+        }
+        Meow_InSize[0] = Meow_PosNow64;
+        Meow_OutSize[0] = Meow_Ranger.FetchProcessedSize();
+        if(Meow_PredictMatchFind.Meow_FetchNumAvailBytes() === 0)
+        {
+          Meow_Flush((int)[Meow_PosNow64]);
+          return;
+        }
+        if(Meow_PosNow64 - Meow_PredictPrevPosValPerf >= (1 << 12))
+        {
+          Meow_PredictEnd = false;
+          Meow_PredictEnd[0] = false;
+          return;
+        }
+      }
     }
   };
+
+  // Still Coding Now... Will be updated! (^_^)
 }
