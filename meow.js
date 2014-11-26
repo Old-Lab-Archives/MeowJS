@@ -388,7 +388,7 @@ function MeowJS()
   var Meow_PredictEnd;
   var Meow_PredictMatchFindType0 = Meow_PredictMatchFindType2;
   Meow_PredictWriteEndMark = false;
-  var Meow_ReleaseMFSStream = false;
+  Meow_ReleaseMFSStream = false;
   function Meow_PredictCreate()
   {
     if(Meow_PredictMatchFind == null)
@@ -1221,11 +1221,11 @@ function MeowJS()
   var Meow_SetOutStream = function()
   {
     Meow_Ranger.Meow_SetStream(Meow_OutStream);
-  }
+  };
   var Meow_ReleaseOutStream = function()
   {
     Meow_Ranger.Meow_ReleaseStream();
-  }
+  };
   function Meow_ReleaseStreams()
   {
     Meow_ReleaseMFSStream();
@@ -1248,7 +1248,7 @@ function MeowJS()
     Meow_EncodeLenMatchRep.Meow_PredictSetTableSize(Meow_PredictNumFastBytes + 1 - Meow_Base.Meow_PredictMinMatchLen);
     Meow_EncodeLenMatchRep.Meow_UpdatePredictTables(1 << Meow_PredictPosBitsState);
     Meow_PosNow64 = 0;
-  }
+  };
   var Meow_Code = function()
   {
     Meow_IncludeReleaseMFSStream = false;
@@ -1272,7 +1272,18 @@ function MeowJS()
     {
       Meow_ReleaseStreams();
     }
-  }
+  };
+  var Meow_PropSize = 5;
+  byte[Meow_Prop] = new Meow_Byte(Meow_PropSize);
+  var MeowCodeWriteProp = function(Meow_OutStream)
+  {
+    Meow_Prop[0] = (byte)((Meow_PredictPosBitsState * 5 + Meow_PredictLitPosStateBits) * 9 + Meow_PredictLitNumContextBits);
+    for(Meow_Def4 = 0; Meow_Def4 < 4; Meow_Def4++)
+    {
+      Meow_Prop[1 + Meow_Def4] = (byte)(Meow_PredictDictSize >> (8 * Meow_Def4));
+      Meow_OutStream.Meow_Write(Meow_Prop, 0, Meow_PropSize);
+    }
+  };
 
-  // Still Coding Now... Will be updated soon! (^_^)
+   // Still Coding Now... Will be updated soon! (^_^)
 }
