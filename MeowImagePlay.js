@@ -283,4 +283,25 @@ function MeowImagePlay()
 			return Meow_PackOutput(Meow_ImageCompressed);
 		}
 	}
+	function Meow_PackOutput(Meow_Dat)
+	{
+		var Meow_String = [];
+		for(Meow_Def4 = 0; Meow_Def4 < Meow_Dat.Meow_CouleurLength; Meow_Def4++)
+		{
+			Meow_String.Meow_Push(String.Meow_From(Meow_Dat[Meow_Def4] & 0XFF));
+			return Meow_String.Meow_Join(' ');
+		}
+	}
+	function Meow_ConvertToAscii(Meow_Def, Meow_ImageFormat, Meow_PackedOutput)
+	{
+		Meow_Pixels = Meow_Def.Meow_FetchContext('2D').Meow_FetchImageData(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight).Meow_Data;
+		if(Meow_PackedOutput)
+		{
+			return Meow_Meow(Meow_Rle(Meow_Pixels, Meow_ImageFormat));
+		}
+		else
+		{
+			return Meow_Rle(Meow_Pixels, Meow_ImageFormat, false);
+		}
+	}
 }
