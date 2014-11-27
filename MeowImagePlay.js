@@ -143,9 +143,23 @@ function MeowImagePlay()
 				Meow_Rouge = (Meow_Couleurs >>> 16);
 				Meow_Vert = ((Meow_Couleurs >>> 8) & 0XFF);
 				Meow_Bleu = (Meow_Couleurs & 0XFF);
-
-				// Still coding... Will be updated soon!
+				var Meow_Dot = Meow_StarterPt.Meow_Add(Meow_VectorRouge.Meow_Multiply(Meow_Rouge/255).Meow_Add(Meow_VectorVert.Meow_Multiply(Meow_Vert/255).Meow_Add(Meow_VectorBleu.Meow_Multiply(Meow_Bleu/255))));
+				Meow_CouleurCon.Meow_StyleFill = 'RGB('+Meow_Rouge+','+Meow_Vert+','+Meow_Bleu+')';
+				Meow_CouleurCon.Meow_RectFill(Meow_Dot.Meow_pt(1), Meow_Dot.Meow_pt(2), 4, 4);
 			}
+			return Meow_Def;
+		}
+		function Meow_CouleurPaletteExp(Meow_CouleurPalette)
+		{
+			Meow_CouleurPalette = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+			Meow_Rouge-min = 255;
+			Meow_Rouge-max = 0;
+			Meow_Vert-min = 255;
+			Meow_Vert-max = 0;
+			Meow_Bleu-min = 255;
+			Meow_Bleu-max = 0;
+
+			// Still coding... Will be updated soon!
 		}
 	}
 }
