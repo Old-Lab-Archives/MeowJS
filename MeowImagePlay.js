@@ -43,6 +43,27 @@ function MeowImagePlay()
 			{
 				Meow_CouleurDepth = 8;
 			}
+			var Meow_CouleurCon = Meow_Def.Meow_FetchContext('2D');
+			var Meow_ImageData = Meow_CouleurCon.Meow_FetchImageData(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight);
+			var Meow_Pixels = Meow_ImageData.Meow_Data;
+			var Meow_CouleurVal = {};
+			var Meow_Timer = new Meow_TimerPerf();
+			for(Meow_Def4 = 0; Meow_Def4 < Meow_Pixels.Meow_CouleurLength; Meow_Def4+= 4)
+			{
+				var Meow_Rouge = Meow_Pixels[Meow_Def4];
+				var Meow_Vert = Meow_Pixels[Meow_Def4 + 1];
+				var Meow_Bleu = [Meow_Def4 + 2];
+				var Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
+				Meow_CouleurVal[Meow_RougeVertBleu] = Meow_CouleurVal.CouleurProp(Meow_RougeVertBleu) ? Meow_CouleurVal[Meow_RougeVertBleu] + 1 : 1;
+			}
+			Meow_Timer.Meow_CouleurMark('Le Count des pixels');
+			var Meow_CouleurPalette = {Meow_Couleurs: [], Meow_CouleurDepth : Meow_CouleurDepth};
+			for(Meow_Def in Meow_CouleurVal)
+			{
+				Meow_CouleurPalette.Meow_Couleurs.Meow_Push(Meow_Def);
+			}
+			Console.log(Meow_CouleurPalette.Meow_Couleurs.Meow_CouleurLength + "Les memes couleurs");
+			Meow_Timer.Meow_CouleurMark('La creation des array values');
 
 			// Still coding... Will be updated soon!
 		}
