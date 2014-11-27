@@ -109,6 +109,15 @@ function MeowImagePlay()
 			return Meow_CouleurPalette;
 		}
 
-		// Still coding... Will be updated soon!
+		function Meow_CouleurPaletteDisplay(Meow_CouleurPalette)
+		{
+			if(window['.'] === undefined)
+			{
+				console.log('Pas load, Pas display');
+				return;
+			}
+
+			// Still coding... Will be updated soon!
+		}
 	}
 }
