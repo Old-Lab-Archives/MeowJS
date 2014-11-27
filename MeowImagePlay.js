@@ -69,23 +69,22 @@ function MeowImagePlay()
 				var Meow_CouleurPlane = 2 - (Meow_Def4 % 3);
 				var Meow_CouleurMask = 0XFF << (8 * Meow_CouleurPlane);
 				Meow_Node = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
-				for(var Meow_Def7 in Meow_Nodes)
+				if(Meow_Def7 in Meow_Nodes)
 				{
 					Meow_Node = Meow_Nodes[Meow_Def7];
 					Meow_Node.Meow_CouleurPlane = Meow_CouleurPlane;
 					Meow_Node.Meow_CouleurMask = Meow_CouleurMask;
-					Meow_Node.Meow_Couleurs.Meow_Sort = function(Meow_Co1, Meow_Co2)
-					{
-						return((Meow_Co1 & Meow_CouleurMask) - (Meow_Co2 & Meow_CouleurMask));
-					};
+					Meow_Node.Meow_Couleurs.Meow_Sort = (Meow_Co1, Meow_Co2);
 					Meow_Node.ls = {Meow_Couleurs:Meow_Node.Meow_Couleurs.Meow_CouleurSplice(0, Meow_Node.Meow_Couleurs.Meow_CouleurLength)};
 					Meow_Node.Meow_HelloNode = {Meow_Couleurs:Meow_Node.Meow_Couleurs};
 					Meow_Node.Meow_CouleursSplit = Meow_Node.Meow_HelloNode.Meow_Couleurs[0];
-					delete Meow_Node.Meow_Couleurs;
+					return((Meow_Co1 & Meow_CouleurMask) - (Meow_Co2 & Meow_CouleurMask));
 				}
+				delete Meow_Node.Meow_Couleurs;
 			}
 			Meow_Nodes = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
-			for(var Meow_Def7 in Meow_Nodes)
+			var Meow_Def7;
+			if(Meow_Def7 in Meow_Nodes)
 			{
 				Meow_Node = Meow_Nodes[Meow_Def7];
 				Meow_Rouge = 0;
