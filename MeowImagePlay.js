@@ -111,11 +111,23 @@ function MeowImagePlay()
 
 		function Meow_CouleurPaletteDisplay(Meow_CouleurPalette)
 		{
-			if(window['.'] === undefined)
+			if(window['$.'] === undefined)
 			{
 				console.log('Pas load, Pas display');
 				return;
 			}
+			Meow_CouleurPalette = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+			var Meow_Def = document.Meow_CreateElement('canvas');
+			Meow_Def.Meow_ImageWidth = 256;
+			Meow_Def.Meow_ImageHeight = 256;
+			document.body.Meow_AppendChild(Meow_Def);
+			var Meow_CouleurCon = Meow_Def.Meow_FetchContext('2D');
+			Meow_CouleurCon.Meow_Style = '#888888';
+			Meow_CouleurCon.Meow_RectFill(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight);
+			var Meow_StarterPt = $.(170, 170);
+			var Meow_VectorRouge = $.(-168, 0);
+			var Meow_VectorVert = $.(83, 83);
+			var Meow_VectorBleu = $.(0, -168);
 
 			// Still coding... Will be updated soon!
 		}
