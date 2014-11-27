@@ -50,10 +50,10 @@ function MeowImagePlay()
 			var Meow_Timer = new Meow_TimerPerf();
 			for(Meow_Def4 = 0; Meow_Def4 < Meow_Pixels.Meow_CouleurLength; Meow_Def4+= 4)
 			{
-				var Meow_Rouge = Meow_Pixels[Meow_Def4];
-				var Meow_Vert = Meow_Pixels[Meow_Def4 + 1];
-				var Meow_Bleu = [Meow_Def4 + 2];
-				var Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
+				Meow_Rouge = Meow_Pixels[Meow_Def4];
+				Meow_Vert = Meow_Pixels[Meow_Def4 + 1];
+				Meow_Bleu = [Meow_Def4 + 2];
+				Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
 				Meow_CouleurVal[Meow_RougeVertBleu] = Meow_CouleurVal.CouleurProp(Meow_RougeVertBleu) ? Meow_CouleurVal[Meow_RougeVertBleu] + 1 : 1;
 			}
 			Meow_Timer.Meow_CouleurMark('Le Count des pixels');
@@ -64,8 +64,51 @@ function MeowImagePlay()
 			}
 			Console.log(Meow_CouleurPalette.Meow_Couleurs.Meow_CouleurLength + "Les memes couleurs");
 			Meow_Timer.Meow_CouleurMark('La creation des array values');
-
-			// Still coding... Will be updated soon!
+			for(Meow_Def4 = 0; Meow_Def4 < Meow_CouleurDepth; Meow_Def4++)
+			{
+				var Meow_CouleurPlane = 2 - (Meow_Def4 % 3);
+				var Meow_CouleurMask = 0XFF << (8 * Meow_CouleurPlane);
+				Meow_Node = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+				for(var Meow_Def7 in Meow_Nodes)
+				{
+					Meow_Node = Meow_Nodes[Meow_Def7];
+					Meow_Node.Meow_CouleurPlane = Meow_CouleurPlane;
+					Meow_Node.Meow_CouleurMask = Meow_CouleurMask;
+					Meow_Node.Meow_Couleurs.Meow_Sort = function(Meow_Co1, Meow_Co2)
+					{
+						return((Meow_Co1 & Meow_CouleurMask) - (Meow_Co2 & Meow_CouleurMask));
+					};
+					Meow_Node.ls = {Meow_Couleurs:Meow_Node.Meow_Couleurs.Meow_CouleurSplice(0, Meow_Node.Meow_Couleurs.Meow_CouleurLength)};
+					Meow_Node.Meow_HelloNode = {Meow_Couleurs:Meow_Node.Meow_Couleurs};
+					Meow_Node.Meow_CouleursSplit = Meow_Node.Meow_HelloNode.Meow_Couleurs[0];
+					delete Meow_Node.Meow_Couleurs;
+				}
+			}
+			Meow_Nodes = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+			for(var Meow_Def7 in Meow_Nodes)
+			{
+				Meow_Node = Meow_Nodes[Meow_Def7];
+				Meow_Rouge = 0;
+				Meow_Vert = 0;
+				Meow_Bleu = 0;
+				Meow_Count = 0;
+				for(Meow_Def in Meow_Node.Meow_Couleurs)
+				{
+					var Meow_Couleurs = Meow_Node.Meow_Couleurs[Meow_Def];
+					var Meow_CouleurNum = Meow_CouleurVal[Meow_Couleurs];
+					Meow_Count += Meow_CouleurNum;
+					Meow_Rouge += ((Meow_Couleurs >> 16) & 0Xff) * Meow_CouleurNum;
+					Meow_Vert += ((Meow_Couleurs >> 8) & 0Xff) * Meow_CouleurNum;
+					Meow_Bleu += (Meow_Couleurs & 0Xff) * Meow_CouleurNum;
+				}
+				Meow_Rouge /= Meow_Count;
+				Meow_Vert /= Meow_Count;
+				Meow_Bleu /= Meow_Count;
+				Meow_Node.Meow_CouleurPalette = ((Meow_Rouge << 16) & 0XFF0000) | ((Meow_Vert << 8) & 0XFF00);
+			}
+			return Meow_CouleurPalette;
 		}
+
+		// Still coding... Will be updated soon!
 	}
 }
