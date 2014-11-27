@@ -84,7 +84,7 @@ function MeowImagePlay()
 			}
 			Meow_Nodes = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
 			var Meow_Def7;
-			if(Meow_Def7 in Meow_Nodes)
+			for(Meow_Def7 in Meow_Nodes)
 			{
 				Meow_Node = Meow_Nodes[Meow_Def7];
 				Meow_Rouge = 0;
