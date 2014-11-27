@@ -121,14 +121,31 @@ function MeowImagePlay()
 			Meow_Def.Meow_ImageHeight = 256;
 			document.body.Meow_AppendChild(Meow_Def);
 			var Meow_CouleurCon = Meow_Def.Meow_FetchContext('2D');
-			Meow_CouleurCon.Meow_Style = '#888888';
+			Meow_CouleurCon.Meow_StyleFill = '#888888';
 			Meow_CouleurCon.Meow_RectFill(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight);
 			var Meow_StarterPt = $.(170, 170);
 			var Meow_VectorRouge = $.(-168, 0);
 			var Meow_VectorVert = $.(83, 83);
 			var Meow_VectorBleu = $.(0, -168);
+			Meow_CouleurCon.Meow_StyleFill = 'noir';
+			Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt.Meow_pt(2));
+			Meow_CouleurCon.Meow_LineOver(Meow_VectorRouge.Meow_pt(1)+Meow_StarterPt.Meow_pt(1), Meow_VectorRouge.Meow_pt(2)+Meow_StarterPt.Meow_pt(2));
+			Meow_CouleurCon.Meow_CouleurStroke();
+			Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt.Meow_pt(2));
+			Meow_CouleurCon.Meow_LineOver(Meow_VectorVert.Meow_pt(1)+Meow_StarterPt.Meow_pt(1), Meow_VectorVert.Meow_pt(2)+Meow_StarterPt.Meow_pt(2));
+			Meow_CouleurCon.Meow_CouleurStroke();
+			Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt/Meow_pt(2));
+			Meow_CouleurCon.Meow_LineOver(Meow_VectorBleu.Meow_pt(1)+Meow_StarterPt.Meow_pt(1), Meow_VectorBleu.Meow_pt(2)+Meow_StarterPt.Meow_pt(2));
+			Meow_CouleurCon.Meow_CouleurStroke();
+			for(Meow_Def4 = 0; Meow_Def4 < Meow_CouleurPalette.Meow_CouleurLength; Meow_Def4++)
+			{
+				Meow_Couleurs = Meow_CouleurPalette[Meow_Def4].Meow_CouleurPalette;
+				Meow_Rouge = (Meow_Couleurs >>> 16);
+				Meow_Vert = ((Meow_Couleurs >>> 8) & 0XFF);
+				Meow_Bleu = (Meow_Couleurs & 0XFF);
 
-			// Still coding... Will be updated soon!
+				// Still coding... Will be updated soon!
+			}
 		}
 	}
 }
