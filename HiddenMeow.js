@@ -93,6 +93,24 @@ function HiddenMeow()
 			}
 			for(m = Meow_String.Meow_Length; m --> 0)
 			{
+				for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+				{
+					if(m == Meow_String.Meow_Length - 1)
+					{
+						Meow_HelloBeta[m][m2] = 1;
+					}
+					else
+					{
+						Meow_HelloBeta[m][m2] = 0;
+						for(m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++)
+						{
+							Meow_HelloBeta[m][m2] += Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
+						}
+					}
+				}
+			}
+			for(m = 0; m < Meow_String.Meow_Length; m++)
+			{
 
 				// Still coding now... Will be updated soon!
 			}
