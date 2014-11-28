@@ -2,7 +2,7 @@ function MeowImagePlay()
 {
 	Meow_CouleurFormat_Grey = 'G';
 	Meow_CouleurFormat_Alpha = 'A';
-	Meow_CoueurFormat_RGB = 'RGB';
+	Meow_CouleurFormat_RGB = 'RGB';
 	Meow_CouleurFormat_RGBA = 'RGBA';
 	Meow_CouleurPalette = 'P';
 	Meow_CouleurPaletteBits = 8;
