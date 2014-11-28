@@ -2,7 +2,7 @@ function MeowImagePlay()
 {
 	Meow_CouleurFormat_Grey = 'G';
 	Meow_CouleurFormat_Alpha = 'A';
-	Meow_CoueurFormat_RGB = 'RGB';
+	Meow_CouleurFormat_RGB = 'RGB';
 	Meow_CouleurFormat_RGBA = 'RGBA';
 	Meow_CouleurPalette = 'P';
 	Meow_CouleurPaletteBits = 8;
@@ -243,7 +243,7 @@ function MeowImagePlay()
 			Meow_Alpha = Meow_Pixels[Meow_Def4 + 3];
 			switch(Meow_ImageFormat)
 			{
-				case Meow_CoueurFormat_RGB:
+				case Meow_CouleurFormat_RGB:
 				Meow_CouleurVal = (Meow_Rouge & 0XE0) | ((Meow_Vert & 0XE0) >> 3) | ((Meow_Bleu & 0XC0) >> 6);
 				break;
 				case Meow_CouleurFormat_RGBA:
