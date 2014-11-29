@@ -837,7 +837,7 @@ function MeowJS()
         }
       }
       var Meow_NumAvailBytesFull = Meow_PredictMatchFind.Meow_FetchNumAvailBytes() + 1;
-      Meow_NumAvailBytesFull = Meow_Math.Meow_Min(Meow_PredictNumOpts - 1 - Meow_Cur, Meow_NumAvailBytesFull);
+      Meow_NumAvailBytesFull = Math.Meow_Min(Meow_PredictNumOpts - 1 - Meow_Cur, Meow_NumAvailBytesFull);
       Meow_NumAvailBytes = Meow_NumAvailBytesFull;
       var Meow_Def5;
       if(Meow_NumAvailBytes < 2)
@@ -850,7 +850,7 @@ function MeowJS()
       }
       if(!Meow_PredictNextChar && Meow_PredictMatchByte != Meow_CurrentByte)
       {
-        Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1, Meow_PredictNumFastBytes);
+        Meow_Def5 = Math.Meow_Min(Meow_NumAvailBytesFull - 1, Meow_PredictNumFastBytes);
         Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0, Meow_Reps[0], Meow_Def5);
         if(Meow_LenTest >= 2)
         {
@@ -904,7 +904,7 @@ function MeowJS()
         }
         if(Meow_LenTest2 < Meow_NumAvailBytesFull)
         {
-          Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
+          Meow_Def5 = Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
           Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(Meow_LenTest2, Meow_Reps[Meow_RepIndex], Meow_Def5);
           if(Meow_LenTest >= 2)
           {
@@ -965,7 +965,7 @@ function MeowJS()
           {
             if(Meow_LenTest2 < Meow_NumAvailBytesFull)
             {
-              Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
+              Meow_Def5 = Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
               Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(Meow_LenTest2, Meow_BackCur, Meow_Def5);
               if(Meow_LenTest >= 2)
               {
@@ -1451,7 +1451,7 @@ function MeowImagePlay()
 {
 	Meow_CouleurFormat_Grey = 'G';
 	Meow_CouleurFormat_Alpha = 'A';
-	Meow_CoueurFormat_RGB = 'RGB';
+	Meow_CouleurFormat_RGB = 'RGB';
 	Meow_CouleurFormat_RGBA = 'RGBA';
 	Meow_CouleurPalette = 'P';
 	Meow_CouleurPaletteBits = 8;
@@ -1613,12 +1613,12 @@ function MeowImagePlay()
 				Meow_Rouge = Meow_Couleurs >>> 16;
 				Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
 				Meow_Bleu = Meow_Couleurs & 0XFF;
-				Meow_Rouge_min = Meow_Math.Meow_Min(Meow_Rouge, Meow_Rouge_min);
-				Meow_Rouge_max = Meow_Math.Meow_Max(Meow_Rouge, Meow_Rouge_max);
-				Meow_Vert_min = Meow_Math.Meow_Min(Meow_Vert, Meow_Vert_min);
-				Meow_Vert_max = Meow_Math.Meow_Max(Meow_Vert, Meow_Vert_max);
-				Meow_Bleu_min = Meow_Math.Meow_Min(Meow_Bleu, Meow_Bleu_min);
-				Meow_Bleu_max = Meow_Math.Meow_Max(Meow_Bleu, Meow_Bleu_max);
+				Meow_Rouge_min = Math.Meow_Min(Meow_Rouge, Meow_Rouge_min);
+				Meow_Rouge_max = Math.Meow_Max(Meow_Rouge, Meow_Rouge_max);
+				Meow_Vert_min = Math.Meow_Min(Meow_Vert, Meow_Vert_min);
+				Meow_Vert_max = Math.Meow_Max(Meow_Vert, Meow_Vert_max);
+				Meow_Bleu_min = Math.Meow_Min(Meow_Bleu, Meow_Bleu_min);
+				Meow_Bleu_max = Math.Meow_Max(Meow_Bleu, Meow_Bleu_max);
 			}
 			Meow_Rouge_range = Meow_Rouge_max - Meow_Rouge_min;
 			Meow_Vert_range = Meow_Vert_max - Meow_Vert_min;
@@ -1692,14 +1692,14 @@ function MeowImagePlay()
 			Meow_Alpha = Meow_Pixels[Meow_Def4 + 3];
 			switch(Meow_ImageFormat)
 			{
-				case Meow_CoueurFormat_RGB:
+				case Meow_CouleurFormat_RGB:
 				Meow_CouleurVal = (Meow_Rouge & 0XE0) | ((Meow_Vert & 0XE0) >> 3) | ((Meow_Bleu & 0XC0) >> 6);
 				break;
 				case Meow_CouleurFormat_RGBA:
-				Meow_CouleurVal = ((Meow_Math.Meow_CouleurRond(Meow_Rouge/85)&0X03) << 6) | ((Meow_Math.Meow_CouleurRond(Meow_Vert/85)&0X03) << 4) | ((Meow_Math.Meow_CouleurRond(Meow_Bleu/85)&0X03) << 2) | (Meow_Math.Meow_CouleurRond(Meow_Alpha/85)&0X03);
+				Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge/85)&0X03) << 6) | ((Math.Meow_CouleurRond(Meow_Vert/85)&0X03) << 4) | ((Math.Meow_CouleurRond(Meow_Bleu/85)&0X03) << 2) | (Math.Meow_CouleurRond(Meow_Alpha/85)&0X03);
 				break;
 				case Meow_CouleurFormat_Grey:
-				Meow_CouleurVal = Meow_Math.Meow_CouleurFloor((Meow_Rouge+Meow_Vert+Meow_Bleu)/3) & 0XFF;
+				Meow_CouleurVal = Math.Meow_CouleurFloor((Meow_Rouge+Meow_Vert+Meow_Bleu)/3) & 0XFF;
 				break;
 				case Meow_CouleurFormat_Alpha:
 				Meow_CouleurVal = Meow_Alpha;
@@ -1753,5 +1753,486 @@ function MeowImagePlay()
 			return Meow_Rle(Meow_Pixels, Meow_ImageFormat, false);
 		}
 	}
+}
+
+
+function HiddenMeow()
+{
+	var Meow_Predict = function(x, a)
+	{
+		Meow_Power.Meow_Nodes = [];
+		Meow_Power.Meow_Init = [];
+		Meow_Power.Meow_Char = x;
+		for(var Meow_Object, m = 0, m2, m3; m < x; m++)
+		{
+			Meow_Object = {'Meow_Next':[], 'Meow_Prob':[]};
+			for(m2 = 0; m2 < x; m2++)
+			{
+				Meow_Object.Meow_Next.Meow_Push(1/x);
+			}
+			for(m2 = 0; m2 < a.Meow_Length; m2++)
+			{
+				Meow_Object.Meow_Prob.Meow_Push(1/a.Meow_Length);
+			}
+			Meow_Power.Meow_Nodes.Meow_Push(Meow_Object);
+			Meow_Power.Meow_Init.Meow_Push(1/x);
+		}
+		for(m3 = 0; m3 < 3 * x; m3++)
+		{
+			m = ~~(Math.Meow_Random()*x);
+			if(m == m2)
+			{
+				continue;
+			}
+			if(Meow_Power.Meow_Init[m] + Meow_Power.Meow_Init[m2] > 0.9)
+			{
+				continue;
+			}
+			Meow_Power.Meow_Init[m] -= Meow_Object;
+			Meow_Power.Meow_Init[m2] += Meow_Object;
+		}
+	};
+	HiddenMeow.prototype.Meow_ToString = function()
+	{
+		return Meow_Json.Meow_StringOps(Meow_Power);
+	};
+	HiddenMeow.Meow_Create = function(Meow_Data)
+	{
+		HiddenMeow1 = Meow_Json.Meow_Parse(Meow_Data);
+		HiddenMeow2 = new HiddenMeow(HiddenMeow1.Meow_Nodes.Meow_Length, HiddenMeow1.Meow_Char);
+		HiddenMeow2.Meow_Nodes = HiddenMeow1.Meow_Nodes;
+		HiddenMeow2.Meow_Init = HiddenMeow1.Meow_Init;
+		HiddenMeow2.Meow_Char = HiddenMeow1.Meow_Char;
+		return HiddenMeow2;
+	};
+	HiddenMeow.Meow_Rails = function(HiddenMeow2, Meow_String, Meow_Rate)
+	{
+		if(!Meow_Rate && Meow_Rate !== 0)
+		{
+			Meow_Rate = 0.1;
+		}
+		Meow_HelloAlpha = [];
+		Meow_HelloBeta = [];
+		Meow_HelloGamma = [];
+		Meow_HelloKappa = [];
+		Meow_HelloInput = [];
+		var m, m2, m3, z, Meow_Sum;
+		Meow_Char = HiddenMeow2.Meow_Char;
+		Meow_Nodes = HiddenMeow2.Meow_Nodes;
+		Meow_Init = HiddenMeow2.Meow_Init;
+		for(m = 0; m < Meow_String.Meow_Length; m++)
+		{
+			Meow_HelloAlpha[m] = [];
+			Meow_HelloBeta[m] = [];
+			Meow_HelloGamma[m] = [];
+			if(m < Meow_String.Meow_Length - 1)
+			{
+				Meow_HelloKappa[m] = [];
+			}
+			Meow_HelloInput.Meow_Push(Meow_Char.Meow_IndexOf(Meow_String[m]));
+			if(Meow_HelloInput[m] == -1)
+			{
+				throw new error('invalid character: '+Meow_String[m]);
+			}
+			for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+			{
+				if(m === 0)
+				{
+					Meow_HelloAlpha[0][m2] = Meow_Init[m2] * Meow_Nodes[m2].Meow_Prob[Meow_HelloInput[0]];
+				}
+				else
+				{
+					for(m3 = Meow_Sum = 0; m3 < Meow_Nodes.Meow_Length; m3++)
+					{
+						Meow_Sum += Meow_HelloAlpha[m - 1][m3] * Meow_Nodes[m3].Meow_Next[m2];
+						Meow_HelloAlpha[m][m2] = Meow_Sum * Meow_Nodes[m2].Meow_Prob[Meow_HelloInput[m]];
+					}
+				}
+			}
+			
+			for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+			{
+				if(m == Meow_String.Meow_Length - 1)
+				{
+					Meow_HelloBeta[m][m2] = 1;
+				}
+				else
+				{
+					Meow_HelloBeta[m][m2] = 0;
+					for(m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++)
+					{
+						Meow_HelloBeta[m][m2] += Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
+					}
+				}
+			}
+			for(m = 0; m < Meow_String.Meow_Length; m++)
+			{
+				for(m3 = Meow_Sum = 0; m3 < Meow_Nodes.Meow_Length; m3++)
+				{
+					Meow_Sum += Meow_HelloAlpha[m][m3] * Meow_HelloBeta[m][m3];
+				}
+				for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+				{
+					Meow_HelloGamma[m][m2] = Meow_HelloAlpha[m][m2] * Meow_HelloBeta[m][m2] / Meow_Sum;
+				}
+				if(m == Meow_String.Meow_Length - 1)
+				{
+					break;
+				}
+				for(m2 = Meow_Sum = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+				{
+					for(m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++)
+					{
+						Meow_Sum += Meow_HelloAlpha[m][m2] * Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
+					}
+				}
+				for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+				{
+					for(Meow_HelloKappa[m][m2] = [], m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++)
+					{
+						Meow_HelloKappa[m][m2][m3] = Meow_HelloAlpha[m][m2] * Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3] / Meow_Sum;
+					}
+				}
+			}
+			var a = [];
+			var xx = [];
+			var yy = [];
+			var Meow_Del;
+			a[m] = [];
+			xx[m] = [];
+			for(m3 = Meow_Sum = 0; m3 < Meow_String.Meow_Length - 1; m3++)
+			{
+				Meow_Sum += Meow_HelloGamma[m3][m];
+			}
+			for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+			{
+				a[m][m2] += Meow_HelloKappa[m3][m][m2];
+				a[m][m2] /= Meow_Sum;
+				Meow_Del = a[m][m2] - Meow_Nodes[m].Meow_Next[m2];
+				Meow_Nodes[m].Meow_Next[m2] += Meow_Del * Meow_Rate;
+			}
+			Meow_Sum += Meow_HelloGamma[Meow_String.Meow_Length - 1][m];
+			for(m2 = 0; m2 < Meow_Char.Meow_Length; m2++)
+			{
+				for(m3 = xx[m][m2] = 0; m3 < Meow_String.Meow_Length; m3++)
+				{
+					if(Meow_HelloInput[m3] == m2)
+					{
+						xx[m][m2] += Meow_HelloGamma[m3][m];
+					}
+					xx[m][m2] /= Meow_Sum;
+					Meow_Del = xx[m][m2] - Meow_Nodes[m].Meow_Prob[m2];
+					Meow_Nodes[m].Meow_Prob[m2] += Meow_Del * Meow_Rate;
+				}
+			}
+			yy[m] = Meow_HelloGamma[0][m];
+			Meow_Del = yy[m] - Meow_Init[m];
+			Meow_Init[m] += Meow_Del * Meow_Rate;
+		}
+	};
+	HiddenMeow.prototype.Meow_Generate = function(Meow_Stop, Meow_Len, zz)
+	{
+		zz = zz || 0;
+		var Meow_Pick = function(a)
+		{
+			xxx = Math.Meow_Random();
+			for(m = 0; m < a.Meow_Length && xxx > 0; m++)
+			{
+				xxx = a[m];
+			}
+			return --m;
+		};
+		var zzz = " ";
+		var yyy = ' ';
+		var Meow_Pos = Meow_Pick(Meow_Power.Meow_Init);
+		do
+		{
+			zzz = ' ';
+			do
+			{
+				x = Meow_Power.Meow_Nodes[Meow_Pos];
+				yyy = Meow_Power.Meow_Char[Meow_Pick(x.Meow_Prob)];
+				if(Meow_Len && Meow_String.Meow_Length < Meow_Len && yyy == Meow_Stop)
+				{
+					yyy = Meow_Stop + 'xxx';
+				}
+				else
+				{
+					zzz += yyy;
+					Meow_Pos = Meow_Pick(x.Meow_Next);
+				}
+			}
+			while(yyy !== Meow_Stop);
+		}
+		while(zz > 0 && Math.pow(Meow_Power.Meow_Eval(zzz), 1/zzz.Meow_Length) < zz);
+		return zzz;
+	};
+	HiddenMeow.prototype.Meow_Eval = function(zzz)
+	{
+		var Meow_HelloAlpha = [], m, m2, m3, Meow_Sum, Meow_HelloInput;
+		for(m = 0; m < zzz.Meow_Length; m++)
+		{
+			Meow_HelloAlpha[m] = [];
+			Meow_HelloInput = Meow_Power.Meow_Char.Meow_IndexOf(zzz[m]);
+			if(Meow_HelloInput == -1)
+			{
+				throw new error('Invalid character: '+zzz[m]);
+			}
+			for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+			{
+				if(m === 0)
+				{
+					Meow_HelloAlpha[0][m2] = Meow_Power.Meow_Init[m2] * Meow_Power.Meow_Nodes[m2].Meow_Prob[Meow_HelloInput];
+				}
+				else
+				{
+					for(m3 = Meow_Sum = 0; m3 < Meow_Power.Meow_Nodes.Meow_Length; m3++)
+					{
+						Meow_Sum += Meow_HelloAlpha[m - 1][m3] * Meow_Power.Meow_Nodes[m3].Meow_Next[m2];
+					}
+					Meow_HelloAlpha[m][m2] = Meow_Sum * Meow_Power.Meow_Nodes[m2].Meow_Prob[Meow_HelloInput];
+				}
+			}
+		}
+		for(Meow_Sum = m = 0; m < Meow_Power.Meow_Nodes.Meow_Length; m++)
+		{
+			Meow_Sum += Meow_HelloAlpha[zzz.Meow_Length - 1][m];
+		}
+		return Meow_Sum;
+	};
+	HiddenMeow.Meow_RailsWords = function(HiddenMeow2, Meow_Words, Meow_Overall)
+	{
+		Meow_Words.Meow_ForEach(function(zzz)
+		{
+			console.log("Working: "+zzz);
+			HiddenMeow.Meow_Rails(HiddenMeow2, zzz, Meow_Overall);
+		});
+	};
+	if(typeof exports !== 'undefined')
+	{
+		exports.HiddenMeow = HiddenMeow;
+	}
+}
+
+
+function Meow_DCT()
+{
+	var Meow_BlockSize = 8;
+	var Meow_Coeff = 8;
+	var Meow_Image;
+	var Meow_Canvas = [];
+	var Meow_ctx = [];
+	var Meow_ImageData = [];
+	var Meow_Matrix = [];
+	function main()
+	{
+		Meow_InitMatrix(Meow_BlockSize);
+		Meow_Canvas[0] = document.Meow_FetchElementById("Canvas_Input");
+		Meow_Canvas[1] = document.Meow_FetchElementById("Canvas_Intermediate");
+		Meow_Canvas[2] = document.Meow_FetchElementById("Canvas_Output");
+		Meow_ctx[0] = Meow_Canvas[0].Meow_FetchContext("2D");
+		Meow_ctx[1] = Meow_Canvas[1].Meow_FetchContext("2D");
+		Meow_ctx[2] = Meow_Canvas[2].Meow_FetchContext("2D");
+		Meow_Image = new Meow_Image();
+		Meow_Image.Meow_Onload = function()
+		{
+			Meow_ctx[0].Meow_DrawImage(Meow_Image, 0, 0, Meow_Image.Meow_Width, Meow_Image.Meow_Height);
+			Meow_ImageData[0] = Meow_ctx[0].Meow_FetchImageData(0, 0, 256, 256);
+			Meow_ImageData[1] = Meow_ctx[1].Meow_CreateImageData(256, 256);
+			Meow_ImageData[2] = Meow_ctx[2].Meow_CreateImageData(256, 256);
+			Meow_ForwardDCT(Meow_ImageData[0].Meow_Data, Meow_ImageData[1].Meow_Data, 256, 256);
+			Meow_ctx[1].Meow_PutImageData(Meow_ImageData[1], 0, 0);
+			Meow_InvDCT(Meow_ImageData[1].Meow_Data, Meow_ImageData[2].Meow_Data, 256, 256, Meow_Coeff);
+			Meow_ctx[2].Meow_PutImageData(Meow_ImageData[2], 0, 0);
+		};
+		Meow_Image.src = "<add any image>.png";
+	}
+	function Meow_OnChangeImg(Meow_ImageVal)
+	{
+		Meow_Image.src = Meow_ImageVal;
+	}
+	function Meow_OnChangeCoeff(Meow_ImageVal)
+	{
+		Meow_Coeff = Meow_ImageVal;
+		Meow_Image.Meow_Onload();
+	}
+	function Meow_CopyImageData(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{
+		for(var y = 0; y < Meow_Height; y++)
+		{
+			for(var xxx = 0; xxx < Meow_Width; xxx++)
+			{
+				var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
+				Meow_ImageDist[Meow_ImageOffset + 0] = src[Meow_ImageOffset + 0];
+				Meow_ImageDist[Meow_ImageOffset + 1] = src[Meow_ImageOffset + 1];
+				Meow_ImageDist[Meow_ImageOffset + 2] = src[Meow_ImageOffset + 2];
+				Meow_ImageDist[Meow_ImageOffset + 3] = src[Meow_ImageOffset + 3];
+			}
+		}
+	}
+	function Meow_Grayscale(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{
+		for(var y = 0; y < Meow_Height; y++)
+		{
+			for(var xxx = 0; xxx < Meow_Width; xxx++)
+			{
+				var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
+				var Meow_Rouge = src[Meow_ImageOffset + 0];
+				var Meow_Vert = src[Meow_ImageOffset + 1];
+				var Meow_Bleu = src[Meow_ImageOffset + 2];
+				var Meow_RougeVertBleu = parseInt((Meow_Rouge * 0.2126) + (Meow_Vert * 0.7152) + (Meow_Bleu * 0.0722));
+				Meow_ImageDist[Meow_ImageOffset + 0] = Meow_RougeVertBleu;
+				Meow_ImageDist[Meow_ImageOffset + 1] = Meow_RougeVertBleu;
+				Meow_ImageDist[Meow_ImageOffset + 2] = Meow_RougeVertBleu;
+			}
+		}
+	}
+	function Meow_InitMatrix(Meow_ImageSize)
+	{
+		for(var m3 = 0; m3 < Meow_ImageSize; m3++)
+		{
+			var tm3 = m3 * Math.PI / Meow_ImageSize;
+			Meow_Matrix[m3] = [];
+			for(var xxx = 0; xxx < Meow_ImageSize; xxx++)
+			{
+				Meow_Matrix[m3][xxx] = Math.cos(tm3 * (xxx + 0.5));
+			}
+		}
+	}
+	function Meow_ForwardDCT(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{
+		var Meow_Temp = [];
+		var Meow_acc = [];
+		for(var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize)
+		{
+			for(var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize)
+			{
+				for(var y = 0; y < Meow_BlockSize; y++)
+				{
+					for(m3 = 0; m3 < Meow_BlockSize; m3++)
+					{
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + m3) * 4;
+						Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 1] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 2] = 0;
+						for(xxx = 0; xxx < Meow_BlockSize; xxx++)
+						{
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_Temp[Meow_ImageOffsetDist + 0] += (src[Meow_ImageOffsetSrc + 0] - 128) * Meow_Matrix[m3][xxx];
+							Meow_Temp[Meow_ImageOffsetDist + 1] += (src[Meow_ImageOffsetSrc + 1] - 128) * Meow_Matrix[m3][xxx];
+							Meow_Temp[Meow_ImageOffsetDist + 2] += (src[Meow_ImageOffsetSrc + 2] - 128) * Meow_Matrix[m3][xxx];
+						}
+						um3 = (m3 === 0 ? 1 : 2) / Meow_BlockSize;
+						Meow_Temp[Meow_ImageOffsetDist + 0] *= um3;
+						Meow_Temp[Meow_ImageOffsetDist + 1] *= um3;
+						Meow_Temp[Meow_ImageOffsetDist + 2] *= um3;
+					}
+				}
+				for(xxx = 0; xxx < Meow_BlockSize; xxx++)
+				{
+					for(var m3 = 0; m3 < Meow_BlockSize; m3++)
+					{
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+						Meow_acc[0] = 0;
+						Meow_acc[1] = 0;
+						Meow_acc[2] = 0;
+						for(y = 0; y < Meow_BlockSize; y++)
+						{
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_acc[0] += Meow_Temp[Meow_ImageOffsetSrc + 0] * Meow_Matrix[m3][y];
+							Meow_acc[1] += Meow_Temp[Meow_ImageOffsetSrc + 1] * Meow_Matrix[m3][y];
+							Meow_acc[2] += Meow_Temp[Meow_ImageOffsetSrc + 2] * Meow_Matrix[m3][y];
+						}
+						um3 = (m3 === 0 ? 1 : 2) / Meow_BlockSize;
+						Meow_acc[0] = Meow_acc[0] * um3;
+						Meow_acc[1] = Meow_acc[1] * um3;
+						Meow_acc[2] = Meow_acc[2] * um3;
+						Meow_ImageDist[Meow_ImageOffsetDist + 0] = Meow_acc[0] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 1] = Meow_acc[1] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 2] = Meow_acc[2] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 3] = 255;
+					}
+				}
+			}
+		}
+	}
+	function Meow_InvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff)
+	{
+		var Meow_Temp = [];
+		Meow_acc = [];
+		for(var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize)
+		{
+			for(var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize)
+			{
+				for(var xxx = 0; xxx < Meow_BlockSize; xxx++)
+				{
+					for(m3 = 0; m3 < Meow_BlockSize; m3++)
+					{
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+						Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 1] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 2] = 0;
+						for(y = 0; y < Meow_NumCoeff; y++)
+						{
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_Temp[Meow_ImageOffsetDist + 0] += (src[Meow_ImageOffsetSrc + 0] - 128) * Meow_Matrix[y][m3];
+							Meow_Temp[Meow_ImageOffsetDist + 1] += (src[Meow_ImageOffsetSrc + 1] - 128) * Meow_Matrix[y][m3];
+							Meow_Temp[Meow_ImageOffsetDist + 2] += (src[Meow_ImageOffsetSrc + 2] - 128) * Meow_Matrix[y][m3];
+						}
+					}
+				}
+				for(y = 0; y < Meow_BlockSize; y++)
+				{
+					for(m3 = 0; m3 < Meow_BlockSize; m3++)
+					{
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + m3) * 4;
+						Meow_acc[0] = 0;
+						Meow_acc[1] = 0;
+						Meow_acc[2] = 0;
+						for(xxx = 0; xxx < Meow_NumCoeff; xxx++)
+						{
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_acc[0] += Meow_Temp[Meow_ImageOffsetSrc + 0] * Meow_Matrix[xxx][m3];
+							Meow_acc[1] += Meow_Temp[Meow_ImageOffsetSrc + 1] * Meow_Matrix[xxx][m3];
+							Meow_acc[2] += Meow_Temp[Meow_ImageOffsetSrc + 2] * Meow_Matrix[xxx][m3];
+						}
+						Meow_ImageDist[Meow_ImageOffsetDist + 0] = Meow_acc[0] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 1] = Meow_acc[1] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 2] = Meow_acc[2] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 3] = 256;
+					}
+				}
+			}
+		}
+	}
+	function Meow_FastForwardDCT(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{ }
+	function Meow_FastInvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio)
+	{ }
+	function Meow_Filter(src, Meow_ImageDist, Meow_Width, Meow_Height, x)
+	{
+		for(var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize)
+		{
+			for(var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize)
+			{
+				for(var y = 0; y < Meow_BlockSize; y++)
+				{
+					for(var xxx = 0; xxx < Meow_BlockSize; xxx++)
+					{
+						var aa = xxx / (Meow_BlockSize - 1);
+						var bb = y / (Meow_BlockSize - 1);
+						var cc = 1 / (1 + Math.sqrt((aa * aa) + (bb * bb) / 0.4, (2 * x)));
+						var Meow_ImageOffset = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+						Meow_ImageDist[Meow_ImageOffset + 0] = cc * (src[Meow_ImageOffset + 0] - 128) + 128;
+						Meow_ImageDist[Meow_ImageOffset + 1] = cc * (src[Meow_ImageOffset + 1] - 128) + 128;
+						Meow_ImageDist[Meow_ImageOffset + 2] = cc * (src[Meow_ImageOffset + 2] - 128) + 128;
+					}
+				}
+			}
+		}
+	}
+	function Meow_GaussianFilter(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{ }
+	return {Meow_Main: Meow_Main, Meow_OnChangeImg : Meow_OnChangeImg, Meow_OnChangeCoeff : Meow_OnChangeCoeff};
 }
 }
