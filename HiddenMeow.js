@@ -91,21 +91,19 @@ function HiddenMeow()
 					}
 				}
 			}
-			for(m = Meow_String.Meow_Length; m --> 0)
+			
+			for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
 			{
-				for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+				if(m == Meow_String.Meow_Length - 1)
 				{
-					if(m == Meow_String.Meow_Length - 1)
+					Meow_HelloBeta[m][m2] = 1;
+				}
+				else
+				{
+					Meow_HelloBeta[m][m2] = 0;
+					for(m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++)
 					{
-						Meow_HelloBeta[m][m2] = 1;
-					}
-					else
-					{
-						Meow_HelloBeta[m][m2] = 0;
-						for(m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++)
-						{
-							Meow_HelloBeta[m][m2] += Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
-						}
+						Meow_HelloBeta[m][m2] += Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
 					}
 				}
 			}
@@ -223,7 +221,7 @@ function HiddenMeow()
 				}
 				for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
 				{
-					if(m == 0)
+					if(m === 0)
 					{
 						Meow_HelloAlpha[0][m2] = Meow_Power.Meow_Init[m2] * Meow_Power.Meow_Nodes[m2].Meow_Prob[Meow_HelloInput];
 					}
@@ -251,7 +249,7 @@ function HiddenMeow()
 				HiddenMeow.Meow_Rails(HiddenMeow2, zzz, Meow_Overall);
 			});
 		};
-	}
+	};
 	if(typeof exports !== 'undefined')
 	{
 		exports.HiddenMeow = HiddenMeow;
