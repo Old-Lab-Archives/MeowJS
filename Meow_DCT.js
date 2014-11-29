@@ -149,24 +149,52 @@ function Meow_DCT()
 			{
 				for(var xxx = 0; xxx < Meow_BlockSize; xxx++)
 				{
-					for(var m3 = 0; m3 < Meow_BlockSize; m3++)
+					for(m3 = 0; m3 < Meow_BlockSize; m3++)
 					{
-						var Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
 						Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
 						Meow_Temp[Meow_ImageOffsetDist + 1] = 0;
 						Meow_Temp[Meow_ImageOffsetDist + 2] = 0;
-						for(var y = 0; y < Meow_NumCoeff; y++)
+						for(y = 0; y < Meow_NumCoeff; y++)
 						{
-							var Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
 							Meow_Temp[Meow_ImageOffsetDist + 0] += (src[Meow_ImageOffsetSrc + 0] - 128) * Meow_Matrix[y][m3];
 							Meow_Temp[Meow_ImageOffsetDist + 1] += (src[Meow_ImageOffsetSrc + 1] - 128) * Meow_Matrix[y][m3];
 							Meow_Temp[Meow_ImageOffsetDist + 2] += (src[Meow_ImageOffsetSrc + 2] - 128) * Meow_Matrix[y][m3];
 						}
 					}
 				}
-
-				// Still Coding now... Will be updated soon! (^_^)
+				for(y = 0; y < Meow_BlockSize; y++)
+				{
+					for(m3 = 0; m3 < Meow_BlockSize; m3++)
+					{
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + m3) * 4;
+						Meow_acc[0] = 0;
+						Meow_acc[1] = 0;
+						Meow_acc[2] = 0;
+						for(xxx = 0; xxx < Meow_NumCoeff; xxx++)
+						{
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_acc[0] += Meow_Temp[Meow_ImageOffsetSrc + 0] * Meow_Matrix[xxx][m3];
+							Meow_acc[1] += Meow_Temp[Meow_ImageOffsetSrc + 1] * Meow_Matrix[xxx][m3];
+							Meow_acc[2] += Meow_Temp[Meow_ImageOffsetSrc + 2] * Meow_Matrix[xxx][m3];
+						}
+						Meow_ImageDist[Meow_ImageOffsetDist + 0] = Meow_acc[0] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 1] = Meow_acc[1] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 2] = Meow_acc[2] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 3] = 256;
+					}
+				}
 			}
 		}
+	}
+	function Meow_FastForwardDCT(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{ }
+	function Meow_FastInvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio)
+	{ }
+	function Meow_Filter(src, Meow_ImageDist, Meow_Width, Meow_Height, x)
+	{
+
+		// Still Coding now... Will be updated soon! (^_^)
 	}
 }
