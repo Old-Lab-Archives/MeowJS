@@ -139,6 +139,23 @@ function Meow_DCT()
 			}
 		}
 	}
+	function Meow_InvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff)
+	{
+		var Meow_Temp = [];
+		Meow_acc = [];
+		for(var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize)
+		{
+			for(var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize)
+			{
+				for(var xxx = 0; xxx < Meow_BlockSize; xxx++)
+				{
+					for(var m3 = 0; m3 < Meow_BlockSize; m3++)
+					{
 
-	// Still Coding now... Will be updated soon! (^_^)
+						// Still Coding now... Will be updated soon! (^_^)
+					}
+				}
+			}
+		}
+	}
 }
