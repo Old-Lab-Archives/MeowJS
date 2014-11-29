@@ -1964,7 +1964,7 @@ function HiddenMeow()
 			}
 			while(yyy !== Meow_Stop);
 		}
-		while(zz > 0 && Math.Meow_Bow(Meow_Power.Meow_Eval(zzz), 1/zzz.Meow_Length) < zz);
+		while(zz > 0 && Math.pow(Meow_Power.Meow_Eval(zzz), 1/zzz.Meow_Length) < zz);
 		return zzz;
 	};
 	HiddenMeow.prototype.Meow_Eval = function(zzz)
