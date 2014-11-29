@@ -92,13 +92,53 @@ function Meow_DCT()
 			{
 				for(var y = 0; y < Meow_BlockSize; y++)
 				{
+					for(m3 = 0; m3 < Meow_BlockSize; m3++)
+					{
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + m3) * 4;
+						Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 1] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 2] = 0;
+						for(xxx = 0; xxx < Meow_BlockSize; xxx++)
+						{
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_Temp[Meow_ImageOffsetDist + 0] += (src[Meow_ImageOffsetSrc + 0] - 128) * Meow_Matrix[m3][xxx];
+							Meow_Temp[Meow_ImageOffsetDist + 1] += (src[Meow_ImageOffsetSrc + 1] - 128) * Meow_Matrix[m3][xxx];
+							Meow_Temp[Meow_ImageOffsetDist + 2] += (src[Meow_ImageOffsetSrc + 2] - 128) * Meow_Matrix[m3][xxx];
+						}
+						um3 = (m3 === 0 ? 1 : 2) / Meow_BlockSize;
+						Meow_Temp[Meow_ImageOffsetDist + 0] *= um3;
+						Meow_Temp[Meow_ImageOffsetDist + 1] *= um3;
+						Meow_Temp[Meow_ImageOffsetDist + 2] *= um3;
+					}
+				}
+				for(xxx = 0; xxx < Meow_BlockSize; xxx++)
+				{
 					for(var m3 = 0; m3 < Meow_BlockSize; m3++)
 					{
-
-						// Still Coding now... Will be updated soon! (^_^)
+						Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+						Meow_acc[0] = 0;
+						Meow_acc[1] = 0;
+						Meow_acc[2] = 0;
+						for(y = 0; y < Meow_BlockSize; y++)
+						{
+							Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_acc[0] += Meow_Temp[Meow_ImageOffsetSrc + 0] * Meow_Matrix[m3][y];
+							Meow_acc[1] += Meow_Temp[Meow_ImageOffsetSrc + 1] * Meow_Matrix[m3][y];
+							Meow_acc[2] += Meow_Temp[Meow_ImageOffsetSrc + 2] * Meow_Matrix[m3][y];
+						}
+						um3 = (m3 === 0 ? 1 : 2) / Meow_BlockSize;
+						Meow_acc[0] = Meow_acc[0] * um3;
+						Meow_acc[1] = Meow_acc[1] * um3;
+						Meow_acc[2] = Meow_acc[2] * um3;
+						Meow_ImageDist[Meow_ImageOffsetDist + 0] = Meow_acc[0] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 1] = Meow_acc[1] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 2] = Meow_acc[2] + 128;
+						Meow_ImageDist[Meow_ImageOffsetDist + 3] = 255;
 					}
 				}
 			}
 		}
 	}
+
+	// Still Coding now... Will be updated soon! (^_^)
 }
