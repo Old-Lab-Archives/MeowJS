@@ -151,10 +151,21 @@ function Meow_DCT()
 				{
 					for(var m3 = 0; m3 < Meow_BlockSize; m3++)
 					{
-
-						// Still Coding now... Will be updated soon! (^_^)
+						var Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+						Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 1] = 0;
+						Meow_Temp[Meow_ImageOffsetDist + 2] = 0;
+						for(var y = 0; y < Meow_NumCoeff; y++)
+						{
+							var Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+							Meow_Temp[Meow_ImageOffsetDist + 0] += (src[Meow_ImageOffsetSrc + 0] - 128) * Meow_Matrix[y][m3];
+							Meow_Temp[Meow_ImageOffsetDist + 1] += (src[Meow_ImageOffsetSrc + 1] - 128) * Meow_Matrix[y][m3];
+							Meow_Temp[Meow_ImageOffsetDist + 2] += (src[Meow_ImageOffsetSrc + 2] - 128) * Meow_Matrix[y][m3];
+						}
 					}
 				}
+
+				// Still Coding now... Will be updated soon! (^_^)
 			}
 		}
 	}
