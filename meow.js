@@ -1779,7 +1779,7 @@ function HiddenMeow()
 		}
 		for(m3 = 0; m3 < 3 * x; m3++)
 		{
-			m = ~~(Meow_Math.Meow_Random()*x);
+			m = ~~(Math.Meow_Random()*x);
 			if(m == m2)
 			{
 				continue;
@@ -1935,7 +1935,7 @@ function HiddenMeow()
 		zz = zz || 0;
 		var Meow_Pick = function(a)
 		{
-			xxx = Meow_Math.Meow_Random();
+			xxx = Math.Meow_Random();
 			for(m = 0; m < a.Meow_Length && xxx > 0; m++)
 			{
 				xxx = a[m];
@@ -1964,7 +1964,7 @@ function HiddenMeow()
 			}
 			while(yyy !== Meow_Stop);
 		}
-		while(zz > 0 && Meow_Math.Meow_Bow(Meow_Power.Meow_Eval(zzz), 1/zzz.Meow_Length) < zz);
+		while(zz > 0 && Math.Meow_Bow(Meow_Power.Meow_Eval(zzz), 1/zzz.Meow_Length) < zz);
 		return zzz;
 	};
 	HiddenMeow.prototype.Meow_Eval = function(zzz)
