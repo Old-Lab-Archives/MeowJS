@@ -39,6 +39,37 @@ function Meow_DCT()
 		Meow_Coeff = Meow_ImageVal;
 		Meow_Image.Meow_Onload();
 	}
+	function Meow_CopyImageData(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{
+		for(var y = 0; y < Meow_Height; y++)
+		{
+			for(var xxx = 0; xxx < Meow_Width; xxx++)
+			{
+				var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
+				Meow_ImageDist[Meow_ImageOffset + 0] = src[Meow_ImageOffset + 0];
+				Meow_ImageDist[Meow_ImageOffset + 1] = src[Meow_ImageOffset + 1];
+				Meow_ImageDist[Meow_ImageOffset + 2] = src[Meow_ImageOffset + 2];
+				Meow_ImageDist[Meow_ImageOffset + 3] = src[Meow_ImageOffset + 3];
+			}
+		}
+	}
+	function Meow_Grayscale(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{
+		for(var y = 0; y < Meow_Height; y++)
+		{
+			for(var xxx = 0; xxx < Meow_Width; xxx++)
+			{
+				var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
+				var Meow_Rouge = src[Meow_ImageOffset + 0];
+				var Meow_Vert = src[Meow_ImageOffset + 1];
+				var Meow_Bleu = src[Meow_ImageOffset + 2];
+				var Meow_RougeVertBleu = parseInt((Meow_Rouge * 0.2126) + (Meow_Vert * 0.7152) + (Meow_Bleu * 0.0722));
+				Meow_ImageDist[Meow_ImageOffset + 0] = Meow_RougeVertBleu;
+				Meow_ImageDist[Meow_ImageOffset + 1] = Meow_RougeVertBleu;
+				Meow_ImageDist[Meow_ImageOffset + 2] = Meow_RougeVertBleu;
+			}
+		}
+	}
 
 	// Still Coding now... Will be updated soon! (^_^)
 }
