@@ -70,6 +70,18 @@ function Meow_DCT()
 			}
 		}
 	}
+	function Meow_InitMatrix(Meow_ImageSize)
+	{
+		for(var m3 = 0; m3 < Meow_ImageSize; m3++)
+		{
+			var tm3 = m3 * Math.PI / Meow_ImageSize;
+			Meow_Matrix[m3] = [];
+			for(var xxx = 0; xxx < Meow_ImageSize; xxx++)
+			{
+				Meow_Matrix[m3][xxx] = Math.cos(tm3 * (xxx + 0.5));
+			}
+		}
+	}
 
 	// Still Coding now... Will be updated soon! (^_^)
 }
