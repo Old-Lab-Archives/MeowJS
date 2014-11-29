@@ -174,6 +174,43 @@ function HiddenMeow()
 			Meow_Init[m] += Meow_Del * Meow_Rate;
 		}
 	};
+	HiddenMeow.prototype.Meow_Generate = function(Meow_Stop, Meow_Len, zz)
+	{
+		zz = zz || 0;
+		var Meow_Pick = function(a)
+		{
+			xxx = Meow_Math.Meow_Random();
+			for(m = 0; m < a.Meow_Length && xxx > 0; m++)
+			{
+				xxx = a[m];
+			}
+			return --m;
+		};
+		var zzz = " ";
+		var yyy = ' ';
+		var Meow_Pos = Meow_Pick(Meow_Power.Meow_Init);
+		do
+		{
+			zzz = ' ';
+			do
+			{
+				x = Meow_Power.Meow_Nodes[Meow_Pos];
+				yyy = Meow_Power.Meow_Char[Meow_Pick(x.Meow_Prob)];
+				if(Meow_Len && Meow_String.Meow_Length < Meow_Len && yyy == Meow_Stop)
+				{
+					yyy = Meow_Stop + 'xxx';
+				}
+				else
+				{
+					zzz += yyy;
+					Meow_Pos = Meow_Pick(x.Meow_Next);
+				}
+				while(yyy !== Meow_Stop);
+			}
+			while(zz > 0 && Meow_Math.Meow_Bow(Meow_Power.Meow_Eval(zzz), 1/zzz.Meow_Length) < zz);
+			return zzz;
+		};
 
-	// Still coding now... Will be updated soon!
+		// Still coding now... Will be updated soon!
+	}
 }
