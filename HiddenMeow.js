@@ -138,8 +138,42 @@ function HiddenMeow()
 					}
 				}
 			}
-
-			// Still coding now... Will be updated soon!
+			var a = [];
+			var xx = [];
+			var yy = [];
+			var Meow_Del;
+			a[m] = [];
+			xx[m] = [];
+			for(m3 = Meow_Sum = 0; m3 < Meow_String.Meow_Length - 1; m3++)
+			{
+				Meow_Sum += Meow_HelloGamma[m3][m];
+			}
+			for(m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++)
+			{
+				a[m][m2] += Meow_HelloKappa[m3][m][m2];
+				a[m][m2] /= Meow_Sum;
+				Meow_Del = a[m][m2] - Meow_Nodes[m].Meow_Next[m2];
+				Meow_Nodes[m].Meow_Next[m2] += Meow_Del * Meow_Rate;
+			}
+			Meow_Sum += Meow_HelloGamma[Meow_String.Meow_Length - 1][m];
+			for(m2 = 0; m2 < Meow_Char.Meow_Length; m2++)
+			{
+				for(m3 = xx[m][m2] = 0; m3 < Meow_String.Meow_Length; m3++)
+				{
+					if(Meow_HelloInput[m3] == m2)
+					{
+						xx[m][m2] += Meow_HelloGamma[m3][m];
+					}
+					xx[m][m2] /= Meow_Sum;
+					Meow_Del = xx[m][m2] - Meow_Nodes[m].Meow_Prob[m2];
+					Meow_Nodes[m].Meow_Prob[m2] += Meow_Del * Meow_Rate;
+				}
+			}
+			yy[m] = Meow_HelloGamma[0][m];
+			Meow_Del = yy[m] - Meow_Init[m];
+			Meow_Init[m] += Meow_Del * Meow_Rate;
 		}
 	};
+
+	// Still coding now... Will be updated soon!
 }
