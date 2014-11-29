@@ -34,6 +34,11 @@ function Meow_DCT()
 	{
 		Meow_Image.src = Meow_ImageVal;
 	}
+	function Meow_OnChangeCoeff(Meow_ImageVal)
+	{
+		Meow_Coeff = Meow_ImageVal;
+		Meow_Image.Meow_Onload();
+	}
 
 	// Still Coding now... Will be updated soon! (^_^)
 }
