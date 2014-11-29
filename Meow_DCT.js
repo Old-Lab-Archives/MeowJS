@@ -194,7 +194,27 @@ function Meow_DCT()
 	{ }
 	function Meow_Filter(src, Meow_ImageDist, Meow_Width, Meow_Height, x)
 	{
-
-		// Still Coding now... Will be updated soon! (^_^)
+		for(var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize)
+		{
+			for(var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize)
+			{
+				for(var y = 0; y < Meow_BlockSize; y++)
+				{
+					for(var xxx = 0; xxx < Meow_BlockSize; xxx++)
+					{
+						var aa = xxx / (Meow_BlockSize - 1);
+						var bb = y / (Meow_BlockSize - 1);
+						var cc = 1 / (1 + Math.sqrt((aa * aa) + (bb * bb) / 0.4, (2 * x)));
+						var Meow_ImageOffset = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+						Meow_ImageDist[Meow_ImageOffset + 0] = cc * (src[Meow_ImageOffset + 0] - 128) + 128;
+						Meow_ImageDist[Meow_ImageOffset + 1] = cc * (src[Meow_ImageOffset + 1] - 128) + 128;
+						Meow_ImageDist[Meow_ImageOffset + 2] = cc * (src[Meow_ImageOffset + 2] - 128) + 128;
+					}
+				}
+			}
+		}
 	}
+	function Meow_GaussianFilter(src, Meow_ImageDist, Meow_Width, Meow_Height)
+	{ }
+	return {Meow_Main: Meow_Main, Meow_OnChangeImg : Meow_OnChangeImg, Meow_OnChangeCoeff : Meow_OnChangeCoeff};
 }
