@@ -837,7 +837,7 @@ function MeowJS()
         }
       }
       var Meow_NumAvailBytesFull = Meow_PredictMatchFind.Meow_FetchNumAvailBytes() + 1;
-      Meow_NumAvailBytesFull = Meow_Math.Meow_Min(Meow_PredictNumOpts - 1 - Meow_Cur, Meow_NumAvailBytesFull);
+      Meow_NumAvailBytesFull = Math.Meow_Min(Meow_PredictNumOpts - 1 - Meow_Cur, Meow_NumAvailBytesFull);
       Meow_NumAvailBytes = Meow_NumAvailBytesFull;
       var Meow_Def5;
       if(Meow_NumAvailBytes < 2)
@@ -850,7 +850,7 @@ function MeowJS()
       }
       if(!Meow_PredictNextChar && Meow_PredictMatchByte != Meow_CurrentByte)
       {
-        Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1, Meow_PredictNumFastBytes);
+        Meow_Def5 = Math.Meow_Min(Meow_NumAvailBytesFull - 1, Meow_PredictNumFastBytes);
         Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(0, Meow_Reps[0], Meow_Def5);
         if(Meow_LenTest >= 2)
         {
@@ -904,7 +904,7 @@ function MeowJS()
         }
         if(Meow_LenTest2 < Meow_NumAvailBytesFull)
         {
-          Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
+          Meow_Def5 = Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
           Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(Meow_LenTest2, Meow_Reps[Meow_RepIndex], Meow_Def5);
           if(Meow_LenTest >= 2)
           {
@@ -965,7 +965,7 @@ function MeowJS()
           {
             if(Meow_LenTest2 < Meow_NumAvailBytesFull)
             {
-              Meow_Def5 = Meow_Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
+              Meow_Def5 = Math.Meow_Min(Meow_NumAvailBytesFull - 1 - Meow_LenTest2, Meow_PredictNumFastBytes);
               Meow_LenTest = Meow_PredictMatchFind.Meow_PredictGetMatchLen(Meow_LenTest2, Meow_BackCur, Meow_Def5);
               if(Meow_LenTest >= 2)
               {
@@ -1389,6 +1389,7 @@ function MeowJS()
   {
     Meow_PredictWriteEndMark = Meow_PredictEndMarkMode;
   };
+}
 
 
 function MeowBinary()
@@ -1613,12 +1614,12 @@ function MeowImagePlay()
 				Meow_Rouge = Meow_Couleurs >>> 16;
 				Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
 				Meow_Bleu = Meow_Couleurs & 0XFF;
-				Meow_Rouge_min = Meow_Math.Meow_Min(Meow_Rouge, Meow_Rouge_min);
-				Meow_Rouge_max = Meow_Math.Meow_Max(Meow_Rouge, Meow_Rouge_max);
-				Meow_Vert_min = Meow_Math.Meow_Min(Meow_Vert, Meow_Vert_min);
-				Meow_Vert_max = Meow_Math.Meow_Max(Meow_Vert, Meow_Vert_max);
-				Meow_Bleu_min = Meow_Math.Meow_Min(Meow_Bleu, Meow_Bleu_min);
-				Meow_Bleu_max = Meow_Math.Meow_Max(Meow_Bleu, Meow_Bleu_max);
+				Meow_Rouge_min = Math.Meow_Min(Meow_Rouge, Meow_Rouge_min);
+				Meow_Rouge_max = Math.Meow_Max(Meow_Rouge, Meow_Rouge_max);
+				Meow_Vert_min = Math.Meow_Min(Meow_Vert, Meow_Vert_min);
+				Meow_Vert_max = Math.Meow_Max(Meow_Vert, Meow_Vert_max);
+				Meow_Bleu_min = Math.Meow_Min(Meow_Bleu, Meow_Bleu_min);
+				Meow_Bleu_max = Math.Meow_Max(Meow_Bleu, Meow_Bleu_max);
 			}
 			Meow_Rouge_range = Meow_Rouge_max - Meow_Rouge_min;
 			Meow_Vert_range = Meow_Vert_max - Meow_Vert_min;
@@ -1696,10 +1697,10 @@ function MeowImagePlay()
 				Meow_CouleurVal = (Meow_Rouge & 0XE0) | ((Meow_Vert & 0XE0) >> 3) | ((Meow_Bleu & 0XC0) >> 6);
 				break;
 				case Meow_CouleurFormat_RGBA:
-				Meow_CouleurVal = ((Meow_Math.Meow_CouleurRond(Meow_Rouge/85)&0X03) << 6) | ((Meow_Math.Meow_CouleurRond(Meow_Vert/85)&0X03) << 4) | ((Meow_Math.Meow_CouleurRond(Meow_Bleu/85)&0X03) << 2) | (Meow_Math.Meow_CouleurRond(Meow_Alpha/85)&0X03);
+				Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge/85)&0X03) << 6) | ((Math.Meow_CouleurRond(Meow_Vert/85)&0X03) << 4) | ((Math.Meow_CouleurRond(Meow_Bleu/85)&0X03) << 2) | (Math.Meow_CouleurRond(Meow_Alpha/85)&0X03);
 				break;
 				case Meow_CouleurFormat_Grey:
-				Meow_CouleurVal = Meow_Math.Meow_CouleurFloor((Meow_Rouge+Meow_Vert+Meow_Bleu)/3) & 0XFF;
+				Meow_CouleurVal = Math.Meow_CouleurFloor((Meow_Rouge+Meow_Vert+Meow_Bleu)/3) & 0XFF;
 				break;
 				case Meow_CouleurFormat_Alpha:
 				Meow_CouleurVal = Meow_Alpha;
