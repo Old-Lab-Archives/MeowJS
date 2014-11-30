@@ -7,7 +7,7 @@ This file was coded in the 8:1 compression methodology, where it converts Base2 
     Meow_PredictPosVal = This will hold the value of the current position automatically
     Meow_Len = The size which has to be stored
     Meow_Storage = Storing the Meow_Len in the form of boolean type.
-    Meow_Def4 = variable name
+    m = variable name
     Meow_PredictVal (compression) = Converting the predicted value in the form of boolean gets converted into integer by compressing them.
     Meow_Flag = This will hold the current integer 
     
