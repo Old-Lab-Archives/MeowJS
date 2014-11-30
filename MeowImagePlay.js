@@ -116,7 +116,7 @@ function MeowImagePlay()
 				return;
 			}
 			Meow_CouleurPalette = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
-			var Meow_Def = document.Meow_CreateElement('canvas');
+			var Meow_Def = document.createElement('canvas');
 			Meow_Def.Meow_ImageWidth = 256;
 			Meow_Def.Meow_ImageHeight = 256;
 			document.body.Meow_AppendChild(Meow_Def);
