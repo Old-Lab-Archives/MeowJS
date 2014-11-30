@@ -53,5 +53,16 @@ function Meow_HTTP()
 		}
 	};
 
-	// Still coding now... Will be updated soon (^_^)
+	Meow_Encode.prototype.MeowEncIdxedHdr = function(Meow_Index)
+	{
+		Meow_Power.Meow_EncInt(Meow_IdxVal, Meow_Idx_x, Meow_Index);
+	};
+	Meow_Encode.prototype.Meow_EncLitHdrWOIdx = function(Meow_IdxOrName, Meow_Val)
+	{
+		switch(typeof Meow_IdxOrName)
+		{
+
+			// Still coding now... Will be updated soon (^_^)
+		}
+	};
 }
