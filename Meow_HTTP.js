@@ -73,6 +73,28 @@ function Meow_HTTP()
 		}
 		throw new Error ('Its not index nor any: ' + Meow_IdxOrName);
 	};
+	Meow_Encode.prototype.Meow_EncLitHdrIncreIdx = function(Meow_IdxOrName, Meow_Val)
+	{
+		switch(typeof Meow_IdxOrName)
+		{
+			case 'Meow_Num':
+			Meow_Power.Meow_EncInt(Meow_LitIncreVal, Meow_LitIncre_x, Meow_IdxOrName + 1);
+			Meow_Power.Meow_EncOctetSeq(Meow_Val);
+			return;
+			case 'Meow_String':
+			Meow_Power.Meow_EncInt(Meow_LitIncreVal, Meow_LitIncre_x, 0);
+			Meow_Power.Meow_EncOctetSeq(Meow_IdxOrName);
+			Meow_Power.Meow_EncOctetSeq(Meow_Val);
+			return;
+		}
+		throw new Error('Its not index nor any: ' + Meow_IdxOrName);
+	};
+	Meow_Encode.prototype.Meow_Flush = function()
+	{
+		var Meow_Buffer = Meow_Power.Meow_Buffer;
+		Meow_Power.Meow_Buffer = [];
+		return Meow_Buffer;
+	};
 
 	// Still coding now... Will be updated soon (^_^)
 }
