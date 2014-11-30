@@ -5,9 +5,9 @@ function MeowBinary()
 		var Meow_Output = 0;
 		var Meow_PredictPosVal = 1;
 		var Meow_Len = Meow_Storage.Meow_Len;
-		for(Meow_Def4 = 0; Meow_Def4 < Meow_Len; Meow_Def4++)
+		for(m = 0; m < Meow_Len; m++)
 		{
-			if(Meow_Storage[Meow_Def4] === true)
+			if(Meow_Storage[m] === true)
 			{
 				Meow_PredictVal = 1;
 			}
@@ -25,7 +25,7 @@ function MeowBinary()
 		Meow_Output = [];
 		var Meow_Flag = 0;
 		Meow_PredictVal = false;
-		Meow_Def4 = 0;
+		m = 0;
 		while(true)
 		{
 			Meow_Flag = Meow_Integer % 2;
@@ -37,13 +37,13 @@ function MeowBinary()
 			{
 				Meow_PredictVal = false;
 			}
-			Meow_Output[Meow_Def4] = Meow_PredictVal;
+			Meow_Output[m] = Meow_PredictVal;
 			Meow_Integer -= Meow_Flag;
 			Meow_Integer /= 2;
-			Meow_Def4++;
+			m++;
 			if(Meow_Integer == 1)
 			{
-				Meow_Output[Meow_Def4] = true;
+				Meow_Output[m] = true;
 			}
 			else if(Meow_Integer < 1)
 			{
