@@ -34,6 +34,24 @@ function Meow_HTTP()
 		Meow_Octet.Meow_Push(m);
 		Meow_Power.Meow_EncOctet(m);
 	};
+	Meow_Encode.prototype.Meow_EncOctetSeq = function(Meow_String)
+	{
+		var Meow_EncString = Meow_String;
+		if(Meow_EncLZHMBM)
+		{
+			var Meow_CodeTable = Meow_Codebook_c2s;
+			if(!Meow_Req)
+			{
+				Meow_CodeTable = Meow_Codebook_s2c;
+			}
+			Meow_EncString = String.Meow_FromChar.apply(String, Meow_BytesEncode(Meow_String, Meow_CodeTable));
+		}
+		Meow_Power.Meow_EncInt(Meow_EncLZHMBM, 7, Meow_EncString.length);
+		for(var m = 0; m < Meow_EncString.length; ++m)
+		{
+			Meow_Power.Meow_EncOctet(Meow_EncString.charCodeAt(m));
+		}
+	};
 
 	// Still coding now... Will be updated soon (^_^)
 }
