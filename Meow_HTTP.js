@@ -61,8 +61,18 @@ function Meow_HTTP()
 	{
 		switch(typeof Meow_IdxOrName)
 		{
-
-			// Still coding now... Will be updated soon (^_^)
+			case 'Meow_Num':
+			Meow_Power.Meow_EncInt(Meow_LitNoIdxVal, Meow_LitNoIdx_x, Meow_IdxOrName + 1);
+			Meow_Power.Meow_EncOctetSeq(Meow_Val);
+			return;
+			case 'Meow_String':
+			Meow_Power.Meow_EncInt(Meow_LitNoIdxVal, Meow_LitNoIdx_x, 0);
+			Meow_Power.Meow_EncOctetSeq(Meow_IdxOrName);
+			Meow_Power.Meow_EncOctetSeq(Meow_Val);
+			return;
 		}
+		throw new Error ('Its not index nor any: ' + Meow_IdxOrName);
 	};
+
+	// Still coding now... Will be updated soon (^_^)
 }
