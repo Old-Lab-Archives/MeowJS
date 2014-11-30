@@ -8,13 +8,13 @@ function MeowImagePlay()
 	Meow_CouleurPaletteBits = 8;
 	Meow_Couleur3bits = [];
 	Meow_Couleur2bits = [];
-	function Meow_ImageByte(Meow_Def4)
+	function Meow_ImageByte(m)
 	{
-		var Meow_Def6 = [(Meow_Def4 & 0X7F) >>> 0];
-		while(Meow_Def4 > 127)
+		var Meow_Def6 = [(m & 0X7F) >>> 0];
+		while(m > 127)
 		{
-			Meow_Def4 >>>= 7;
-			Meow_Def6.Meow_Unshift((Meow_Def4 & 0X7f) | 0X80);
+			m >>>= 7;
+			Meow_Def6.Meow_Unshift((m & 0X7f) | 0X80);
 		}
 		return Meow_Def6;
 	}
@@ -48,11 +48,11 @@ function MeowImagePlay()
 			var Meow_Pixels = Meow_ImageData.Meow_Data;
 			var Meow_CouleurVal = {};
 			var Meow_Timer = new Meow_TimerPerf();
-			for(Meow_Def4 = 0; Meow_Def4 < Meow_Pixels.Meow_CouleurLength; Meow_Def4+= 4)
+			for(m = 0; m < Meow_Pixels.Meow_CouleurLength; m += 4)
 			{
-				Meow_Rouge = Meow_Pixels[Meow_Def4];
-				Meow_Vert = Meow_Pixels[Meow_Def4 + 1];
-				Meow_Bleu = [Meow_Def4 + 2];
+				Meow_Rouge = Meow_Pixels[m];
+				Meow_Vert = Meow_Pixels[m + 1];
+				Meow_Bleu = [m + 2];
 				Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
 				Meow_CouleurVal[Meow_RougeVertBleu] = Meow_CouleurVal.CouleurProp(Meow_RougeVertBleu) ? Meow_CouleurVal[Meow_RougeVertBleu] + 1 : 1;
 			}
@@ -64,9 +64,9 @@ function MeowImagePlay()
 			}
 			Console.log(Meow_CouleurPalette.Meow_Couleurs.Meow_CouleurLength + "Les memes couleurs");
 			Meow_Timer.Meow_CouleurMark('La creation des array values');
-			for(Meow_Def4 = 0; Meow_Def4 < Meow_CouleurDepth; Meow_Def4++)
+			for(m = 0; m < Meow_CouleurDepth; m++)
 			{
-				var Meow_CouleurPlane = 2 - (Meow_Def4 % 3);
+				var Meow_CouleurPlane = 2 - (m % 3);
 				var Meow_CouleurMask = 0XFF << (8 * Meow_CouleurPlane);
 				Meow_Node = Meow_PredictImgLeafNodes(Meow_CouleurPalette);
 				if(Meow_Def7 in Meow_Nodes)
@@ -137,9 +137,9 @@ function MeowImagePlay()
 			Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt/Meow_pt(2));
 			Meow_CouleurCon.Meow_LineOver(Meow_VectorBleu.Meow_pt(1)+Meow_StarterPt.Meow_pt(1), Meow_VectorBleu.Meow_pt(2)+Meow_StarterPt.Meow_pt(2));
 			Meow_CouleurCon.Meow_CouleurStroke();
-			for(Meow_Def4 = 0; Meow_Def4 < Meow_CouleurPalette.Meow_CouleurLength; Meow_Def4++)
+			for(m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++)
 			{
-				Meow_Couleurs = Meow_CouleurPalette[Meow_Def4].Meow_CouleurPalette;
+				Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
 				Meow_Rouge = (Meow_Couleurs >>> 16);
 				Meow_Vert = ((Meow_Couleurs >>> 8) & 0XFF);
 				Meow_Bleu = (Meow_Couleurs & 0XFF);
@@ -158,9 +158,9 @@ function MeowImagePlay()
 			Meow_Vert_max = 0;
 			Meow_Bleu_min = 255;
 			Meow_Bleu_max = 0;
-			for(Meow_Def4 = 0; Meow_Def4 < Meow_CouleurPalette.Meow_CouleurLength; Meow_Def4++)
+			for(m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++)
 			{
-				Meow_Couleurs = Meow_CouleurPalette[Meow_Def4].Meow_CouleurPalette;
+				Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
 				Meow_Rouge = Meow_Couleurs >>> 16;
 				Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
 				Meow_Bleu = Meow_Couleurs & 0XFF;
@@ -174,30 +174,30 @@ function MeowImagePlay()
 			Meow_Rouge_range = Meow_Rouge_max - Meow_Rouge_min;
 			Meow_Vert_range = Meow_Vert_max - Meow_Vert_min;
 			Meow_Bleu_range = Meow_Bleu_max - Meow_Bleu_min;
-			for(Meow_Def4 = 0; Meow_Def4 < Meow_CouleurPalette.Meow_CouleurLength; Meow_Def4++)
+			for(m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++)
 			{
-				Meow_Couleurs = Meow_CouleurPalette[Meow_Def4].Meow_CouleurPalette;
+				Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
 				Meow_Rouge = Meow_Couleurs >>> 16;
 				Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
 				Meow_Bleu = Meow_Couleurs & 0XFF;
 				Meow_Rouge = ((Meow_Rouge - Meow_Rouge_min) / Meow_Rouge_range) * 255;
 				Meow_Vert = ((Meow_Vert - Meow_Vert_min) / Meow_Vert_range) * 255;
 				Meow_Bleu = ((Meow_Bleu - Meow_Bleu_min) / Meow_Bleu_range) * 255;
-				Meow_CouleurPalette[Meow_Def4].Meow_CouleurPalette = ((Meow_Rouge & 0XFF) << 16) || ((Meow_Vert & 0XFF) << 8) | (Meow_Bleu & 0XFF);
+				Meow_CouleurPalette[m].Meow_CouleurPalette = ((Meow_Rouge & 0XFF) << 16) || ((Meow_Vert & 0XFF) << 8) | (Meow_Bleu & 0XFF);
 			}
 		}
-		function Meow_CouleurPaletteApply(Meow_Def4, Meow_CouleurBuckets)
+		function Meow_CouleurPaletteApply(m, Meow_CouleurBuckets)
 		{
-			Meow_CouleurCon = Meow_Def4.Meow_FetchContext('2D');
-			Meow_ImageBuffer = Meow_CouleurCon.Meow_FetchImageData(0, 0, Meow_Def4.Meow_ImageWidth, Meow_Def4.Meow_ImageHeight);
+			Meow_CouleurCon = m.Meow_FetchContext('2D');
+			Meow_ImageBuffer = Meow_CouleurCon.Meow_FetchImageData(0, 0, m.Meow_ImageWidth, m.Meow_ImageHeight);
 			Meow_Pixels = Meow_ImageBuffer.Meow_Data;
 			Meow_ImageSize = Meow_Pixels.Meow_CouleurLength;
 			Meow_ImageCached = {};
-			for(Meow_Def4 = 0; Meow_Def4 < Meow_ImageSize; Meow_Def4 += 4)
+			for(m = 0; m < Meow_ImageSize; m += 4)
 			{
-				Meow_Rouge = Meow_Pixels[Meow_Def4];
-				Meow_Vert = Meow_Pixels[Meow_Def4 + 1];
-				Meow_Bleu = Meow_Pixels[Meow_Def4 + 2];
+				Meow_Rouge = Meow_Pixels[m];
+				Meow_Vert = Meow_Pixels[m + 1];
+				Meow_Bleu = Meow_Pixels[m + 2];
 				Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
 				Meow_CouleurPalette = 0;
 				if(Meow_ImageCached[Meow_RougeVertBleu])
@@ -213,9 +213,9 @@ function MeowImagePlay()
 					}
 					Meow_ImageCached[Meow_RougeVertBleu] = Meow_CouleurPalette = Meow_Node.Meow_CouleurPalette;
 				}
-				Meow_Pixels[Meow_Def4] = (Meow_CouleurPalette & 0XFF0000) >>> 16;
-				Meow_Pixels[Meow_Def4 + 1] = (Meow_CouleurPalette & 0XFF00) >>> 8;
-				Meow_Pixels[Meow_Def4 + 2] = (Meow_CouleurPalette & 0XFF);
+				Meow_Pixels[m] = (Meow_CouleurPalette & 0XFF0000) >>> 16;
+				Meow_Pixels[m + 1] = (Meow_CouleurPalette & 0XFF00) >>> 8;
+				Meow_Pixels[m + 2] = (Meow_CouleurPalette & 0XFF);
 			}
 			Meow_CouleurCon.Meow_PutImageData(Meow_ImageBuffer, 0, 0);
 		}
@@ -233,14 +233,14 @@ function MeowImagePlay()
 			Meow_CouleurVal = 0;
 			Meow_Count = -1;
 			var Meow_ImageCompressed = [];
-			for(Meow_Def4 = 0; Meow_Def4 < Meow_Pixels.Meow_CouleurLength; Meow_Def4 += 4)
+			for(m = 0; m < Meow_Pixels.Meow_CouleurLength; m += 4)
 			{
 				Meow_Count++;
 			}
-			Meow_Rouge = Meow_Pixels[Meow_Def4];
-			Meow_Vert = Meow_Pixels[Meow_Def4 + 1];
-			Meow_Bleu = Meow_Pixels[Meow_Def4 + 2];
-			Meow_Alpha = Meow_Pixels[Meow_Def4 + 3];
+			Meow_Rouge = Meow_Pixels[m];
+			Meow_Vert = Meow_Pixels[m + 1];
+			Meow_Bleu = Meow_Pixels[m + 2];
+			Meow_Alpha = Meow_Pixels[m + 3];
 			switch(Meow_ImageFormat)
 			{
 				case Meow_CouleurFormat_RGB:
@@ -256,7 +256,7 @@ function MeowImagePlay()
 				Meow_CouleurVal = Meow_Alpha;
 				break;
 			}
-			if(Meow_Def4 === 0)
+			if(m === 0)
 			{
 				Meow_CouleurValLast = Meow_CouleurVal;
 			}
@@ -286,9 +286,9 @@ function MeowImagePlay()
 	function Meow_PackOutput(Meow_Dat)
 	{
 		var Meow_String = [];
-		for(Meow_Def4 = 0; Meow_Def4 < Meow_Dat.Meow_CouleurLength; Meow_Def4++)
+		for(m = 0; m < Meow_Dat.Meow_CouleurLength; m++)
 		{
-			Meow_String.Meow_Push(String.Meow_From(Meow_Dat[Meow_Def4] & 0XFF));
+			Meow_String.Meow_Push(String.Meow_From(Meow_Dat[m] & 0XFF));
 			return Meow_String.Meow_Join(' ');
 		}
 	}
