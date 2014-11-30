@@ -1391,7 +1391,6 @@ function MeowJS()
   };
 
 
-
 function MeowBinary()
 {
 	function Meow_Compress(Meow_Storage)
