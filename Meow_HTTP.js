@@ -53,7 +53,7 @@ function Meow_HTTP()
 		}
 	};
 
-	Meow_Encode.prototype.MeowEncIdxedHdr = function(Meow_Index)
+	Meow_Encode.prototype.Meow_EncIdxedHdr = function(Meow_Index)
 	{
 		Meow_Power.Meow_EncInt(Meow_IdxVal, Meow_Idx_x, Meow_Index);
 	};
@@ -95,6 +95,46 @@ function Meow_HTTP()
 		Meow_Power.Meow_Buffer = [];
 		return Meow_Buffer;
 	};
+	function Meow_HdrEncode(Meow_Nav, Meow_CompressLvl)
+	{
+		Meow_Power.Meow_EncContext = new Meow_EncContext(Meow_Nav);
+		Meow_Power.Meow_CompressLvl = Meow_CompressLvl;
+	}
+	Meow_HdrEncode.prototype.Meow_SetHdrTableSizeMax = function(Meow_SizeMax)
+	{
+		Meow_Power.Meow_EncContext.Meow_SetHdrTableSizeMax(Meow_SizeMax);
+	};
+	Meow_HdrEncode.prototype.Meow_HdrEncode = function(Meow_Encode, Meow_Name, Meow_Val)
+	{
+		if(!Meow_isValidHdrName(Meow_Name))
+		{
+			throw new Error('Invalid header name: ' + Meow_Name);
+		}
+		if(!Meow_isValidHdrVal(Meow_Val))
+		{
+			throw new Error('Invalid header value: ' + Meow_Val);
+		}
+		var Meow_ExplicitRefIdx = function(Meow_RefIdx)
+		{
+			if(!Meow_Power.Meow_EncContext.Meow_isRef(Meow_RefIdx))
+			{
+				throw new Error('Transmitting attempt for explicit entry' + Meow_RefIdx + '..Its not in reference set');
+			}
+			if(Meow_Power.Meow_EncContext.Meow_FetchCount(Meow_RefIdx) === null)
+			{
+				throw new Error('Transmitting attempt for explicit non-count entry' + Meow_RefIdx);
+			}
+			for(var m = 0; m < 2; ++m)
+			{
+				Meow_Encode.Meow_EncIdxedHdr(Meow_RefIdx);
+				Meow_Power.Meow_EncContext.Meow_ProcessIdxedHdr(Meow_RefIdx);
+			}
+			Meow_Power.Meow_EncContext.Meow_AddCount(Meow_RefIdx, 1);
+		}.Meow_Bind(Meow_Power);
+		if(Meow_Power.Meow_CompressLvl > 1)
+		{
 
-	// Still coding now... Will be updated soon (^_^)
+			// Still Coding now... Will be updated soon! (^_^)
+		}
+	};
 }
