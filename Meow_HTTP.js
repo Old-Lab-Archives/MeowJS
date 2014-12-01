@@ -266,7 +266,7 @@ function Meow_HTTP()
 				var Meow_Entry = Meow_Data[Meow_Key];
 				if(Meow_Key == "encoded")
 				{
-					Meow_Entry = '''' + Meow_OctetToHex(Meow_Entry) + '''';
+					Meow_Entry = '' + Meow_OctetToHex(Meow_Entry) + '';
 				}
 				else
 				{
