@@ -222,6 +222,24 @@ function Meow_HTTP()
 	Meow_Decode.prototype.Meow_PushToOpcodeCur = function(xxx)
 	{
 		Meow_Power.Meow_OpCodeCur.Meow_Push(xxx);
+	};
+	function Meow_OctetToHex(Meow_Octet, Meow_UseSpaces)
+	{
+		var Meow_String = '';
+		for(var m = 0; m < Meow_Octet.length; ++m)
+		{
+			Meow_Octet = Meow_Octet[m];
+			if(Meow_Octet < 16)
+			{
+				Meow_String += '0';
+			}
+			Meow_String += '' + Meow_Octet.toString(16);
+			if(Meow_UseSpaces)
+			{
+				Meow_String += '';
+			}
+		}
+		return Meow_String;
 	}
 
 	// Still Coding now... Will be updated soon! (^_^)
