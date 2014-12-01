@@ -253,7 +253,50 @@ function Meow_HTTP()
 				Meow_Col += Meow_NumSpaces;
 			}
 		}
-
-		// Still Coding now... Will be updated soon! (^_^)
+		var Meow_TableLen = 0;
+		for(var m = 0; m < Meow_OpFields.length; ++m)
+		{
+			var Meow_Name = Meow_OpFields[m].name;
+			var Meow_Data = Meow_OpFields[m].data;
+			Meow_AddSpaces(Meow_TableLen);
+			Meow_OpOutput += Meow_Name + ':\n';
+			Meow_TableLen = 4;
+			for(var Meow_Key in Meow_Data)
+			{
+				var Meow_Entry = Meow_Data[Meow_Key];
+				if(Meow_Key == "encoded")
+				{
+					Meow_Entry = '''' + Meow_OctetToHex(Meow_Entry) + '''';
+				}
+				else
+				{
+					Meow_Entry = Meow_Entry.toString();
+				}
+				Meow_AddSpaces(Meow_TableLen + 4);
+				Meow_OpOutput += Meow_Key + ' : ' + Meow_Entry + '\n';
+			}
+			Meow_TableLen = 4;
+		}
+		return Meow_OpOutput;
 	}
+	Meow_Decode.prototype.Meow_OpCodeCurFinished = function()
+	{
+		Meow_Power.Meow_OpCodeStack.Meow_Push(Meow_Power.Meow_OpCodeCur);
+		Meow_Power.Meow_OpCodeCur = [];
+	};
+	Meow_Decode.prototype.Meow_FetchOpcodeFormatList = function()
+	{
+		var Meow_OpOutput = "";
+		for(var m = 0; m < Meow_Power.Meow_OpCodeStack.length; ++m)
+		{
+			Meow_OpOutput += Meow_OpcodeFormat(Meow_Power.Meow_OpCodeStack[m]) + '\n';
+		}
+		return Meow_OpOutput;
+	};
+	Meow_Decode.prototype.Meow_MoreData = function()
+	{
+		return Meow_Power.m < Meow_Power.Meow_Buffer.length;
+	};
+
+	// Still coding now... Will be updated soon! (^_^)
 }
