@@ -241,6 +241,19 @@ function Meow_HTTP()
 		}
 		return Meow_String;
 	}
+	function Meow_OpcodeFormat(Meow_OpFields)
+	{
+		var Meow_OpOutput = '';
+		var Meow_Col = 0;
+		function Meow_AddSpaces(Meow_NumSpaces)
+		{
+			for(var m3 = 0; m3 < Meow_NumSpaces; ++m3)
+			{
+				Meow_OpOutput += ' ';
+				Meow_Col += Meow_NumSpaces;
+			}
+		}
 
-	// Still Coding now... Will be updated soon! (^_^)
+		// Still Coding now... Will be updated soon! (^_^)
+	}
 }
