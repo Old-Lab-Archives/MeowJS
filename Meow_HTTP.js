@@ -164,7 +164,52 @@ function Meow_HTTP()
 				return;
 			}
 		}
-
-		// Still Coding now... Will be updated soon! (^_^)
+		var Meow_Index = -1;
+		if(Meow_Power.Meow_CompressLvl > 0)
+		{
+			Meow_Index = Meow_Power.Meow_EncContext.Meow_FindIdxNameVal(Meow_Name);
+		}
+		var Meow_OnRefSetRemove = function(Meow_RefIdx)
+		{ }.Meow_Bind(Meow_Power);
+		var Meow_IdxOrName = (Meow_Index >= 0) ? Meow_Index : Meow_Name;
+		if((Meow_Power.Meow_CompressLvl > 3))
+		{
+			var Meow_StoredIdx = Meow_Power.Meow_EncContext.Meow_ProcessLitHdrIncreIdx(Meow_Name, Meow_Val, Meow_OnRefSetRemove);
+			Meow_Encode.Meow_EncLitHdrIncreIdx(Meow_IdxOrName, Meow_Val);
+			if(Meow_StoredIdx >= 0)
+			{
+				Meow_Power.Meow_EncContext.Meow_AddCount(Meow_StoredIdx, 1);
+			}
+			return;
+		}
+		Meow_Encode.Meow_EncLitHdrWOIdx(Meow_IdxOrName, Meow_Val);
 	};
+	Meow_HdrEncode.prototype.Meow_HdrEncodeSet = function(Meow_HdrSet)
+	{
+		var Meow_Encode = new Meow_Encode();
+		for(var m = 0; m < Meow_HdrSet.length; ++m)
+		{
+			var Meow_Key = Meow_HdrSet[m][0];
+			var Meow_Val = Meow_HdrSet[m][1];
+			var Meow_Vals = [Meow_Val];
+			if(Meow_Key == "cookie")
+			{ }
+			for(var m2 = 0; m2 < Meow_Vals.length; ++m2)
+			{
+				Meow_Power.Meow_EncHdr(Meow_Encode, Meow_Key, Meow_Vals[m2]);
+			}
+		}
+		Meow_Power.Meow_EncContext.Meow_PerEntry(function(Meow_Index, Meow_Name, Meow_Val, Meow_Ref, Meow_Countt)
+		{
+			if(Meow_Ref && (Meow_Countt === null))
+			{
+				Meow_Encode.Meow_EncIdxedHdr(Meow_Index);
+				Meow_Power.Meow_EncContext.Meow_ProcessIdxedHdr(Meow_Index);
+			}
+			Meow_Power.Meow_EncContext.Meow_ClearCount(Meow_Index);
+		}.bind(Meow_Power));
+		return Meow_Encode.Meow_Flush();
+	};
+
+	// Still Coding now... Will be updated soon! (^_^)
 }
