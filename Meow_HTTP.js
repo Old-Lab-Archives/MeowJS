@@ -297,6 +297,20 @@ function Meow_HTTP()
 	{
 		return Meow_Power.m < Meow_Power.Meow_Buffer.length;
 	};
+	Meow_Decode.prototype.Meow_JumpNxtOctet = function()
+	{
+		if(!Meow_Power.Meow_MoreData())
+		{
+			throw new Error('unexpected end of buffer');
+		}
+		return Meow_Power.Meow_Buffer[Meow_Power.m] & 0Xff;
+	};
+	Meow_Decode.prototype.Meow_DecodeNxtOctet = function()
+	{
+		var Meow_NxtOctet = Meow_Power.Meow_JumpNxtOctet();
+		++Meow_Power.m;
+		return Meow_NxtOctet;
+	};
 
 	// Still coding now... Will be updated soon! (^_^)
 }
