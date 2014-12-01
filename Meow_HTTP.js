@@ -210,6 +210,19 @@ function Meow_HTTP()
 		}.bind(Meow_Power));
 		return Meow_Encode.Meow_Flush();
 	};
+	function Meow_Decode(Meow_Buffer, Meow_EncContext, Meow_CallFunc)
+	{
+		Meow_Power.Meow_Buffer = Meow_Buffer;
+		Meow_Power.m = 0;
+		Meow_Power.Meow_EncContext = Meow_EncContext;
+		Meow_Power.Meow_CallFunc = Meow_CallFunc;
+		Meow_Power.Meow_OpCodeStack = [];
+		Meow_Power.Meow_OpCodeCur = [];
+	}
+	Meow_Decode.prototype.Meow_PushToOpcodeCur = function(xxx)
+	{
+		Meow_Power.Meow_OpCodeCur.Meow_Push(xxx);
+	}
 
 	// Still Coding now... Will be updated soon! (^_^)
 }
