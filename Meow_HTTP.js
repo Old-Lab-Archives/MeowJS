@@ -386,6 +386,23 @@ function Meow_HTTP()
 		}
 		return Meow_Name;
 	};
+	function Meow_FindOpCode(Meow_NxtOctet)
+	{
+		var Meow_OpCode = Meow_OpCodes.Meow_UnknownOpCode;
+		if((Meow_NxtOctet >> Meow_Idx_x) == Meow_IdxVal)
+		{
+			Meow_OpCode = Meow_OpCodes.Meow_IdxOpCode;
+		}
+		else if((Meow_NxtOctet >> Meow_LitNoIdx_x) == Meow_LitNoIdxVal)
+		{
+			Meow_OpCode = Meow_OpCodes.Meow_LitNoIdxOpcode;
+		}
+		else if((Meow_NxtOctet >> Meow_LitIncre_x) == Meow_LitIncreVal)
+		{
+			Meow_OpCode = Meow_OpCodes.Meow_LitIncreOpcode;
+		}
+		return Meow_OpCode;
+	}
 
 	// Still coding now... Will be updated soon! (^_^)
 }
