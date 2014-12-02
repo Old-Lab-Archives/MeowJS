@@ -18,20 +18,27 @@ function Meow_DCT_md5()
 			{
 				return (ROutput ^ 0X80000000 ^ 1X8 ^ 1Y8);
 			}
+			if(1X4 | 1Y4)
+			{
+				if(ROutput & 0X40000000)
+				{
+					return (ROutput ^ 0XC0000000 ^ 1X8 ^ 1Y8);
+				}
+				else
+				{
+					return (ROutput ^ 0X40000000 ^ 1X8 ^ 1Y8);
+				}
+			};
 			else
 			{
-				return (ROutput ^ 0X40000000 ^ 1X8 ^ 1Y8);
+				return(ROutput ^ 1X8 ^ 1Y8);
 			}
 		}
-		else
+		function P(l, m, n)
 		{
-			return(ROutput ^ 1X8 ^ 1Y8);
+			return (l & m) | ((~l) & n);
 		}
-	};
-	function P(l, m, n)
-	{
-		return (l & m) | ((~l) & n);
-	}
 
-	// Still coding now... Will be updated soon! (^_^)
+		// Still coding now... Will be updated soon! (^_^)
+	};
 }
