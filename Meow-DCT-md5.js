@@ -104,6 +104,40 @@ function Meow_DCT_md5()
 			}
 			return Meow_ConvertWordToHexVal;
 		}
+		function Meow_UTF8Encode(Meow_String)
+		{
+			Meow_String = Meow_String.replace(/\r\n/g, "\n");
+			var Meow_UTFtext = "";
+			for(var x = 0; x < Meow_String.length; x++)
+			{
+				var m4 = Meow_String.charCodeAt(x);
+				if(m4 < 128)
+				{
+					Meow_UTFtext += String.fromCharCode(m4);
+				}
+				else if((m4 > 127) && (m4 < 2048))
+				{
+					Meow_UTFtext += String.fromCharCode((m4 >> 6) | 192);
+					Meow_UTFtext += String.fromCharCode((m4 & 63) | 128);
+				}
+				else
+				{
+					Meow_UTFtext += String.fromCharCode((m4 >> 12) | 224);
+					Meow_UTFtext += String.fromCharCode(((m4 >> 6) & 63) | 128);
+					Meow_UTFtext += String.fromCharCode((m4 & 63) | 128);
+				}
+			}
+			return Meow_UTFtext;
+		}
+		var xxx = Array();
+		var m3, iii, jjj, kkk, lll, ii, jj, kk, ll;
+		var N11 = 7, N12 = 12, N13 = 17, N14 = 22;
+		var N21 = 5, N22 = 9, N23 = 14, N24 = 20;
+		var N31 = 4, N32 = 11, N33 = 16, N34 = 23;
+		var N41 = 6, N42 = 10, N43 = 15, N44 = 21;
+		Meow_String = Meow_UTF8Encode(Meow_String);
+		xxx = Meow_ConvertToWordArray(Meow_String);
+		ii = 0X67452301; jj = 0XEFCDAB89; kk = 0X98BADCFE; ll = 0X10325476;
 
 		// Still coding now... Will be updated soon! (^_^)
 	};
