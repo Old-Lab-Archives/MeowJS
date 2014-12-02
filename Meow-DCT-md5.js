@@ -37,6 +37,38 @@ function Meow_DCT_md5()
 		{
 			return (l & m) | ((~l) & n);
 		}
+		function Q(l, m, n)
+		{
+			return (l & n) | (m & (~n));
+		}
+		function R(l, m, n)
+		{
+			return (l ^ m ^ n);
+		}
+		function S(l, m, n)
+		{
+			return (m ^ (l | (~n)));
+		}
+		function PP(ii, jj, kk, ll, mm, nn, oo)
+		{
+			ii = Meow_AddUnsigned(ii, Meow_AddUnsigned(Meow_AddUnsigned(P(jj, kk, ll), mm), oo));
+				return Meow_AddUnsigned(Meow_RotateLeft(ii, nn), jj);
+		}
+		function QQ(ii, jj, kk, ll, mm, nn, oo)
+		{
+			ii = Meow_AddUnsigned(ii, Meow_AddUnsigned(Meow_AddUnsigned(Q(jj, kk, ll), mm), oo));
+			return Meow_AddUnsigned(Meow_RotateLeft(ii, nn), jj);
+		}
+		function RR(ii, jj, kk, ll, mm, nn, oo)
+		{
+			ii = Meow_AddUnsigned(ii, Meow_AddUnsigned(Meow_AddUnsigned(R(jj, kk, ll), mm), oo));
+			return Meow_AddUnsigned(Meow_RotateLeft(ii, nn), jj);
+		}
+		function SS(ii, jj, kk, ll, mm, nn, oo)
+		{
+			ii = Meow_AddUnsigned(ii, Meow_AddUnsigned(Meow_AddUnsigned(S(jj, kk, ll), mm), oo));
+			return Meow_AddUnsigned(Meow_RotateLeft(ii, nn), jj);
+		}
 
 		// Still coding now... Will be updated soon! (^_^)
 	};
