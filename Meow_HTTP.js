@@ -341,6 +341,30 @@ function Meow_HTTP()
 		Meow_Power.Meow_PushToOpcodeCur( { Meow_Name: Meow_Description, Meow_Data: { Meow_Encode: Meow_Data, Meow_Decode: m}} );
 		return m;
 	};
+	Meow_Decode.prototype.Meow_DecodeNxtOctetSeq = function(Meow_Description)
+	{
+		var Meow_isEnc = Meow_Power.Meow_JumpNxtOctet() >> 7 & 1;
+		var Meow_Len = Meow_Power.Meow_DecodeNxtInt(7, Meow_Description + "Meow_Len");
+		var Meow_String = '';
+		if(Meow_isEnc)
+		{
+			var Meow_InvCodeTable = Meow_InvCodebook_c2s;
+			if(!Meow_Req)
+			{
+				Meow_InvCodeTable = Meow_InvCodebook_s2c;
+			}
+			Meow_String = Meow_BytesDecode(Meow_Data, 0, Meow_InvCodeTable).Meow_String;
+			Meow_Power.m += Meow_Len;
+		}
+		else
+		{
+			for(var m = 0; m < Meow_Len; ++m)
+			{
+				var Meow_NxtOctet = Meow_Power.Meow_DecodeNxtOctet();
+				Meow_String += String.fromCharCode(Meow_NxtOctet);
+			}
+		}
 
-	// Still coding now... Will be updated soon! (^_^)
+		// Still coding now... Will be updated soon! (^_^)
+	};
 }
