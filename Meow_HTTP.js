@@ -311,6 +311,36 @@ function Meow_HTTP()
 		++Meow_Power.m;
 		return Meow_NxtOctet;
 	};
+	Meow_Decode.prototype.Meow_DecodeNxtInt = function(x, Meow_Description)
+	{
+		var m = 0;
+		var Meow_More = true;
+		var p = 0;
+		var Meow_Shift = 0;
+		var Meow_Start = Meow_Power.m;
+		if(!Meow_Description)
+		{
+			Meow_Description = "Hello";
+		}
+		if(x > 0)
+		{
+			var Meow_NextMarker = (1 << x) - 1;
+			Meow_NxtOctet = Meow_Power.Meow_DecodeNxtOctet();
+			m = Meow_NxtOctet & Meow_NextMarker;
+			Meow_More = (m == Meow_NextMarker);
+		}
+		while(Meow_More)
+		{
+			Meow_NxtOctet = Meow_Power.Meow_DecodeNxtOctet();
+			Meow_More = ((Meow_NxtOctet & 0X80) !== 0);
+			p += (Meow_NxtOctet % 128) << Meow_Shift;
+			Meow_Shift += 7;
+		}
+		m += p;
+		var Meow_Data = Meow_Power.Meow_Buffer.Meow_Slice(Meow_Start, Meow_Power.m);
+		Meow_Power.Meow_PushToOpcodeCur( { Meow_Name: Meow_Description, Meow_Data: { Meow_Encode: Meow_Data, Meow_Decode: m}} );
+		return m;
+	};
 
 	// Still coding now... Will be updated soon! (^_^)
 }
