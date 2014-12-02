@@ -403,6 +403,71 @@ function Meow_HTTP()
 		}
 		return Meow_OpCode;
 	}
-
-	// Still coding now... Will be updated soon! (^_^)
+	Meow_Decode.prototype.Meow_ProcessNxtHdrRep = function()
+	{
+		var Meow_NxtOctet = Meow_Power.Meow_JumpNxtOctet();
+		var Meow_OpCodeStartIdx = Meow_Power.m;
+		var Meow_OpCode = Meow_FindOpCode(Meow_NxtOctet);
+		Meow_Power.Meow_PushToOpcodeCur({Meow_Name: Meow_OpCode.name, Meow_Data: { Meow_OpCodeLenBits: Meow_OpCode.Meow_OpCodeLen, Meow_BytesFound: "'" + Meow_OctetToHex([Meow_NxtOctet]) + "'"}});
+		switch(Meow_OpCode)
+		{
+			case Meow_OpCodes.Meow_IdxOpCode:
+			var Meow_Index = Meow_Power.Meow_DecodeNxtInt(7, "index_entry");
+			Meow_Power.Meow_EncContext.Meow_ProcessIdxedHdr(Meow_Index);
+			if(!Meow_Power.Meow_EncContext.Meow_isRef(Meow_Index))
+			{
+				break;
+			}
+			Meow_Power.Meow_EncContext.Meow_AddCount(Meow_Index, 0);
+			var Meow_Name = Meow_Power.Meow_EncContext.Meow_FetchIdxedHdrName(Meow_Index);
+			var Meow_Val = Meow_Power.Meow_EncContext.Meow_FetchIdxedHdrVal(Meow_Index);
+			Meow_Power.Meow_CallFunc(Meow_Name, Meow_Val);
+			break;
+			case Meow_OpCodes.Meow_LitIncreOpcode:
+			Meow_Name = Meow_Power.Meow_DecodeNxtName(Meow_LitIncre_x);
+			Meow_Val = Meow_Power.Meow_DecodeNxtVal();
+			Meow_Index = Meow_Power.Meow_EncContext.Meow_ProcessLitHdrIncreIdx(Meow_Name, Meow_Val, function(Meow_RefIdx)
+			{ });
+			if(Meow_Index >= 0)
+			{
+				Meow_Power.Meow_EncContext.Meow_AddCount(Meow_Index, 0);
+			}
+			Meow_Power.Meow_CallFunc(Meow_Name, Meow_Val);
+			break;
+			case Meow_OpCodes.Meow_LitNoIdxOpcode:
+			Meow_Name = Meow_Power.Meow_DecodeNxtName(Meow_LitNoIdx_x);
+			Meow_Val = Meow_Power.Meow_DecodeNxtVal();
+			Meow_Power.Meow_CallFunc(Meow_Name, Meow_Val);
+			break;
+			default:
+			throw new Error('Unable to decode opcode from ' + Meow_NxtOctet);
+		}
+		Meow_Power.Meow_OpCodeCurFinished();
+	};
+	function Meow_DecodeHdr(Meow_Nav)
+	{
+		Meow_Power.Meow_EncContext = new Meow_EncContext(Meow_Nav);
+	}
+	Meow_DecodeHdr.prototype.Meow_SetHdrTableSizeMax = function(Meow_SizeMax)
+	{
+		Meow_Power.Meow_EncContext.Meow_SetHdrTableSizeMax(Meow_SizeMax);
+	};
+	Meow_DecodeHdr.prototype.Meow_DecodeHdrSet = function(Meow_HdrEncodeSet, Meow_CallFunc)
+	{
+		var Meow_Decode = new Meow_Decode(Meow_HdrEncodeSet, Meow_Power.Meow_EncContext, Meow_CallFunc);
+		while(Meow_Decode.Meow_MoreData())
+		{
+			Meow_Decode.Meow_ProcessNxtHdrRep();
+		}
+		var Meow_OpcodeFormat = Meow_Decode.Meow_FetchOpcodeFormatList();
+		Meow_Power.Meow_EncContext.Meow_PerEntry(function(Meow_Index, Meow_Name, Meow_Val, Meow_Ref, Meow_Countt)
+		{
+			if(Meow_Ref && (Meow_Countt == null))
+			{
+				Meow_CallFunc(Meow_Name, Meow_Val);
+			}
+			Meow_Power.Meow_EncContext.Meow_ClearCount(Meow_Index);
+		}.Meow_Bind(Meow_Power));
+		return Meow_OpcodeFormat;
+	};
 }
