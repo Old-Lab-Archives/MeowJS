@@ -138,7 +138,13 @@ function Meow_DCT_md5()
 		Meow_String = Meow_UTF8Encode(Meow_String);
 		xxx = Meow_ConvertToWordArray(Meow_String);
 		ii = 0X67452301; jj = 0XEFCDAB89; kk = 0X98BADCFE; ll = 0X10325476;
+		for(m3 = 0; m3 < xxx.length; m3 += 16)
+		{
+			iii = ii; jjj = jj; kkk = kk; lll = ll;
+			ii = PP(ii, jj, kk, ll, xxx[m3 + 0], N11, 0XD76AA478);
+			ll = PP(ll, ii, jj, kk, xxx[m3 + 1], N12, 0XE8C7B756);
 
-		// Still coding now... Will be updated soon! (^_^)
+			// Still coding now... Will be updated soon! (^_^)
+		}
 	};
 }
