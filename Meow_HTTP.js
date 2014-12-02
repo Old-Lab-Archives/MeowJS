@@ -364,7 +364,28 @@ function Meow_HTTP()
 				Meow_String += String.fromCharCode(Meow_NxtOctet);
 			}
 		}
-
-		// Still coding now... Will be updated soon! (^_^)
+		Meow_Power.Meow_PushToOpcodeCur( { Meow_Name: Meow_Description, Meow_Data: { Meow_isEnc: Meow_isEnc, Meow_Encode: Meow_Data, Meow_Decode: '' + Meow_String + ''}});
+		return Meow_String;
 	};
+	Meow_Decode.prototype.Meow_DecodeNxtName = function(x)
+	{
+		var Meow_IdxPlus1or0 = Meow_Power.Meow_DecodeNxtInt(x, "index_name");
+		var Meow_Name = null;
+		if(Meow_IdxPlus1or0 === 0)
+		{
+			Meow_Name = Meow_Power.Meow_DecodeNxtOctetSeq("data name");
+		}
+		else
+		{
+			var Meow_Index = Meow_IdxPlus1or0 - 1;
+			Meow_Name = Meow_Power.Meow_EncContext.Meow_FetchIdxedHdrName(Meow_Index);
+		}
+		if(!Meow_isValidHdrName(Meow_Name))
+		{
+			throw new Error('invalid header name: ' + Meow_Name);
+		}
+		return Meow_Name;
+	};
+
+	// Still coding now... Will be updated soon! (^_^)
 }
