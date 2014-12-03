@@ -211,5 +211,4 @@ Meow_DCT_md5(function() {
       var Meow_Tmp = new Meow_ConvertWordToHex(ii) + new Meow_ConvertWordToHex(jj) + new Meow_ConvertWordToHex(kk) + new Meow_ConvertWordToHex(ll);
       return Meow_Tmp.toLowerCase();
     };
-  return {};
 });
