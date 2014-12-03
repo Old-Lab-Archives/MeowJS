@@ -173,6 +173,22 @@ function Meow_DCT_md5()
 			ll = QQ(ll, ii, jj, kk, xxx[m3 + 2], N22, 0XFCEFA3F8);
 			kk = QQ(kk, ll, ii, jj, xxx[m3 + 7], N23, 0X676F02D9);
 			jj = QQ(jj, kk, ll, ii, xxx[m3 + 12], N24, 0X8D2A4C8A);
+			ii = RR(ii, jj, kk, ll, xxx[m3 + 5], N31, 0XFFFA3942);
+			ll = RR(ll, ii, jj, kk, xxx[m3 + 8], N32, 0X8771F681);
+			kk = RR(kk, ll, ii, jj, xxx[m3 + 11], N33, 0X6D9D6122);
+			jj = RR(jj, kk, ll, ii, xxx[m3 + 14], N34, 0XFDE5380C);
+			ii = RR(ii, jj, kk, ll, xxx[m3 + 1], N31, 0XA4BEEA44);
+			ll = RR(ll, ii, jj, kk, xxx[m3 + 4], N32, 0X4BDECFA9);
+			kk = RR(kk, ll, ii, jj, xxx[m3 + 7], N33, 0XF6BB4B60);
+			jj = RR(jj, kk, ll, ii, xxx[m3 + 10], N34, 0XBEBFBC70);
+			ii = RR(ii, jj, kk, ll, xxx[m3 + 13], N31, 0X289B7EC6);
+			ll = RR(ll, ii, jj, kk, xxx[m3 + 0], N32, 0XEAA127FA);
+			kk = RR(kk, ll, ii, jj, xxx[m3 + 3], N33, 0XD4EF3085);
+			jj = RR(jj, kk, ll, ii, xxx[m3 + 6], N34, 0X4881D05);
+			ii = RR(ii, jj, kk, ll, xxx[m3 + 9], N31, 0XD9D4D039);
+			ll = RR(ll, ii, jj, kk, xxx[m3 + 12], N32, 0XE6DB99E5);
+			kk = RR(kk, ll, ii, jj, xxx[m3 + 15], N33, 0X1FA27CF8);
+			jj = RR(jj, kk, ll, ii, xxx[m3 + 2], N34, 0XC4AC5665);
 
 			// Still coding now... Will be updated soon! (^_^)
 		}
