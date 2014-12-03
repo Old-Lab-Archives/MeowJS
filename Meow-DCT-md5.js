@@ -189,8 +189,28 @@ function Meow_DCT_md5()
 			ll = RR(ll, ii, jj, kk, xxx[m3 + 12], N32, 0XE6DB99E5);
 			kk = RR(kk, ll, ii, jj, xxx[m3 + 15], N33, 0X1FA27CF8);
 			jj = RR(jj, kk, ll, ii, xxx[m3 + 2], N34, 0XC4AC5665);
-
-			// Still coding now... Will be updated soon! (^_^)
+			ii = SS(ii, jj, kk, ll, xxx[m3 + 0], N41, 0XF4292244);
+			ll = SS(ll, ii, jj, kk, xxx[m3 + 7], N42, 0X432AFF97);
+			kk = SS(kk, ll, ii, jj, xxx[m3 + 14], N43, 0XAB9423A7);
+			jj = SS(jj, kk, ll, ii, xxx[m3 + 5], N44, 0XFC93A039);
+			ii = SS(ii, jj, kk, ll, xxx[m3 + 12], N41, 0X655B59C3);
+			ll = SS(ll, ii, jj, kk, xxx[m3 + 3], N42, 0X8F0CCC92);
+			kk = SS(kk, ll, ii, jj, xxx[m3 + 10], N43, 0XFFEFF47D);
+			jj = SS(jj, kk, ll, ii, xxx[m3 + 1], N44, 0X85845DD1);
+			ii = SS(ii, jj, kk, ll, xxx[m3 + 8], N41, 0X6FA87E4F);
+			ll = SS(ll, ii, jj, kk, xxx[m3 + 15], N42, 0XFE2CE6E0);
+			kk = SS(kk, ll, ii, jj, xxx[m3 + 6], N43, 0XA3014314);
+			jj = SS(jj, kk, ll, ii, xxx[m3 + 13], N44, 0X4E0811A1);
+			ii = SS(ii, jj, kk, ll, xxx[m3 + 4], N41, 0XF7537E82);
+			ll = SS(ll, ii, jj, kk, xxx[m3 + 11], N42, 0XBD3AF235);
+			kk = SS(kk, ll, ii, jj, xxx[m3 + 2], N43, 0X2AD7D2BB);
+			jj = SS(jj, kk, ll, ii, xxx[m3 + 9], N44, 0XEB86D391);
+			ii = Meow_AddUnsigned(ii, iii);
+			jj = Meow_AddUnsigned(jj, jjj);
+			kk = Meow_AddUnsigned(kk, kkk);
+			ll = Meow_AddUnsigned(ll, lll);
 		}
+		var Meow_Tmp = Meow_ConvertWordToHex(ii) + Meow_ConvertWordToHex(jj) + Meow_ConvertWordToHex(kk) + Meow_ConvertWordToHex(ll);
+		return Meow_Tmp.toLowerCase();
 	};
 }
