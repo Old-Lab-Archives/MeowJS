@@ -2530,5 +2530,4 @@ MeowJS(function() {
         };
       };
     }
-  return {};
 });
