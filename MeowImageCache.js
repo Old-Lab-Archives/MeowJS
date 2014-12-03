@@ -38,14 +38,14 @@ function MeowImageCache()
 				{
 					if(Meow_ImageLoad)
 					{
-						Meow_LoadEvent(e);
+						Meow_ImageLoad(e);
 					}
 					Meow_LoadedNum++;
 					if(Meow_LoadedNum == Meow_ArrayLen)
 					{
 						setTimeout(function()
 						{
-							Meow_ImageLoad(e);
+							Meow_ImageLoad2(e);
 						}, 1);
 					}
 				});
