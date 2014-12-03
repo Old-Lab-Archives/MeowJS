@@ -64,5 +64,4 @@ MeowString(function() {
     console.log("Original Source(String): " + w + "\n");
     console.log("Compressed String: " + new Meow_Parser("") + "\n");
     console.log("Decompressed String: " + new Meow_Decompress(""));
-  return {};
 });
