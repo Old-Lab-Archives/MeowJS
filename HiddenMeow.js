@@ -1,4 +1,4 @@
-var HiddenMeow(function() {
+var HiddenMeow = (function() {
   "use strict";
     var Meow_Predict = function(x, a) {
       Meow_Power.Meow_Nodes = [];
