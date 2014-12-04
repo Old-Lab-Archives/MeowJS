@@ -1,4 +1,4 @@
-Meow_DCT(function() {
+var Meow_DCT = (function() {
   "use strict";
     var Meow_BlockSize = 8;
     var Meow_Coeff = 8;
