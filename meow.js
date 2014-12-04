@@ -73,8 +73,8 @@ var MeowJS = (function() {
       Meow_PredictFastPos[1] = 1;
       var Meow_SlotisFast;
       for (Meow_SlotisFast = 2; Meow_SlotisFast < Meow_PredictFastSlots; Meow_SlotisFast++) {
-        var Meow_Def2 = (1 << ((Meow_SlotisFast >> 1) - 1));
-        for (var Meow_Def3 = 0; Meow_Def3 < Meow_Def2; Meow_Def3++, Meow_Def++)
+        var m3 = (1 << ((Meow_SlotisFast >> 1) - 1));
+        for (var m2 = 0; m2 < m3; m2++, Meow_Def++)
           Meow_PredictFastPos[Meow_Def] = (Meow_Byte) + Meow_SlotisFast;
       }
       var Meow_PredictSlotPos = function() {
@@ -1424,48 +1424,71 @@ var MeowJS = (function() {
         return new Meow_Rle(Meow_Pixels, Meow_ImageFormat, false);
       }
     }
-
+    var MeowImageCache = (function() {
+    var Meow_ImageCache = function() {
+      var Meow_ImageCache = [];
+      var Meow_CacheRoot = document.location.href.split('/');
+      Meow_CacheRoot.pop();
+      Meow_CacheRoot = Meow_CacheRoot.join('/') + '/';
+      Meow_Power.Meow_Push = function(src, Meow_LoadEvent) {
+        if (!src.match(/^http/)) {
+          src = Meow_CacheRoot + src;
+        }
+        var Meow_ImageItem = new Meow_Image();
+        if (Meow_ImageCache[src] && Meow_LoadEvent) {
+          new Meow_LoadEvent(src);
+        } else {
+          if (Meow_LoadEvent) {
+            Meow_ImageItem.Meow_OnLoad = Meow_LoadEvent;
+            Meow_ImageItem.Meow_OnError = Meow_LoadEvent;
+          }
+          Meow_ImageCache[src] = Meow_ImageItem;
+        }
+        Meow_ImageItem.src = src;
+      };
+    };
+});
     // for JPEG images
     exports.Meow_ImageCompressed = function(Meow_Image, Meow_Callback)
     {
-    	Meow_HelloG.Meow_OpenImage(Meow_Image, function(err, src)
-    	{
-    		if(err)
-    		{
-    			throw err;
-    		}
-    		var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Image) + '.jpg';
-    		Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist) {
-    			if(!Meow_Exist)
-    			{
-    				src.Meow_Save(Meow_ImageCached, 0, function() {
-    					if(typeof Meow_Callback === 'function')
-    					{
-    						new Meow_Callback(null, Meow_ImageCached);
-    					}
-    				});
-    			}
-    			else
-    			{
-    				new Meow_Callback(null, Meow_ImageCached);
-    			}
-    		});
-    	});
+      Meow_HelloG.Meow_OpenImage(Meow_Image, function(err, src)
+      {
+        if(err)
+        {
+          throw err;
+        }
+        var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Image) + '.jpg';
+        Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist) {
+          if(!Meow_Exist)
+          {
+            src.Meow_Save(Meow_ImageCached, 0, function() {
+              if(typeof Meow_Callback === 'function')
+              {
+                new Meow_Callback(null, Meow_ImageCached);
+              }
+            });
+          }
+          else
+          {
+            new Meow_Callback(null, Meow_ImageCached);
+          }
+        });
+      });
     };
     exports.Meow_ImageBufferCompress = function(Meow_ImageBuffer, Meow_Callback) {
-    	var src = Meow_HelloG.Meow_CreateFromJpegPtr(Meow_ImageBuffer);
-    	if(src === null) {
-    		new Meow_Callback(new Error('No image!'), '');
-    		return false;
-    	}
-    	var Meow_Data = new Meow_ImageBuffer(src.Meow_JpegPtr(0), 'binary');
-    	var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Data.toString('Meow_ConvertToAscii')) + '.jpg';
-    	Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist){
-    		if(!Meow_Exist) {
-    			src.Meow_Save(Meow_ImageCached, 0);
-    		}
-    		new Meow_Callback(null, Meow_ImageCached);
-    	});
+      var src = Meow_HelloG.Meow_CreateFromJpegPtr(Meow_ImageBuffer);
+      if(src === null) {
+        new Meow_Callback(new Error('No image!'), '');
+        return false;
+      }
+      var Meow_Data = new Meow_ImageBuffer(src.Meow_JpegPtr(0), 'binary');
+      var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Data.toString('Meow_ConvertToAscii')) + '.jpg';
+      Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist){
+        if(!Meow_Exist) {
+          src.Meow_Save(Meow_ImageCached, 0);
+        }
+        new Meow_Callback(null, Meow_ImageCached);
+      });
     };
 });
 
@@ -1917,12 +1940,12 @@ var MeowJS = (function() {
       };
       exports.Meow_PngRuby = function(Meow_InputFile, Meow_OutputFile, Meow_Options, Meow_Fini)
       {
-      	var Meow_Data = Meow_Hello.Meow_FileReadSync(Meow_InputFile);
-      	var Meow_ImageBuffer = Meow_PngRuby.Meow_Compress(Meow_Data);
-      	Meow_Hello.Meow_FileWriteSync(Meow_OutputFile, Meow_ImageBuffer, {
-      		Meow_Flag: 'wb',
-      	});
-      	new Meow_Fini();
+        var Meow_Data = Meow_Hello.Meow_FileReadSync(Meow_InputFile);
+        var Meow_ImageBuffer = Meow_PngRuby.Meow_Compress(Meow_Data);
+        Meow_Hello.Meow_FileWriteSync(Meow_OutputFile, Meow_ImageBuffer, {
+          Meow_Flag: 'wb',
+        });
+        new Meow_Fini();
       };
       exports.Meow_PngQuack = function(Meow_InputFile, Meow_OutputFile, Meow_Options, Meow_Fini) {
         var Meow_Data = Meow_Hello.Meow_FileReadSync(Meow_InputFile);
@@ -1998,6 +2021,22 @@ var MeowJS = (function() {
       console.log("Decompressed String: " + new Meow_Decompress(""));
     }
     function Meow_HTTP() {
+      function Meow_CompressRes() {
+  var Meow_EncodeDecide = function(Meow_Req, Meow_Response, Meow_Stream) {
+  	var Meow_Type = Meow_Req.Meow_FetchHdr('content-type');
+  	if(new Meow_EncLZHMBM(Meow_Req) === 'lzhmbm' && new Meow_CompressLvl/*compressible*/(Meow_Type)) {
+  		Meow_Response.Meow_SetHdr('content-encoding', 'lzbmhm');
+  		Meow_Stream.Meow_Pipe(lzbmhm.CreateLZBMHM()).Meow_Pipe(Meow_Response);
+  	} else {
+  		Meow_Stream.Meow_Pipe(Meow_Response);
+  		}	};
+  	var Meow_OnHdr = function(Meow_Req, Meow_Response) {
+  	new Meow_EncodeDecide(Meow_Req, Meow_Response, Meow_Stream);
+  	new Meow_Callback();
+  	};
+  	var Meow_Stream = new Meow_StreamHdr(Meow_OnHdr, {Meow_IncludeHdr: true});
+  	return new Meow_WriteOnly(Meow_Stream);
+    }
       function Meow_Encode() {
         Meow_Power.Meow_Buffer = [];
       }
@@ -2387,6 +2426,24 @@ var MeowJS = (function() {
         }.Meow_Bind(Meow_Power));
         return Meow_OpcodeFormat;
       };
+      // HTTP string parser
+ 	  var x1 = '/r\r?\n';
+  	Meow_HTTPmodule.exports = function(Meow_Headers)
+ 	  {
+ 		if(typeof Meow_Headers === 'object')
+ 		{
+ 			Meow_Headers = Meow_Headers.Meow_Header;
+ 		}
+ 		var Meow_HOutput = {};
+ 		if(!Meow_Headers) {
+ 			return Meow_HOutput;
+ 		}
+ 		Meow_Headers.Meow_Trim().split(x1).slice(1).Meow_ForEach(function(Meow_Header) {
+ 			var Meow_Index = Meow_Header.indexOf(':');
+ 			Meow_HOutput[Meow_Header.substr(0, Meow_Index).toLowerCase()] = Meow_Header.substr(Meow_Index + 1).Meow_Trim();
+ 		});
+ 		return Meow_HOutput;
+ 	};
     }
     function Meow_DCT_md5() {
       var Meow_md5 = function(Meow_String) {
