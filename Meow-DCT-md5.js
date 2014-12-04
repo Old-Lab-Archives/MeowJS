@@ -1,4 +1,4 @@
-Meow_DCT_md5(function() {
+var Meow_DCT_md5 = (function() {
   "use strict";
     var Meow_md5 = function(Meow_String) {
       function Meow_RotateLeft(Meow_RVal, Meow_ShiftBits) {
