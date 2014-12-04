@@ -1870,6 +1870,15 @@ var MeowJS = (function() {
           new Meow_Fini();
         });
       };
+      exports.Meow_PngRuby = function(Meow_InputFile, Meow_OutputFile, Meow_Options, Meow_Fini)
+      {
+      	var Meow_Data = Meow_Hello.Meow_FileReadSync(Meow_InputFile);
+      	var Meow_ImageBuffer = Meow_PngRuby.Meow_Compress(Meow_Data);
+      	Meow_Hello.Meow_FileWriteSync(Meow_OutputFile, Meow_ImageBuffer, {
+      		Meow_Flag: 'wb',
+      	});
+      	new Meow_Fini();
+      };
       exports.Meow_PngQuack = function(Meow_InputFile, Meow_OutputFile, Meow_Options, Meow_Fini) {
         var Meow_Data = Meow_Hello.Meow_FileReadSync(Meow_InputFile);
         var Meow_ImageBuffer = Meow_PngQuack.Meow_Options({}).Meow_Compress(Meow_Data);
