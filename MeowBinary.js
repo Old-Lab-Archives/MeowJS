@@ -1,4 +1,4 @@
-MeowBinary(function() {
+var MeowBinary = (function() {
   "use strict";
     function Meow_Compress(Meow_Storage) {
       var Meow_Output = 0;
