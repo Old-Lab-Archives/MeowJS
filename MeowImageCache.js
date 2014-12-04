@@ -1,4 +1,4 @@
-MeowImageCache(function() {
+var MeowImageCache = (function() {
   "use strict";
     var Meow_ImageCache = function() {
       var Meow_ImageCache = [];
@@ -39,5 +39,4 @@ MeowImageCache(function() {
         }
       };
     };
-  return {};
 });
