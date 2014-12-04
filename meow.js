@@ -1,4 +1,4 @@
-MeowJS(function() {
+var MeowJS = (function() {
   "use strict";
     function Meow_Base() {
       var Meow_Index;
