@@ -1,4 +1,4 @@
-MeowString(function() {
+var MeowString = (function() {
   "use strict";
     var c = "";
     var d = "";
