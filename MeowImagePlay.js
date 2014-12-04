@@ -1,4 +1,4 @@
-MeowImagePlay(function() {
+var MeowImagePlay = (function() {
   "use strict";
     Meow_CouleurFormat_Grey = 'G';
     Meow_CouleurFormat_Alpha = 'A';
