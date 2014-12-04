@@ -1,4 +1,4 @@
-var MeowImagePlay = (function() {
+MeowImagePlay(function() {
   "use strict";
     Meow_CouleurFormat_Grey = 'G';
     Meow_CouleurFormat_Alpha = 'A';
@@ -262,4 +262,47 @@ var MeowImagePlay = (function() {
         return new Meow_Rle(Meow_Pixels, Meow_ImageFormat, false);
       }
     }
+
+    // for JPEG images
+    exports.Meow_ImageCompressed = function(Meow_Image, Meow_Callback)
+    {
+    	Meow_HelloG.Meow_OpenImage(Meow_Image, function(err, src)
+    	{
+    		if(err)
+    		{
+    			throw err;
+    		}
+    		var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Image) + '.jpg';
+    		Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist) {
+    			if(!Meow_Exist)
+    			{
+    				src.Meow_Save(Meow_ImageCached, 0, function() {
+    					if(typeof Meow_Callback === 'function')
+    					{
+    						new Meow_Callback(null, Meow_ImageCached);
+    					}
+    				});
+    			}
+    			else
+    			{
+    				new Meow_Callback(null, Meow_ImageCached);
+    			}
+    		});
+    	});
+    };
+    exports.Meow_ImageBufferCompress = function(Meow_ImageBuffer, Meow_Callback) {
+    	var src = Meow_HelloG.Meow_CreateFromJpegPtr(Meow_ImageBuffer);
+    	if(src === null) {
+    		new Meow_Callback(new Error('No image!'), '');
+    		return false;
+    	}
+    	var Meow_Data = new Meow_ImageBuffer(src.Meow_JpegPtr(0), 'binary');
+    	var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Data.toString('Meow_ConvertToAscii')) + '.jpg';
+    	Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist){
+    		if(!Meow_Exist) {
+    			src.Meow_Save(Meow_ImageCached, 0);
+    		}
+    		new Meow_Callback(null, Meow_ImageCached);
+    	});
+    };
 });
