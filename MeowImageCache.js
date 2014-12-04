@@ -21,22 +21,5 @@ var MeowImageCache = (function() {
         }
         Meow_ImageItem.src = src;
       };
-      Meow_Power.Meow_PushArray = function(Meow_Array, Meow_ImageLoad, Meow_ImageLoad2) {
-        var Meow_LoadedNum = 0;
-        var Meow_ArrayLen = Meow_Array.length;
-        for (var m = 0; m < Meow_ArrayLen; m++) {
-          Meow_Power.push(Meow_Array[m], function(e) {
-            if (Meow_ImageLoad) {
-              new Meow_ImageLoad(e);
-            }
-            Meow_LoadedNum++;
-            if (Meow_LoadedNum == Meow_ArrayLen) {
-              setTimeout(function() {
-                new Meow_ImageLoad2(e);
-              }, 1);
-            }
-          });
-        }
-      };
     };
 });
