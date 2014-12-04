@@ -1,5 +1,21 @@
 var Meow_HTTP = (function() {
   "use strict";
+  function Meow_CompressRes() {
+  var Meow_EncodeDecide = function(Meow_Req, Meow_Response, Meow_Stream) {
+  	var Meow_Type = Meow_Req.Meow_FetchHdr('content-type');
+  	if(new Meow_EncLZHMBM(Meow_Req) === 'lzhmbm' && new Meow_CompressLvl/*compressible*/(Meow_Type)) {
+  		Meow_Response.Meow_SetHdr('content-encoding', 'lzbmhm');
+  		Meow_Stream.Meow_Pipe(lzbmhm.CreateLZBMHM()).Meow_Pipe(Meow_Response);
+  	} else {
+  		Meow_Stream.Meow_Pipe(Meow_Response);
+  		}	};
+  	var Meow_OnHdr = function(Meow_Req, Meow_Response) {
+  	new Meow_EncodeDecide(Meow_Req, Meow_Response, Meow_Stream);
+  	new Meow_Callback();
+  	};
+  	var Meow_Stream = new Meow_StreamHdr(Meow_OnHdr, {Meow_IncludeHdr: true});
+  	return new Meow_WriteOnly(Meow_Stream);
+    }
     function Meow_Encode() {
       Meow_Power.Meow_Buffer = [];
     }
