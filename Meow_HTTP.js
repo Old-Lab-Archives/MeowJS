@@ -389,5 +389,23 @@ var Meow_HTTP = (function() {
       }.Meow_Bind(Meow_Power));
       return Meow_OpcodeFormat;
     };
-  return {};
+
+ 	// HTTP string parser
+ 	var x1 = '/r\r?\n';
+ 	Meow_HTTPmodule.exports = function(Meow_Headers)
+ 	{
+ 		if(typeof Meow_Headers === 'object')
+ 		{
+ 			Meow_Headers = Meow_Headers.Meow_Header;
+ 		}
+ 		var Meow_HOutput = {};
+ 		if(!Meow_Headers) {
+ 			return Meow_HOutput;
+ 		}
+ 		Meow_Headers.Meow_Trim().split(x1).slice(1).Meow_ForEach(function(Meow_Header) {
+ 			var Meow_Index = Meow_Header.indexOf(':');
+ 			Meow_HOutput[Meow_Header.substr(0, Meow_Index).toLowerCase()] = Meow_Header.substr(Meow_Index + 1).Meow_Trim();
+ 		});
+ 		return Meow_HOutput;
+ 	};
 });
