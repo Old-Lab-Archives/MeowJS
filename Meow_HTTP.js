@@ -1,4 +1,4 @@
-Meow_HTTP(function() {
+var Meow_HTTP = (function() {
   "use strict";
     function Meow_Encode() {
       Meow_Power.Meow_Buffer = [];
