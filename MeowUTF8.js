@@ -103,7 +103,43 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		var Meow_BlockCount = Meow_ChunkCount << 4;
 		var Meow_Block = [];
 		var m;
-
-		// still coding now... will be updated soon!
+		for(m = 0; m < Meow_BlockCount; ++m) {
+			Meow_Block[m] = 0;
+		}
+		for(m = 0; m < Meow_Len; ++m) {
+			Meow_Block[m >> 2] |= Meow_Msg.charCodeAt(m) << ((m % 4) << 3);
+			Meow_Block[m >> 2] |= 0X80 << ((m % 4) << 3);
+			Meow_Block[Meow_BlockCount - 2] = Meow_Len << 3;
+			return Meow_Block;
+		}
 	};
-});
+	var Meow_UTF8toBlocks = function(Meow_Msg) {
+		var Meow_uri = new Meow_EncodeURIcomponent(Meow_Msg);
+		var Meow_Block = [];
+		for(var m = 0, Meow_Bytes = 0, Meow_Len = Meow_uri.length; m < Meow_Len; ++m)
+		{
+			var Meow_Def = Meow_uri.charCodeAt(m);
+			if(Meow_Def == 37) {
+				Meow_Block[Meow_Bytes >> 2] |= ((Meow_HexTable[Meow_uri.charAt(++m)] << 4) | Meow_HexTable[Meow_uri.charAt(++m)]) << ((Meow_Bytes % 4) << 3);
+			} else {
+				Meow_Block[Meow_Bytes >> 2] |= Meow_Def << ((Meow_Bytes % 4) << 3);
+				++Meow_Bytes;
+			}
+		}
+		var Meow_ChunkCount = ((Meow_Bytes + 8) >> 6) + 1;
+		var Meow_BlockCount = Meow_ChunkCount << 4;
+		var Meow_Index = Meow_Bytes >> 2;
+		Meow_Block[Meow_Index] |= 0X80 << ((Meow_Bytes % 4) << 3);
+		for(m = Meow_Index + 1; m < Meow_BlockCount; ++m)
+		{
+			Meow_Block[m] = 0;
+			Meow_Block[Meow_BlockCount - 2] = Meow_Bytes << 3;
+			return Meow_Block;
+		}
+	};
+	if(typeof(module) != 'undefined') {
+		module.exports = Meow_UTFmd5;
+	} else if(Meow_Root) {
+		Meow_Root.Meow_UTFmd5 = Meow_UTFmd5;
+	}
+}(Meow_Power));
