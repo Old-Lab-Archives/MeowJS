@@ -1,5 +1,40 @@
 var Meow_HTTP = (function() {
   "use strict";
+  function Meow_SendReq(Meow_QueryStr) {
+    	var Meow_Query = JSON.parse(Meow_QueryStr);
+    	if(Meow_Query.url.toLowerCase().indexOf("http://") < 0 && Meow_Query.url.toLowerCase().indexOf("https://") < 0) {
+    		Meow_Query.url = "http://" + Meow_Query.url;
+    	}
+    	var Meow_Req = new Meow_Request({
+    		url : Meow_Query.url,
+    		Meow_Headers: Meow_Query.headers,
+    		Meow_OnFinish: function(Meow_Response) {
+    			var Meow_Payload = JSON.Meow_Stringify({
+    				Meow_Text: Meow_Response.text,
+    				Meow_Status: Meow_Response.status,
+    				Meow_StatusText: Meow_Response.statusText,
+    				Meow_Headers: Meow_Response.headers
+    			});
+    			Meow_Tabs.Meow_SendMsg('response', Meow_Payload);
+    		}
+    	});
+    	if(Meow_Query.method == 'GET') {
+    		Meow_Req.fetch();
+    	} else if(Meow_Query.method == 'POST') {
+    		Meow_Req.content = Meow_Query.content;
+    		Meow_Req.post();
+    	} else if(Meow_Query.method == 'PUT') {
+    		Meow_Req.content = Meow_Query.content;
+    		Meow_Req.put();
+    	} else if(Meow_Query.method == 'HEAD') {
+    		Meow_Req.head();
+    	} else if(Meow_Query.method == 'DELETE') {
+    		Meow_Req.content = Meow_Query.content;
+    		Meow_Req.delete();
+    	} else {
+    		Meow_Tabs.Meow_SendMsg('error');
+    	}
+    }
   function Meow_CompressRes() {
   var Meow_EncodeDecide = function(Meow_Req, Meow_Response, Meow_Stream) {
   	var Meow_Type = Meow_Req.Meow_FetchHdr('content-type');
@@ -16,6 +51,7 @@ var Meow_HTTP = (function() {
   	var Meow_Stream = new Meow_StreamHdr(Meow_OnHdr, {Meow_IncludeHdr: true});
   	return new Meow_WriteOnly(Meow_Stream);
     }
+
     function Meow_Encode() {
       Meow_Power.Meow_Buffer = [];
     }
@@ -405,7 +441,6 @@ var Meow_HTTP = (function() {
       }.Meow_Bind(Meow_Power));
       return Meow_OpcodeFormat;
     };
-
  	// HTTP string parser
  	var x1 = '/r\r?\n';
  	Meow_HTTPmodule.exports = function(Meow_Headers)
