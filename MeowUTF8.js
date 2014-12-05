@@ -78,6 +78,31 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 	};
 	var Meow_ToHexStr = function(Meow_Num)
 	{
+		var Meow_Hex = "";
+		for(var m = 0; m < 4; m++)
+		{
+			var Meow_Offset = m << 3;
+			Meow_Hex += Meow_HexChar.charAt((Meow_Num >> (Meow_Offset + 4)) & 0X0F) + Meow_HexChar.charAt((Meow_Num >> Meow_Offset) & 0X0F);
+		}
+		return Meow_Hex;
+	};
+	var Meow_HasUTF8 = function(Meow_Msg) {
+		var m = Meow_Msg.length;
+		while(m--)
+		{
+			if(Meow_Msg.charCodeAt(m) > 127)
+			{
+				return true;
+			}
+			return false;
+		}
+	};
+	var Meow_ASCIItoBlocks = function(Meow_Msg) {
+		var Meow_Len = Meow_Msg.length;
+		var Meow_ChunkCount = ((Meow_Len + 8) >> 6) + 1;
+		var Meow_BlockCount = Meow_ChunkCount << 4;
+		var Meow_Block = [];
+		var m;
 
 		// still coding now... will be updated soon!
 	};
