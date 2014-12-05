@@ -1,6 +1,6 @@
-// Main file
+// Main File
 var MeowJS = (function() {
-  "use strict";
+    "use strict";
     function Meow_Base() {
       var Meow_Index;
       var Meow_Predict = function() {
@@ -1162,336 +1162,303 @@ var MeowJS = (function() {
       }
     }
     var MeowImagePlay = (function() {
-    Meow_CouleurFormat_Grey = 'G';
-    Meow_CouleurFormat_Alpha = 'A';
-    Meow_CouleurFormat_RGB = 'RGB';
-    Meow_CouleurFormat_RGBA = 'RGBA';
-    Meow_CouleurPalette = 'P';
-    Meow_CouleurPaletteBits = 8;
-    Meow_Couleur3bits = [];
-    Meow_Couleur2bits = [];
-    function Meow_ImageByte(m) {
-      var Meow_Def6 = [(m & 0X7F) >>> 0];
-      while (m > 127) {
-        m >>>= 7;
-        Meow_Def6.Meow_Unshift((m & 0X7f) | 0X80);
+      Meow_CouleurFormat_Grey = 'G';
+      Meow_CouleurFormat_Alpha = 'A';
+      Meow_CouleurFormat_RGB = 'RGB';
+      Meow_CouleurFormat_RGBA = 'RGBA';
+      Meow_CouleurPalette = 'P';
+      Meow_CouleurPaletteBits = 8;
+      Meow_Couleur3bits = [];
+      Meow_Couleur2bits = [];
+      function Meow_ImageByte(m) {
+        var Meow_Def6 = [(m & 0X7F) >>> 0];
+        while (m > 127) {
+          m >>>= 7;
+          Meow_Def6.Meow_Unshift((m & 0X7f) | 0X80);
+        }
+        return Meow_Def6;
       }
-      return Meow_Def6;
-    }
-    function Meow_PredictImgLeafNodes(Meow_Node) {
-      if (Meow_Node.ls) {
-        return new Meow_PredictImgLeafNodes(Meow_Node.ls).Meow_Concat(new Meow_PredictImgLeafNodes(Meow_Node.Meow_HelloNode));
-      } else {
-        return Meow_Node;
-      }
-      function Meow_CouleurAvg(Meow_Couleurs, Meow_CouleurMask) {
-        var Meow_PleineDeCouleurs = 0;
-        for (var Meow_Def in Meow_Couleurs) {
-          Meow_PleineDeCouleurs += Meow_Couleurs[Meow_Def] & Meow_CouleurMask;
+      function Meow_PredictImgLeafNodes(Meow_Node) {
+        if (Meow_Node.ls) {
+          return new Meow_PredictImgLeafNodes(Meow_Node.ls).Meow_Concat(new Meow_PredictImgLeafNodes(Meow_Node.Meow_HelloNode));
+        } else {
+          return Meow_Node;
         }
-        return (Meow_PleineDeCouleurs / Meow_Couleurs.Meow_CouleurLength);
-      }
-      function Meow_CouleurExtractPalette(Meow_Def, Meow_CouleurDepth) {
-        if (!Meow_CouleurDepth || Meow_CouleurDepth < 1 || Meow_CouleurDepth > 8) {
-          Meow_CouleurDepth = 8;
+        function Meow_CouleurAvg(Meow_Couleurs, Meow_CouleurMask) {
+          var Meow_PleineDeCouleurs = 0;
+          for (var Meow_Def in Meow_Couleurs) {
+            Meow_PleineDeCouleurs += Meow_Couleurs[Meow_Def] & Meow_CouleurMask;
+          }
+          return (Meow_PleineDeCouleurs / Meow_Couleurs.Meow_CouleurLength);
         }
-        var Meow_CouleurCon = Meow_Def.Meow_FetchContext('2D');
-        var Meow_ImageData = Meow_CouleurCon.Meow_FetchImageData(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight);
-        var Meow_Pixels = Meow_ImageData.Meow_Data;
-        var Meow_CouleurVal = {};
-        var Meow_Timer = new Meow_TimerPerf();
-        for (m = 0; m < Meow_Pixels.Meow_CouleurLength; m += 4) {
-          Meow_Rouge = Meow_Pixels[m];
-          Meow_Vert = Meow_Pixels[m + 1];
-          Meow_Bleu = [m + 2];
-          Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
-          Meow_CouleurVal[Meow_RougeVertBleu] = Meow_CouleurVal.CouleurProp(Meow_RougeVertBleu) ? Meow_CouleurVal[Meow_RougeVertBleu] + 1 : 1;
-        }
-        Meow_Timer.Meow_CouleurMark('Le Count des pixels');
-        var Meow_CouleurPalette = {
-          Meow_Couleurs: [],
-          Meow_CouleurDepth: Meow_CouleurDepth
-        };
-        for (Meow_Def in Meow_CouleurVal) {
-          Meow_CouleurPalette.Meow_Couleurs.Meow_Push(Meow_Def);
-        }
-        Console.log(Meow_CouleurPalette.Meow_Couleurs.Meow_CouleurLength + "Les memes couleurs");
-        Meow_Timer.Meow_CouleurMark('La creation des array values');
-        for (m = 0; m < Meow_CouleurDepth; m++) {
-          var Meow_CouleurPlane = 2 - (m % 3);
-          var Meow_CouleurMask = 0XFF << (8 * Meow_CouleurPlane);
-          Meow_Node = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
-          if (Meow_Def7 in Meow_Nodes) {
+        function Meow_CouleurExtractPalette(Meow_Def, Meow_CouleurDepth) {
+          if (!Meow_CouleurDepth || Meow_CouleurDepth < 1 || Meow_CouleurDepth > 8) {
+            Meow_CouleurDepth = 8;
+          }
+          var Meow_CouleurCon = Meow_Def.Meow_FetchContext('2D');
+          var Meow_ImageData = Meow_CouleurCon.Meow_FetchImageData(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight);
+          var Meow_Pixels = Meow_ImageData.Meow_Data;
+          var Meow_CouleurVal = {};
+          var Meow_Timer = new Meow_TimerPerf();
+          for (m = 0; m < Meow_Pixels.Meow_CouleurLength; m += 4) {
+            Meow_Rouge = Meow_Pixels[m];
+            Meow_Vert = Meow_Pixels[m + 1];
+            Meow_Bleu = [m + 2];
+            Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
+            Meow_CouleurVal[Meow_RougeVertBleu] = Meow_CouleurVal.CouleurProp(Meow_RougeVertBleu) ? Meow_CouleurVal[Meow_RougeVertBleu] + 1 : 1;
+          }
+          Meow_Timer.Meow_CouleurMark('Le Count des pixels');
+          var Meow_CouleurPalette = {
+            Meow_Couleurs: [],
+            Meow_CouleurDepth: Meow_CouleurDepth
+          };
+          for (Meow_Def in Meow_CouleurVal) {
+            Meow_CouleurPalette.Meow_Couleurs.Meow_Push(Meow_Def);
+          }
+          Console.log(Meow_CouleurPalette.Meow_Couleurs.Meow_CouleurLength + "Les memes couleurs");
+          Meow_Timer.Meow_CouleurMark('La creation des array values');
+          for (m = 0; m < Meow_CouleurDepth; m++) {
+            var Meow_CouleurPlane = 2 - (m % 3);
+            var Meow_CouleurMask = 0XFF << (8 * Meow_CouleurPlane);
+            Meow_Node = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+            if (Meow_Def7 in Meow_Nodes) {
+              Meow_Node = Meow_Nodes[Meow_Def7];
+              Meow_Node.Meow_CouleurPlane = Meow_CouleurPlane;
+              Meow_Node.Meow_CouleurMask = Meow_CouleurMask;
+              Meow_Node.Meow_Couleurs.Meow_Sort = (Meow_Co1, Meow_Co2);
+              Meow_Node.ls = {Meow_Couleurs: Meow_Node.Meow_Couleurs.Meow_CouleurSplice(0, Meow_Node.Meow_Couleurs.Meow_CouleurLength)};
+              Meow_Node.Meow_HelloNode = {Meow_Couleurs: Meow_Node.Meow_Couleurs};
+              Meow_Node.Meow_CouleursSplit = Meow_Node.Meow_HelloNode.Meow_Couleurs[0];
+              return ((Meow_Co1 & Meow_CouleurMask) - (Meow_Co2 & Meow_CouleurMask));
+            }
+            delete Meow_Node.Meow_Couleurs;
+          }
+          Meow_Nodes = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+          var Meow_Def7;
+          for (Meow_Def7 in Meow_Nodes) {
             Meow_Node = Meow_Nodes[Meow_Def7];
-            Meow_Node.Meow_CouleurPlane = Meow_CouleurPlane;
-            Meow_Node.Meow_CouleurMask = Meow_CouleurMask;
-            Meow_Node.Meow_Couleurs.Meow_Sort = (Meow_Co1, Meow_Co2);
-            Meow_Node.ls = {Meow_Couleurs: Meow_Node.Meow_Couleurs.Meow_CouleurSplice(0, Meow_Node.Meow_Couleurs.Meow_CouleurLength)};
-            Meow_Node.Meow_HelloNode = {Meow_Couleurs: Meow_Node.Meow_Couleurs};
-            Meow_Node.Meow_CouleursSplit = Meow_Node.Meow_HelloNode.Meow_Couleurs[0];
-            return ((Meow_Co1 & Meow_CouleurMask) - (Meow_Co2 & Meow_CouleurMask));
+            Meow_Rouge = 0;
+            Meow_Vert = 0;
+            Meow_Bleu = 0;
+            Meow_Count = 0;
+            for (Meow_Def in Meow_Node.Meow_Couleurs) {
+              var Meow_Couleurs = Meow_Node.Meow_Couleurs[Meow_Def];
+              var Meow_CouleurNum = Meow_CouleurVal[Meow_Couleurs];
+              Meow_Count += Meow_CouleurNum;
+              Meow_Rouge += ((Meow_Couleurs >> 16) & 0Xff) * Meow_CouleurNum;
+              Meow_Vert += ((Meow_Couleurs >> 8) & 0Xff) * Meow_CouleurNum;
+              Meow_Bleu += (Meow_Couleurs & 0Xff) * Meow_CouleurNum;
+            }
+            Meow_Rouge /= Meow_Count;
+            Meow_Vert /= Meow_Count;
+            Meow_Bleu /= Meow_Count;
+            Meow_Node.Meow_CouleurPalette = ((Meow_Rouge << 16) & 0XFF0000) | ((Meow_Vert << 8) & 0XFF00);
           }
-          delete Meow_Node.Meow_Couleurs;
+          return Meow_CouleurPalette;
         }
-        Meow_Nodes = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
-        var Meow_Def7;
-        for (Meow_Def7 in Meow_Nodes) {
-          Meow_Node = Meow_Nodes[Meow_Def7];
-          Meow_Rouge = 0;
-          Meow_Vert = 0;
-          Meow_Bleu = 0;
-          Meow_Count = 0;
-          for (Meow_Def in Meow_Node.Meow_Couleurs) {
-            var Meow_Couleurs = Meow_Node.Meow_Couleurs[Meow_Def];
-            var Meow_CouleurNum = Meow_CouleurVal[Meow_Couleurs];
-            Meow_Count += Meow_CouleurNum;
-            Meow_Rouge += ((Meow_Couleurs >> 16) & 0Xff) * Meow_CouleurNum;
-            Meow_Vert += ((Meow_Couleurs >> 8) & 0Xff) * Meow_CouleurNum;
-            Meow_Bleu += (Meow_Couleurs & 0Xff) * Meow_CouleurNum;
+        function Meow_CouleurPaletteDisplay(Meow_CouleurPalette) {
+          if (window['$.Val'] === undefined) {
+            console.log('Pas load, Pas display');
+            return;
           }
-          Meow_Rouge /= Meow_Count;
-          Meow_Vert /= Meow_Count;
-          Meow_Bleu /= Meow_Count;
-          Meow_Node.Meow_CouleurPalette = ((Meow_Rouge << 16) & 0XFF0000) | ((Meow_Vert << 8) & 0XFF00);
+          Meow_CouleurPalette = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+          var Meow_Def = document.createElement('canvas');
+          Meow_Def.Meow_ImageWidth = 256;
+          Meow_Def.Meow_ImageHeight = 256;
+          document.body.Meow_AppendChild(Meow_Def);
+          var Meow_CouleurCon = Meow_Def.Meow_FetchContext('2D');
+          Meow_CouleurCon.Meow_StyleFill = '#888888';
+          Meow_CouleurCon.Meow_RectFill(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight);
+          var Meow_StarterPt = $.Val(170, 170);
+          var Meow_VectorRouge = $.Val(-168, 0);
+          var Meow_VectorVert = $.Val(83, 83);
+          var Meow_VectorBleu = $.Val(0, -168);
+          Meow_CouleurCon.Meow_StyleFill = 'noir';
+          Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt.Meow_pt(2));
+          Meow_CouleurCon.Meow_LineOver(Meow_VectorRouge.Meow_pt(1) + Meow_StarterPt.Meow_pt(1), Meow_VectorRouge.Meow_pt(2) + Meow_StarterPt.Meow_pt(2));
+          Meow_CouleurCon.Meow_CouleurStroke();
+          Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt.Meow_pt(2));
+          Meow_CouleurCon.Meow_LineOver(Meow_VectorVert.Meow_pt(1) + Meow_StarterPt.Meow_pt(1), Meow_VectorVert.Meow_pt(2) + Meow_StarterPt.Meow_pt(2));
+          Meow_CouleurCon.Meow_CouleurStroke();
+          Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt / new Meow_pt(2));
+          Meow_CouleurCon.Meow_LineOver(Meow_VectorBleu.Meow_pt(1) + Meow_StarterPt.Meow_pt(1), Meow_VectorBleu.Meow_pt(2) + Meow_StarterPt.Meow_pt(2));
+          Meow_CouleurCon.Meow_CouleurStroke();
+          for (m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++) {
+            Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
+            Meow_Rouge = (Meow_Couleurs >>> 16);
+            Meow_Vert = ((Meow_Couleurs >>> 8) & 0XFF);
+            Meow_Bleu = (Meow_Couleurs & 0XFF);
+            var Meow_Dot = Meow_StarterPt.Meow_Add(Meow_VectorRouge.Meow_Multiply(Meow_Rouge / 255).Meow_Add(Meow_VectorVert.Meow_Multiply(Meow_Vert / 255).Meow_Add(Meow_VectorBleu.Meow_Multiply(Meow_Bleu / 255))));
+            Meow_CouleurCon.Meow_StyleFill = 'RGB(' + Meow_Rouge + ',' + Meow_Vert + ',' + Meow_Bleu + ')';
+            Meow_CouleurCon.Meow_RectFill(Meow_Dot.Meow_pt(1), Meow_Dot.Meow_pt(2), 4, 4);
+          }
+          return Meow_Def;
         }
-        return Meow_CouleurPalette;
-      }
-      function Meow_CouleurPaletteDisplay(Meow_CouleurPalette) {
-        if (window['$.Val'] === undefined) {
-          console.log('Pas load, Pas display');
-          return;
+        function Meow_CouleurPaletteExp(Meow_CouleurPalette) {
+          Meow_CouleurPalette = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
+          Meow_Rouge_min = 255;
+          Meow_Rouge_max = 0;
+          Meow_Vert_min = 255;
+          Meow_Vert_max = 0;
+          Meow_Bleu_min = 255;
+          Meow_Bleu_max = 0;
+          for (m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++) {
+            Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
+            Meow_Rouge = Meow_Couleurs >>> 16;
+            Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
+            Meow_Bleu = Meow_Couleurs & 0XFF;
+            Meow_Rouge_min = Math.Meow_Min(Meow_Rouge, Meow_Rouge_min);
+            Meow_Rouge_max = Math.Meow_Max(Meow_Rouge, Meow_Rouge_max);
+            Meow_Vert_min = Math.Meow_Min(Meow_Vert, Meow_Vert_min);
+            Meow_Vert_max = Math.Meow_Max(Meow_Vert, Meow_Vert_max);
+            Meow_Bleu_min = Math.Meow_Min(Meow_Bleu, Meow_Bleu_min);
+            Meow_Bleu_max = Math.Meow_Max(Meow_Bleu, Meow_Bleu_max);
+          }
+          Meow_Rouge_range = Meow_Rouge_max - Meow_Rouge_min;
+          Meow_Vert_range = Meow_Vert_max - Meow_Vert_min;
+          Meow_Bleu_range = Meow_Bleu_max - Meow_Bleu_min;
+          for (m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++) {
+            Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
+            Meow_Rouge = Meow_Couleurs >>> 16;
+            Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
+            Meow_Bleu = Meow_Couleurs & 0XFF;
+            Meow_Rouge = ((Meow_Rouge - Meow_Rouge_min) / Meow_Rouge_range) * 255;
+            Meow_Vert = ((Meow_Vert - Meow_Vert_min) / Meow_Vert_range) * 255;
+            Meow_Bleu = ((Meow_Bleu - Meow_Bleu_min) / Meow_Bleu_range) * 255;
+            Meow_CouleurPalette[m].Meow_CouleurPalette = ((Meow_Rouge & 0XFF) << 16) || ((Meow_Vert & 0XFF) << 8) | (Meow_Bleu & 0XFF);
+          }
         }
-        Meow_CouleurPalette = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
-        var Meow_Def = document.createElement('canvas');
-        Meow_Def.Meow_ImageWidth = 256;
-        Meow_Def.Meow_ImageHeight = 256;
-        document.body.Meow_AppendChild(Meow_Def);
-        var Meow_CouleurCon = Meow_Def.Meow_FetchContext('2D');
-        Meow_CouleurCon.Meow_StyleFill = '#888888';
-        Meow_CouleurCon.Meow_RectFill(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight);
-        var Meow_StarterPt = $.Val(170, 170);
-        var Meow_VectorRouge = $.Val(-168, 0);
-        var Meow_VectorVert = $.Val(83, 83);
-        var Meow_VectorBleu = $.Val(0, -168);
-        Meow_CouleurCon.Meow_StyleFill = 'noir';
-        Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt.Meow_pt(2));
-        Meow_CouleurCon.Meow_LineOver(Meow_VectorRouge.Meow_pt(1) + Meow_StarterPt.Meow_pt(1), Meow_VectorRouge.Meow_pt(2) + Meow_StarterPt.Meow_pt(2));
-        Meow_CouleurCon.Meow_CouleurStroke();
-        Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt.Meow_pt(2));
-        Meow_CouleurCon.Meow_LineOver(Meow_VectorVert.Meow_pt(1) + Meow_StarterPt.Meow_pt(1), Meow_VectorVert.Meow_pt(2) + Meow_StarterPt.Meow_pt(2));
-        Meow_CouleurCon.Meow_CouleurStroke();
-        Meow_CouleurCon.Meow_MoveOver(Meow_StarterPt.Meow_pt(1), Meow_StarterPt / new Meow_pt(2));
-        Meow_CouleurCon.Meow_LineOver(Meow_VectorBleu.Meow_pt(1) + Meow_StarterPt.Meow_pt(1), Meow_VectorBleu.Meow_pt(2) + Meow_StarterPt.Meow_pt(2));
-        Meow_CouleurCon.Meow_CouleurStroke();
-        for (m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++) {
-          Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
-          Meow_Rouge = (Meow_Couleurs >>> 16);
-          Meow_Vert = ((Meow_Couleurs >>> 8) & 0XFF);
-          Meow_Bleu = (Meow_Couleurs & 0XFF);
-          var Meow_Dot = Meow_StarterPt.Meow_Add(Meow_VectorRouge.Meow_Multiply(Meow_Rouge / 255).Meow_Add(Meow_VectorVert.Meow_Multiply(Meow_Vert / 255).Meow_Add(Meow_VectorBleu.Meow_Multiply(Meow_Bleu / 255))));
-          Meow_CouleurCon.Meow_StyleFill = 'RGB(' + Meow_Rouge + ',' + Meow_Vert + ',' + Meow_Bleu + ')';
-          Meow_CouleurCon.Meow_RectFill(Meow_Dot.Meow_pt(1), Meow_Dot.Meow_pt(2), 4, 4);
+        function Meow_CouleurPaletteApply(m, Meow_CouleurBuckets) {
+          Meow_CouleurCon = m.Meow_FetchContext('2D');
+          Meow_ImageBuffer = Meow_CouleurCon.Meow_FetchImageData(0, 0, m.Meow_ImageWidth, m.Meow_ImageHeight);
+          Meow_Pixels = Meow_ImageBuffer.Meow_Data;
+          Meow_ImageSize = Meow_Pixels.Meow_CouleurLength;
+          Meow_ImageCached = {};
+          for (m = 0; m < Meow_ImageSize; m += 4) {
+            Meow_Rouge = Meow_Pixels[m];
+            Meow_Vert = Meow_Pixels[m + 1];
+            Meow_Bleu = Meow_Pixels[m + 2];
+            Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
+            Meow_CouleurPalette = 0;
+            if (Meow_ImageCached[Meow_RougeVertBleu]) {
+              Meow_CouleurPalette = Meow_ImageCached[Meow_RougeVertBleu];
+            } else {
+              Meow_Node = Meow_CouleurBuckets;
+              for (Meow_Bleu = 0; Meow_Bleu < Meow_CouleurBuckets.Meow_CouleurDepth; Meow_Bleu++) {
+                Meow_Node = (Meow_RougeVertBleu & Meow_Node.Meow_CouleurMask) < (Meow_Node.Meow_CouleursSplit & Meow_CouleurMask) ? Meow_Node.ls : Meow_Node.Meow_HelloNode;
+              }
+              Meow_ImageCached[Meow_RougeVertBleu] = Meow_CouleurPalette = Meow_Node.Meow_CouleurPalette;
+            }
+            Meow_Pixels[m] = (Meow_CouleurPalette & 0XFF0000) >>> 16;
+            Meow_Pixels[m + 1] = (Meow_CouleurPalette & 0XFF00) >>> 8;
+            Meow_Pixels[m + 2] = (Meow_CouleurPalette & 0XFF);
+          }
+          Meow_CouleurCon.Meow_PutImageData(Meow_ImageBuffer, 0, 0);
         }
-        return Meow_Def;
-      }
-      function Meow_CouleurPaletteExp(Meow_CouleurPalette) {
-        Meow_CouleurPalette = new Meow_PredictImgLeafNodes(Meow_CouleurPalette);
-        Meow_Rouge_min = 255;
-        Meow_Rouge_max = 0;
-        Meow_Vert_min = 255;
-        Meow_Vert_max = 0;
-        Meow_Bleu_min = 255;
-        Meow_Bleu_max = 0;
-        for (m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++) {
-          Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
-          Meow_Rouge = Meow_Couleurs >>> 16;
-          Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
-          Meow_Bleu = Meow_Couleurs & 0XFF;
-          Meow_Rouge_min = Math.Meow_Min(Meow_Rouge, Meow_Rouge_min);
-          Meow_Rouge_max = Math.Meow_Max(Meow_Rouge, Meow_Rouge_max);
-          Meow_Vert_min = Math.Meow_Min(Meow_Vert, Meow_Vert_min);
-          Meow_Vert_max = Math.Meow_Max(Meow_Vert, Meow_Vert_max);
-          Meow_Bleu_min = Math.Meow_Min(Meow_Bleu, Meow_Bleu_min);
-          Meow_Bleu_max = Math.Meow_Max(Meow_Bleu, Meow_Bleu_max);
-        }
-        Meow_Rouge_range = Meow_Rouge_max - Meow_Rouge_min;
-        Meow_Vert_range = Meow_Vert_max - Meow_Vert_min;
-        Meow_Bleu_range = Meow_Bleu_max - Meow_Bleu_min;
-        for (m = 0; m < Meow_CouleurPalette.Meow_CouleurLength; m++) {
-          Meow_Couleurs = Meow_CouleurPalette[m].Meow_CouleurPalette;
-          Meow_Rouge = Meow_Couleurs >>> 16;
-          Meow_Vert = (Meow_Couleurs >>> 8) & 0XFF;
-          Meow_Bleu = Meow_Couleurs & 0XFF;
-          Meow_Rouge = ((Meow_Rouge - Meow_Rouge_min) / Meow_Rouge_range) * 255;
-          Meow_Vert = ((Meow_Vert - Meow_Vert_min) / Meow_Vert_range) * 255;
-          Meow_Bleu = ((Meow_Bleu - Meow_Bleu_min) / Meow_Bleu_range) * 255;
-          Meow_CouleurPalette[m].Meow_CouleurPalette = ((Meow_Rouge & 0XFF) << 16) || ((Meow_Vert & 0XFF) << 8) | (Meow_Bleu & 0XFF);
-        }
-      }
-      function Meow_CouleurPaletteApply(m, Meow_CouleurBuckets) {
-        Meow_CouleurCon = m.Meow_FetchContext('2D');
-        Meow_ImageBuffer = Meow_CouleurCon.Meow_FetchImageData(0, 0, m.Meow_ImageWidth, m.Meow_ImageHeight);
-        Meow_Pixels = Meow_ImageBuffer.Meow_Data;
-        Meow_ImageSize = Meow_Pixels.Meow_CouleurLength;
-        Meow_ImageCached = {};
-        for (m = 0; m < Meow_ImageSize; m += 4) {
+        function Meow_Rle(Meow_Pixels, Meow_ImageFormat, Meow_PackOutput) {
+          if (!Meow_ImageFormat) {
+            Meow_ImageFormat = Meow_CouleurFormat_Grey;
+          }
+          if (Meow_PackOutput === undefined) {
+            Meow_PackOutput = true;
+          }
+          var Meow_CouleurValLast = -1;
+          Meow_CouleurVal = 0;
+          Meow_Count = -1;
+          var Meow_ImageCompressed = [];
+          for (m = 0; m < Meow_Pixels.Meow_CouleurLength; m += 4) {
+            Meow_Count++;
+          }
           Meow_Rouge = Meow_Pixels[m];
           Meow_Vert = Meow_Pixels[m + 1];
           Meow_Bleu = Meow_Pixels[m + 2];
-          Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
-          Meow_CouleurPalette = 0;
-          if (Meow_ImageCached[Meow_RougeVertBleu]) {
-            Meow_CouleurPalette = Meow_ImageCached[Meow_RougeVertBleu];
-          } else {
-            Meow_Node = Meow_CouleurBuckets;
-            for (Meow_Bleu = 0; Meow_Bleu < Meow_CouleurBuckets.Meow_CouleurDepth; Meow_Bleu++) {
-              Meow_Node = (Meow_RougeVertBleu & Meow_Node.Meow_CouleurMask) < (Meow_Node.Meow_CouleursSplit & Meow_CouleurMask) ? Meow_Node.ls : Meow_Node.Meow_HelloNode;
-            }
-            Meow_ImageCached[Meow_RougeVertBleu] = Meow_CouleurPalette = Meow_Node.Meow_CouleurPalette;
+          Meow_Alpha = Meow_Pixels[m + 3];
+          switch (Meow_ImageFormat) {
+            case Meow_CouleurFormat_RGB:
+              Meow_CouleurVal = (Meow_Rouge & 0XE0) | ((Meow_Vert & 0XE0) >> 3) | ((Meow_Bleu & 0XC0) >> 6);
+              break;
+            case Meow_CouleurFormat_RGBA:
+              Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge / 85) & 0X03) << 6) | ((Math.Meow_CouleurRond(Meow_Vert / 85) & 0X03) << 4) | ((Math.Meow_CouleurRond(Meow_Bleu / 85) & 0X03) << 2) | (Math.Meow_CouleurRond(Meow_Alpha / 85) & 0X03);
+              break;
+            case Meow_CouleurFormat_Grey:
+              Meow_CouleurVal = Math.Meow_CouleurFloor((Meow_Rouge + Meow_Vert + Meow_Bleu) / 3) & 0XFF;
+              break;
+            case Meow_CouleurFormat_Alpha:
+              Meow_CouleurVal = Meow_Alpha;
+              break;
           }
-          Meow_Pixels[m] = (Meow_CouleurPalette & 0XFF0000) >>> 16;
-          Meow_Pixels[m + 1] = (Meow_CouleurPalette & 0XFF00) >>> 8;
-          Meow_Pixels[m + 2] = (Meow_CouleurPalette & 0XFF);
+          if (m === 0) {
+            Meow_CouleurValLast = Meow_CouleurVal;
+          }
+          if (Meow_CouleurVal != Meow_CouleurValLast) {
+            Meow_IByte = new Meow_ImageByte(Meow_Count);
+          }
+          for (var Meow_Bleu in Meow_IByte) {
+            Meow_ImageCompressed.Meow_Push(Meow_IByte[Meow_Bleu]);
+            Meow_ImageCompressed.Meow_Push(Meow_CouleurValLast);
+            Meow_Count = 0;
+          }
         }
-        Meow_CouleurCon.Meow_PutImageData(Meow_ImageBuffer, 0, 0);
+        Meow_CouleurValLast = Meow_CouleurVal;
       }
-      function Meow_Rle(Meow_Pixels, Meow_ImageFormat, Meow_PackOutput) {
-        if (!Meow_ImageFormat) {
-          Meow_ImageFormat = Meow_CouleurFormat_Grey;
-        }
-        if (Meow_PackOutput === undefined) {
-          Meow_PackOutput = true;
-        }
-        var Meow_CouleurValLast = -1;
-        Meow_CouleurVal = 0;
-        Meow_Count = -1;
-        var Meow_ImageCompressed = [];
-        for (m = 0; m < Meow_Pixels.Meow_CouleurLength; m += 4) {
-          Meow_Count++;
-        }
-        Meow_Rouge = Meow_Pixels[m];
-        Meow_Vert = Meow_Pixels[m + 1];
-        Meow_Bleu = Meow_Pixels[m + 2];
-        Meow_Alpha = Meow_Pixels[m + 3];
-        switch (Meow_ImageFormat) {
-          case Meow_CouleurFormat_RGB:
-            Meow_CouleurVal = (Meow_Rouge & 0XE0) | ((Meow_Vert & 0XE0) >> 3) | ((Meow_Bleu & 0XC0) >> 6);
-            break;
-          case Meow_CouleurFormat_RGBA:
-            Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge / 85) & 0X03) << 6) | ((Math.Meow_CouleurRond(Meow_Vert / 85) & 0X03) << 4) | ((Math.Meow_CouleurRond(Meow_Bleu / 85) & 0X03) << 2) | (Math.Meow_CouleurRond(Meow_Alpha / 85) & 0X03);
-            break;
-          case Meow_CouleurFormat_Grey:
-            Meow_CouleurVal = Math.Meow_CouleurFloor((Meow_Rouge + Meow_Vert + Meow_Bleu) / 3) & 0XFF;
-            break;
-          case Meow_CouleurFormat_Alpha:
-            Meow_CouleurVal = Meow_Alpha;
-            break;
-        }
-        if (m === 0) {
-          Meow_CouleurValLast = Meow_CouleurVal;
-        }
-        if (Meow_CouleurVal != Meow_CouleurValLast) {
-          Meow_IByte = new Meow_ImageByte(Meow_Count);
-        }
-        for (var Meow_Bleu in Meow_IByte) {
-          Meow_ImageCompressed.Meow_Push(Meow_IByte[Meow_Bleu]);
-          Meow_ImageCompressed.Meow_Push(Meow_CouleurValLast);
-          Meow_Count = 0;
+      Meow_IByte = new Meow_ImageByte(Meow_Count + 1);
+      if (Meow_Bleu in Meow_IByte) {
+        Meow_ImageCompressed.Meow_Push(Meow_IByte[Meow_Bleu]);
+        Meow_ImageCompressed.Meow_Push(Meow_CouleurValLast);
+        if (Meow_PackOutput) {
+          return new Meow_PackOutput(Meow_ImageCompressed);
         }
       }
-      Meow_CouleurValLast = Meow_CouleurVal;
-    }
-    Meow_IByte = new Meow_ImageByte(Meow_Count + 1);
-    if (Meow_Bleu in Meow_IByte) {
-      Meow_ImageCompressed.Meow_Push(Meow_IByte[Meow_Bleu]);
-      Meow_ImageCompressed.Meow_Push(Meow_CouleurValLast);
-      if (Meow_PackOutput) {
-        return new Meow_PackOutput(Meow_ImageCompressed);
-      }
-    }
-    function Meow_PackOutput(Meow_Dat) {
-      var Meow_String = [];
-      for (m = 0; m < Meow_Dat.Meow_CouleurLength; m++) {
-        Meow_String.Meow_Push(String.Meow_From(Meow_Dat[m] & 0XFF));
-        return Meow_String.Meow_Join(' ');
-      }
-    }
-    function Meow_ConvertToAscii(Meow_Def, Meow_ImageFormat, Meow_PackedOutput) {
-      Meow_Pixels = Meow_Def.Meow_FetchContext('2D').Meow_FetchImageData(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight).Meow_Data;
-      if (Meow_PackedOutput) {
-        return new Meow_Meow(new Meow_Rle(Meow_Pixels, Meow_ImageFormat));
-      } else {
-        return new Meow_Rle(Meow_Pixels, Meow_ImageFormat, false);
-      }
-    }
-    var MeowImageCache = (function() {
-    var Meow_ImageCache = function() {
-      var Meow_ImageCache = [];
-      var Meow_CacheRoot = document.location.href.split('/');
-      Meow_CacheRoot.pop();
-      Meow_CacheRoot = Meow_CacheRoot.join('/') + '/';
-      Meow_Power.Meow_Push = function(src, Meow_LoadEvent) {
-        if (!src.match(/^http/)) {
-          src = Meow_CacheRoot + src;
+      function Meow_PackOutput(Meow_Dat) {
+        var Meow_String = [];
+        for (m = 0; m < Meow_Dat.Meow_CouleurLength; m++) {
+          Meow_String.Meow_Push(String.Meow_From(Meow_Dat[m] & 0XFF));
+          return Meow_String.Meow_Join(' ');
         }
-        var Meow_ImageItem = new Meow_Image();
-        if (Meow_ImageCache[src] && Meow_LoadEvent) {
-          new Meow_LoadEvent(src);
+      }
+      function Meow_ConvertToAscii(Meow_Def, Meow_ImageFormat, Meow_PackedOutput) {
+        Meow_Pixels = Meow_Def.Meow_FetchContext('2D').Meow_FetchImageData(0, 0, Meow_Def.Meow_ImageWidth, Meow_Def.Meow_ImageHeight).Meow_Data;
+        if (Meow_PackedOutput) {
+          return new Meow_Meow(new Meow_Rle(Meow_Pixels, Meow_ImageFormat));
         } else {
-          if (Meow_LoadEvent) {
-            Meow_ImageItem.Meow_OnLoad = Meow_LoadEvent;
-            Meow_ImageItem.Meow_OnError = Meow_LoadEvent;
-          }
-          Meow_ImageCache[src] = Meow_ImageItem;
+          return new Meow_Rle(Meow_Pixels, Meow_ImageFormat, false);
         }
-        Meow_ImageItem.src = src;
-      };
-    };
-});
-    // for JPEG images
-    exports.Meow_ImageCompressed = function(Meow_Image, Meow_Callback)
-    {
-      Meow_HelloG.Meow_OpenImage(Meow_Image, function(err, src)
-      {
-        if(err)
-        {
-          throw err;
-        }
-        var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Image) + '.jpg';
-        Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist) {
-          if(!Meow_Exist)
-          {
-            src.Meow_Save(Meow_ImageCached, 0, function() {
-              if(typeof Meow_Callback === 'function')
-              {
-                new Meow_Callback(null, Meow_ImageCached);
-              }
-            });
-          }
-          else
-          {
-            new Meow_Callback(null, Meow_ImageCached);
-          }
-        });
-      });
-    };
-    exports.Meow_ImageBufferCompress = function(Meow_ImageBuffer, Meow_Callback) {
-      var src = Meow_HelloG.Meow_CreateFromJpegPtr(Meow_ImageBuffer);
-      if(src === null) {
-        new Meow_Callback(new Error('No image!'), '');
-        return false;
       }
-      var Meow_Data = new Meow_ImageBuffer(src.Meow_JpegPtr(0), 'binary');
-      var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Data.toString('Meow_ConvertToAscii')) + '.jpg';
-      Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist){
-        if(!Meow_Exist) {
-          src.Meow_Save(Meow_ImageCached, 0);
+      exports.Meow_ImageCompressed = function(Meow_Image, Meow_Callback) {
+        Meow_HelloG.Meow_OpenImage(Meow_Image, function(err, src) {
+          if (err) {
+            throw err;
+          }
+          var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Image) + '.jpg';
+          Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist) {
+            if (!Meow_Exist) {
+              src.Meow_Save(Meow_ImageCached, 0, function() {
+                if (typeof Meow_Callback === 'function') {
+                  new Meow_Callback(null, Meow_ImageCached);
+                }
+              });
+            } else {
+              new Meow_Callback(null, Meow_ImageCached);
+            }
+          });
+        });
+      };
+      exports.Meow_ImageBufferCompress = function(Meow_ImageBuffer, Meow_Callback) {
+        var src = Meow_HelloG.Meow_CreateFromJpegPtr(Meow_ImageBuffer);
+        if (src === null) {
+          new Meow_Callback(new Error('No image!'), '');
+          return false;
         }
-        new Meow_Callback(null, Meow_ImageCached);
-      });
-    };
-});
-
+        var Meow_Data = new Meow_ImageBuffer(src.Meow_JpegPtr(0), 'binary');
+        var Meow_ImageCached = './cache/' + new Meow_DCT_md5(Meow_Data.toString('Meow_ConvertToAscii')) + '.jpg';
+        Meow_Hello.Meow_Exist(Meow_ImageCached, function(Meow_Exist) {
+          if (!Meow_Exist) {
+            src.Meow_Save(Meow_ImageCached, 0);
+          }
+          new Meow_Callback(null, Meow_ImageCached);
+        });
+      };
+    });
     function HiddenMeow() {
       var Meow_Predict = function(x, a) {
         Meow_Power.Meow_Nodes = [];
@@ -1938,13 +1905,10 @@ var MeowJS = (function() {
           new Meow_Fini();
         });
       };
-      exports.Meow_PngRuby = function(Meow_InputFile, Meow_OutputFile, Meow_Options, Meow_Fini)
-      {
+      exports.Meow_PngRuby = function(Meow_InputFile, Meow_OutputFile, Meow_Options, Meow_Fini) {
         var Meow_Data = Meow_Hello.Meow_FileReadSync(Meow_InputFile);
         var Meow_ImageBuffer = Meow_PngRuby.Meow_Compress(Meow_Data);
-        Meow_Hello.Meow_FileWriteSync(Meow_OutputFile, Meow_ImageBuffer, {
-          Meow_Flag: 'wb',
-        });
+        Meow_Hello.Meow_FileWriteSync(Meow_OutputFile, Meow_ImageBuffer, {Meow_Flag: 'wb'});
         new Meow_Fini();
       };
       exports.Meow_PngQuack = function(Meow_InputFile, Meow_OutputFile, Meow_Options, Meow_Fini) {
@@ -2021,22 +1985,6 @@ var MeowJS = (function() {
       console.log("Decompressed String: " + new Meow_Decompress(""));
     }
     function Meow_HTTP() {
-      function Meow_CompressRes() {
-  var Meow_EncodeDecide = function(Meow_Req, Meow_Response, Meow_Stream) {
-  	var Meow_Type = Meow_Req.Meow_FetchHdr('content-type');
-  	if(new Meow_EncLZHMBM(Meow_Req) === 'lzhmbm' && new Meow_CompressLvl/*compressible*/(Meow_Type)) {
-  		Meow_Response.Meow_SetHdr('content-encoding', 'lzbmhm');
-  		Meow_Stream.Meow_Pipe(lzbmhm.CreateLZBMHM()).Meow_Pipe(Meow_Response);
-  	} else {
-  		Meow_Stream.Meow_Pipe(Meow_Response);
-  		}	};
-  	var Meow_OnHdr = function(Meow_Req, Meow_Response) {
-  	new Meow_EncodeDecide(Meow_Req, Meow_Response, Meow_Stream);
-  	new Meow_Callback();
-  	};
-  	var Meow_Stream = new Meow_StreamHdr(Meow_OnHdr, {Meow_IncludeHdr: true});
-  	return new Meow_WriteOnly(Meow_Stream);
-    }
       function Meow_Encode() {
         Meow_Power.Meow_Buffer = [];
       }
@@ -2426,24 +2374,6 @@ var MeowJS = (function() {
         }.Meow_Bind(Meow_Power));
         return Meow_OpcodeFormat;
       };
-      // HTTP string parser
- 	  var x1 = '/r\r?\n';
-  	Meow_HTTPmodule.exports = function(Meow_Headers)
- 	  {
- 		if(typeof Meow_Headers === 'object')
- 		{
- 			Meow_Headers = Meow_Headers.Meow_Header;
- 		}
- 		var Meow_HOutput = {};
- 		if(!Meow_Headers) {
- 			return Meow_HOutput;
- 		}
- 		Meow_Headers.Meow_Trim().split(x1).slice(1).Meow_ForEach(function(Meow_Header) {
- 			var Meow_Index = Meow_Header.indexOf(':');
- 			Meow_HOutput[Meow_Header.substr(0, Meow_Index).toLowerCase()] = Meow_Header.substr(Meow_Index + 1).Meow_Trim();
- 		});
- 		return Meow_HOutput;
- 	};
     }
     function Meow_DCT_md5() {
       var Meow_md5 = function(Meow_String) {
@@ -2658,4 +2588,143 @@ var MeowJS = (function() {
         return Meow_Tmp.toLowerCase();
       };
     }
+    var MeowUTF8 = (function(Meow_Root, undefined) {
+      var Meow_HexChar = "0123456789abcdef";
+      var Meow_HexTable = {
+        '0': 0,
+        '1': 1,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        'a': 10,
+        'b': 11,
+        'c': 12,
+        'd': 13,
+        'e': 14,
+        'f': 15,
+        'A': 10,
+        'B': 11,
+        'C': 12,
+        'D': 13,
+        'E': 14,
+        'F': 15
+      };
+      var E = [7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21];
+      var EE = [0XD76AA478, 0XE8C7B756, 0X242070DB, 0XC1BDCEEE, 0XF57C0FAF, 0X4787C62A, 0XA8304613, 0XFD469501, 0X698098D8, 0X8B44F7AF, 0XFFFF5BB1, 0X895CD7BE, 0X6B901122, 0XFD987193, 0XA679438E, 0X49B40821, 0XF61E2562, 0XC040B340, 0X265E5A51, 0XE9B6C7AA, 0XD62F105D, 0X02441453, 0XD8A1E681, 0XE7D3FBC8, 0X21E1CDE6, 0XC33707D6, 0XF4D50D87, 0X455A14ED, 0XA9E3E905, 0XFCEFA3F8, 0X676F02D9, 0X8D2A4C8A, 0XFFFA3942, 0X8771F681, 0X6D9D6122, 0XFDE5380C, 0XA4BEEA44, 0X4BDECFA9, 0XF6BB4B60, 0XBEBFBC70, 0X289B7EC6, 0XEAA127FA, 0XD4EF3085, 0X04881D05, 0XD9D4D039, 0XE6DB99E5, 0X1FA27CF8, 0XC4AC5665, 0XF4292244, 0X432AFF97, 0XAB9423A7, 0XFC93A039, 0X655B59C3, 0X8F0CCC92, 0XFFEFF47D, 0X85845DD1, 0X6FA87E4F, 0XFE2CE6E0, 0XA3014314, 0X4E0811A1, 0XF7537E82, 0XBD3AF235, 0X2AD7D2BB, 0XEB86D391];
+      var Meow_UTFmd5 = function(Meow_Msg) {
+        var Meow_Block = new Meow_HasUTF8(Meow_Msg) ? new Meow_UTF8toBlocks(Meow_Msg) : new Meow_ASCIItoBlocks(Meow_Msg);
+        var E0 = 0X67452301;
+        var E1 = 0XEFCDAB89;
+        var E2 = 0X98BADCFE;
+        var E3 = 0X10325476;
+        for (var m = 0,
+            Meow_Len = Meow_Block.length; m < Meow_Len; m += 16) {
+          var ii = E0;
+          var jj = E1;
+          var kk = E2;
+          var ll = E3;
+          var p,
+              q,
+              Meow_Tmp,
+              xxx,
+              y;
+          for (var m2 = 0; m2 < 64; ++m2) {
+            if (m2 < 16) {
+              p = ll ^ (jj & (kk ^ ll));
+              q = m2;
+            } else if (m2 < 32) {
+              p = kk ^ (ll & (jj ^ kk));
+              q = (5 * m2 + 1) % 16;
+            } else if (m2 < 48) {
+              p = jj ^ kk ^ ll;
+              q = (3 * m2 + 5) % 16;
+            } else {
+              p = kk ^ (jj | (~ll));
+              q = (7 * m2) % 16;
+            }
+            Meow_Tmp = ll;
+            ll = kk;
+            kk = jj;
+            xxx = (ii + p + m3[m2] + Meow_Block[m + q]);
+            y = lR[m2];
+            jj += (xxx << y) | (xxx >>> (32 - y));
+            ii = Meow_Tmp;
+          }
+          E0 = (E0 + ii) | 0;
+          E1 = (E1 + jj) | 0;
+          E2 = (E2 + kk) | 0;
+          E3 = (E3 + ll) | 0;
+        }
+        return new Meow_ToHexStr(E0) + new Meow_ToHexStr(E1) + new Meow_ToHexStr(E2) + new Meow_ToHexStr(E3);
+      };
+      var Meow_ToHexStr = function(Meow_Num) {
+        var Meow_Hex = "";
+        for (var m = 0; m < 4; m++) {
+          var Meow_Offset = m << 3;
+          Meow_Hex += Meow_HexChar.charAt((Meow_Num >> (Meow_Offset + 4)) & 0X0F) + Meow_HexChar.charAt((Meow_Num >> Meow_Offset) & 0X0F);
+        }
+        return Meow_Hex;
+      };
+      var Meow_HasUTF8 = function(Meow_Msg) {
+        var m = Meow_Msg.length;
+        while (m--) {
+          if (Meow_Msg.charCodeAt(m) > 127) {
+            return true;
+          }
+          return false;
+        }
+      };
+      var Meow_ASCIItoBlocks = function(Meow_Msg) {
+        var Meow_Len = Meow_Msg.length;
+        var Meow_ChunkCount = ((Meow_Len + 8) >> 6) + 1;
+        var Meow_BlockCount = Meow_ChunkCount << 4;
+        var Meow_Block = [];
+        var m;
+        for (m = 0; m < Meow_BlockCount; ++m) {
+          Meow_Block[m] = 0;
+        }
+        for (m = 0; m < Meow_Len; ++m) {
+          Meow_Block[m >> 2] |= Meow_Msg.charCodeAt(m) << ((m % 4) << 3);
+          Meow_Block[m >> 2] |= 0X80 << ((m % 4) << 3);
+          Meow_Block[Meow_BlockCount - 2] = Meow_Len << 3;
+          return Meow_Block;
+        }
+      };
+      var Meow_UTF8toBlocks = function(Meow_Msg) {
+        var Meow_uri = new Meow_EncodeURIcomponent(Meow_Msg);
+        var Meow_Block = [];
+        for (var m = 0,
+            Meow_Bytes = 0,
+            Meow_Len = Meow_uri.length; m < Meow_Len; ++m) {
+          var Meow_Def = Meow_uri.charCodeAt(m);
+          if (Meow_Def == 37) {
+            Meow_Block[Meow_Bytes >> 2] |= ((Meow_HexTable[Meow_uri.charAt(++m)] << 4) | Meow_HexTable[Meow_uri.charAt(++m)]) << ((Meow_Bytes % 4) << 3);
+          } else {
+            Meow_Block[Meow_Bytes >> 2] |= Meow_Def << ((Meow_Bytes % 4) << 3);
+            ++Meow_Bytes;
+          }
+        }
+        var Meow_ChunkCount = ((Meow_Bytes + 8) >> 6) + 1;
+        var Meow_BlockCount = Meow_ChunkCount << 4;
+        var Meow_Index = Meow_Bytes >> 2;
+        Meow_Block[Meow_Index] |= 0X80 << ((Meow_Bytes % 4) << 3);
+        for (m = Meow_Index + 1; m < Meow_BlockCount; ++m) {
+          Meow_Block[m] = 0;
+          Meow_Block[Meow_BlockCount - 2] = Meow_Bytes << 3;
+          return Meow_Block;
+        }
+      };
+    if (typeof(module) != 'undefined') {
+      module.exports = Meow_UTFmd5;
+    } 
+    else if (Meow_Root)
+    {
+      Meow_Root.Meow_UTFmd5 = Meow_UTFmd5;
+    }
+  }(Meow_Power));
 });
