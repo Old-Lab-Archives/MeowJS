@@ -34,6 +34,9 @@ var Meow_HTTP = (function() {
     	} else {
     		Meow_Tabs.Meow_SendMsg('error');
     	}
+    	exports.Meow_SendReq = function(Meow_Query) {
+    		return new Meow_SendReq(Meow_Query);
+    	};
     }
   function Meow_CompressRes() {
   var Meow_EncodeDecide = function(Meow_Req, Meow_Response, Meow_Stream) {
