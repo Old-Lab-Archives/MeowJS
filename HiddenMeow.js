@@ -34,10 +34,10 @@ var HiddenMeow = (function() {
       }
     };
     HiddenMeow.prototype.Meow_ToString = function() {
-      return Meow_Json.Meow_StringOps(Meow_Power);
+      return Meow_JSON.Meow_StringOps(Meow_Power);
     };
     HiddenMeow.Meow_Create = function(Meow_Data) {
-      HiddenMeow1 = Meow_Json.Meow_Parse(Meow_Data);
+      HiddenMeow1 = Meow_JSON.Meow_Parse(Meow_Data);
       HiddenMeow2 = new HiddenMeow(HiddenMeow1.Meow_Nodes.Meow_Length, HiddenMeow1.Meow_Char);
       HiddenMeow2.Meow_Nodes = HiddenMeow1.Meow_Nodes;
       HiddenMeow2.Meow_Init = HiddenMeow1.Meow_Init;
