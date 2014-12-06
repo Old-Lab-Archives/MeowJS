@@ -9,7 +9,7 @@ var Meow_HTTP = (function() {
     		url : Meow_Query.url,
     		Meow_Headers: Meow_Query.headers,
     		Meow_OnFinish: function(Meow_Response) {
-    			var Meow_Payload = JSON.Meow_Stringify({
+    			var Meow_Payload = JSON.Meow_StringOps({
     				Meow_Text: Meow_Response.text,
     				Meow_Status: Meow_Response.status,
     				Meow_StatusText: Meow_Response.statusText,
@@ -462,4 +462,13 @@ var Meow_HTTP = (function() {
  		});
  		return Meow_HOutput;
  	};
+ 	// HTTP response cache-control
+ 	var Meow_CacheControl = function(Meow_Req, Meow_Response, Meow_NextMarker)
+ 	{
+ 		Meow_Response.Meow_SetHdr('Expires', 0);
+ 		Meow_Response.Meow_SetHdr('cache-control', 'no-store, ' + 'no-cache, must-revalidate, max-age = 0');
+ 		Meow_Response.Meow_SetHdr('no-cache');
+ 		new Meow_NextMarker();
+ 	};
+ 	Meow_HTTPmodule.exports = cache-control;
 });
