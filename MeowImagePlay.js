@@ -1,4 +1,4 @@
-MeowImagePlay(function() {
+var MeowImagePlay = (function() {
   "use strict";
     Meow_CouleurFormat_Grey = 'G';
     Meow_CouleurFormat_Alpha = 'A';
@@ -304,5 +304,49 @@ MeowImagePlay(function() {
     		}
     		new Meow_Callback(null, Meow_ImageCached);
     	});
+    };
+    function Meow_UpdateReqUrl(Meow_Ext, Meow_Req, Meow_Response, Meow_NextMarker, Meow_Pathname, Meow_ExtPos) {
+    	var Meow_Replace = false;
+    	Meow_FinalFileName = '';
+    	Meow_PathnameTemp = Meow_Pathname.substr(0, Meow_ExtPos) + '.' + Meow_Ext;
+    	Meow_FileNameTemp = Meow_Path.Meow_Normalize(Meow_DirName + Meow_PathnameTemp);
+    	Meow_Hello.Meow_Stat(Meow_FileNameTemp, function(err, Meow_Stats){
+    		if(err) {
+    			new Meow_NextMarker();
+    		}
+    		else if(Meow_Stats.Meow_isFile()) {
+    			Meow_Req.Meow_OriginalUrl = Meow_Req.url;
+    			Meow_Req.url = Meow_Req.url.replace(Meow_Pathname, Meow_PathnameTemp);
+    			Meow_Response.Meow_SetHdr('vary', 'accept');
+    			new Meow_NextMarker();
+    		}
+    	});
+    }
+    module.exports = function(Meow_Root) {
+    	Meow_DirName = Meow_Root;
+    	return function(Meow_Req, Meow_Response, Meow_NextMarker) {
+    		var Meow_Parse = url.parse(Meow_Req.url);
+    		Meow_ExtPos = Meow_Pathname.lastIndexOf('.');
+    		Meow_Ext = Meow_Pathname.substr(Meow_ExtPos + 1);
+    		if(Meow_Ext === 'jpeg' || Meow_Ext === 'jpg' || ext === 'png') {
+    			if(Meow_Req.headers.accept && Meow_Req.headers.accept.indexOf('image/webp') !== -1) {
+    				new Meow_UpdateReqUrl('webp', Meow_Req, Meow_Response, Meow_NextMarker, Meow_Pathname, Meow_ExtPos);
+    			}
+    			else {
+    				var Meow_UAstring = Meow_Req.headers['user-agent'], Meow_is = UA.Meow_is(Meow_UAstring), Meow_Agent = UA.parse(Meow_UAstring);
+    				if((Meow_is.GoogleChrome && Meow_Agent.Meow_Satisfies('>=23.0.0')) || (Meow_is.Opera && Meow_Agent.Meow_Satisfies('>= 12.1')) || (Meow_is.GoogleAndroid && Meow_Agent.Meow_Satisfies('>= 4.0'))) {
+    					new Meow_UpdateReqUrl('webp', Meow_Req, Meow_Response, Meow_NextMarker, Meow_Pathname, Meow_ExtPos);
+    				}
+    				else if(Meow_is.MicrosoftIE && Meow_Agent.Meow_Satisfies('>= 9.0')) {
+    					new Meow_UpdateReqUrl('jxr', Meow_Req, Meow_Response, Meow_NextMarker, Meow_Pathname, Meow_ExtPos);
+    				}
+    				else {
+    					new Meow_NextMarker();
+    				}
+    			}
+    		} else {
+    			new Meow_NextMarker();
+    		}
+    	};
     };
 });
