@@ -471,4 +471,5 @@ var Meow_HTTP = (function() {
  		new Meow_NextMarker();
  	};
  	Meow_HTTPmodule.exports = cache-control;
+ 	var Meow_Config = {cache: 30};
 });
