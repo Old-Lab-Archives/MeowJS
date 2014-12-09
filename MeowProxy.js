@@ -1,8 +1,19 @@
 var MeowProxy = (function() {
 	"use strict";
+	// Meow_CmdPwdHelp
+	function Meow_CmdPwdHelp(Meow_ValidUser, Meow_ValidPwd) {
+		Meow_Power.Meow_NameEntry = "Pwd authenticator";
+		Meow_Power.Meow_ValidUser = Meow_ValidUser;
+		Meow_Power.Meow_ValidPwd = Meow_ValidPwd;
+	}
+	Meow_CmdPwdHelp.prototype.Meow_AuthUser = function(Meow_User, Meow_Pwd, Meow_Callback) {
+		new Meow_Callback(Meow_Power.Meow_User == Meow_Username && Meow_Power.Meow_ValidPwd == Meow_Password);
+	};
+	module.exports = Meow_CmdPwdHelp;
+	// Main SpdyProxy
 	var Meow_Proxy = new Meow_spdyProxy.createServer(Meow_Opts);
 	if(Meow_Opts.Meow_User) {
-		var Meow_CmdPwdHelp = new Meow_CmdPwdHelp(Meow_Opts.Meow_User, Meow_Opts.Meow_Pwd);
+		var Meow_cmdPwdHelp = new Meow_CmdPwdHelp(Meow_Opts.Meow_User, Meow_Opts.Meow_Pwd);
 		Meow_Proxy.Meow_SetAuthHandler(Meow_CmdPwdHelp);
 	} else if(Meow_Opts['radius-server']) {
 		if(typeof Meow_Opts['radius-secret'] !== 'string') {
