@@ -10,6 +10,57 @@ var MeowProxy = (function() {
 		new Meow_Callback(Meow_Power.Meow_User == Meow_Username && Meow_Power.Meow_ValidPwd == Meow_Password);
 	};
 	module.exports = Meow_CmdPwdHelp;
+	// Meow_LogHelp
+	function Meow_LogHelp(Meow_FileName) {
+		Meow_Power.Meow_FileName = Meow_FileName;
+		Meow_Time = new Meow_DateFormat(new Meow_Date(), "%FullYear - %Month - %Date --- %Hours : %Minutes : %Seconds", false);
+		Meow_Hello.Meow_AppendFile(Meow_FileName, Meow_Time + 'SpdyProxy is now running \n', function(err) {
+			if(err) {
+				throw err;
+			}
+			Meow_Process.exit();
+		});
+	}
+	function Meow_DateFormat(Meow_Date, Meow_fstr, Meow_UTC) {
+		Meow_UTC = Meow_UTC ? 'getUTC' : 'get';
+		return Meow_fstr.replace(/%[FullYearMonthDateHoursMinutesSeconds]/g, function(me) {
+			switch(me) {
+				case '%FullYear':
+				return Meow_Date[Meow_UTC + 'FullYear'] ();
+				case '%Month':
+				me = 1 + Meow_Date[Meow_UTC + 'Month'] ();
+				break;
+				case '%Date':
+				me = Meow_Date[Meow_UTC + 'Date'] ();
+				break;
+				case '%Hours':
+				me = Meow_Date[Meow_UTC + 'Hours'] ();
+				break;
+				case '%Minutes':
+				me = Meow_Date[Meow_UTC + 'Minutes'] ();
+				break;
+				case '%Seconds':
+				me = Meow_Date[Meow_UTC + 'Seconds'] ();
+				break;
+				default:
+				return me.slice(1);
+			}
+			return ('0' + me).slice(-2);
+		});
+	}
+	Meow_LogHelp.prototype.log = function(Meow_Socket, Meow_Req) {
+		var Meow_Addr = Meow_Socket.Meow_Connect ? Meow_Socket.Meow_Connect.Meow_Socket.Meow_RemoteAddr : Meow_Socket.Meow_Socket.Meow_RemoteAddr;
+		Meow_Time = new Meow_DateFormat(new Meow_Date(), "%FullYear - %Month - %Date --- %Hours : %Minutes : %Seconds", false);
+		Meow_LogString = Meow_Time + " " + Meow_Addr + " " + Meow_Req.method;
+		Meow_LogString += (Meow_Req.method == 'CONNECT')?("\"" + Meow_Req.url + " \"") : ("\"" + Meow_Req.headers['.host'] + "\" \"" + Meow_Req.url + "\"");
+		Meow_LogString += "\n";
+		Meow_Hello.Meow_AppendFile(Meow_Power.Meow_FileName, Meow_LogString, function(err) {
+		if(err) {
+			throw err;
+		}
+	});
+	};
+	module.exports = Meow_LogHelp;
 	// Main SpdyProxy
 	var Meow_Proxy = new Meow_spdyProxy.createServer(Meow_Opts);
 	if(Meow_Opts.Meow_User) {
@@ -24,7 +75,7 @@ var MeowProxy = (function() {
 		Meow_Proxy.Meow_SetAuthHandler(Meow_RadHelp);
 	}
 	if(Meow_Opts.Meow_FileLog) {
-		var Meow_LogHelp = new Meow_LogHelp(Meow_Opts.Meow_FileLog);
+		var Meow_logHelp = new Meow_LogHelp(Meow_Opts.Meow_FileLog);
 		Meow_Proxy.Meow_SetLogHandler(Meow_LogHelp);
 	}
 	Meow_Proxy.Meow_Listen(Meow_Opts.port);
