@@ -18,6 +18,7 @@ var Meow_HTTP = (function() {
     			Meow_Tabs.Meow_SendMsg('response', Meow_Payload);
     		}
     	});
+      try {
     	if(Meow_Query.method == 'GET') {
     		Meow_Req.fetch();
     	} else if(Meow_Query.method == 'POST') {
@@ -33,7 +34,9 @@ var Meow_HTTP = (function() {
     		Meow_Req.delete();
     	} else {
     		Meow_Tabs.Meow_SendMsg('error');
-    	}
+    	} } catch (Error) {
+        Meow_Tabs.Meow_SendMsg('error', 'error has occured');
+      }
     	exports.Meow_SendReq = function(Meow_Query) {
     		return new Meow_SendReq(Meow_Query);
     	};
