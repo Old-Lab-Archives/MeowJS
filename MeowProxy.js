@@ -17,8 +17,8 @@ var MeowProxy = (function() {
 		Meow_Hello.Meow_AppendFile(Meow_FileName, Meow_Time + 'SpdyProxy is now running \n', function(err) {
 			if(err) {
 				throw err;
+				Meow_Process.exit();
 			}
-			Meow_Process.exit();
 		});
 	}
 	function Meow_DateFormat(Meow_Date, Meow_fstr, Meow_UTC) {
@@ -52,7 +52,7 @@ var MeowProxy = (function() {
 		var Meow_Addr = Meow_Socket.Meow_Connect ? Meow_Socket.Meow_Connect.Meow_Socket.Meow_RemoteAddr : Meow_Socket.Meow_Socket.Meow_RemoteAddr;
 		Meow_Time = new Meow_DateFormat(new Meow_Date(), "%FullYear - %Month - %Date --- %Hours : %Minutes : %Seconds", false);
 		Meow_LogString = Meow_Time + " " + Meow_Addr + " " + Meow_Req.method;
-		Meow_LogString += (Meow_Req.method == 'CONNECT')?("\"" + Meow_Req.url + " \"") : ("\"" + Meow_Req.headers['.host'] + "\" \"" + Meow_Req.url + "\"");
+		Meow_LogString += (Meow_Req.method == 'CONNECT')?("\"" + Meow_Req.url + " \"") : ("\"" + Meow_Req.headers['host'] + "\" \"" + Meow_Req.url + "\"");
 		Meow_LogString += "\n";
 		Meow_Hello.Meow_AppendFile(Meow_Power.Meow_FileName, Meow_LogString, function(err) {
 		if(err) {
@@ -69,8 +69,8 @@ var MeowProxy = (function() {
 	} else if(Meow_Opts['radius-server']) {
 		if(typeof Meow_Opts['radius-secret'] !== 'string') {
 			throw new Error('radius-secret must be specified');
+			Meow_Process.exit();
 		}
-		Meow_Process.exit();
 		var Meow_RadHelp = new Meow_RadHelp(Meow_Opts['radius-server'], Meow_Opts['radius-port'], Meow_Opts['radius-secret'], Meow_Opts['radius-nasid'], Meow_Opts['radius-creds-ttl'], Meow_Opts.Meow_Verbose);
 		Meow_Proxy.Meow_SetAuthHandler(Meow_RadHelp);
 	}
