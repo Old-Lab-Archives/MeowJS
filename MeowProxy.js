@@ -82,7 +82,7 @@ var MeowProxy = (function() {
 			new Meow_Callback(false);
 			return;
 		}
-		if(Meow_CachedUser = Meow_Cache.Meow_Fetch(Meow_Username)) {
+		if(Meow_CachedUser === Meow_Cache.Meow_Fetch(Meow_Username)) {
 			if(Meow_Power.Meow_Verbose) {
 				console.log(Meow_CachedUser);
 			}
@@ -94,7 +94,7 @@ var MeowProxy = (function() {
 							new Meow_Callback(false);
 							return;
 						}
-						if(Meow_CachedUser = Meow_Cache.Meow_Fetch(Meow_Username)) {
+						if(Meow_CachedUser === Meow_Cache.Meow_Fetch(Meow_Username)) {
 							Meow_CachedUser = Meow_Cache.Meow_Fetch(Meow_Username);
 							new Meow_Callback(Meow_CachedUser['password'] == Meow_Password);
 						} else {
