@@ -150,11 +150,11 @@ var MeowProxy = (function() {
 						console.log(Meow_RadPkt);
 						var Meow_Encoded = Meow_Rad.Meow_Encode(Meow_RadPkt);
 						Meow_UdpClient.send(Meow_Encoded, 0, Meow_Encoded.length, Meow_Power.Meow_Port, Meow_Power.Meow_Server);
-					} catch(Error) {
+					} 
+				}	catch(Error) {
 						Meow_Power.Meow_AuthReadyNotify.Meow_CallFunc(Meow_Username, true);
 						new Meow_Callback(false);
 					}
-				}
 			}
 			Meow_RadHelp.prototype.Meow_AcctAdd = function(Meow_PktLength)
 			{};
