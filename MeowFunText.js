@@ -83,8 +83,29 @@ var MeowFunText = (function() {
 		var Meow_ClassDefn, Meow_ProColor, Meow_ProText, Meow_ProShadow;
 		var m, m2, m3, x;
 		var Meow_Match = Meow_Text.match(/<\s*br\s*\/>|<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>|<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>|[^<]+/g);
-			var Meow_InnerMatch = null;
+		var Meow_InnerMatch = null;
+		for(m = 0; m < Meow_Match.length; m++) {
+			Meow_Power.Meow_BufferContext.Meow_Save();
+			Meow_ProColor = Meow_Power.fontColor;
+			Meow_ProFont.style = Meow_Power.fontStyle;
+			Meow_ProFont.weight = Meow_Power.fontWeight;
+			Meow_ProFont.size = Meow_Power.fontSize;
+			Meow_ProFont.family= Meow_Power.fontFamily;
+			Meow_ProShadow = Meow_Power.textShadow;
+			if(/<\s*style=/i.test(Meow_Match[m])) {
+				Meow_InnerMatch = Meow_Match[m].match(/<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>/);
+				Meow_Props = Meow_InnerMatch[1].split(";");
+				for(m2 = 0; m2 < Meow_Props.length; m2++) {
+					Meow_Property = Meow_Props[m2].split(":");
+					if(Meow_Power.Meow_isEmpty(Meow_Property[0]) || Meow_Power.Meow_isEmpty(Meow_Property[1])) {
+						continue;
+					}
+					Meow_PropName = Meow_Property[0];
+					Meow_PropVal = Meow_Property[1];
 
-			// Still coding now... Will be updated soon!
+					// Still coding now... Will be updated soon!
+				}
+			}
+		}
 	};
 });
