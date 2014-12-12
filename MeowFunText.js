@@ -58,7 +58,7 @@ var MeowFunText = (function() {
 			alert("invalid text format");
 			return false;
 		}
-		if(!Meow_Power.Meow_isNumber(Meow_TextInfo.xxx) || !Meow_Power.Meow_isNumber(Meow_TextInfo.y)) {
+		if(!Meow_Power.Meow_isNumber(Meow_TextInfo.x) || !Meow_Power.Meow_isNumber(Meow_TextInfo.y)) {
 			alert("Specify a correct \"x\" & \"y\" axis value.");
 			return false;
 		}
@@ -66,7 +66,7 @@ var MeowFunText = (function() {
 		Meow_Power.Meow_BufferContext.Meow_FillStyle = Meow_Power.fontColor;
 		Meow_Power.Meow_BufferContext.Meow_Font = Meow_Power.fontWeight + ' ' + Meow_Power.fontSize + ' ' + Meow_Power.fontFamily;
 		Meow_Power.Meow_DrawStyledText(Meow_TextInfo);
-		if(Meow_TextInfo.Meow_CacheID != undefined) {
+		if(Meow_TextInfo.Meow_CacheID !== undefined) {
 			Meow_Power.Meow_SetCache(Meow_TextInfo.Meow_CacheID);
 		}
 		Meow_Power.Meow_EndTime = new Meow_Date().getTime();
@@ -76,6 +76,15 @@ var MeowFunText = (function() {
 			return Meow_Power.Meow_BufferCanvas;
 		}
 	};
+	Meow_Power.Meow_DrawStyledText = function(Meow_TextInfo) {
+		var Meow_Text = Meow_TextInfo.text, xxx = Meow_TextInfo.x, y = Meow_TextInfo.y;
+		var Meow_TextSplit, Meow_Aux, Meow_TextLines = [], Meow_BoxWidth = Meow_TextInfo.Meow_BoxWidth;
+		var Meow_ProFont = [], Meow_Property, Meow_Props, Meow_PropName, Meow_PropVal, Meow_Attribute;
+		var Meow_ClassDefn, Meow_ProColor, Meow_ProText, Meow_ProShadow;
+		var m, m2, m3, x;
+		var Meow_Match = Meow_Text.match(/<\s*br\s*\/>|<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>|<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>|[^<]+/g);
+			var Meow_InnerMatch = null;
 
-	// Still coding now... Will be updated soon!
+			// Still coding now... Will be updated soon!
+	};
 });
