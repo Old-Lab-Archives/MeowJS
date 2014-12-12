@@ -102,9 +102,39 @@ var MeowFunText = (function() {
 					}
 					Meow_PropName = Meow_Property[0];
 					Meow_PropVal = Meow_Property[1];
-
-					// Still coding now... Will be updated soon!
+					switch(Meow_PropName) {
+						case "Meow_Font":
+						Meow_ProFont = Meow_PropVal;
+						break;
+						case "fontFamily":
+						Meow_ProFont.weight = Meow_PropVal;
+						break;
+						case "fontSize":
+						Meow_ProFont.size = Meow_PropVal;
+						break;
+						case "fontStyle":
+						Meow_ProFont.style = Meow_PropVal;
+						break;
+						case "textShadow":
+						Meow_ProShadow = Meow_Power.Meow_Trim(Meow_PropVal);
+						Meow_ProShadow = Meow_ProShadow.split(" ");
+						if(Meow_ProShadow.length != 4) {
+							Meow_ProShadow = null;
+						}
+						break;
+						case "Meow_Color":
+						if(Meow_Power.Meow_isHex(Meow_PropVal)) {
+							Meow_ProColor = Meow_PropVal;
+						}
+						break;
+					}
 				}
+				Meow_ProText = Meow_InnerMatch[2];
+			} else if(/<\s*class=/m.test(Meow_Match[m])) {
+				Meow_InnerMatch = Meow_Match[m].match(/<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>/);
+				Meow_ClassDefn = Meow_Power.Meow_FetchClass(Meow_InnerMatch[1]);
+
+				// Still coding now... Will be updated soon!
 			}
 		}
 	};
