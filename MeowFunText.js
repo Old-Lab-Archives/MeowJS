@@ -133,9 +133,47 @@ var MeowFunText = (function() {
 			} else if(/<\s*class=/m.test(Meow_Match[m])) {
 				Meow_InnerMatch = Meow_Match[m].match(/<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>/);
 				Meow_ClassDefn = Meow_Power.Meow_FetchClass(Meow_InnerMatch[1]);
-
-				// Still coding now... Will be updated soon!
+				for(Meow_Attribute in Meow_ClassDefn) {
+					switch(Meow_Attribute) {
+						case "Meow_Font":
+						Meow_ProFont = Meow_ClassDefn[Meow_Attribute];
+						break;
+						case "fontFamily":
+						Meow_ProFont.family = Meow_ClassDefn[Meow_Attribute];
+						break;
+						case "fontWeight":
+						Meow_ProFont.weight = Meow_ClassDefn[Meow_Attribute];
+						break;
+						case "fontSize":
+						Meow_ProFont.size = Meow_ClassDefn[Meow_Attribute];
+						break;
+						case "fontStyle":
+						Meow_ProFont.style = Meow_ClassDefn[Meow_Attribute];
+						break;
+						case "fontColor":
+						if(Meow_Power.Meow_isHex(Meow_ClassDefn[Meow_Attribute])) {
+							Meow_ProColor = Meow_ClassDefn[Meow_Attribute];
+						}
+						break;
+						case "textShadow":
+						Meow_ProShadow = Meow_Power.Meow_Trim(Meow_ClassDefn[Meow_Attribute]);
+						Meow_ProShadow = Meow_ProShadow.split(" ");
+						if(Meow_ProShadow.length != 4) {
+							Meow_ProShadow = null;
+						}
+						break;
+					}
+				}
+				Meow_ProText = Meow_InnerMatch[2];
+			} else if(/<\s*br\s*\/>/m.test(Meow_Match[m])) {
+				y += parseInt(Meow_Power.lineHeight, 10) * 1.5;
+				xxx = Meow_TextInfo.x;
+				continue;
+			} else {
+				Meow_ProText = Meow_Match[m];
 			}
+
+			// Still coding now... Will be updated soon!
 		}
 	};
 });
