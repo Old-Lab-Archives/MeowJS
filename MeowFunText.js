@@ -58,7 +58,24 @@ var MeowFunText = (function() {
 			alert("invalid text format");
 			return false;
 		}
-
-		// Still coding... Will be updated soon!
+		if(!Meow_Power.Meow_isNumber(Meow_TextInfo.xxx) || !Meow_Power.Meow_isNumber(Meow_TextInfo.y)) {
+			alert("Specify a correct \"x\" & \"y\" axis value.");
+			return false;
+		}
+		Meow_Power.Meow_BufferCanvas.width = Meow_Power.Meow_BufferCanvas.width;
+		Meow_Power.Meow_BufferContext.Meow_FillStyle = Meow_Power.fontColor;
+		Meow_Power.Meow_BufferContext.Meow_Font = Meow_Power.fontWeight + ' ' + Meow_Power.fontSize + ' ' + Meow_Power.fontFamily;
+		Meow_Power.Meow_DrawStyledText(Meow_TextInfo);
+		if(Meow_TextInfo.Meow_CacheID != undefined) {
+			Meow_Power.Meow_SetCache(Meow_TextInfo.Meow_CacheID);
+		}
+		Meow_Power.Meow_EndTime = new Meow_Date().getTime();
+		if(!Meow_TextInfo.Meow_ReturnImage) {
+			Meow_Power.Meow_Context.Meow_DrawImage(Meow_Power.Meow_BufferCanvas, 0, 0);
+		} else if(Meow_TextInfo.Meow_ReturnImage) {
+			return Meow_Power.Meow_BufferCanvas;
+		}
 	};
+
+	// Still coding now... Will be updated soon!
 });
