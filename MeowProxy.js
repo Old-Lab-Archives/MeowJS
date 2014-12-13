@@ -144,6 +144,12 @@ var MeowProxy = (function() {
 					Meow_Self.Meow_AuthReadyNotify.Meow_CallFunc(Meow_Username, false);
 					Meow_Self.Meow_AuthCallbacks[Meow_Response.Meow_Identifier](true);
 				});
+				Meow_UdpClient.Meow_On('error', function(Error) {
+					if(Meow_Power.Meow_Verbose) {
+						console.log("radius client error: \n" + Error.Meow_Stack);
+					}
+					Meow_UdpClient.close();
+				});
 				try
 				{
 					if(Meow_Power.Meow_Verbose) {
