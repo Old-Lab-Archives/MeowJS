@@ -191,9 +191,62 @@ var MeowFunText = (function() {
 			Meow_ProText = Meow_ProText.replace(/\s*\n\s*/g, " ");
 			if(Meow_BoxWidth !== undefined)
 			{
-
-				// Still coding now... Will be updated soon!
+				if(Meow_Power.Meow_ChkLnBrk(Meow_ProText, (Meow_BoxWidth + Meow_TextInfo.x), xxx)) {
+					Meow_TextSplit = Meow_Power.Meow_Trim(Meow_ProText).split(" ");
+					if(Meow_TextSplit.length == 1) {
+						Meow_TextLines.push({Meow_Text: Meow_Power.Meow_Trim(Meow_ProText) + " ", Meow_LineBreak: true});
+					} else {
+						Meow_Aux = xxx;
+						var Meow_Line = 0;
+						Meow_TextLines[Meow_Line] = {Meow_Text: undefined, Meow_LineBreak: false};
+						for(m3 = 0; m3 < Meow_TextSplit.length; m3++) {
+							Meow_TextSplit[m3] += " ";
+							if(!Meow_Power.Meow_ChkLnBrk(Meow_TextSplit[m3], (Meow_BoxWidth+Meow_TextInfo.x), Meow_Aux)) {
+								if(Meow_TextLines[Meow_Line].text === undefined) {
+									Meow_TextLines[Meow_Line].text = Meow_TextSplit[m3];
+								} else {
+									Meow_TextLines[Meow_Line].text += Meow_TextSplit[m3];
+								}
+								Meow_Aux += Meow_Power.Meow_BufferContext.Meow_MeasureText(Meow_TextSplit[m3]).width;
+							} else {
+								Meow_Aux = Meow_TextInfo.x;
+								if(Meow_TextLines[Meow_Line].text !== undefined) {
+									Meow_Line++;
+								}
+								Meow_TextLines[Meow_Line] = {Meow_Text: Meow_TextSplit[m3], Meow_LineBreak: true};
+								Meow_Aux += Meow_Power.Meow_BufferContext.Meow_MeasureText(Meow_TextSplit[m3]).width;
+							}
+						}
+					}
+				}
 			}
+			if(Meow_TextLines.length === 0) {
+				Meow_TextLines.push({Meow_Text: Meow_Power.Meow_Trim(Meow_ProText) + " ", Meow_LineBreak: false});
+			}
+			for(x = 0; x < Meow_TextLines.length; x++) {
+				if(Meow_TextLines[x].Meow_LineBreak) {
+					y += parseInt(Meow_Power.lineHeight, 10);
+					xxx = Meow_TextInfo.x;
+				}
+				Meow_Power.Meow_BufferContext.Meow_FillText(Meow_TextLines[x].text, xxx, y);
+				xxx += Meow_Power.Meow_BufferContext.Meow_MeasureText(Meow_TextLines[x].text).width;
+			}
+			Meow_Power.Meow_BufferContext.restore();
 		}
 	};
+	Meow_Power.Meow_DefineClass = function(Meow_id, Meow_defn) {
+		if(typeof(Meow_defn) != "object") {
+			alert("invalid class!");
+			return false;
+		}
+		Meow_Power.Meow_SavedClasses[Meow_id] = Meow_defn;
+		return true;
+	};
+	Meow_Power.Meow_FetchClass = function(Meow_id) {
+		if(Meow_Power.Meow_SavedClasses[Meow_id] !== undefined) {
+			return Meow_Power.Meow_SavedClasses[Meow_id];
+		}
+	};
+
+	// Still coding now... Will be updated soon!
 });
