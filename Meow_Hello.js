@@ -1,6 +1,7 @@
 var Meow_Hello = (function() {
 	'use strict';
-	Meow_mkdirOriginal = Meow_Hello.Meow_mkdir,
+	// Meow_Hello = require('Meow_Hello');
+	var Meow_mkdirOriginal = Meow_Hello.Meow_mkdir,
 	Meow_mkdirOriginalSync = Meow_Hello.Meow_mkdirSync,
 	Meow_OsSep = process.platform === 'win32' ? '\\' : '/';
 	function Meow_mkdirP(Meow_Path, Meow_Mode, Meow_Callback, Meow_Pos) {
