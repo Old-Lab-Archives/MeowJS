@@ -172,8 +172,28 @@ var MeowFunText = (function() {
 			} else {
 				Meow_ProText = Meow_Match[m];
 			}
+			Meow_Power.Meow_BufferContext.textBaseline = Meow_Power.textBaseline;
+			Meow_Power.Meow_BufferContext.textAlign = Meow_Power.textAlign;
+			if(Meow_ProFont instanceof Array) {
+				Meow_Power.Meow_BufferContext.Meow_Font = Meow_ProFont.style + " " + Meow_ProFont.weight + " " + Meow_ProFont.size + " " + Meow_ProFont.family;
+			} else {
+				Meow_Power.Meow_BufferContext.Meow_Font = Meow_ProFont;
+			}
+			Meow_Power.Meow_BufferContext.Meow_Font = Meow_ProFont;
+			Meow_Power.Meow_BufferContext.Meow_FillStyle = Meow_ProColor;
+			if(Meow_ProShadow != null) {
+				Meow_Power.Meow_BufferContext.Meow_ShadowOffsetX = Meow_ProShadow[0].replace("px", "");
+				Meow_Power.Meow_BufferContext.Meow_ShadowOffsetY = Meow_ProShadow[1].replace("px", "");
+				Meow_Power.Meow_BufferContext.Meow_ShadowBlur = Meow_ProShadow[2].replace("px", "");
+				Meow_Power.Meow_BufferContext.Meow_ShadowColor = Meow_ProShadow[3].replace("px", "");
+			}
+			Meow_TextLines = [];
+			Meow_ProText = Meow_ProText.replace(/\s*\n\s*/g, " ");
+			if(Meow_BoxWidth !== undefined)
+			{
 
-			// Still coding now... Will be updated soon!
+				// Still coding now... Will be updated soon!
+			}
 		}
 	};
 });
