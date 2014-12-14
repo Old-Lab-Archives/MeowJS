@@ -1,5 +1,6 @@
 var MeowBinary = (function() {
   "use strict";
+  var m, Meow_Output, Meow_PredictVal;
     function Meow_Compress(Meow_Storage) {
       var Meow_Output = 0;
       var Meow_PredictPosVal = 1;
@@ -22,7 +23,7 @@ var MeowBinary = (function() {
       m = 0;
       while (true) {
         Meow_Flag = Meow_Integer % 2;
-        if (Meow_Flag == 1) {
+        if (Meow_Flag === 1) {
           Meow_PredictVal = true;
         } else {
           Meow_PredictVal = false;
@@ -31,7 +32,7 @@ var MeowBinary = (function() {
         Meow_Integer -= Meow_Flag;
         Meow_Integer /= 2;
         m++;
-        if (Meow_Integer == 1) {
+        if (Meow_Integer === 1) {
           Meow_Output[m] = true;
         } else if (Meow_Integer < 1) {
           return Meow_Output;
