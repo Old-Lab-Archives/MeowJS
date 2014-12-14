@@ -164,7 +164,7 @@ var MeowRangerPred = (function() {
       var Meow_PredictNumPosBits;
       var Meow_PredictPosMask;
       var Meow_PredictCreate = function(Meow_PredictNumPosBits, Meow_PredictNumPrevBits) {
-        if (Meow_mCoders != null && Meow_PredictNumPrevBits == Meow_PredictNumPrevBits && Meow_PredictPosNumOfBits == Meow_PredictNumPosBits) {
+        if (Meow_mCoders !== null && Meow_PredictNumPrevBits == Meow_PredictNumPrevBits && Meow_PredictPosNumOfBits === Meow_PredictNumPosBits) {
           return;
         }
         Meow_PredictNumPosBits = Meow_PredictPosNumOfBits;
