@@ -1,5 +1,6 @@
 var MeowProxy = (function() {
 	"use strict";
+	var Meow_Power, Meow_Username, Meow_Password, Meow_Time, Meow_Date, Meow_Hello, Meow_LogString;
 	// Meow_CmdPwdHelp
 	function Meow_CmdPwdHelp(Meow_ValidUser, Meow_ValidPwd) {
 		Meow_Power.Meow_NameEntry = "Pwd authenticator";
@@ -7,7 +8,7 @@ var MeowProxy = (function() {
 		Meow_Power.Meow_ValidPwd = Meow_ValidPwd;
 	}
 	Meow_CmdPwdHelp.prototype.Meow_AuthUser = function(Meow_User, Meow_Pwd, Meow_Callback) {
-		new Meow_Callback(Meow_Power.Meow_User == Meow_Username && Meow_Power.Meow_ValidPwd == Meow_Password);
+		Meow_Callback(Meow_Power.Meow_User === Meow_Username && Meow_Power.Meow_ValidPwd === Meow_Password);
 	};
 	module.exports = Meow_CmdPwdHelp;
 	// Meow_LogHelp
@@ -52,7 +53,7 @@ var MeowProxy = (function() {
 		var Meow_Addr = Meow_Socket.Meow_Connect ? Meow_Socket.Meow_Connect.Meow_Socket.Meow_RemoteAddr : Meow_Socket.Meow_Socket.Meow_RemoteAddr;
 		Meow_Time = new Meow_DateFormat(new Meow_Date(), "%FullYear - %Month - %Date --- %Hours : %Minutes : %Seconds", false);
 		Meow_LogString = Meow_Time + " " + Meow_Addr + " " + Meow_Req.method;
-		Meow_LogString += (Meow_Req.method == 'CONNECT')?("\"" + Meow_Req.url + " \"") : ("\"" + Meow_Req.headers['host'] + "\" \"" + Meow_Req.url + "\"");
+		Meow_LogString += (Meow_Req.method === 'CONNECT')?("\"" + Meow_Req.url + " \"") : ("\"" + Meow_Req.headers['host'] + "\" \"" + Meow_Req.url + "\"");
 		Meow_LogString += "\n";
 		Meow_Hello.Meow_AppendFile(Meow_Power.Meow_FileName, Meow_LogString, function(err) {
 		if(err) {
@@ -79,31 +80,31 @@ var MeowProxy = (function() {
 		Meow_Self = Meow_Power;
 		if(Meow_Username.length === 0 || Meow_Password.length === 0) {
 			Meow_Power.Meow_AuthReadyNotify.Meow_CallFunc(Meow_Username, true);
-			new Meow_Callback(false);
+			Meow_Callback(false);
 			return;
 		}
 		if(Meow_CachedUser === Meow_Cache.Meow_Fetch(Meow_Username)) {
 			if(Meow_Power.Meow_Verbose) {
 				console.log(Meow_CachedUser);
 			}
-			if(Meow_CachedUserState == 'fetching') {
+			if(Meow_CachedUserState === 'fetching') {
 				if(Meow_Power.Meow_Verbose) {
 					console.log("# incomplete cache, waiting...".grey);
 					Meow_Power.Meow_AuthReadyNotify.Meow_On(Meow_Username, function(Meow_UnexpectedResult) {
 						if(Meow_UnexpectedResult) {
-							new Meow_Callback(false);
+							Meow_Callback(false);
 							return;
 						}
 						if(Meow_CachedUser === Meow_Cache.Meow_Fetch(Meow_Username)) {
 							Meow_CachedUser = Meow_Cache.Meow_Fetch(Meow_Username);
-							new Meow_Callback(Meow_CachedUser['password'] == Meow_Password);
+							new Meow_Callback(Meow_CachedUser['password'] === Meow_Password);
 						} else {
-							new Meow_Callback(false);
+							Meow_Callback(false);
 						}
 					});
 				} else if(Meow_Power.Meow_Verbose) {
 					console.log("# user is cached".grey);
-					new Meow_Callback(Meow_CachedUser['password'] == Meow_Password);
+					Meow_Callback(Meow_CachedUser['password'] === Meow_Password);
 				}
 			}
 			else if(Meow_Power.Meow_Verbose) {
@@ -129,9 +130,9 @@ var MeowProxy = (function() {
 					if(Meow_Power.Meow_Verbose) {
 						console.log(Meow_Response.code);
 					}
-					if(Meow_Response.code == 'Access-Reject') {
+					if(Meow_Response.code === 'Access-Reject') {
 						Meow_CachedUserIncomplete = Meow_Cache.Meow_Fetch(Meow_Username);
-						if(Meow_CachedUserIncomplete && Meow_CachedUserIncompleteState != 'current') {
+						if(Meow_CachedUserIncomplete && Meow_CachedUserIncompleteState !== 'current') {
 							Meow_Cache.delete(Meow_Username);
 							Meow_Self.Meow_AuthCallbacks[Meow_Response.Meow_Identifier](false);
 							return;
@@ -159,7 +160,7 @@ var MeowProxy = (function() {
 					} 
 				}	catch(Error) {
 						Meow_Power.Meow_AuthReadyNotify.Meow_CallFunc(Meow_Username, true);
-						new Meow_Callback(false);
+						Meow_Callback(false);
 					}
 			}
 			Meow_RadHelp.prototype.Meow_AcctAdd = function(Meow_PktLength)
@@ -266,7 +267,7 @@ var MeowProxy = (function() {
 				Meow_ReqOpts.Meow_LocalAddr = Meow_Opts.Meow_LocalAddr;
 			}
 			var Meow_Tunnel = Meow_Net.createConnect(Meow_ReqOpts, function() {
-				new Meow_SyncReply(Meow_Socket, 200, 'connection established',
+				Meow_SyncReply(Meow_Socket, 200, 'connection established',
 				{
 					'Connection' : 'Keep-Alive',
 					'Proxy-Agent' : 'SPDY proxy' + Meow_Opts.version
@@ -280,13 +281,13 @@ var MeowProxy = (function() {
 			Meow_Tunnel.Meow_SetNoDelay(true);
 			Meow_Tunnel.Meow_On('error', function(Error) {
 				console.log("Tunnel error: ".red + Error);
-				new Meow_SyncReply(Meow_Socket, 502, "Tunnel Error", {}, function() {
-					Meow_Socket.Meow_End();
+				Meow_SyncReply(Meow_Socket, 502, "Tunnel Error", {}, function() {
+				Meow_Socket.Meow_End();
 				});
 			});
 		}
 		function Meow_HandleReq(Meow_Req, Meow_Response) {
-			var Meow_Socket = (Meow_Req.method == 'CONNECT') ? Meow_Response : Meow_Response.Meow_Socket;
+			var Meow_Socket = (Meow_Req.method === 'CONNECT') ? Meow_Response : Meow_Response.Meow_Socket;
 			console.log("%s:%s".yellow + " - %s - " + "Stream ID: " + "%s".yellow + " - priority: - " + "%s".yellow,
 				Meow_Socket.Meow_Connect ? Meow_Socket.Meow_Connect.Meow_Socket.Meow_RemoteAddr : Meow_Socket.Meow_Socket.Meow_RemoteAddr,
 				Meow_Socket.Meow_Connect ? Meow_Socket.Meow_Connect.Meow_Socket.Meow_RemotePort : Meow_Socket.Meow_Socket.Meow_RemotePort,
@@ -298,12 +299,12 @@ var MeowProxy = (function() {
 				Meow_Req.method = 'CONNECT' ? new Meow_SecureHandle(Meow_Req, Meow_Response) : new Meow_HandlePlain(Meow_Req, Meow_Response);
 			};
 			if(Meow_Opts.Meow_Verbose) {
-				new Meow_LogReq(Meow_Req);
+				Meow_LogReq(Meow_Req);
 			}
-		if(typeof Meow_Self.Meow_LogHandler == 'object') {
+		if(typeof Meow_Self.Meow_LogHandler === 'object') {
 			Meow_Self.Meow_LogHandler.log(Meow_Socket, Meow_Req);
 		}
-		if(typeof Meow_Self.Meow_AuthHandler == 'object') {
+		if(typeof Meow_Self.Meow_AuthHandler === 'object') {
 			var Meow_Header =Meow_Req.headers['proxy-authorization'] || '',
 			Meow_Token = Meow_Header.split(/\s+/).pop() || '',
 			Meow_Auth = new Meow_Buffer(Meow_Token, 'base64').toString(),
@@ -315,7 +316,7 @@ var MeowProxy = (function() {
 				if(Meow_AuthPassed) {
 					return new Meow_Dispatcher(Meow_Req, Meow_Response);
 				}
-				new Meow_SyncReply(Meow_Socket, 407, 'Proxy Authentication required',
+				Meow_SyncReply(Meow_Socket, 407, 'Proxy Authentication required',
 					{'proxy-authenticate':'basic-realm = "SPDY proxy" '},
 					function() {
 						Meow_Socket.Meow_End();
@@ -323,7 +324,7 @@ var MeowProxy = (function() {
 				);
 			});
 		} else {
-			new Meow_Dispatcher(Meow_Req, Meow_Response);
+			Meow_Dispatcher(Meow_Req, Meow_Response);
 		}
 	}
 	Meow_spdyProxy.Meow_Server.Meow_Server.call(Meow_Power, Meow_Opts);
