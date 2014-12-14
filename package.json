@@ -1,0 +1,21 @@
+{
+  "name": "MeowJS",
+  "version": "v0.3.2",
+  "description": "Simple Fast Javascript Library",
+  "license": "GNU GPL v2.0",
+  "repository": "Geek-Research-Lab/MeowJS",
+  "author": {
+    "name": "Aswini S",
+    "github": "ashumeow",
+    "twitter": "@ashumeow",
+    "email": "ashumeow@live.com",
+    "url": "http://windowsgeekpro.in"
+  },
+  "engines": {
+    "node": ">=0.10.0",
+    "terminal" : "Cygwin"
+  },
+  "files": [
+    "",
+  ]
+}
