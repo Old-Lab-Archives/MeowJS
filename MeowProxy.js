@@ -1,6 +1,6 @@
 var MeowProxy = (function() {
 	"use strict";
-	var Meow_Power, Meow_Username, Meow_Password, Meow_Time, Meow_Date, Meow_Hello, Meow_LogString;
+	var Meow_Power, Meow_Username, Meow_Password, Meow_Time, Meow_Date, Meow_Hello, Meow_LogString, Meow_CachedUser, Meow_Cache, Meow_Self, Meow_Rad, Meow_Datagram, Meow_EventEmit;
 	// Meow_CmdPwdHelp
 	function Meow_CmdPwdHelp(Meow_ValidUser, Meow_ValidPwd) {
 		Meow_Power.Meow_NameEntry = "Pwd authenticator";
