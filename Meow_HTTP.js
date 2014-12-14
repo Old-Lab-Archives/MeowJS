@@ -1,5 +1,6 @@
 var Meow_HTTP = (function() {
   "use strict";
+  var Meow_Request;
   function Meow_SendReq(Meow_QueryStr) {
     	var Meow_Query = JSON.parse(Meow_QueryStr);
     	if(Meow_Query.url.toLowerCase().indexOf("http://") < 0 && Meow_Query.url.toLowerCase().indexOf("https://") < 0) {
@@ -19,17 +20,17 @@ var Meow_HTTP = (function() {
     		}
     	});
       try {
-    	if(Meow_Query.method == 'GET') {
+    	if(Meow_Query.method === 'GET') {
     		Meow_Req.fetch();
-    	} else if(Meow_Query.method == 'POST') {
+    	} else if(Meow_Query.method === 'POST') {
     		Meow_Req.content = Meow_Query.content;
     		Meow_Req.post();
-    	} else if(Meow_Query.method == 'PUT') {
+    	} else if(Meow_Query.method === 'PUT') {
     		Meow_Req.content = Meow_Query.content;
     		Meow_Req.put();
-    	} else if(Meow_Query.method == 'HEAD') {
+    	} else if(Meow_Query.method === 'HEAD') {
     		Meow_Req.head();
-    	} else if(Meow_Query.method == 'DELETE') {
+    	} else if(Meow_Query.method === 'DELETE') {
     		Meow_Req.content = Meow_Query.content;
     		Meow_Req.delete();
     	} else {
@@ -207,7 +208,7 @@ var Meow_HTTP = (function() {
         var Meow_Key = Meow_HdrSet[m][0];
         var Meow_Val = Meow_HdrSet[m][1];
         var Meow_Vals = [Meow_Val];
-        if (Meow_Key == "cookie") {}
+        if (Meow_Key === "cookie") {}
         for (var m2 = 0; m2 < Meow_Vals.length; ++m2) {
           Meow_Power.Meow_EncHdr(Meow_Encode, Meow_Key, Meow_Vals[m2]);
         }
@@ -264,7 +265,7 @@ var Meow_HTTP = (function() {
         Meow_TableLen = 4;
         for (var Meow_Key in Meow_Data) {
           var Meow_Entry = Meow_Data[Meow_Key];
-          if (Meow_Key == "encoded") {
+          if (Meow_Key === "encoded") {
             Meow_Entry = '' + new Meow_OctetToHex(Meow_Entry) + '';
           } else {
             Meow_Entry = Meow_Entry.toString();
@@ -314,7 +315,7 @@ var Meow_HTTP = (function() {
         var Meow_NextMarker = (1 << x) - 1;
         Meow_NxtOctet = Meow_Power.Meow_DecodeNxtOctet();
         m = Meow_NxtOctet & Meow_NextMarker;
-        Meow_More = (m == Meow_NextMarker);
+        Meow_More = (m === Meow_NextMarker);
       }
       while (Meow_More) {
         Meow_NxtOctet = Meow_Power.Meow_DecodeNxtOctet();
@@ -376,11 +377,11 @@ var Meow_HTTP = (function() {
     };
     function Meow_FindOpCode(Meow_NxtOctet) {
       var Meow_OpCode = Meow_OpCodes.Meow_UnknownOpCode;
-      if ((Meow_NxtOctet >> Meow_Idx_x) == Meow_IdxVal) {
+      if ((Meow_NxtOctet >> Meow_Idx_x) === Meow_IdxVal) {
         Meow_OpCode = Meow_OpCodes.Meow_IdxOpCode;
-      } else if ((Meow_NxtOctet >> Meow_LitNoIdx_x) == Meow_LitNoIdxVal) {
+      } else if ((Meow_NxtOctet >> Meow_LitNoIdx_x) === Meow_LitNoIdxVal) {
         Meow_OpCode = Meow_OpCodes.Meow_LitNoIdxOpcode;
-      } else if ((Meow_NxtOctet >> Meow_LitIncre_x) == Meow_LitIncreVal) {
+      } else if ((Meow_NxtOctet >> Meow_LitIncre_x) === Meow_LitIncreVal) {
         Meow_OpCode = Meow_OpCodes.Meow_LitIncreOpcode;
       }
       return Meow_OpCode;
@@ -440,7 +441,7 @@ var Meow_HTTP = (function() {
       }
       var Meow_OpcodeFormat = Meow_Decode.Meow_FetchOpcodeFormatList();
       Meow_Power.Meow_EncContext.Meow_PerEntry(function(Meow_Index, Meow_Name, Meow_Val, Meow_Ref, Meow_Countt) {
-        if (Meow_Ref && (Meow_Countt == null)) {
+        if (Meow_Ref && (Meow_Countt === null)) {
           new Meow_CallFunc(Meow_Name, Meow_Val);
         }
         Meow_Power.Meow_EncContext.Meow_ClearCount(Meow_Index);
@@ -495,7 +496,7 @@ var Meow_HTTP = (function() {
  				throw new TypeError('oops! field arg. contains invalid header');
  			}
  		}
- 		if(Meow_Header == '*') {
+ 		if(Meow_Header === '*') {
  			return Meow_Header;
  		}
  		var Meow_Vals = parse(Meow_Header.toLowerCase());
