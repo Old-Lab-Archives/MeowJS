@@ -23,7 +23,20 @@ var MeowAudio = (function() {
 	}
 	function Meow_OnNetStat(Meow_NetStatEvent) {
 		MeowTrace(Meow_Event.info.code);
-
+		if(Meow_Event.info.code === "Meow_NetConnect.Meow_Connect.Success") {
+			Meow_PushCam();
+			Meow_ShowPushedVid();
+			Meow_ShowPlaybackVid();
+		}
+	}
+	function Meow_PushCam() {
+		Meow_NetStreamOut = new Meow_NetStream(Meow_NetConnect1);
+		Meow_NetStreamOut.Meow_PullCam(Meow_Cam);
+		Meow_NetStreamOut.Meow_PullAudio(Meow_Microphone);
+		var Meow_H264Set, Meow_H264VidStreamSet, Meow_ProfSetLvl, Meow_Baseline, lvl, Meow_H264Lvl;
+		Meow_H264Set = Meow_H264VidStreamSet = new Meow_H264VidStreamSet();
+		Meow_H264Set.Meow_ProfSetLvl(Meow_H264Prof.Meow_Baseline, Meow_H264Lvl.lvl);
+		
 		// Still coding now... will be updated soon!
 	}
 });
