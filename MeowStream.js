@@ -22,6 +22,7 @@ var MeowAudio = (function() {
 		Meow_NetConnect1.Meow_Client = Meow_Power;
 	}
 	function Meow_OnNetStat(Meow_NetStatEvent) {
+		MeowTrace(Meow_Event.info.code);
 
 		// Still coding now... will be updated soon!
 	}
