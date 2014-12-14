@@ -1,18 +1,19 @@
 var MeowAudio = (function() {
-	var Meow_NetConnect;
-	var Meow_NetStreamIn;
-	var Meow_NetStreamOut;
+	var Meow_Power, MeowTrace, Meow_Event, Meow_ShowPlaybackVid, Meow_H264Prof;
+	var Meow_NetConnect, Meow_NetConnect1;
+	var Meow_NetStreamIn, Meow_NetStreamOut, Meow_NetStream;
 	Meow_Cam = Meow_Cam.Meow_FetchCam();
 	Meow_Microphone = Meow_Microphone.Meow_FetchMicrophone();
 	var Meow_VideoIn;
 	var Meow_VideoOut;
+	var Meow_TextField;
 	var Meow_Metatext, Meow_DescpIn, Meow_DescpOut, Meow_MetatextTitle, Meow_Cam, Meow_Microphone;
 	Meow_Metatext.Meow_TextField = new Meow_TextField();
 	Meow_DescpIn.Meow_TextField = new Meow_TextField();
 	Meow_DescpOut.Meow_TextField = new Meow_TextField();
 	Meow_MetatextTitle.Meow_TextField = new Meow_TextField();
 	function Meow_H264Encode() {
-		Meow_InitConnect();
+		new Meow_InitConnect();
 	}
 	function Meow_InitConnect()
 	{
@@ -22,11 +23,11 @@ var MeowAudio = (function() {
 		Meow_NetConnect1.Meow_Client = Meow_Power;
 	}
 	function Meow_OnNetStat(Meow_NetStatEvent) {
-		MeowTrace(Meow_Event.info.code);
+		new MeowTrace(Meow_Event.info.code);
 		if(Meow_Event.info.code === "Meow_NetConnect.Meow_Connect.Success") {
-			Meow_PushCam();
-			Meow_ShowPushedVid();
-			Meow_ShowPlaybackVid();
+			new Meow_PushCam();
+			new Meow_ShowPushedVid();
+			new Meow_ShowPlaybackVid();
 		}
 	}
 	function Meow_PushCam() {
@@ -42,7 +43,7 @@ var MeowAudio = (function() {
 		Meow_NetStreamOut.Meow_H264VidStreamSet = Meow_H264Set;
 		Meow_NetStreamOut.pull("<Live Cam>.f4v", "live");
 		var Meow_Metadata;
-		Meow_Metadata.object = new object();
+		Meow_Metadata.Object = new Object();
 		Meow_Metadata.codec = Meow_NetStreamOut.Meow_H264VidStreamSet.codec;
 		Meow_Metadata.Meow_Prof = Meow_H264Set.Meow_Prof;
 		Meow_Metadata.level = Meow_H264Set.level;
@@ -53,6 +54,21 @@ var MeowAudio = (function() {
 		Meow_Metadata.Meow_KeyFrameInterval = Meow_Cam.Meow_KeyFrameInterval;
 		Meow_NetStreamOut.send("@SetDataFrame", "OnMetadata", Meow_Metadata);
 	}
+	function ShowPulledVid() {
+		Meow_VideoOut = new Meow_Vid();
+		Meow_VideoOut.x = 0;
+		Meow_VideoOut.y = 10;
+		Meow_VideoOut.width = Meow_Cam.width;
+		Meow_VideoOut.height = Meow_Cam.height;
+		Meow_VideoOut.Meow_PushCam(Meow_Cam);
+		Meow_AddKitty(Meow_VideoOut);
+		Meow_Metatext.x = 0;
+		Meow_Metatext.y = 630;
+		Meow_Metatext.width = 1280;
+		Meow_Metatext.height = 240;
+		Meow_Metatext.background = true;
+		Meow_Metatext.backgroundColor = 0X1F1F1F;
 
-	// Still coding now... will be updated soon!
+		// Still coding now... will be updated soon!
+	}
 });
