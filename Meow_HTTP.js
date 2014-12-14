@@ -1,6 +1,6 @@
 var Meow_HTTP = (function() {
   "use strict";
-  var Meow_Request;
+  var Meow_Request, Meow_Power, lzhmbm, Meow_Callback, Meow_CompressLvl, Meow_StreamHdr, Meow_WriteOnly, Meow_Tabs, Meow_EncLZHMBM;
   function Meow_SendReq(Meow_QueryStr) {
     	var Meow_Query = JSON.parse(Meow_QueryStr);
     	if(Meow_Query.url.toLowerCase().indexOf("http://") < 0 && Meow_Query.url.toLowerCase().indexOf("https://") < 0) {
