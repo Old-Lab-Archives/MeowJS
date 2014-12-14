@@ -19,6 +19,7 @@ var MeowJS = (function() {
     var Meow-DCT-md5 = require('Meow-DCT-md5');
     var Meow_HTTP = require('Meow_HTTP');
     var MeowProxy = require('MeowProxy');
+    var Meow_IP = require('Meow_IP');
     */
   }
 );
