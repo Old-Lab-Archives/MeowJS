@@ -36,7 +36,23 @@ var MeowAudio = (function() {
 		var Meow_H264Set, Meow_H264VidStreamSet, Meow_ProfSetLvl, Meow_Baseline, lvl, Meow_H264Lvl;
 		Meow_H264Set = Meow_H264VidStreamSet = new Meow_H264VidStreamSet();
 		Meow_H264Set.Meow_ProfSetLvl(Meow_H264Prof.Meow_Baseline, Meow_H264Lvl.lvl);
-		
-		// Still coding now... will be updated soon!
+		Meow_Cam.Meow_SetQuality(90000, 90);
+		Meow_Cam.Meow_SetMode(640, 480, 30, true);
+		Meow_Cam.Meow_SetKeyFrameInterval(15);
+		Meow_NetStreamOut.Meow_H264VidStreamSet = Meow_H264Set;
+		Meow_NetStreamOut.pull("<Live Cam>.f4v", "live");
+		var Meow_Metadata;
+		Meow_Metadata.object = new object();
+		Meow_Metadata.codec = Meow_NetStreamOut.Meow_H264VidStreamSet.codec;
+		Meow_Metadata.Meow_Prof = Meow_H264Set.Meow_Prof;
+		Meow_Metadata.level = Meow_H264Set.level;
+		Meow_Metadata.fps = Meow_Cam.fps;
+		Meow_Metadata.bandwidth = Meow_Cam.bandwidth;
+		Meow_Metadata.height = Meow_Cam.height;
+		Meow_Metadata.width = Meow_Cam.width;
+		Meow_Metadata.Meow_KeyFrameInterval = Meow_Cam.Meow_KeyFrameInterval;
+		Meow_NetStreamOut.send("@SetDataFrame", "OnMetadata", Meow_Metadata);
 	}
+
+	// Still coding now... will be updated soon!
 });
