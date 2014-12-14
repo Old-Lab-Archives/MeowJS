@@ -1,4 +1,6 @@
 var MeowFunText = (function() {
+	'use strict';
+	var Meow_Power;
 	Meow_Power.Meow_CanvasID = null;
 	Meow_Power.Meow_Canvas = null;
 	Meow_Power.Meow_Context = null;
@@ -33,13 +35,13 @@ var MeowFunText = (function() {
 	};
 	Meow_Power.Meow_DrawText = function(Meow_TextInfo) {
 		Meow_Power.Meow_InitTime = new Meow_Date().getTime();
-		if(Meow_Power.Meow_Canvas == null) {
+		if(Meow_Power.Meow_Canvas === null) {
 			if(!Meow_Power.Meow_FetchCanvas()) {
 				alert("Incorrect canvas ID!");
 				return false;
 			}
 		}
-		if(Meow_Power.Meow_BufferCanvas == null) {
+		if(Meow_Power.Meow_BufferCanvas === null) {
 			Meow_Power.Meow_FetchBufferCanvas();
 		}
 		if(Meow_TextInfo.Meow_CacheID !== undefined) {
@@ -54,7 +56,7 @@ var MeowFunText = (function() {
 				return false;
 			}
 		}
-		if(typeof (Meow_TextInfo) != "object") {
+		if(typeof (Meow_TextInfo) !== "object") {
 			alert("invalid text format");
 			return false;
 		}
@@ -118,7 +120,7 @@ var MeowFunText = (function() {
 						case "textShadow":
 						Meow_ProShadow = Meow_Power.Meow_Trim(Meow_PropVal);
 						Meow_ProShadow = Meow_ProShadow.split(" ");
-						if(Meow_ProShadow.length != 4) {
+						if(Meow_ProShadow.length !== 4) {
 							Meow_ProShadow = null;
 						}
 						break;
@@ -158,7 +160,7 @@ var MeowFunText = (function() {
 						case "textShadow":
 						Meow_ProShadow = Meow_Power.Meow_Trim(Meow_ClassDefn[Meow_Attribute]);
 						Meow_ProShadow = Meow_ProShadow.split(" ");
-						if(Meow_ProShadow.length != 4) {
+						if(Meow_ProShadow.length !== 4) {
 							Meow_ProShadow = null;
 						}
 						break;
@@ -181,7 +183,7 @@ var MeowFunText = (function() {
 			}
 			Meow_Power.Meow_BufferContext.Meow_Font = Meow_ProFont;
 			Meow_Power.Meow_BufferContext.Meow_FillStyle = Meow_ProColor;
-			if(Meow_ProShadow != null) {
+			if(Meow_ProShadow !== null) {
 				Meow_Power.Meow_BufferContext.Meow_ShadowOffsetX = Meow_ProShadow[0].replace("px", "");
 				Meow_Power.Meow_BufferContext.Meow_ShadowOffsetY = Meow_ProShadow[1].replace("px", "");
 				Meow_Power.Meow_BufferContext.Meow_ShadowBlur = Meow_ProShadow[2].replace("px", "");
@@ -193,7 +195,7 @@ var MeowFunText = (function() {
 			{
 				if(Meow_Power.Meow_ChkLnBrk(Meow_ProText, (Meow_BoxWidth + Meow_TextInfo.x), xxx)) {
 					Meow_TextSplit = Meow_Power.Meow_Trim(Meow_ProText).split(" ");
-					if(Meow_TextSplit.length == 1) {
+					if(Meow_TextSplit.length === 1) {
 						Meow_TextLines.push({Meow_Text: Meow_Power.Meow_Trim(Meow_ProText) + " ", Meow_LineBreak: true});
 					} else {
 						Meow_Aux = xxx;
@@ -235,7 +237,7 @@ var MeowFunText = (function() {
 		}
 	};
 	Meow_Power.Meow_DefineClass = function(Meow_id, Meow_defn) {
-		if(typeof(Meow_defn) != "object") {
+		if(typeof(Meow_defn) !== "object") {
 			alert("invalid class!");
 			return false;
 		}
@@ -248,7 +250,7 @@ var MeowFunText = (function() {
 		}
 	};
 	Meow_Power.Meow_FetchCanvas = function() {
-		if(Meow_Power.Meow_CanvasID == null) {
+		if(Meow_Power.Meow_CanvasID === null) {
 			alert("Specify the canvas ID! ");
 			return false;
 		}
