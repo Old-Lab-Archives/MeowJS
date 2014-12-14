@@ -3,7 +3,6 @@ Licensed under "GNU GPL v2.0".<br>
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Geek-Research-Lab/MeowJS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)    [![Build Status](https://snap-ci.com/snap-ci/docs.snap-ci.com/branch/master/build_image)](https://snap-ci.com/Geek-Research-Lab/MeowJS/branch/master)
 <a href="https://codeclimate.com/github/Geek-Research-Lab/MeowJS"><img src="https://codeclimate.com/github/Geek-Research-Lab/MeowJS/badges/gpa.svg" /></a>
 <a href="https://codeclimate.com/github/Geek-Research-Lab/MeowJS"><img src="https://codeclimate.com/github/Geek-Research-Lab/MeowJS/badges/coverage.svg" /></a>
-[![Build status](https://ci.appveyor.com/api/projects/status/tkru5nj3s12vo00u/branch/master?svg=true)](https://ci.appveyor.com/project/ashumeow/meowjs/branch/master)
 <br>
 <br>
 <b>How-To install and compile?</b><br><p>
