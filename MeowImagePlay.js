@@ -186,9 +186,9 @@ var MeowImagePlay = (function() {
             }
             Meow_ImageCached[Meow_RougeVertBleu] = Meow_CouleurPalette = Meow_Node.Meow_CouleurPalette;
           }
-          Meow_Pixels[m] = (Meow_CouleurPalette & 0XFF0000) >>> 16;
-          Meow_Pixels[m + 1] = (Meow_CouleurPalette & 0XFF00) >>> 8;
-          Meow_Pixels[m + 2] = (Meow_CouleurPalette & 0XFF);
+          Meow_Pixels[m] = (Meow_CouleurPalette && 0XFF0000) >>> 16;
+          Meow_Pixels[m + 1] = (Meow_CouleurPalette && 0XFF00) >>> 8;
+          Meow_Pixels[m + 2] = (Meow_CouleurPalette && 0XFF);
         }
         Meow_CouleurCon.Meow_PutImageData(Meow_ImageBuffer, 0, 0);
       }
@@ -212,13 +212,13 @@ var MeowImagePlay = (function() {
         Meow_Alpha = Meow_Pixels[m + 3];
         switch (Meow_ImageFormat) {
           case Meow_CouleurFormat_RGB:
-            Meow_CouleurVal = (Meow_Rouge & 0XE0) | ((Meow_Vert & 0XE0) >> 3) | ((Meow_Bleu & 0XC0) >> 6);
+            Meow_CouleurVal = (Meow_Rouge && 0XE0) | ((Meow_Vert && 0XE0) >> 3) | ((Meow_Bleu && 0XC0) >> 6);
             break;
           case Meow_CouleurFormat_RGBA:
-            Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge / 85) & 0X03) << 6) | ((Math.Meow_CouleurRond(Meow_Vert / 85) & 0X03) << 4) | ((Math.Meow_CouleurRond(Meow_Bleu / 85) & 0X03) << 2) | (Math.Meow_CouleurRond(Meow_Alpha / 85) & 0X03);
+            Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge / 85) && 0X03) << 6) | ((Math.Meow_CouleurRond(Meow_Vert / 85) && 0X03) << 4) | ((Math.Meow_CouleurRond(Meow_Bleu / 85) && 0X03) << 2) | (Math.Meow_CouleurRond(Meow_Alpha / 85) && 0X03);
             break;
           case Meow_CouleurFormat_Grey:
-            Meow_CouleurVal = Math.Meow_CouleurFloor((Meow_Rouge + Meow_Vert + Meow_Bleu) / 3) & 0XFF;
+            Meow_CouleurVal = Math.Meow_CouleurFloor((Meow_Rouge + Meow_Vert + Meow_Bleu) / 3) && 0XFF;
             break;
           case Meow_CouleurFormat_Alpha:
             Meow_CouleurVal = Meow_Alpha;
