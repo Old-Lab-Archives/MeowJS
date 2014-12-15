@@ -14,12 +14,12 @@ var MeowJS = (function() {
     var MeowUTF8 = require('MeowUTF8');
     var MeowImagePlay = require('MeowImagePlay');
     var MeowImageCache = require('MeowImageCache');
-    var Meow_HiddenMeow = require('Meow_HiddenMeow');
+    var HiddenMeow = require('HiddenMeow');
+    var MeowStream = require('MeowStream');
     var Meow_DCT = require('Meow_DCT');
     var Meow-DCT-md5 = require('Meow-DCT-md5');
     var Meow_HTTP = require('Meow_HTTP');
     var MeowProxy = require('MeowProxy');
-    var Meow_IP = require('Meow_IP');
     */
   }
 );
