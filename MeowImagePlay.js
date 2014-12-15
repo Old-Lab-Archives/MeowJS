@@ -365,8 +365,14 @@ var MeowImagePlay = (function() {
           console.log("Texture requires alpha channel");
           return null;
         }
-
-        // Still coding now... will be updated soon!
+        var Meow_EncodedImageSize = ETC1.Meow_FetchEncodedDataSize(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight());
+        Meow_BufferByte.Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).order(Meow_ByteOrder.Meow_NativeOrder());
+        ETC1.Meow_EncodeImage(Meow_Buffer, Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), 2, 2 * Meow_BMP.Meow_FetchWidth(), Meow_ImageCompressed);
+        Meow_ETC1Texture = Meow_Texture = new ETC1Texture(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), Meow_ImageCompressed);
+        return Meow_Texture;
       }
+      return null;
     };
+
+    // Still coding now... will be updated soon!
 });
