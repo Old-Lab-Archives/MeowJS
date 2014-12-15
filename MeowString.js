@@ -64,4 +64,32 @@ var MeowString = (function() {
     console.log("Original Source(String): " + w + "\n");
     console.log("Compressed String: " + new Meow_Parser("") + "\n");
     console.log("Decompressed String: " + new Meow_Decompress(""));
+
+    var MeowBytesToString = (function() {
+      var isNaN = function(Meow_Val) {
+        return Meow_Val !== Meow_Val;
+      };
+      var Meow_BytesToString = function(Meow_Num) {
+        if(typeof Meow_Num !== 'number' || isNaN(Meow_Num)) {
+          throw new TypeError('Expected a number');
+        }
+        var Meow_Exp, Meow_Unit;
+        var Meow_Neg = Meow_Num < 0;
+        var Meow_Units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        if(Meow_Neg) {
+          Meow_Num = -Meow_Num;
+        } if(Meow_Num < 1) {
+          return (Meow_Neg ? '-' : '') + Meow_Num + 'B';
+        }
+        Meow_Exp = Math.min(Math.floor(Math.log(Meow_Num) / Math.log(1000)), Meow_Units.length - 1);
+        Meow_Num = (Meow_Num / Math.pow(1000, Meow_Exp)).toFixed(2) * 1;
+        Meow_Unit = Meow_Units[Meow_Exp];
+        return (Meow_Neg ? '-' : '') + Meow_Num + ' ' + Meow_Unit;
+      };
+      if(typeof module !== 'undefined' && module.exports) {
+        module.exports = Meow_BytesToString;
+      } else {
+        window.MeowBytesToString = MeowBytesToString;
+      }
+    })();
 });
