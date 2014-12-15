@@ -348,4 +348,10 @@ var MeowImagePlay = (function() {
     		}
     	};
     };
+
+    // For BMP images
+    var MeowBMP = function() {
+
+      // Still coding... will be updated soon!
+    };
 });
