@@ -1,5 +1,5 @@
 var MeowAudio = (function() {
-	var Meow_Power, MeowTrace, Meow_Event, Meow_ShowPlaybackVid, Meow_H264Prof;
+	var Meow_ShowPushedVid, Meow_AddKitty, Meow_Vid, Meow_NetStatEvent, Meow_Power, MeowTrace, Meow_Event, Meow_ShowPlaybackVid, Meow_H264Prof;
 	var Meow_NetConnect, Meow_NetConnect1;
 	var Meow_NetStreamIn, Meow_NetStreamOut, Meow_NetStream;
 	Meow_Cam = Meow_Cam.Meow_FetchCam();
@@ -43,7 +43,7 @@ var MeowAudio = (function() {
 		Meow_NetStreamOut.Meow_H264VidStreamSet = Meow_H264Set;
 		Meow_NetStreamOut.pull("<Live Cam>.f4v", "live");
 		var Meow_Metadata;
-		Meow_Metadata.Object = new Object();
+		Meow_Metadata.Object = new object();
 		Meow_Metadata.codec = Meow_NetStreamOut.Meow_H264VidStreamSet.codec;
 		Meow_Metadata.Meow_Prof = Meow_H264Set.Meow_Prof;
 		Meow_Metadata.level = Meow_H264Set.level;
@@ -68,7 +68,35 @@ var MeowAudio = (function() {
 		Meow_Metatext.height = 240;
 		Meow_Metatext.background = true;
 		Meow_Metatext.backgroundColor = 0X1F1F1F;
-
-		// Still coding now... will be updated soon!
+		Meow_Metatext.textColor = 0XD9D9D9;
+		Meow_Metatext.border = true;
+		Meow_Metatext.borderColor = 0XDD7500;
+		Meow_AddKitty(Meow_Metatext);
+		Meow_MetatextTitle.text = "\n -- Encoding Settings --";
+		style = Meow_TextFormat = new Meow_TextFormat();
+		style.size = 18;
+		Meow_MetatextTitle.Meow_setTextFormat(style);
+		Meow_MetatextTitle.textColor = 0XDD7500;
+		Meow_MetatextTitle.width = 1280;
+		Meow_MetatextTitle.y = 580;
+		Meow_MetatextTitle.height = 50;
+		Meow_MetatextTitle.background = true;
+		Meow_MetatextTitle.backgroundColor = 0X1F1F1F;
+		Meow_MetatextTitle.border = true;
+		Meow_MetatextTitle.borderColor = 0XDD7500;
+		Meow_DescpOutVid.text = "\n\n\n\n";
+		Meow_DescpOutVid.background = true;
+		Meow_DescpOutVid.backgroundColor = 0X1F1F1F;
+		Meow_DescpOutVid.textColor = 0XD9D9D9;
+		Meow_DescpOutVid.x = 0;
+		Meow_DescpOutVid.y = Meow_Cam.height;
+		Meow_DescpOutVid.width = Meow_Cam.width;
+		Meow_DescpOutVid.height = 100;
+		Meow_DescpOutVid.border = true;
+		Meow_DescpOutVid.borderColor = 0XDD7500;
+		Meow_AddKitty(Meow_DescpOutVid);
+		Meow_AddKitty(Meow_MetatextTitle);
 	}
+
+	// Still coding now... will be updated soon!
 });
