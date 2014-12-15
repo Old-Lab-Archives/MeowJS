@@ -1,5 +1,5 @@
 var MeowAudio = (function() {
-	var Meow_ShowPushedVid, Meow_AddKitty, Meow_Vid, Meow_NetStatEvent, Meow_Power, MeowTrace, Meow_Event, Meow_ShowPlaybackVid, Meow_H264Prof;
+	var Meow_ShowPushedVid, Meow_AddKitty, Meow_Vid, Meow_NetStatEvent, Meow_Power, MeowTrace, Meow_Event, Meow_H264Prof;
 	var Meow_NetConnect, Meow_NetConnect1;
 	var Meow_NetStreamIn, Meow_NetStreamOut, Meow_NetStream;
 	Meow_Cam = Meow_Cam.Meow_FetchCam();
@@ -97,6 +97,34 @@ var MeowAudio = (function() {
 		Meow_AddKitty(Meow_DescpOutVid);
 		Meow_AddKitty(Meow_MetatextTitle);
 	}
-
-	// Still coding now... will be updated soon!
+	function Meow_ShowPlaybackVid() {
+		Meow_NetStreamIn = new Meow_NetStream(Meow_NetConnect1);
+		Meow_NetStreamIn.Meow_Client = Meow_Power;
+		Meow_NetStreamIn.play("<on-demand cam>.f4v");
+		Meow_VideoIn = new Meow_Vid();
+		Meow_VideoIn.x = Meow_VideoOut.x + Meow_VideoOut.width;
+		Meow_VideoIn.y = Meow_VideoOut.y;
+		Meow_VideoIn.width = Meow_Cam.width;
+		Meow_VideoIn.height = Meow_VideoOut.height;
+		Meow_VideoIn.Meow_PushNetStream(Meow_NetStreamIn);
+		Meow_AddKitty(Meow_VideoIn);
+		Meow_DescpInVid.text = "\n\n\n\n";
+		Meow_DescpInVid.background = true;
+		Meow_DescpInVid.backgroundColor = 0X1F1F1F;
+		Meow_DescpInVid.textColor = 0XD9D9D9;
+		Meow_DescpInVid.x = Meow_VideoIn.x;
+		Meow_DescpInVid.y = Meow_Cam.height;
+		Meow_DescpInVid.width = Meow_Cam.width;
+		Meow_DescpInVid.height = 100;
+		Meow_DescpInVid.border = true;
+		Meow_DescpInVid.borderColor = 0XDD7500;
+		Meow_AddKitty(Meow_DescpInVid);
+	}
+	function Meow_OnBandwidthFinish() {}
+	function OnMetadata(object) {
+		for(var Meow_Settings in object) {
+			MeowTrace(Meow_Settings + " = " + object[Meow_Settings]);
+			Meow_Metatext.text += "\n" + " " + Meow_Settings.toUpperCase() + " = " + object[Meow_Settings] + "\n";
+		}
+	}
 });
