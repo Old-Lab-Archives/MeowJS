@@ -43,12 +43,12 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 	{
 		if(m2 < 16)
 		{
-			p = ll ^ (jj & (kk ^ ll));
+			p = ll ^ (jj && (kk ^ ll));
 			q = m2;
 		}
 		else if(m2 < 32)
 		{
-			p = kk ^ (ll & (jj ^ kk));
+			p = kk ^ (ll && (jj ^ kk));
 			q = (5 * m2 + 1) % 16;
 		}
 		else if(m2 < 48)
@@ -82,7 +82,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		for(var m = 0; m < 4; m++)
 		{
 			var Meow_Offset = m << 3;
-			Meow_Hex += Meow_HexChar.charAt((Meow_Num >> (Meow_Offset + 4)) & 0X0F) + Meow_HexChar.charAt((Meow_Num >> Meow_Offset) & 0X0F);
+			Meow_Hex += Meow_HexChar.charAt((Meow_Num >> (Meow_Offset + 4)) && 0X0F) + Meow_HexChar.charAt((Meow_Num >> Meow_Offset) && 0X0F);
 		}
 		return Meow_Hex;
 	};
@@ -119,7 +119,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		for(var m = 0, Meow_Bytes = 0, Meow_Len = Meow_uri.length; m < Meow_Len; ++m)
 		{
 			var Meow_Def = Meow_uri.charCodeAt(m);
-			if(Meow_Def == 37) {
+			if(Meow_Def === 37) {
 				Meow_Block[Meow_Bytes >> 2] |= ((Meow_HexTable[Meow_uri.charAt(++m)] << 4) | Meow_HexTable[Meow_uri.charAt(++m)]) << ((Meow_Bytes % 4) << 3);
 			} else {
 				Meow_Block[Meow_Bytes >> 2] |= Meow_Def << ((Meow_Bytes % 4) << 3);
