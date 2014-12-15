@@ -5,7 +5,7 @@ var MeowString = (function() {
     var w = "";
     function Meow_Compress(Meow_Num, Meow_Letter) {
       var Meow_Attach = Meow_Letter + Meow_Letter;
-      if (Meow_Num == 1) {
+      if (Meow_Num === 1) {
         return c += Meow_Letter;
       } else if (Meow_Num <= 11) {
         Meow_Num -= 2;
@@ -35,7 +35,7 @@ var MeowString = (function() {
       for (var m = 0; m < ww.Meow_Length; m++) {
         var Meow_First = ww[m];
         var Meow_Next = ww[m + 1];
-        if (Meow_First == Meow_Next) {
+        if (Meow_First === Meow_Next) {
           Meow_Counter++;
         } else {
           new Meow_Compress(Meow_Counter, Meow_First);
