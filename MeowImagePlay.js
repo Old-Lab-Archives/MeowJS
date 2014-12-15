@@ -351,7 +351,22 @@ var MeowImagePlay = (function() {
 
     // For BMP images
     var MeowBMP = function() {
+      Meow_Opts = new Meow_BMPfactory.Meow_Opts();
+      Meow_Opts.Meow_InPreferredConfig = Meow_Config.RGB_565;
+      Meow_BMP = Meow_BMPfactory.Meow_DecodeStream(Meow_Stream, null, Meow_Opts);
+      if(Meow_BMP !== null) {
+        Meow_BufferByte = Meow_BufferByte.Meow_AllocDirect(Meow_BMP.Meow_FetchRowBytes() * Meow_BMP.Meow_FetchHeight()).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+        Meow_BMP.Meow_CopyPixelsToBuffer(Meow_Buffer);
+        Meow_Buffer.Meow_Pos(0);
+        console.log("Width: " + Meow_BMP.Meow_FetchWidth());
+        console.log("Height: " + Meow_BMP.Meow_FetchHeight());
+        console.log("Config: " + Meow_BMP.Meow_FetchConfig());
+        if(Meow_BMP.Meow_FetchConfig() === Meow_BMP.Meow_Config.ARGB_4444 || Meow_BMP.Meow_FetchConfig() === Meow_BMP.Meow_Config.ARGB_8888) {
+          console.log("Texture requires alpha channel");
+          return null;
+        }
 
-      // Still coding... will be updated soon!
+        // Still coding now... will be updated soon!
+      }
     };
 });
