@@ -1,4 +1,4 @@
-var MeowAudio = (function() {
+var MeowStream = (function() {
 	var Meow_ShowPushedVid, Meow_AddKitty, Meow_Vid, Meow_NetStatEvent, Meow_Power, MeowTrace, Meow_Event, Meow_H264Prof;
 	var Meow_NetConnect, Meow_NetConnect1;
 	var Meow_NetStreamIn, Meow_NetStreamOut, Meow_NetStream;
