@@ -8,7 +8,6 @@ var MeowJS = (function() {
     var Meow_Hello = require('Meow_Hello');
     var Meow_cli =  require('Meow_cli');
     var MeowRangerPred = require('Meow_RangerPred');
-    var MeowDOM = require('MeowDOM');
     var MeowString = require('MeowString');
     var MeowBinary = require('MeowBinary');
     var MeowFunText = require('MeowFunText');
@@ -21,6 +20,7 @@ var MeowJS = (function() {
     var Meow-DCT-md5 = require('Meow-DCT-md5');
     var Meow_HTTP = require('Meow_HTTP');
     var MeowProxy = require('MeowProxy');
+    var Meow_TextureRenderer = require('Meow_TextureRenderer')
     */
   }
 );
