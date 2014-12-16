@@ -445,8 +445,20 @@ var MeowImagePlay = (function() {
         Meow_Alloc = Meow_AllocOutAlpha = Meow_Alloc.Meow_CreateSized(Meow_RenderScript, Meow_Element.U8(Meow_RenderScript), 8 * Meow_Size);
         Meow_ETC1Script.Meow_BindIn(Meow_AllocIn);
         Meow_ETC1Script.Meow_BindOutAlpha(Meow_AllocOutAlpha);
-
-        // Still coding... will be updated soon!
+        Meow_ETC1Script.Meow_ForEachRoot(Meow_AllocOut);
+        Meow_Short = Meow_ArrayOutTemp = new Meow_Short(4 * Meow_Size);
+        Meow_AllocOut.Meow_CopyTo(Meow_ArrayOutTemp);
+        Meow_AllocOut.destroy();
+        Meow_AllocOut2 = Meow_Alloc.Meow_CreateSized(Meow_RenderScript, Meow_Element.U8(Meow_RenderScript), 8 * Meow_Size);
+        Meow_AllocOut2.Meow_CopyFromChecked(Meow_ArrayOutTemp);
+        Meow_AllocOut2.Meow_CopyTo(Meow_ImageCompressed.Array());
+        Meow_AllocOut2.destroy();
+        if(Meow_HasAlpha) {
+          Meow_AllocOutAlpha.Meow_CopyTo(Meow_ImageCompressedAlpha.Array());
+        }
+        Meow_AllocOutAlpha.destroy();
+        Meow_ImageCompressed.Meow_Rewind();
+        return 0;
       }
     }
 });
