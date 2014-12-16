@@ -395,6 +395,33 @@ var MeowImagePlay = (function() {
       }
       return null;
     }
-
-    // Still coding now... will be updated soon!
+    ETC1Texture = function(Meow_Stream, Meow_RenderScript, Meow_ETC1Script) {
+      Meow_HasAlpha = false;
+      Meow_BufferByte = Meow_ImageCompressedAlpha = null;
+      Meow_Opts = new Meow_BMPfactory.Meow_Opts();
+      Meow_Opts.Meow_InPreferredConfig = Meow_Config.RGB_565;
+      Meow_BMP = Meow_BMPfactory.Meow_DecodeStream(Meow_Stream, null, Meow_Opts);
+      if(Meow_BMP !== null) {
+        console.log("Width: " + Meow_BMP.Meow_FetchWidth());
+        console.log("Height: " + Meow_BMP.Meow_FetchHeight());
+        console.log("Config: " + Meow_BMP.Meow_FetchConfig());
+        Meow_EncodedImageSize = Meow_RenderScriptETC1.Meow_FetchEncodedDataSize(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight());
+        if(Meow_BMP.Meow_FetchConfig() === Meow_BMP.Meow_Config.ARGB_4444 || Meow_BMP.Meow_FetchConfig() === Meow_BMP.Meow_Config.ARGB_8888) {
+          Meow_HasAlpha = true;
+          Meow_ImageCompressedAlpha = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+        }
+        Meow_BufferByte = Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+        Meow_Alloc = Meow_Alloc.Meow_CreateFromBmp(Meow_RenderScript, Meow_BMP, Meow_MipmapCtrl.Mmp_none, Meow_Alloc.sharedUsage);
+        Meow_RenderScriptETC1.Meow_EncodeImage(Meow_RenderScript, Meow_ETC1Script, Meow_Alloc, Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), 2, 2 * Meow_BMP.Meow_FetchWidth(), Meow_ImageCompressed, Meow_ImageCompressedAlpha, false, Meow_HasAlpha);
+        var Meow_ETC1Texture = new ETC1Texture(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), Meow_ImageCompressed);
+        Meow_ETC1Texture = Meow_TextureAlpha = null;
+        if(Meow_HasAlpha) {
+          Meow_TextureAlpha = new Meow_ETC1Texture(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), Meow_ImageCompressedAlpha);
+        }
+        Meow_Alloc.destroy();
+        Meow_ETC1Texture = Meow_Result = (Meow_Texture, Meow_TextureAlpha);
+        return Meow_Result;
+      }
+      return null;
+    };
 });
