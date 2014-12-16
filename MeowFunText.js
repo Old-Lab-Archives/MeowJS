@@ -79,9 +79,14 @@ var MeowFunText = (function() {
 		}
 	};
 	Meow_Power.Meow_DrawStyledText = function(Meow_TextInfo) {
-		var Meow_Text = Meow_TextInfo.text, xxx = Meow_TextInfo.x, y = Meow_TextInfo.y;
-		var Meow_TextSplit, Meow_Aux, Meow_TextLines = [], Meow_BoxWidth = Meow_TextInfo.Meow_BoxWidth;
-		var Meow_ProFont = [], Meow_Property, Meow_Props, Meow_PropName, Meow_PropVal, Meow_Attribute;
+		var Meow_Text = Meow_TextInfo.text;
+		var xxx = Meow_TextInfo.x;
+		var y = Meow_TextInfo.y;
+		var Meow_TextSplit, Meow_Aux;
+		var Meow_TextLines = [];
+		var Meow_BoxWidth = Meow_TextInfo.Meow_BoxWidth;
+		var Meow_ProFont = [];
+		var Meow_Property, Meow_Props, Meow_PropName, Meow_PropVal, Meow_Attribute;
 		var Meow_ClassDefn, Meow_ProColor, Meow_ProText, Meow_ProShadow;
 		var m, m2, m3, x;
 		var Meow_Match = Meow_Text.match(/<\s*br\s*\/>|<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>|<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>|[^<]+/g);
