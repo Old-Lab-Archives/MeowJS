@@ -192,6 +192,38 @@ var Meow_TextureRenderer = (function() {
     }
     Meow_BufferData.Meow_Pos(0);
     return new Meow_ETC1Texture(Meow_ImageWidth, Meow_ImageHeight, Meow_BufferData);
-
-    // Still coding... will be updated soon!
+    function Meow_CompressTexture(Meow_RenderScript, Meow_ETC1Script, Meow_Input, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride) {
+      var Meow_EncodedImageSize = Meow_RenderScriptETC1.Meow_FetchEncodedDataSize(Meow_ImageWidth, Meow_ImageHeight);
+      console.log("Meow_EncodedImageSize: " +Meow_EncodedImageSize);
+      Meow_BufferByte = Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+      Meow_Alloc = xx00 = Meow_Alloc.Meow_CreateSized(Meow_RenderScript,Meow_Element.U8(Meow_RenderScript), Meow_ImageWidth * Meow_ImageHeight * Meow_PixelSize);
+      xx00.Meow_CopyFrom(((Meow_BufferByte)(Meow_Input)).Array());
+      Meow_RenderScriptETC1.Meow_EncodeImage(Meow_RenderScript, Meow_ETC1Script, xx00, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride, Meow_ImageCompressed, null, false, false);
+      xx00.destroy();
+      Meow_ImageCompressed.Meow_Rewind();
+      return new Meow_ETC1Texture(Meow_ImageWidth, Meow_ImageHeight, Meow_ImageCompressed);
+    }
+    function Meow_WriteTexture(Meow_Texture, Meow_Output) {
+      Meow_BufferByte = Meow_BufferData = Meow_Texture.Meow_FetchData();
+      Meow_BufferData.Meow_Rewind();
+      console.log(Meow_BufferData.Meow_Bal());
+      var Meow_PosOriginal = Meow_BufferData.Meow_Pos();
+      try {
+        var Meow_ImageWidth = Meow_Texture.Meow_FetchWidth();
+        var Meow_ImageHeight = Meow_Texture.Meow_FetchHeight();
+        Meow_BufferByte = Meow_Header = Meow_BufferByte.Meow_AllocDirect(ETC1.ETC_PKM_HEADER_SIZE).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+        ETC1.Meow_HeaderFormat(Meow_Header, Meow_ImageWidth, Meow_ImageHeight);
+        Meow_Header.Meow_Pos(0);
+        Meow_Byte[Meow_IOBuffer] = new Meow_Byte(4096);
+        Meow_Header.Fetch(Meow_IOBuffer, 0, ETC1.ETC_PKM_HEADER_SIZE);
+        Meow_Output.Meow_Write(Meow_IOBuffer, 0, ETC1.ETC_PKM_HEADER_SIZE);
+        while(Meow_BufferData.Meow_Bal() > 0) {
+          var Meow_ChunkSize = Math.min(Meow_IOBuffer.length, Meow_BufferData.Meow_Bal());
+          Meow_BufferData.fetch(Meow_IOBuffer, 0, Meow_ChunkSize);
+          Meow_Output.Meow_Write(Meow_IOBuffer, 0, Meow_ChunkSize);
+        }
+      } finally {
+        Meow_BufferData.Meow_Pos(Meow_PosOriginal);
+      }
+    }
 });
