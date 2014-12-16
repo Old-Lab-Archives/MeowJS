@@ -424,4 +424,16 @@ var MeowImagePlay = (function() {
       }
       return null;
     };
+    function Meow_RenderScriptETC1() {
+      var Meow_EncodedBlockSize = 8;
+      var Meow_DecodedBlockSize = 40;
+      var Meow_ETC1_RGB8_OES = 0X8D64;
+      function Meow_FetchEncodedDataSize(Meow_ImageWidth, Meow_ImageHeight) {
+        return(((Meow_ImageWidth + 3) & ~3) * ((Meow_ImageHeight + 3) & ~3)) >> 1;
+      }
+      function Meow_EncodeImage(Meow_RenderScript, Meow_ETC1Script, Meow_AllocIn, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride, Meow_ImageCompressed, Meow_ImageCompressedAlpha, Meow_Mipmap) {
+
+        // Still coding... will be updated soon!
+      }
+    }
 });
