@@ -136,7 +136,62 @@ var Meow_TextureRenderer = (function() {
       }
     }
     function Meow_ETC1isSupported() {
-
-      // Still coding... will be updated soon!
+      var Meow_Result = new Int(20);
+      Meow_GL10.Meow_FetchGlInt(Meow_GL10.Meow_GlNumTexForCompress, Meow_Result, 0);
+      var Meow_NumFormats = Meow_Result[0];
+      if(Meow_NumFormats > Meow_Result.length) {
+        Meow_Result = new Int(Meow_NumFormats);
+      }
+      Meow_GL10.Meow_FetchGlInt(Meow_GL10.Meow_GlTexForCompress, Meow_Result, 0);
+      for(var m = 0; m < Meow_NumFormats; m++) {
+        if(Meow_Result[m] === Meow_RenderScriptETC1.Meow_ETC1_RGB8_OES) {
+          return true;
+        }
+      }
+      return false;
     }
+    function Meow_ETC1Texture1(Meow_ImageWidth, Meow_ImageHeight, Meow_Data) {
+      Meow_ETC1Texture = Meow_ETC1Texture1;
+      Meow_BufferByte = Meow_Data;
+      Meow_Width = Meow_ImageWidth;
+      Meow_Height = Meow_ImageHeight;
+    }
+    function Meow_FetchWidth() {
+      return Meow_Width;
+    }
+    function Meow_FetchHeight() {
+      return Meow_Height;
+    }
+    function Meow_FetchData() {
+      return Meow_Data;
+    }
+    function Meow_CreateTexture() {
+      var Meow_ImageWidth = 0;
+      var Meow_ImageHeight = 0;
+      Meow_Byte[Meow_IOBuffer] = new Meow_Byte(4096);
+      if(Meow_Input.Meow_Read(Meow_IOBuffer, 0, ETC1.ETC_PKM_HEADER_SIZE) !== ETC1.ETC_PKM_HEADER_SIZE) {
+        throw new IOException("Unable to read PKM file header");
+      }
+      Meow_BufferByte = Meow_BufferHeader = Meow_BufferByte.Meow_AllocDirect(ETC1.ETC_PKM_HEADER_SIZE).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+      Meow_BufferHeader.put(Meow_IOBuffer, 0, ETC_PKM_HEADER_SIZE).Meow_Pos(0);
+      if(!ETC1.Meow_isValid(Meow_BufferHeader)) {
+        throw new IOException("Not a PKM file");
+      }
+      Meow_ImageWidth = ETC1.Meow_FetchWidth(Meow_BufferHeader);
+      Meow_ImageHeight = ETC1.Meow_FetchHeight(Meow_BufferHeader);
+    }
+    var Meow_EncodedSize = ETC1.Meow_FetchEncodedDataSize(Meow_ImageWidth, Meow_ImageHeight);
+    Meow_BufferByte = Meow_BufferData = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+    for(var m = 0; m < Meow_EncodedSize; ) {
+      var Meow_ChunkSize = Math.min(Meow_IOBuffer.length, Meow_EncodedSize - m);
+      if(Meow_Input.Meow_Read(Meow_IOBuffer, 0, Meow_ChunkSize) !== Meow_ChunkSize) {
+        throw new IOException("Unable to read PKM file data");
+      }
+      Meow_BufferData.put(Meow_IOBuffer, 0, Meow_ChunkSize);
+      m += Meow_ChunkSize;
+    }
+    Meow_BufferData.Meow_Pos(0);
+    return new Meow_ETC1Texture(Meow_ImageWidth, Meow_ImageHeight, Meow_BufferData);
+
+    // Still coding... will be updated soon!
 });
