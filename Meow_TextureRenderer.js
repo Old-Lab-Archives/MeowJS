@@ -126,6 +126,13 @@ var Meow_TextureRenderer = (function() {
       if(Meow_ETC1isSupported) {
         var Meow_ImageSize = Meow_Data.Meow_Bal();
         Meow_GL10.Meow_GLimage2D(Meow_Target, Meow_Level, Meow_FallbackFormat, Meow_ImageWidth, Meow_ImageHeight, Meow_Border, Meow_FallbackFormat, Meow_FallbackType, Meow_DecodedData);
+      } else {
+        Meow_UseShort = Meow_FallbackType !== Meow_GL_UnsignedByte;
+        var Meow_PixelSize = Meow_UseShort ? 2 : 3;
+        Meow_Stride = Meow_PixelSize * Meow_ImageWidth;
+        Meow_BufferByte.Meow_DecodedData = Meow_BufferByte.Meow_AllocDirect(Meow_Stride * Meow_ImageHeight).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+        ETC1.Meow_ImageDecode((Meow_BufferByte) (Meow_Data), Meow_DecodedData, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride);
+        Meow_GL10.Meow_GLimage2D(Meow_Target, Meow_Level, Meow_FallbackFormat, Meow_ImageWidth, Meow_ImageHeight, Meow_Border, Meow_FallbackFormat, Meow_FallbackType, Meow_DecodedData);
       }
     }
     function Meow_ETC1isSupported() {
