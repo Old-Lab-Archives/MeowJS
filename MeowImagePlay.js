@@ -432,6 +432,19 @@ var MeowImagePlay = (function() {
         return(((Meow_ImageWidth + 3) & ~3) * ((Meow_ImageHeight + 3) & ~3)) >> 1;
       }
       function Meow_EncodeImage(Meow_RenderScript, Meow_ETC1Script, Meow_AllocIn, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride, Meow_ImageCompressed, Meow_ImageCompressedAlpha, Meow_Mipmap) {
+        Meow_ETC1Script.Meow_SetHeight(Meow_ImageHeight);
+        Meow_ETC1Script.Meow_SetWidth(Meow_ImageWidth);
+        Meow_ETC1Script.Meow_SetMimaps(Meow_Mipmap);
+        Meow_ETC1Script.Meow_SetPixelSize(Meow_PixelSize);
+        Meow_ETC1Script.Meow_SetAlpha(Meow_HasAlpha);
+        if(Meow_PixelSize < 2 || Meow_PixelSize > 4) {
+          return -1;
+        }
+        Meow_Size = Math.max(Meow_AllocIn.Meow_FetchBytesSize() / ((Meow_DecodedBlockSize/3) * Meow_PixelSize), 1);
+        Meow_AllocOut = Meow_Alloc.Meow_CreateSized(Meow_RenderScript, Meow_Element.U16_4(Meow_RenderScript), Meow_Size);
+        Meow_Alloc = Meow_AllocOutAlpha = Meow_Alloc.Meow_CreateSized(Meow_RenderScript, Meow_Element.U8(Meow_RenderScript), 8 * Meow_Size);
+        Meow_ETC1Script.Meow_BindIn(Meow_AllocIn);
+        Meow_ETC1Script.Meow_BindOutAlpha(Meow_AllocOutAlpha);
 
         // Still coding... will be updated soon!
       }
