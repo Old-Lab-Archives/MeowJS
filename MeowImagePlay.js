@@ -366,13 +366,35 @@ var MeowImagePlay = (function() {
           return null;
         }
         var Meow_EncodedImageSize = ETC1.Meow_FetchEncodedDataSize(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight());
-        Meow_BufferByte.Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).order(Meow_ByteOrder.Meow_NativeOrder());
+        Meow_BufferByte.Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
         ETC1.Meow_EncodeImage(Meow_Buffer, Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), 2, 2 * Meow_BMP.Meow_FetchWidth(), Meow_ImageCompressed);
         Meow_ETC1Texture = Meow_Texture = new ETC1Texture(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), Meow_ImageCompressed);
         return Meow_Texture;
       }
       return null;
     };
+    function Meow_ETC1Texture() {
+      Meow_Opts = new Meow_BMPfactory.Meow_Opts();
+      Meow_Opts.Meow_InPreferredConfig = Meow_Config.RGB_565;
+      Meow_BMP = Meow_BMPfactory.Meow_DecodeStream(Meow_Stream, null, Meow_Opts);
+      if(Meow_BMP !== null) {
+        Meow_BufferByte = Meow_Buffer = Meow_BufferByte.Meow_AllocDirect(Meow_BMP.Meow_FetchRowBytes() * Meow_BMP.Meow_FetchHeight()).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+        Meow_BMP.Meow_CopyPixelsToBuffer(Meow_Buffer);
+        Meow_Buffer.Meow_Pos(0);
+        console.log("Width: " + Meow_BMP.Meow_FetchWidth());
+        console.log("Height: " + Meow_BMP.Meow_FetchHeight());
+        console.log("Config: " + Meow_BMP.Meow_FetchConfig());
+        if(Meow_BMP.Meow_FetchConfig() === Meow_BMP.Meow_Config.ARGB_4444 || Meow_BMP.Meow_FetchConfig() === Meow_BMP.Meow_Config.ARGB_8888) {
+          console.log("Texture requires alpha channel");
+          return null;
+        }
+        Meow_EncodedImageSize = Meow_ETC1JS.Meow_FetchEncodedDataSize(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight());
+        Meow_BufferByte = Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
+        Meow_ETC1JS.Meow_EncodeImage(Meow_Buffer, Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), 2, 2 * Meow_BMP.Meow_FetchWidth(), Meow_ImageCompressed);
+        return Meow_Texture;
+      }
+      return null;
+    }
 
     // Still coding now... will be updated soon!
 });
