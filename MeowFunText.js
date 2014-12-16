@@ -23,7 +23,7 @@ var MeowFunText = (function() {
 	Meow_Power.Meow_Config = function(Meow_Config) {
 		var Meow_Property;
 		if(typeof(Meow_Config) !== "object") {
-			alert("invalid config!");
+			console.log("invalid config!");
 			return false;
 		}
 		for(Meow_Property in Meow_Config)
@@ -37,7 +37,7 @@ var MeowFunText = (function() {
 		Meow_Power.Meow_InitTime = new Meow_Date().getTime();
 		if(Meow_Power.Meow_Canvas === null) {
 			if(!Meow_Power.Meow_FetchCanvas()) {
-				alert("Incorrect canvas ID!");
+				console.log("Incorrect canvas ID!");
 				return false;
 			}
 		}
@@ -57,11 +57,11 @@ var MeowFunText = (function() {
 			}
 		}
 		if(typeof (Meow_TextInfo) !== "object") {
-			alert("invalid text format");
+			console.log("invalid text format");
 			return false;
 		}
 		if(!Meow_Power.Meow_isNumber(Meow_TextInfo.x) || !Meow_Power.Meow_isNumber(Meow_TextInfo.y)) {
-			alert("Specify a correct \"x\" & \"y\" axis value.");
+			console.log("Specify a correct \"x\" & \"y\" axis value.");
 			return false;
 		}
 		Meow_Power.Meow_BufferCanvas.width = Meow_Power.Meow_BufferCanvas.width;
@@ -243,7 +243,7 @@ var MeowFunText = (function() {
 	};
 	Meow_Power.Meow_DefineClass = function(Meow_id, Meow_defn) {
 		if(typeof(Meow_defn) !== "object") {
-			alert("invalid class!");
+			console.log("invalid class!");
 			return false;
 		}
 		Meow_Power.Meow_SavedClasses[Meow_id] = Meow_defn;
@@ -256,7 +256,7 @@ var MeowFunText = (function() {
 	};
 	Meow_Power.Meow_FetchCanvas = function() {
 		if(Meow_Power.Meow_CanvasID === null) {
-			alert("Specify the canvas ID! ");
+			console.log("Specify the canvas ID! ");
 			return false;
 		}
 		Meow_Power.Meow_Canvas = document.getElementById(Meow_Power.Meow_CanvasID);
