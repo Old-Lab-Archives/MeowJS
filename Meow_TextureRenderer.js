@@ -1,6 +1,6 @@
 var Meow_TextureRenderer = (function() {
 	"use strict";
-  var Meow_BMPfactory, Meow_Opts, Meow_Config, Meow_Stream, Meow_BMP, Meow_BufferByte, Meow_ByteOrder, Meow_Buffer, Meow_ImageCompressed, Meow_Texture, Meow_ETC1Texture;
+  var Meow_BMPfactory, Meow_Opts, Meow_Config, Meow_Stream, Meow_BMP, Meow_BufferByte, Meow_ByteOrder, Meow_Buffer, Meow_ImageCompressed, Meow_Texture;
 	var MeowBMP = function() {
       Meow_Opts = new Meow_BMPfactory.Meow_Opts();
       Meow_Opts.Meow_InPreferredConfig = Meow_Config.RGB_565;
@@ -46,7 +46,8 @@ var Meow_TextureRenderer = (function() {
       }
       return null;
     }
-    Meow_ETC1Texture = function(Meow_Stream, Meow_RenderScript, Meow_ETC1Script) {
+    Meow_Texture = function(Meow_Stream, Meow_RenderScript, Meow_ETC1Script) {
+      Meow_Texture = Meow_ETC1Texture;
       Meow_HasAlpha = false;
       Meow_BufferByte = Meow_ImageCompressedAlpha = null;
       Meow_Opts = new Meow_BMPfactory.Meow_Opts();
@@ -64,7 +65,7 @@ var Meow_TextureRenderer = (function() {
         Meow_BufferByte = Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
         Meow_Alloc = Meow_Alloc.Meow_CreateFromBmp(Meow_RenderScript, Meow_BMP, Meow_MipmapCtrl.Mmp_none, Meow_Alloc.sharedUsage);
         Meow_RenderScriptETC1.Meow_EncodeImage(Meow_RenderScript, Meow_ETC1Script, Meow_Alloc, Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), 2, 2 * Meow_BMP.Meow_FetchWidth(), Meow_ImageCompressed, Meow_ImageCompressedAlpha, false, Meow_HasAlpha);
-        var Meow_ETC1Texture = new Meow_ETC1Texture(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), Meow_ImageCompressed);
+        Meow_ETC1Texture = new Meow_ETC1Texture(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), Meow_ImageCompressed);
         Meow_ETC1Texture = Meow_TextureAlpha = null;
         if(Meow_HasAlpha) {
           Meow_TextureAlpha = new Meow_ETC1Texture(Meow_BMP.Meow_FetchWidth(), Meow_BMP.Meow_FetchHeight(), Meow_ImageCompressedAlpha);
@@ -111,5 +112,24 @@ var Meow_TextureRenderer = (function() {
         Meow_ImageCompressed.Meow_Rewind();
         return 0;
       }
+    }
+    function Meow_LoadTexture(Meow_Target, Meow_Level, Meow_Border, Meow_FallbackFormat, Meow_FallbackType, Meow_Texture) {
+      if(Meow_FallbackFormat !== Meow_GL_RGB) {
+        throw new Exception("FallBack must be Meow_GL_RGB");
+      }
+      if(!(Meow_FallbackType === Meow_GL_UnsignedShort || Meow_FallbackType === Meow_GL_UnsignedByte)) {
+        throw new Exception("Unsupported Meow_FallbackType");
+      }
+      var Meow_ImageWidth = Meow_Texture.Meow_FetchWidth();
+      var Meow_ImageHeight = Meow_Texture.Meow_FetchHeight();
+      var Meow_BufferData = Meow_Texture.Meow_FetchData();
+      if(Meow_ETC1isSupported) {
+        var Meow_ImageSize = Meow_Data.Meow_Bal();
+        Meow_GL10.Meow_GLimage2D(Meow_Target, Meow_Level, Meow_FallbackFormat, Meow_ImageWidth, Meow_ImageHeight, Meow_Border, Meow_FallbackFormat, Meow_FallbackType, Meow_DecodedData);
+      }
+    }
+    function Meow_ETC1isSupported() {
+
+      // Still coding... will be updated soon!
     }
 });
