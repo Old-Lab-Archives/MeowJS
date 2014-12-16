@@ -226,4 +226,8 @@ var Meow_TextureRenderer = (function() {
         Meow_BufferData.Meow_Pos(Meow_PosOriginal);
       }
     }
+    function Meow_TextureRendererCompress() {
+
+      // Still coding... will be updated soon!
+    }
 });
