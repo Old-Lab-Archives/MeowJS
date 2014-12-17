@@ -268,6 +268,19 @@ var Meow_TextureRenderer = (function() {
           dx += Meow_StrideQ;
         }
       }
+      var Meow_ModifyTable = [
+        [2, 8, -2, -8],
+        [5, 17, -5, -17],
+        [9, 29, -9, -29],
+        [13, 42, -13, -42],
+        [18, 60, -18, -60],
+        [24, 80, -24, -80],
+        [33, 106, -33, -106],
+        [47, 183, -47, -183]
+      ];
+      function Meow_ETC1byte() {
+        return new (Meow_ETC1byte) (xxx >= 0 ? (xxx < 255 ? x : 255) : 0);
+      }
 
       // Still coding... will be updated soon!
     }
