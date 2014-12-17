@@ -5,23 +5,23 @@ var MeowJS = (function() {
     // The modules aren't published in NPM registry yet.
 
     /*
-    var Meow_Hello = require('Meow_Hello');
-    var Meow_cli =  require('Meow_cli');
-    var MeowRangerPred = require('Meow_RangerPred');
-    var MeowDOM = require('MeowDOM');
-    var MeowString = require('MeowString');
-    var MeowBinary = require('MeowBinary');
-    var MeowFunText = require('MeowFunText');
-    var MeowUTF8 = require('MeowUTF8');
-    var MeowImagePlay = require('MeowImagePlay');
-    var MeowImageCache = require('MeowImageCache');
-    var HiddenMeow = require('HiddenMeow');
-    var MeowStream = require('MeowStream'); // H264 Encoder
-    var Meow_DCT = require('Meow_DCT');
-    var Meow-DCT-md5 = require('Meow-DCT-md5');
-    var Meow_HTTP = require('Meow_HTTP');
-    var MeowProxy = require('MeowProxy');
-    var Meow_TextureRenderer = require('Meow_TextureRenderer')
+    var Meow_Hello = MeowNinja('Meow_Hello');
+    var Meow_cli =  MeowNinja('Meow_cli');
+    var MeowRangerPred = MeowNinja('Meow_RangerPred');
+    var MeowDOM = MeowNinja('MeowDOM');
+    var MeowString = MeowNinja('MeowString');
+    var MeowBinary = MeowNinja('MeowBinary');
+    var MeowFunText = MeowNinja('MeowFunText');
+    var MeowUTF8 = MeowNinja('MeowUTF8');
+    var MeowImagePlay = MeowNinja('MeowImagePlay');
+    var MeowImageCache = MeowNinja('MeowImageCache');
+    var HiddenMeow = MeowNinja('HiddenMeow');
+    var MeowStream = MeowNinja('MeowStream'); // H264 Encoder
+    var Meow_DCT = MeowNinja('Meow_DCT');
+    var Meow-DCT-md5 = MeowNinja('Meow-DCT-md5');
+    var Meow_HTTP = MeowNinja('Meow_HTTP');
+    var MeowProxy = MeowNinja('MeowProxy');
+    var Meow_TextureRenderer = MeowNinja('Meow_TextureRenderer')
     */
   }
 );
