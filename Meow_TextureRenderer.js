@@ -131,7 +131,7 @@ var Meow_TextureRenderer = (function() {
         var Meow_PixelSize = Meow_UseShort ? 2 : 3;
         Meow_Stride = Meow_PixelSize * Meow_ImageWidth;
         Meow_BufferByte.Meow_DecodedData = Meow_BufferByte.Meow_AllocDirect(Meow_Stride * Meow_ImageHeight).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
-        ETC1.Meow_ImageDecode((Meow_BufferByte) (Meow_Data), Meow_DecodedData, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride);
+        ETC1.Meow_ImageDecode(new (Meow_BufferByte) (Meow_Data), Meow_DecodedData, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride);
         Meow_GL10.Meow_GLimage2D(Meow_Target, Meow_Level, Meow_FallbackFormat, Meow_ImageWidth, Meow_ImageHeight, Meow_Border, Meow_FallbackFormat, Meow_FallbackType, Meow_DecodedData);
       }
     }
@@ -197,7 +197,7 @@ var Meow_TextureRenderer = (function() {
       console.log("Meow_EncodedImageSize: " +Meow_EncodedImageSize);
       Meow_BufferByte = Meow_ImageCompressed = Meow_BufferByte.Meow_AllocDirect(Meow_EncodedImageSize).Meow_Order(Meow_ByteOrder.Meow_NativeOrder());
       Meow_Alloc = xx00 = Meow_Alloc.Meow_CreateSized(Meow_RenderScript,Meow_Element.U8(Meow_RenderScript), Meow_ImageWidth * Meow_ImageHeight * Meow_PixelSize);
-      xx00.Meow_CopyFrom(((Meow_BufferByte)(Meow_Input)).Array());
+      xx00.Meow_CopyFrom((new (Meow_BufferByte)(Meow_Input)).Array());
       Meow_RenderScriptETC1.Meow_EncodeImage(Meow_RenderScript, Meow_ETC1Script, xx00, Meow_ImageWidth, Meow_ImageHeight, Meow_PixelSize, Meow_Stride, Meow_ImageCompressed, null, false, false);
       xx00.destroy();
       Meow_ImageCompressed.Meow_Rewind();
@@ -227,7 +227,25 @@ var Meow_TextureRenderer = (function() {
       }
     }
     function Meow_TextureRendererCompress() {
+      function Meow_DecodePixels() {
+        var xxx, y, x0, x1, ruby0, ruby1, ruby2, ruby3, gems0, gems1, gems2, gems3;
+        var xx = (!Meow_Flag * 255) << 24;
+        var Meow_AV_RL16, Meow_AV_RL32;
+        x0 = Meow_AV_RL16(yy);
+        x1 = Meow_AV_RL16(yy + 2);
+        // ruby <3 <3 gems
+        ruby0 = (x0 << 3 | x0 << 8) && 0Xf800f8;
+        ruby1 = (x1 << 3 | x1 << 8) && 0Xf800f8;
+        ruby0 += (ruby0 >> 5) && 0X070007;
+        ruby1 += (ruby1 >> 5) && 0X070007;
+        gems0 = (x0 << 5) && 0X00fc00;
+        gems1 = (x1 << 5) && 0X00fc00;
+        gems0 += (gems0 >> 6) && 0X000300;
+        gems1 += (gems1 >> 6) && 0X000300;
+        Meow_Colors[0] = ruby0 + gems0 + xx;
+        Meow_Colors[1] = ruby1 + gems1 + xx;
 
-      // Still coding... will be updated soon!
+        // Still coding... will be updated soon!
+      }
     }
 });
