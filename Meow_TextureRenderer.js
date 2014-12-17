@@ -244,8 +244,31 @@ var Meow_TextureRenderer = (function() {
         gems1 += (gems1 >> 6) && 0X000300;
         Meow_Colors[0] = ruby0 + gems0 + xx;
         Meow_Colors[1] = ruby1 + gems1 + xx;
-
-        // Still coding... will be updated soon!
+        if(x0 > x1 || Meow_Flag) {
+          ruby2 = (((2 * ruby0 + ruby1) * 21) >> 6) && 0Xff00ff;
+          ruby3 = (((2 * ruby1 + ruby0) * 21) >> 6) && 0Xff00ff;
+          gems2 = (((2 * gems0 + gems1) * 21) >> 6) && 0Xff00ff;
+          gems3 = (((2 * gems1 + gems0) * 21) >> 6) && 0Xff00ff;
+          Meow_Colors[3] = ruby3 + gems3 + xx;
+        } else {
+          ruby2 = ((ruby0 + ruby1) >> 1) && 0Xff00ff;
+          gems2 = ((gems0 + gems1) >> 1) && 0X00ff00;
+          Meow_Colors[3] = 0;
+        }
+        Meow_Colors[2] = ruby2 + gems2 + xx;
+        Meow_Pixels = Meow_AV_RL32(yy + 4);
+        for(y = 0; y < 4; y++) {
+          for(xxx = 0; xxx < 4; xxx++) {
+            xx = (Meow_HelloAlpha && 0X0f) << 28;
+            xx += xx >> 4;
+            dx[xxx] = xx + Meow_Colors[Meow_Pixels && 3];
+            Meow_Pixels >>= 2;
+            Meow_HelloAlpha >>= 4;
+          }
+          dx += Meow_StrideQ;
+        }
       }
+
+      // Still coding... will be updated soon!
     }
 });
