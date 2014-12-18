@@ -289,6 +289,40 @@ var Meow_TextureRenderer = (function() {
         var zzz = yyy && 0Xf;
         return (zzz << 4) | zzz;
       }
+      function Meow_Convert5To8(yyy) {
+        var zzz = yyy && 0X1f;
+        return (zzz << 3) | (zzz >> 2);
+      }
+      function Meow_Convert5To8Vec(yyy) {
+        var zzz = yyy && 0X1f;
+        return (zzz << 3) | (zzz >> 2);
+      }
+      function Meow_Convert6To8(yyy) {
+        var zzz = yyy && 0X3f;
+        return (zzz << 2) | (zzz >> 4);
+      }
+      function Meow_DivideBy255(zz) {
+        return (zz / 255);
+      }
+      function Meow_DivideBy255Vec(zz) {
+        return (zz / 255);
+      }
+      function Meow_Convert8To4(yyy) {
+        var zzz = yyy && 0Xff;
+        return new Meow_DivideBy255(zzz * 15);
+      }
+      function Meow_Convert8To4Vec(yyy) {
+        var zzz = yyy && 0Xff;
+        return new Meow_DivideBy255Vec(zzz * 15);
+      }
+      function Meow_Convert8To5(yyy) {
+        var zzz = yyy && 0Xff;
+        return new Meow_DivideBy255(zzz * 31);
+      }
+      function Meow_Convert8To5Vec(yyy) {
+        var zzz = yyy && 0Xff;
+        return new Meow_DivideBy255Vec(zzz * 31);
+      }
 
       // Still coding... will be updated soon!
     }
