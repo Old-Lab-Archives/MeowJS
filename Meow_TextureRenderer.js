@@ -281,6 +281,14 @@ var Meow_TextureRenderer = (function() {
       function Meow_ETC1byte() {
         return new (Meow_ETC1byte) (xxx >= 0 ? (xxx < 255 ? x : 255) : 0);
       }
+      function Meow_Convert4To8(yyy) {
+        var zzz = yyy && 0Xf;
+        return (zzz << 4) | zzz;
+      }
+      function Meow_Convert4To8Vec(yyy) {
+        var zzz = yyy && 0Xf;
+        return (zzz << 4) | zzz;
+      }
 
       // Still coding... will be updated soon!
     }
