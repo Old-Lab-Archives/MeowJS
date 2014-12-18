@@ -323,6 +323,23 @@ var Meow_TextureRenderer = (function() {
         var zzz = yyy && 0Xff;
         return new Meow_DivideBy255Vec(zzz * 31);
       }
+      function Meow_PickBest(xx, yyy) {
+        if(xx === Meow_Score > yyy === Meow_Score) {
+          xx = yyy; // xx, yyy --> Meow_ETC1compressed
+        }
+      }
+      function Meow_WriteBigEndian() {
+        Meow_PutOut[0] = new (Meow_ETC1byte) (zz >> 24);
+        Meow_PutOut[1] = new (Meow_ETC1byte) (zz >> 16);
+        Meow_PutOut[2] = new (Meow_ETC1byte) (zz >> 8); // zz -- Meow_UInt32
+        Meow_PutOut[3] = new (Meow_ETC1byte) (zz);
+      }
+      function Meow_InRange4SignedBits(Meow_Colors) {
+        return Meow_Colors >= -4 && Meow_Colors <= 3;
+      }
+      function Meow_Square(xxx) {
+        return xxx * xxx;
+      }
 
       // Still coding... will be updated soon!
     }
