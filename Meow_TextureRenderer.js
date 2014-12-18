@@ -340,7 +340,17 @@ var Meow_TextureRenderer = (function() {
       function Meow_Square(xxx) {
         return xxx * xxx;
       }
+      function Meow_ETC1AvgColorsSubblock()
+      {
+        var Meow_Pixels = 0;
+        if(Meow_Flipped) {
+          var Meow_FlipBy = 0;
+          if(Meow_Seconds) {
+            Meow_FlipBy = 2;
+          }
 
-      // Still coding... will be updated soon!
+          // Still coding... will be updated soon!
+        }
+      }
     }
 });
