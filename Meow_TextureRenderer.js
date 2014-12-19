@@ -348,9 +348,41 @@ var Meow_TextureRenderer = (function() {
           if(Meow_Seconds) {
             Meow_FlipBy = 2;
           }
-
-          // Still coding... will be updated soon!
+          for(y = 0; y < 2; y++) {
+            var www = Meow_FlipBy + y;
+            for(xxx = 0; xxx < 4; xxx++) {
+              m = xxx + 4 * www;
+              if(Meow_InMask && (1 << m)) {
+                Meow_Uchar4 = Meow_PutIn + m;
+                Meow_Uchar4 = Meow_uc4;
+                Meow_Pad = Meow_Convert4*(Meow_uc4++);
+                Meow_Pixels += Meow_Pad;
+              }
+            }
+          }
+        } else {
+          var yyyx = 0;
+          if(Meow_Seconds) {
+            yyyx = 2;
+          }
+          for(y = 0; y < 4; y++) {
+            for(xxx = 0; xxx < 2; xxx++) {
+              var vv = yyyx + xxx;
+              m = vv + 4 * y;
+              if(Meow_InMask && (1 << m)) {
+                Meow_Uchar4 = Meow_uc4 = Meow_PutIn + m;
+                Meow_Pad = Meow_Convert4*(Meow_uc4++);
+                Meow_Pixels += Meow_Pad;
+              }
+            }
+          }
         }
+        Meow_Pixels = (Meow_Pixels + 4) >> 3;
+        Meow_ColorsP[0].Meow_Rouge = Meow_Pixels.Meow_Rouge;
+        Meow_ColorsP[0].Meow_Vert = Meow_Pixels.Meow_Vert;
+        Meow_ColorsP[0].Meow_Bleu = Meow_Pixels.Meow_Bleu;
       }
+
+      // Still coding now... will be updated soon!
     }
 });
