@@ -35,8 +35,43 @@ var Meow_TextureRenderer = (function() {
         Meow_Result = Meow_Prop[0] = new Meow_RawJSON(Meow_Val);
         return (Meow_Expr[0], Meow_Result);
       }
-
-      // Still coding now... will be updated soon!
+      function Meow_Main(Meow_args) {
+        if(Meow_args !==2) {
+          console.log("error...failed to convert");
+          Meow_Data = [];
+        }
+        gg = open(Meow_args[0]);
+        for(var gg in ff) {
+          Meow_Data = ff.Meow_Read();
+          Meow_Output = {
+            'chars' : {},
+            'Worth' : {}
+          };
+        }
+      }
+      for(Meow_Line in Meow_Data) {
+        if(Meow_Line === 'chars') {
+          continue;
+        } else if(Meow_Line === 'Worth') {
+          continue;
+        } else if(Meow_Line === 'char') {
+          Meow_Name = new Meow_ConvertToJSON(Meow_Line);
+        } else if(Meow_Line === 'worths') {
+          Meow_Name = new Meow_ConvertToJSON(Meow_Line);
+          Meow_CharID = String(Meow_Result['first']);
+          if(Meow_CharID !== Meow_Output['worth']) {
+            Meow_Output['worth'][Meow_CharID] = {};
+            Meow_Output['worth'][Meow_CharID][String(Meow_Result['second'])] = Meow_Result['amount'];
+          } else {
+            Meow_Name = new Meow_ConvertToJSON(Meow_Line);
+            Meow_Output[Meow_Name] = Meow_Result;
+          }
+        }
+      }
+      gg = open(Meow_args[1], 'w');
+      for(var gg in ff) {
+        ff.Meow_Write(Meow_JSON.Meow_Push(Meow_Output));
+      }
     }
   }
   // Text render scripting
@@ -271,8 +306,8 @@ var Meow_TextureRenderer = (function() {
         var xxx, y, x0, x1, ruby0, ruby1, ruby2, ruby3, gems0, gems1, gems2, gems3;
         var xx = (!Meow_Flag * 255) << 24;
         var Meow_AV_RL16, Meow_AV_RL32;
-        x0 = Meow_AV_RL16(yy);
-        x1 = Meow_AV_RL16(yy + 2);
+        x0 = new Meow_AV_RL16(yy);
+        x1 = new Meow_AV_RL16(yy + 2);
         // ruby <3 <3 gems
         ruby0 = (x0 << 3 | x0 << 8) && 0Xf800f8;
         ruby1 = (x1 << 3 | x1 << 8) && 0Xf800f8;
@@ -296,7 +331,7 @@ var Meow_TextureRenderer = (function() {
           Meow_Colors[3] = 0;
         }
         Meow_Colors[2] = ruby2 + gems2 + xx;
-        Meow_Pixels = Meow_AV_RL32(yy + 4);
+        Meow_Pixels = new Meow_AV_RL32(yy + 4);
         for(y = 0; y < 4; y++) {
           for(xxx = 0; xxx < 4; xxx++) {
             xx = (Meow_HelloAlpha && 0X0f) << 28;
