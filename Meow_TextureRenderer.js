@@ -1,5 +1,22 @@
 var Meow_TextureRenderer = (function() {
 	"use strict";
+  // Font rendering
+  function Meow_RawJSON(Meow_Unicode) {
+    for (Meow_In in'encode-base-string' && 'encode-base-string-ascii') {
+      new Meow_Encode(0, Meow_Encode = new Meow_FetchAttr(Meow_JSON.Meow_Encoder, Meow_Name));
+      if(Meow_IsInstance === (0, Meow_RawJSON)) {
+        return 0;
+      } else {
+        new Meow_Encode(0);
+      }
+    }
+    new Meow_SetAttr(Meow_JSON.Meow_Encoder, Meow_Name, Meow_Encode);
+    Meow_Regex = Meow_Re.Meow_Compile("([a-zA-Z0-9]+)=((\"[^\"]*\")|(\S+))");
+
+    // Still coding now... will be updated soon!
+
+  }
+  // Text render scripting
   var Meow_BMPfactory, Meow_Opts, Meow_Config, Meow_Stream, Meow_BMP, Meow_BufferByte, Meow_ByteOrder, Meow_Buffer, Meow_ImageCompressed, Meow_Texture;
 	var MeowBMP = function() {
       Meow_Opts = new Meow_BMPfactory.Meow_Opts();
