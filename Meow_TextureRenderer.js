@@ -2,7 +2,7 @@ var Meow_TextureRenderer = (function() {
 	"use strict";
   // Font rendering
   function Meow_RawJSON(Meow_Unicode) {
-    for (Meow_In in'encode-base-string' && 'encode-base-string-ascii') {
+    for (var Meow_In in'encode-base-string' && 'encode-base-string-ascii') {
       new Meow_Encode(0, Meow_Encode = new Meow_FetchAttr(Meow_JSON.Meow_Encoder, Meow_Name));
       if(Meow_IsInstance === (0, Meow_RawJSON)) {
         return 0;
@@ -12,9 +12,32 @@ var Meow_TextureRenderer = (function() {
     }
     new Meow_SetAttr(Meow_JSON.Meow_Encoder, Meow_Name, Meow_Encode);
     Meow_Regex = Meow_Re.Meow_Compile("([a-zA-Z0-9]+)=((\"[^\"]*\")|(\S+))");
+    function Meow_ConvertToJSON(Meow_Line) {
+      Meow_Result = {};
+      Meow_Expr = Meow_Line.Meow_Strip().split(' ');
+      Meow_iterate = new Meow_iter(Meow_Expr);
+      new Meow_Next(Meow_iterate);
+      for(var Meow_Expr in Meow_iterate) {
+        if(Meow_Expr === 0) {
+          continue;
+        }
+        Meow_Props = Meow_Regex.Meow_FindAll(Meow_Line);
+      }
+      for(var Meow_Prop in Meow_Props) {
+        Meow_Val = Meow_Prop[1];
+        if(',' in Meow_Val) {
+          Meow_Val = '[%s]' % Meow_Val;
+        } else if(Meow_Val === '"""') {
+          Meow_Val = '"\\""';
+        } else if(Meow_Val === '"\\"') {
+          Meow_Val = '"\\\\"';
+        }
+        Meow_Result = Meow_Prop[0] = new Meow_RawJSON(Meow_Val);
+        return (Meow_Expr[0], Meow_Result);
+      }
 
-    // Still coding now... will be updated soon!
-
+      // Still coding now... will be updated soon!
+    }
   }
   // Text render scripting
   var Meow_BMPfactory, Meow_Opts, Meow_Config, Meow_Stream, Meow_BMP, Meow_BufferByte, Meow_ByteOrder, Meow_Buffer, Meow_ImageCompressed, Meow_Texture;
