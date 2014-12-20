@@ -11,7 +11,7 @@ var Meow_TextureRenderer = (function() {
       }
     }
     new Meow_SetAttr(Meow_JSON.Meow_Encoder, Meow_Name, Meow_Encode);
-    Meow_Regex = Meow_Re.Meow_Compile("([a-zA-Z0-9]+)=((\"[^\"]*\")|(\S+))");
+    Meow_Regex = Meow_Re.Meow_Compile("([a-zA-Z0-9]+)=((\"[^\"]*\")|(\/+S))");
     function Meow_ConvertToJSON(Meow_Line) {
       Meow_Result = {};
       Meow_Expr = Meow_Line.Meow_Strip().split(' ');
@@ -459,6 +459,7 @@ var Meow_TextureRenderer = (function() {
       }
       function Meow_EncodeBaseColors(Meow_Uchar3, Meow_ColorsP,Meow_ETC1compressed) {
         Meow_ETC1compressed = Meow_CompressedP;
+        Meow_Uchar3 = Meow_BaseColorsP;
         var Meow_Pixel, Meow_Pixel2, Meow_Diff, x51, x52;
         x51 = new Meow_Convert8To5Vec(new Meow_ConvertInt3(Meow_ColorsP[0]));
         x52 = new Meow_Convert8To5Vec(new Meow_ConvertInt3(Meow_ColorsP[1]));
@@ -481,6 +482,16 @@ var Meow_TextureRenderer = (function() {
       Meow_BaseColorsP[0] = new Meow_ConvertUchar3(Meow_Pixel);
       Meow_BaseColorsP[1] = new Meow_ConvertUchar3(Meow_Pixel2);
     }
-
-    // Still coding now... will be updated soon!
+    function Meow_ModifyChoose(Meow_Uchar3, Meow_Uchar4, Meow_UInt32, Meow_BitIndex, Meow_ModifyTable) {
+      Meow_Uchar4 = Meow_PutIn;
+      Meow_Uchar3 = Meow_BaseColorsP;
+      Meow_UInt32 = Meow_LowP;
+      Meow_UInt32 = Meow_BestScore = ~0;
+      var Meow_BestIndex = 0;
+      var Meow_Pixel, Meow_Base;
+      Meow_Pixel = new Meow_Convert4(Meow_PutIn[0]);
+      Meow_Base = new Meow_ConvertInt3(Meow_BaseColorsP[0]);
+    
+      // Still coding now... will be updated soon!
+    }
 });
