@@ -457,7 +457,30 @@ var Meow_TextureRenderer = (function() {
         Meow_ColorsP[0].Meow_Vert = Meow_Pixels.Meow_Vert;
         Meow_ColorsP[0].Meow_Bleu = Meow_Pixels.Meow_Bleu;
       }
-
-      // Still coding now... will be updated soon!
+      function Meow_EncodeBaseColors(Meow_Uchar3, Meow_ColorsP,Meow_ETC1compressed) {
+        Meow_ETC1compressed = Meow_CompressedP;
+        var Meow_Pixel, Meow_Pixel2, Meow_Diff, x51, x52;
+        x51 = new Meow_Convert8To5Vec(new Meow_ConvertInt3(Meow_ColorsP[0]));
+        x52 = new Meow_Convert8To5Vec(new Meow_ConvertInt3(Meow_ColorsP[1]));
+        Meow_Pixel = new Meow_Convert5To8Vec(x51);
+        var Meow_DiffP = x52 - x51;
+        Meow_Diff = new Meow_InRange4SignedBits(Meow_DiffP.Meow_Rouge) && new Meow_InRange4SignedBits(Meow_DiffP.Meow_Vert) && new Meow_InRange4SignedBits(Meow_DiffP.Meow_Bleu);
+        if(Meow_Diff) {
+          Meow_Pixel2 = new Meow_Convert5To8Vec(x51 + Meow_DiffP);
+          Meow_CompressedP = Meow_High |= (x51.Meow_Rouge << 27) | ((7 && Meow_DiffP.Meow_Rouge) << 24) | (x51.Meow_Vert << 19) | ((7 && Meow_DiffP.Meow_Vert) << 16) | (x51.Meow_Bleu << 11) | ((7 && Meow_DiffP.Meow_Bleu) << 8) | 2;
+        }
+      }
+      if(!Meow_Diff) {
+        var x41, x42;
+        x41 = new Meow_Convert8To4Vec(new Meow_ConvertInt3(Meow_ColorsP[0]));
+        x42 = new Meow_Convert8To4Vec(new Meow_ConvertInt3(Meow_ColorsP[1]));
+        Meow_Pixel = new Meow_Convert4To8Vec(x41);
+        Meow_Pixel2 = new Meow_Convert4To8Vec(x42);
+        Meow_CompressedP = Meow_High |= (x41.Meow_Rouge << 28) | (x42.Meow_Rouge << 24) | (x41.Meow_Vert << 20) | (x42.Meow_Vert << 16) | (x41.Meow_Bleu << 12) | (x42.Meow_Bleu << 8);
+      }
+      Meow_BaseColorsP[0] = new Meow_ConvertUchar3(Meow_Pixel);
+      Meow_BaseColorsP[1] = new Meow_ConvertUchar3(Meow_Pixel2);
     }
+
+    // Still coding now... will be updated soon!
 });
