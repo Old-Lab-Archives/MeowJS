@@ -491,7 +491,29 @@ var Meow_TextureRenderer = (function() {
       var Meow_Pixel, Meow_Base;
       Meow_Pixel = new Meow_Convert4(Meow_PutIn[0]);
       Meow_Base = new Meow_ConvertInt3(Meow_BaseColorsP[0]);
-    
-      // Still coding now... will be updated soon!
+      for(var m = 0; m < 4; m++) {
+        var Meow_Modify = Meow_ModifyTable[m];
+        var Meow_DecodedP = new Meow_ETC1JS(Meow_Base.Meow_Vert + Meow_Modify);
+        Meow_UInt32 = Meow_Score = new (Meow_UInt32) (6 * sqrt(Meow_DecodedP - Meow_Pixel.Meow_Vert));
+        if(Meow_Score >= Meow_BestScore) {
+          continue;
+        }
+        var Meow_DecodedR = new Meow_ETC1JS(Meow_Base.Meow_Rouge + Meow_Modify);
+        Meow_Score += new (Meow_UInt32) (3 * sqrt(Meow_DecodedR - Meow_Pixel.Meow_Rouge));
+        if(Meow_Score >= Meow_BestScore) {
+          continue;
+        }
+        var Meow_DecodedQ = new Meow_ETC1JS(Meow_Base.Meow_Bleu + Meow_Modify);
+        Meow_Score += new (Meow_UInt32) (sqrt(Meow_DecodedQ - Meow_Pixel.Meow_Bleu));
+        if(Meow_Score < Meow_BestScore) {
+          Meow_BestScore = Meow_Score;
+          Meow_BestIndex = m;
+        }
+      }
+      Meow_UInt32 = Meow_LowMask = (((Meow_BestIndex >> 1) << 16) | (Meow_BestIndex && 1)) << Meow_BitIndex;
+      Meow_LowP |= Meow_LowMask;
+      return Meow_BestScore;
     }
+
+    // Still coding now... will be updated soon!
 });
