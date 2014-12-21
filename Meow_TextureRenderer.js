@@ -528,7 +528,7 @@ var Meow_TextureRenderer = (function() {
         for(var xxx = 0; xxx < 4; xxx++) {
           m = xxx + 4 + yyy;
           if(Meow_InMask && (1 << m)) {
-            Meow_Score += new Meow_ModifyChoose(Meow_BaseColorsP, Meow_PutIn + 1 && (Meow_CompressedP === Meow_Low), yyy + xxx * 4, Meow_ModifyTable);
+            Meow_Score += new Meow_ModifyChoose(Meow_BaseColorsP, Meow_PutIn + 1, (Meow_CompressedP === Meow_Low), yyy + xxx * 4, Meow_ModifyTable);
           }
           else {
             yyyx = 0;
@@ -542,14 +542,33 @@ var Meow_TextureRenderer = (function() {
             xx = yyyx + xxx;
             m = xx + 4 * y;
             if(Meow_InMask && (1 << m)) {
-              Meow_Score += new Meow_ModifyChoose(Meow_BaseColorsP, Meow_PutIn + m && (Meow_CompressedP === Meow_Low), y + xx * 4, Meow_ModifyTable);
+              Meow_Score += new Meow_ModifyChoose(Meow_BaseColorsP, Meow_PutIn + m, (Meow_CompressedP === Meow_Low), y + xx * 4, Meow_ModifyTable);
             }
           }
         }
       }
       Meow_CompressedP = Meow_Score;
     }
+    function Meow_EncodeBlockHelp(Meow_Uchar4, Meow_UInt32, Meow_Uchar3, Meow_ETC1compressed, Meow_Flipped) {
+      Meow_Uchar4 = Meow_PutIn;
+      Meow_UInt32 = Meow_InMask;
+      Meow_Uchar3 = Meow_ColorsP;
+      Meow_ETC1compressed = Meow_CompressedP;
+      Meow_CompressedP = Meow_Score = 0;
+      Meow_CompressedP = Meow_High = (Meow_Flipped ? 1 : 0);
+      Meow_CompressedP = Meow_Low = 0;
+      Meow_Uchar3 = Meow_BaseColorsP[2];
+      Meow_ModifyTable = Meow_ModifyTableP;
+      for(m = 0; m < 8; m++, Meow_ModifyTableP += 4) {
+        Meow_ETC1compressed = Meow_Temp;
+        Meow_Temp.Meow_Score = 0;
+        Meow_Temp.Meow_High = Meow_HighOriginal | (m << 5);
+        Meow_Temp.Meow_Low = 0;
+        new Meow_EncodeSubblockHelp(Meow_PutIn, Meow_InMask, Meow_Temp, Meow_Flipped, false, Meow_BaseColorsP, Meow_ModifyTable);
+        new Meow_BestTake(Meow_CompressedP, Meow_Temp);
+      }
 
-    // Still coding now... will be updated soon!
+      // Still coding now... will be updated soon!
+    }
   }
 );
