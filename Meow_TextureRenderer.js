@@ -514,6 +514,42 @@ var Meow_TextureRenderer = (function() {
       Meow_LowP |= Meow_LowMask;
       return Meow_BestScore;
     }
+    function Meow_EncodeSubblockHelp(Meow_Uchar4, Meow_UInt32, Meow_ETC1compressed, Meow_Flipped, Meow_Seconds, Meow_Uchar3, Meow_ModifyTable) {
+      Meow_Uchar4 = Meow_PutIn;
+      Meow_UInt32 = Meow_InMask;
+      Meow_ETC1compressed = Meow_CompressedP;
+      Meow_Uchar3 = Meow_BaseColorsP;
+      var Meow_Score = Meow_CompressedP;
+      if(Meow_Flipped) {
+        var Meow_FlipBy = 2;
+      }
+      for(var y = 0; y < 2; y++) {
+        var yyy = yyyx + y;
+        for(var xxx = 0; xxx < 4; xxx++) {
+          m = xxx + 4 + yyy;
+          if(Meow_InMask && (1 << m)) {
+            Meow_Score += new Meow_ModifyChoose(Meow_BaseColorsP, Meow_PutIn + 1 && (Meow_CompressedP === Meow_Low), yyy + xxx * 4, Meow_ModifyTable);
+          }
+          else {
+            yyyx = 0;
+            if(Meow_Seconds) {
+              yyyx = 2;
+            }
+          }
+        }
+        for(y = 0; y < 4; y++) {
+         for(xxx = 0; xxx < 2; xxx++) {
+            xx = yyyx + xxx;
+            m = xx + 4 * y;
+            if(Meow_InMask && (1 << m)) {
+              Meow_Score += new Meow_ModifyChoose(Meow_BaseColorsP, Meow_PutIn + m && (Meow_CompressedP === Meow_Low), y + xx * 4, Meow_ModifyTable);
+            }
+          }
+        }
+      }
+      Meow_CompressedP = Meow_Score;
+    }
 
     // Still coding now... will be updated soon!
-});
+  }
+);
