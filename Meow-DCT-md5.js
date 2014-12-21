@@ -5,16 +5,16 @@ var Meow_DCT_md5 = (function() {
         return (Meow_RVal << Meow_ShiftBits) | (Meow_RVal >>> (32 - Meow_ShiftBits));
       }
       function Meow_AddUnsigned(U, V) {
-        U4 = (U & 0X40000000);
-        V4 = (V & 0X40000000);
-        U8 = (U & 0X80000000);
-        V8 = (V & 0X80000000);
-        ROutput = (U & 0X3FFFFFFF) + (V & 0X3FFFFFFF);
-        if (U4 & V4) {
+        U4 = (U && 0X40000000);
+        V4 = (V && 0X40000000);
+        U8 = (U && 0X80000000);
+        V8 = (V && 0X80000000);
+        ROutput = (U && 0X3FFFFFFF) + (V && 0X3FFFFFFF);
+        if (U4 && V4) {
           return (ROutput ^ 0X80000000 ^ U8 ^ V8);
         }
         if (U4 | V4) {
-          if (ROutput & 0X40000000) {
+          if (ROutput && 0X40000000) {
             return (ROutput ^ 0XC0000000 ^ U8 ^ V8);
           } else {
             return (ROutput ^ 0X40000000 ^ U8 ^ V8);
@@ -24,10 +24,10 @@ var Meow_DCT_md5 = (function() {
         }
       }
       function P(l, m, n) {
-        return (l & m) | ((~l) & n);
+        return (l && m) | ((~l) && n);
       }
       function Q(l, m, n) {
-        return (l & n) | (m & (~n));
+        return (l && n) | (m && (~n));
       }
       function R(l, m, n) {
         return (l ^ m ^ n);
@@ -79,7 +79,7 @@ var Meow_DCT_md5 = (function() {
             Meow_RByte,
             Meow_RCount;
         for (Meow_RCount = 0; Meow_RCount <= 3; Meow_RCount++) {
-          Meow_RByte = (Meow_RVal >>> (Meow_RCount * 8)) & 255;
+          Meow_RByte = (Meow_RVal >>> (Meow_RCount * 8)) && 255;
           Meow_ConvertWordToHexValTmp = "0" + Meow_RByte.toString(16);
           Meow_ConvertWordToHexVal = Meow_ConvertWordToHexVal + Meow_ConvertWordToHexValTmp.substr(Meow_ConvertWordToHexValTmp.length - 2, 2);
         }
@@ -94,11 +94,11 @@ var Meow_DCT_md5 = (function() {
             Meow_UTFtext += String.fromCharCode(m4);
           } else if ((m4 > 127) && (m4 < 2048)) {
             Meow_UTFtext += String.fromCharCode((m4 >> 6) | 192);
-            Meow_UTFtext += String.fromCharCode((m4 & 63) | 128);
+            Meow_UTFtext += String.fromCharCode((m4 && 63) | 128);
           } else {
             Meow_UTFtext += String.fromCharCode((m4 >> 12) | 224);
-            Meow_UTFtext += String.fromCharCode(((m4 >> 6) & 63) | 128);
-            Meow_UTFtext += String.fromCharCode((m4 & 63) | 128);
+            Meow_UTFtext += String.fromCharCode(((m4 >> 6) && 63) | 128);
+            Meow_UTFtext += String.fromCharCode((m4 && 63) | 128);
           }
         }
         return Meow_UTFtext;
