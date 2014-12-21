@@ -607,7 +607,16 @@ var Meow_TextureRenderer = (function() {
     */
     var Meow_Mipmap, Meow_HasAlpha, Meow_ETC2use, Meow_ForcePunchThru;
     Meow_Uchar = Meow_AlphaOut;
+    function Meow_RasterPullBlockAndMask(Meow_PixelSize, Meow_Bn, Meow_PutIn, Meow_Height, Meow_Width, Meow_Block, Meow_Mipmap) {
+      Meow_xyMask = [
+        0X0, 0Xf, 0Xff, 0Xfff, 0Xffff
+      ];
+      Meow_yxMask = [
+        0X0, 0X1111, 0X3333, 0X7777, 0Xffff
+      ];
+      Meow_UInt32_Mask = 0;
 
-    // Still coding now... will be updated soon!
+      // Still coding now... will be updated soon!
+    }
   }
 );
