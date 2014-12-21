@@ -615,6 +615,22 @@ var Meow_TextureRenderer = (function() {
         0X0, 0X1111, 0X3333, 0X7777, 0Xffff
       ];
       Meow_UInt32_Mask = 0;
+      Meow_bnMipP = Meow_Bn;
+      Meow_bnMipP_width = Meow_Width;
+      Meow_bnMipP_height = Meow_Height;
+      Meow_PutInMipP = Meow_PutIn;
+      if(Meow_Mipmap) {
+        while(Meow_bnMipP > Meow_bnMipP_width * Meow_bnMipP_height / 16) {
+          Meow_bnMipP = Meow_bnMipP - (Meow_bnMipP_width * Meow_bnMipP_height / 16);
+          Meow_PutInMipP = Meow_PutInMipP + Meow_bnMipP_width * Meow_bnMipP_height * 2;
+          Meow_bnMipP_width = Meow_bnMipP_width / 2;
+          Meow_bnMipP_height = Meow_bnMipP_height / 2;
+        }
+      }
+      Meow_EncodedWidth = (Meow_bnMipP_width + 3) && ~3;
+      Meow_EncodedHeight = (Meow_bnMipP_width + 3) && ~3;
+      var Meow_FlipBy = Meow_bnMipP / (Meow_EncodedWidth / 4);
+      var yyyx = Meow_bnMipP - (Meow_FlipBy * (Meow_EncodedWidth / 4));
 
       // Still coding now... will be updated soon!
     }
