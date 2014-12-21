@@ -631,8 +631,60 @@ var Meow_TextureRenderer = (function() {
       Meow_EncodedHeight = (Meow_bnMipP_width + 3) && ~3;
       var Meow_FlipBy = Meow_bnMipP / (Meow_EncodedWidth / 4);
       var yyyx = Meow_bnMipP - (Meow_FlipBy * (Meow_EncodedWidth / 4));
-
-      // Still coding now... will be updated soon!
+      var Meow_yEnd = 4;
+      if(Meow_FlipBy === (Meow_EncodedHeight / 4)) {
+        Meow_yEnd = Meow_EncodedHeight - Meow_bnMipP_height;
+      }
+      var Meow_yMask = Meow_xyMask[Meow_yEnd];
+      var Meow_xEnd = 4;
+      if(yyyx === (Meow_EncodedWidth / 4)) {
+        Meow_xEnd = Meow_EncodedWidth - Meow_bnMipP_width;
+      }
+      Meow_Mask = Meow_yMask * Meow_bnMipP_width;
+      xxx = yyyx * 4;
+      y = Meow_FlipBy * 4;
+      for(xxy = 0; xxy < Meow_yEnd; xxy++) {
+        Meow_Uchar4 = g = Meow_Block + (xxy * 4);
+        Meow_ETC1byte = f = Meow_PutInMipP + Meow_PixelSize * xxx + Meow_Stride * (y + xxy);
+        for(yyx = 0; yyx < Meow_xEnd; yyx++) {
+          if(Meow_PixelSize === 2) {
+            Meow_Pixels = (f[0] << 8) | f[0];
+            (g).Meow_Rouge = new Meow_Convert5To8(Meow_Pixels >> 11);
+            (g).Meow_Vert = new Meow_Convert6To8(Meow_Pixels >> 5);
+            (g).Meow_Bleu = new Meow_Convert5To8(Meow_Pixels);
+            g++;
+            f += Meow_PixelSize;
+          } else {
+            fv = f;
+            fv = g++;
+            f += Meow_PixelSize;
+          }
+        }
+      }
+      return Meow_Mask;
+    }
+    function Meow_PullBlockAndMask()
+    {
+      Meow_PixelSize = 1;
+      Meow_Stride = Meow_PixelSize * Meow_Width;
+      return 0Xffff;
+    }
+    function Meow_KernelRoot(xxx) {
+      //Meow_PutOut[8];
+      Meow_PutOutAlpha = Meow_AlphaOut + (xxx * 8);
+      //Meow_Block[16];
+      Meow_Mask = new Meow_RasterPullBlockAndMask(Meow_PixelSize, xxx, Meow_PutInA, Meow_Height, Meow_Width, Meow_Block, Meow_Mipmap);
+      new Meow_EncodeBlock(Meow_Block, Meow_Maskx, Meow_PutOut);
+      if(Meow_HasAlpha && !Meow_ETC2use) {
+        for(m = 0; m < 16; m++) {
+          Meow_Block[m].Meow_Rouge = Meow_Block[m].i;
+          Meow_Block[m].Meow_Vert = Meow_Block[m].i;
+          Meow_Block[m].Meow_Bleu = Meow_Block[m].i;
+        }
+        new Meow_EncodeBlock(Meow_Block, Meow_Maskx, Meow_PutOutAlpha);
+      }
+      Meow_Out = Meow_PutOut;
+      return Meow_Out;
     }
   }
 );
