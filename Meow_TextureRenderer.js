@@ -567,8 +567,47 @@ var Meow_TextureRenderer = (function() {
         new Meow_EncodeSubblockHelp(Meow_PutIn, Meow_InMask, Meow_Temp, Meow_Flipped, false, Meow_BaseColorsP, Meow_ModifyTable);
         new Meow_BestTake(Meow_CompressedP, Meow_Temp);
       }
-
-      // Still coding now... will be updated soon!
+      Meow_ModifyTable = Meow_ModifyTableP;
+      Meow_ETC1compressed = Meow_FirstHalf = Meow_CompressedP;
+      for(m = 0; m < 8; m++, Meow_ModifyTableP += 4) {
+        Meow_ETC1compressed = Meow_Temp;
+        Meow_Temp.Meow_Score = Meow_FirstHalf.Meow_Score;
+        Meow_Temp.Meow_High = Meow_FirstHalf.Meow_High | (m << 2);
+        Meow_Temp.Meow_Low = Meow_FirstHalf.Meow_Low;
+        new Meow_EncodeSubblockHelp(Meow_PutIn, Meow_InMask, Meow_Temp, Meow_Flipped, true, Meow_BaseColorsP + 1, Meow_ModifyTableP);
+        if(m === 0) {
+          Meow_CompressedP = Meow_Temp;
+        } else {
+          new Meow_BestTake(Meow_CompressedP, Meow_Temp);
+        }
+      }
     }
+    function Meow_EncodeBlock(Meow_Uchar4, Meow_UInt32, Meow_ETC1byte) {
+      Meow_Uchar4 = Meow_PutIn;
+      Meow_UInt32 = Meow_InMask;
+      Meow_ETC1byte = Meow_PutOut;
+      Meow_Uchar3 = Meow_Colors[2];
+      new Meow_ETC1AvgColorsSubblock(Meow_PutIn, Meow_InMask, false, false);
+      new Meow_ETC1AvgColorsSubblock(Meow_PutIn, Meow_InMask,Meow_Colors + 1, false, true);
+      new Meow_ETC1AvgColorsSubblock(Meow_PutIn, Meow_InMask, Meow_ColorsFlip, true, false);
+      new Meow_ETC1AvgColorsSubblock(Meow_PutIn, Meow_InMask, Meow_ColorsFlip + 1, true, true);
+      Meow_ETC1compressed = i; 
+      var j;
+      new Meow_EncodeBlockHelp(Meow_PutIn, Meow_InMask, Meow_Colors, i, false);
+      new Meow_EncodeBlockHelp(Meow_PutIn, Meow_InMask, Meow_ColorsFlip, j, true);
+      new Meow_BestTake(i, j);
+      new Meow_WriteBigEndian(Meow_PutOut, i.Meow_High);
+      new Meow_WriteBigEndian(Meow_PutOut + 4, i.Meow_Low);
+    }
+    //Meow_Uchar * Meow_PutInA;
+    /*
+    Meow_Height = MeowNinja('Meow_UInt32');
+    Meow_Width = MeowNinja('Meow_UInt32');
+    Meow_PixelSize = MeowNinja('Meow_UInt32');
+    */
+    var Meow_Mipmap, Meow_HasAlpha, Meow_ETC2use, Meow_ForcePunchThru;
+    Meow_Uchar = Meow_AlphaOut;
+
+    // Still coding now... will be updated soon!
   }
 );
