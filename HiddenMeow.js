@@ -177,7 +177,7 @@ var HiddenMeow = (function() {
       for (m = 0; m < zzz.Meow_Length; m++) {
         Meow_HelloAlpha[m] = [];
         Meow_HelloInput = Meow_Power.Meow_Char.Meow_IndexOf(zzz[m]);
-        if (Meow_HelloInput == -1) {
+        if (Meow_HelloInput === -1) {
           throw new Error('Invalid character: ' + zzz[m]);
         }
         for (m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
