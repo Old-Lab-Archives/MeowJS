@@ -7,7 +7,7 @@ var Meow_DCT = (function() {
     var Meow_ctx = [];
     var Meow_ImageData = [];
     var Meow_Matrix = [];
-    function main() {
+    Meow_DCT.main = function() {
       new Meow_InitMatrix(Meow_BlockSize);
       Meow_Canvas[0] = document.getElementById("Canvas_Input");
       Meow_Canvas[1] = document.getElementById("Canvas_Intermediate");
@@ -27,15 +27,15 @@ var Meow_DCT = (function() {
         Meow_ctx[2].Meow_PutImageData(Meow_ImageData[2], 0, 0);
       };
       Meow_Image.src = "<add any image>.png";
-    }
-    function Meow_OnChangeImg(Meow_ImageVal) {
+    };
+    Meow_DCT.Meow_OnChangeImg = function(Meow_ImageVal) {
       Meow_Image.src = Meow_ImageVal;
-    }
-    function Meow_OnChangeCoeff(Meow_ImageVal) {
+    };
+    Meow_DCT.Meow_OnChangeCoeff = function(Meow_ImageVal) {
       Meow_Coeff = Meow_ImageVal;
       Meow_Image.Meow_Onload();
-    }
-    function Meow_CopyImageData(src, Meow_ImageDist, Meow_Width, Meow_Height) {
+    };
+    Meow_DCT.Meow_CopyImageData = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
       for (var y = 0; y < Meow_Height; y++) {
         for (var xxx = 0; xxx < Meow_Width; xxx++) {
           var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
@@ -45,8 +45,8 @@ var Meow_DCT = (function() {
           Meow_ImageDist[Meow_ImageOffset + 3] = src[Meow_ImageOffset + 3];
         }
       }
-    }
-    function Meow_Grayscale(src, Meow_ImageDist, Meow_Width, Meow_Height) {
+    };
+    Meow_DCT.Meow_Grayscale = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
       for (var y = 0; y < Meow_Height; y++) {
         for (var xxx = 0; xxx < Meow_Width; xxx++) {
           var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
@@ -59,8 +59,8 @@ var Meow_DCT = (function() {
           Meow_ImageDist[Meow_ImageOffset + 2] = Meow_RougeVertBleu;
         }
       }
-    }
-    function Meow_InitMatrix(Meow_ImageSize) {
+    };
+    Meow_DCT.Meow_InitMatrix = function(Meow_ImageSize) {
       for (var m3 = 0; m3 < Meow_ImageSize; m3++) {
         var tm3 = m3 * Math.PI / Meow_ImageSize;
         Meow_Matrix[m3] = [];
@@ -68,8 +68,8 @@ var Meow_DCT = (function() {
           Meow_Matrix[m3][xxx] = Math.cos(tm3 * (xxx + 0.5));
         }
       }
-    }
-    function Meow_ForwardDCT(src, Meow_ImageDist, Meow_Width, Meow_Height) {
+    };
+    Meow_DCT.Meow_ForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
       var Meow_Temp = [];
       var Meow_acc = [];
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
@@ -116,8 +116,8 @@ var Meow_DCT = (function() {
           }
         }
       }
-    }
-    function Meow_InvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff) {
+    };
+    Meow_DCT.Meow_InvDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff) {
       var Meow_Temp = [];
       Meow_acc = [];
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
@@ -156,10 +156,10 @@ var Meow_DCT = (function() {
           }
         }
       }
-    }
-    function Meow_FastForwardDCT(src, Meow_ImageDist, Meow_Width, Meow_Height) {}
-    function Meow_FastInvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio) {}
-    function Meow_Filter(src, Meow_ImageDist, Meow_Width, Meow_Height, x) {
+    };
+    Meow_DCT.Meow_FastForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {};
+    Meow_DCT.Meow_FastInvDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio) {};
+    Meow_DCT.Meow_Filter = function(src, Meow_ImageDist, Meow_Width, Meow_Height, x) {
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
           for (var y = 0; y < Meow_BlockSize; y++) {
@@ -175,8 +175,8 @@ var Meow_DCT = (function() {
           }
         }
       }
-    }
-    function Meow_GaussianFilter(src, Meow_ImageDist, Meow_Width, Meow_Height) {}
+    };
+    Meow_DCT.Meow_GaussianFilter = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {};
     return {
       Meow_Main: Meow_Main,
       Meow_OnChangeImg: Meow_OnChangeImg,
