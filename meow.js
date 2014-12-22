@@ -22,6 +22,7 @@ var MeowJS = (function() {
     var Meow_HTTP = MeowNinja('Meow_HTTP');
     var MeowProxy = MeowNinja('MeowProxy');
     var Meow_TextureRenderer = MeowNinja('Meow_TextureRenderer')
+    var MeowVideoSemantics = MeowNinja('Meow_VideoSemantics');
     */
   }
 );
