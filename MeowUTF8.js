@@ -26,7 +26,7 @@ var EE = [0XD76AA478, 0XE8C7B756, 0X242070DB, 0XC1BDCEEE,
 	0X655B59C3, 0X8F0CCC92, 0XFFEFF47D, 0X85845DD1,
 	0X6FA87E4F, 0XFE2CE6E0, 0XA3014314, 0X4E0811A1,
 	0XF7537E82, 0XBD3AF235, 0X2AD7D2BB, 0XEB86D391];
-var Meow_UTFmd5 = function(Meow_Msg) {
+MeowUTF8.Meow_UTFmd5 = function(Meow_Msg) {
 var Meow_Block = new Meow_HasUTF8(Meow_Msg) ? new Meow_UTF8toBlocks(Meow_Msg) : new Meow_ASCIItoBlocks(Meow_Msg);
 var E0 = 0X67452301;
 var E1 = 0XEFCDAB89;
@@ -76,7 +76,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 	}
 	return new Meow_ToHexStr(E0) + new Meow_ToHexStr(E1) + new Meow_ToHexStr(E2) + new Meow_ToHexStr(E3);
 	};
-	var Meow_ToHexStr = function(Meow_Num)
+	MeowUTF8.Meow_ToHexStr = function(Meow_Num)
 	{
 		var Meow_Hex = "";
 		for(var m = 0; m < 4; m++)
@@ -86,7 +86,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		}
 		return Meow_Hex;
 	};
-	var Meow_HasUTF8 = function(Meow_Msg) {
+	MeowUTF8.Meow_HasUTF8 = function(Meow_Msg) {
 		var m = Meow_Msg.length;
 		while(m--)
 		{
@@ -97,7 +97,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 			return false;
 		}
 	};
-	var Meow_ASCIItoBlocks = function(Meow_Msg) {
+	MeowUTF8.Meow_ASCIItoBlocks = function(Meow_Msg) {
 		var Meow_Len = Meow_Msg.length;
 		var Meow_ChunkCount = ((Meow_Len + 8) >> 6) + 1;
 		var Meow_BlockCount = Meow_ChunkCount << 4;
@@ -113,7 +113,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 			return Meow_Block;
 		}
 	};
-	var Meow_UTF8toBlocks = function(Meow_Msg) {
+	MeowUTF8.Meow_UTF8toBlocks = function(Meow_Msg) {
 		var Meow_uri = new Meow_EncodeURIcomponent(Meow_Msg);
 		var Meow_Block = [];
 		for(var m = 0, Meow_Bytes = 0, Meow_Len = Meow_uri.length; m < Meow_Len; ++m)
@@ -137,7 +137,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 			return Meow_Block;
 		}
 	};
-	if(typeof(module) != 'undefined') {
+	if(typeof(module) !== 'undefined') {
 		module.exports = Meow_UTFmd5;
 	} else if(Meow_Root) {
 		Meow_Root.Meow_UTFmd5 = Meow_UTFmd5;
