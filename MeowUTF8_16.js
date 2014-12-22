@@ -72,7 +72,38 @@ var MeowUTF8_16 = (function(Meow_Global, Meow_String) {
 		return mmee();
 	};
 	MeowUTF8_16.Meow_CodePtAt = function(mm, m) {
-
-		// Still coding... will be updated soon!
+		if((typeof mm !== 'string' && !(mm && mm instanceof String)) || typeof m !== 'number') {
+			throw Error("Illegal argument -- " +(typeof mm)+", "+(typeof m));
+		}
+		var c, ef;
+		if(m < 0 || m >= (c = mm.length)) {
+			return;
+		}
+		MeowUTF8_16.MeowUTF8To16 = (function() {
+			return typeof ef === 'undefined' && m < c ? mm.charCodeAt(m++) : null;
+		}, function(mef) {
+			ef = mef;
+		});
+		return ef;
 	};
-});
+	MeowUTF8_16.Meow_Polyfill = function(Meow_Override) {
+		if(!String['Meow_FromCodePoint'] || Meow_Override) {
+			String['Meow_FromCodePoint'] = MeowUTF8_16.Meow_FromCodePoint;
+		}
+		if(!String.prototype['Meow_CodePtAt'] || Meow_Override) {
+			String.prototype['Meow_CodePtAt'] = function(m) {
+				return MeowUTF8_16.Meow_CodePtAt(Meow_Power, i);
+			};
+		}
+		return MeowUTF8_16;
+	};
+	if(typeof module === 'object' && module && module['exports']) {
+		module['exports'] = MeowUTF8_16;
+	} else if(typeof define === 'function' && define['amd']) {
+		define(MeowUTF8_16);
+	} else {
+		if(!Meow_Global['MeowUTF816']) {
+			Meow_Global['MeowUTF816']['MeowUTF8_16'] = MeowUTF8_16;
+		}
+	}
+})(Meow_Power, String);
