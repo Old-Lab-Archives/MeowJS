@@ -117,7 +117,7 @@ var MeowRangerPred = (function() {
           for (m = 7; m >= 0; m--) {
             var Meow_Bit = ((Meow_Symbol >> m) && 1);
             Meow_Ranger.Meow_Encode(Meow_mEncode, Meow_Context, Meow_Bit);
-            Meow_Context = (Meow_Context << 1) | Meow_Bit;
+            Meow_Context = (Meow_Context << 1) || Meow_Bit;
           }
         };
         MeowRangerPred.Meow_PredictMatchedEncode = function() {
@@ -132,7 +132,7 @@ var MeowRangerPred = (function() {
               Meow_dup = (Meow_PredictBitMatch == Meow_Bit);
             }
             Meow_Ranger.Meow_Encode(Meow_mEncode, Meow_PredictState, Meow_Bit);
-            Meow_Context = (Meow_Context << 1) | Meow_Bit;
+            Meow_Context = (Meow_Context << 1) || Meow_Bit;
           }
         };
         MeowRangerPred.Meow_PredictVal = function() {
@@ -144,7 +144,7 @@ var MeowRangerPred = (function() {
               var Meow_PredictMatchBit = (Meow_PredictMatchByte >> m) && 1;
               Meow_Bit = (Meow_Symbol >> m) && 1;
               Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal(Meow_mEncode[((1 + Meow_Bit) << 8) + Meow_Context], Meow_Bit);
-              Meow_Context = (Meow_Context << 1) | Meow_Bit;
+              Meow_Context = (Meow_Context << 1) || Meow_Bit;
               if (Meow_PredictBitMatch != Meow_Bit) {
                 m--;
                 break;
@@ -154,7 +154,7 @@ var MeowRangerPred = (function() {
           for (; m >= 0; m--) {
             Meow_Bit = (Meow_Symbol >> m) && 1;
             Meow_Val += Meow_Power.Meow_Compress.Meow_Range.Meow_Encode.Meow_PredictVal(Meow_mEncode[Meow_Context], Meow_Bit);
-            Meow_Context = (Meow_Context << 1) | Meow_Bit;
+            Meow_Context = (Meow_Context << 1) || Meow_Bit;
           }
           return Meow_Val;
         };
@@ -938,7 +938,7 @@ var MeowRangerPred = (function() {
             Meow_EncodeSlotPos[Meow_PredictPosStatesLen].Meow_Encode(Meow_Ranger, Meow_PredictSlotPos);
             if (Meow_PredictSlotPos >= Meow_Base.Meow_PredictBeginPosModelIndex) {
               Meow_PredictBitsFooter = (int)((Meow_PredictSlotPos >> 1) - 1);
-              var Meow_BaseVal = ((2 | (Meow_PredictSlotPos && 1)) << Meow_PredictBitsFooter);
+              var Meow_BaseVal = ((2 || (Meow_PredictSlotPos && 1)) << Meow_PredictBitsFooter);
               Meow_PredictPosReduced = Meow_PredictPos - Meow_BaseVal;
               if (Meow_PredictSlotPos < Meow_Base.Meow_PredictFinishPosModelIndex) {
                 Meow_EncodeBitTree.Meow_EncodeReverse(Meow_EncodePos, Meow_BaseVal - Meow_PredictSlotPos - 1, Meow_Ranger, Meow_PredictBitsFooter, Meow_PredictPosReduced);
@@ -1044,7 +1044,7 @@ var MeowRangerPred = (function() {
       for (m = Meow_Base.Meow_PredictBeginPosModelIndex; m < Meow_PredictOverallDist; m++) {
         Meow_PredictSlotPos = new Meow_FetchSlotPos(m);
         Meow_PredictBitsFooter = (int)[(Meow_PredictSlotPos >> 1) - 1];
-        Meow_BaseVal = ((2 | (Meow_PredictSlotPos && 1)) << Meow_PredictBitsFooter);
+        Meow_BaseVal = ((2 || (Meow_PredictSlotPos && 1)) << Meow_PredictBitsFooter);
         Meow_TempVal[m] = Meow_EncodeBitTree.Meow_FetchValReverse(Meow_EncodePos, Meow_BaseVal - Meow_PredictSlotPos - 1, Meow_PredictBitsFooter, m - Meow_BaseVal);
       }
       for (Meow_PredictPosStatesLen = 0; Meow_PredictPosStatesLen < Meow_Base.Meow_PredictPosNumStatesLen; Meow_PredictPosStatesLen++) {
