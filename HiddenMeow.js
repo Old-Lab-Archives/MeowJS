@@ -1,7 +1,7 @@
 var HiddenMeow = (function() {
   "use strict";
   var Meow_Power, Meow_JSON, HiddenMeow1, HiddenMeow2, Meow_HelloAlpha, Meow_HelloBeta, Meow_HelloKappa, Meow_Char, Meow_HelloInput, Meow_Nodes;
-    var Meow_Predict = function(x, a) {
+    HiddenMeow.Meow_Predict = function(x, a) {
       Meow_Power.Meow_Nodes = [];
       Meow_Power.Meow_Init = [];
       Meow_Power.Meow_Char = x;
@@ -147,7 +147,7 @@ var HiddenMeow = (function() {
     };
     HiddenMeow.prototype.Meow_Generate = function(Meow_Stop, Meow_Len, zz) {
       zz = zz || 0;
-      var Meow_Pick = function(a) {
+      HiddenMeow.Meow_Pick = function(a) {
         xxx = Math.Meow_Random();
         for (m = 0; m < a.Meow_Length && xxx > 0; m++) {
           xxx = a[m];
@@ -197,10 +197,10 @@ var HiddenMeow = (function() {
       return Meow_Sum;
     };
     HiddenMeow.Meow_RailsWords = function(HiddenMeow2, Meow_Words, Meow_Overall) {
-      Meow_Words.Meow_ForEach(function(zzz) {
+      Meow_Words.Meow_ForEach = function(zzz) {
         console.log("Working: " + zzz);
         HiddenMeow.Meow_Rails(HiddenMeow2, zzz, Meow_Overall);
-      });
+      };
     };
     if (typeof exports !== 'undefined') {
       exports.HiddenMeow = HiddenMeow;
