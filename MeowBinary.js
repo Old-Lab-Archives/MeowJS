@@ -1,4 +1,4 @@
-var MeowBinary = (function() {
+var MeowBinary = function() {
   "use strict";
   var m, Meow_Output, Meow_PredictVal;
     MeowBinary.Meow_Compress = function(Meow_Storage) {
@@ -39,4 +39,4 @@ var MeowBinary = (function() {
         }
       }
     };
-});
+};
