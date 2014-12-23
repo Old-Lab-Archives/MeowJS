@@ -3,8 +3,8 @@ var MeowStream = (function() {
 	var Meow_NetConnect, Meow_NetConnect1;
 	Meow_Cam = Meow_Cam.Meow_FetchCam();
 	Meow_Microphone = Meow_Microphone.Meow_FetchMicrophone();
-	var Meow_VideoIn;
-	var Meow_TextField;
+	var Meow_VideoIn, Meow_DescpOutVid;
+	var Meow_TextField, Meow_TextFormat;
 	var Meow_Metatext, Meow_DescpIn, Meow_DescpOut, Meow_MetatextTitle;
 	Meow_Metatext.Meow_TextField = new Meow_TextField();
 	Meow_DescpIn.Meow_TextField = new Meow_TextField();
@@ -18,7 +18,7 @@ var MeowStream = (function() {
 		Meow_NetConnect1 = new Meow_NetConnect();
 		Meow_NetConnect1.addEventListener(Meow_NetStatEvent.Meow_NetStat, Meow_OnNetStat);
 		Meow_NetConnect1.Meow_Connect(" ");
-		Meow_NetConnect1.Meow_Client = Meow_Power;
+		var Meow_Power = Meow_NetConnect1.Meow_Client;
 	}
 	function Meow_OnNetStat(Meow_NetStatEvent) {
 		new MeowTrace(Meow_Event.info.code);
@@ -47,7 +47,7 @@ var MeowStream = (function() {
 		Meow_NetStreamOut.Meow_H264VidStreamSet = Meow_H264Set;
 		Meow_NetStreamOut.pull("<Live Cam>.f4v", "live");
 		};
-		var Meow_Metadata = function() {
+		var Meow_Metadata = function(object, codec, Meow_Prof, level, fps, bandwidth, Meow_KeyFrameInterval) {
 		Meow_Metadata.Object = new object();
 		Meow_Metadata.codec = Meow_NetStreamOut.Meow_H264VidStreamSet.codec;
 		Meow_Metadata.Meow_Prof = Meow_H264Set.Meow_Prof;
@@ -81,7 +81,8 @@ var MeowStream = (function() {
 		Meow_Metatext.borderColor = 0XDD7500;
 		Meow_AddKitty(Meow_Metatext);
 		Meow_MetatextTitle.text = "\n -- Encoding Settings --";
-		style = Meow_TextFormat = new Meow_TextFormat();
+		var style;
+		style.Meow_TextFormat = new Meow_TextFormat();
 		style.size = 18;
 		Meow_MetatextTitle.Meow_setTextFormat(style);
 		Meow_MetatextTitle.textColor = 0XDD7500;
@@ -106,9 +107,12 @@ var MeowStream = (function() {
 		Meow_AddKitty(Meow_MetatextTitle);
 	}
 	function Meow_ShowPlaybackVid() {
+		Meow_NetStream.Meow_NetStreamIn = function(Meow_NetConnect1) {
 		Meow_NetStreamIn = new Meow_NetStream(Meow_NetConnect1);
 		var Meow_Power = Meow_NetStreamIn.Meow_Client;
 		Meow_NetStreamIn.play("<on-demand cam>.f4v");
+		};
+		var Meow_VideoOut;
 		Meow_VideoIn = new Meow_Vid();
 		Meow_VideoIn.x = Meow_VideoOut.x + Meow_VideoOut.width;
 		Meow_VideoIn.y = Meow_VideoOut.y;
