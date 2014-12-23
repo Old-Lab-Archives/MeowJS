@@ -7,12 +7,15 @@ var MeowJS = (function() {
     /*
     var Meow_Hello = MeowNinja('Meow_Hello');
     var Meow_cli =  MeowNinja('Meow_cli');
+    var Meow_TextSemantics = MeowNinja('Meow_TextSemantics');
+    var Meow_VideoSemantics = MeowNinja('Meow_VideoSemantics');
     var MeowRangerPred = MeowNinja('Meow_RangerPred');
     var MeowDOM = MeowNinja('MeowDOM');
     var MeowString = MeowNinja('MeowString');
     var MeowBinary = MeowNinja('MeowBinary');
     var MeowFunText = MeowNinja('MeowFunText');
     var MeowUTF8 = MeowNinja('MeowUTF8');
+    var MeowUTF8_16 = MeowNinja('MeowUTF8_16');
     var MeowImagePlay = MeowNinja('MeowImagePlay');
     var MeowImageCache = MeowNinja('MeowImageCache');
     var HiddenMeow = MeowNinja('HiddenMeow');
@@ -21,8 +24,7 @@ var MeowJS = (function() {
     var Meow-DCT-md5 = MeowNinja('Meow-DCT-md5');
     var Meow_HTTP = MeowNinja('Meow_HTTP');
     var MeowProxy = MeowNinja('MeowProxy');
-    var Meow_TextureRenderer = MeowNinja('Meow_TextureRenderer')
-    var MeowVideoSemantics = MeowNinja('Meow_VideoSemantics');
+    var Meow_TextureRenderer = MeowNinja('Meow_TextureRenderer');
     */
   }
 );
