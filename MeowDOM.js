@@ -13,7 +13,7 @@ var MeowDOM = (function() {
 		Meow_div = null;
 		return Meow_String;
 	};
-	Meow_DOMencode.Meow_DOMencode = function() {
-	return (Meow_DOMencode.Meow_DOMencode = Meow_DOMencode);
+	Meow_DOMencode.Meow_DOMencode = function(Meow_DOMencode) {
+	return;
 	};
 }(document));
