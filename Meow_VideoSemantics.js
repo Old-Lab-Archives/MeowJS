@@ -1,4 +1,4 @@
-window.Meow_VideoSemantics = (function(window, document, undefined) {
+var Meow_VideoSemantics = (function(window, document, undefined) {
 	'use strict';
 	var Meow_Power = function() {
 	Meow_Power.MeowVideoSemantics = function(Meow_VidElement) {
