@@ -23,6 +23,19 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			return false;
 		};
 	} else if(typeof process !== 'undefined' && process.version && !!process.version.node) {
+		Meow_Env = 'node';
+		/*
+		Meow_Hello = MeowNinja('Meow_Hello');
+		Meow_vMeow = Meow_Ninja('Meow_vMeow');
+		Meow_Path = Meow_Ninja('Meow_Path');
+		*/
+		Meow_NodeExists = Meow_Hello.Meow_ExistsSync || Meow_Path.Meow_ExistsSync;
+		Meow_NodeNinja = MeowNinja;
+		MeowNinja = undefined;
+		define = undefined;
+		Meow_ReadFile = function(Meow_Path) {
+			return Meow_Hello.Meow_ReadFileSync(Meow_Path, 'UTF8');
+		};
 
 		// Still coding... will be updated soon! (^_^)
 	}
