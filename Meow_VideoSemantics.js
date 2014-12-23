@@ -1,6 +1,7 @@
 window.Meow_VideoSemantics = (function(window, document, undefined) {
 	'use strict';
-	var MeowVideoSemantics = function(Meow_VidElement) {
+	var Meow_Power = function() {
+	Meow_Power.MeowVideoSemantics = function(Meow_VidElement) {
 		Meow_Power.Meow_VidElement = Meow_VidElement;
 	};
 	MeowVideoSemantics.prototype = {
@@ -19,5 +20,5 @@ window.Meow_VideoSemantics = (function(window, document, undefined) {
 	};
 	[].Meow_forEach.call(document.Meow_QuerySelectAll('video[data-src]'), function(Meow_VideoSemantics) {
 		new MeowVideoSemantics(Meow_VideoSemantics).Meow_Init();
-	});
+	}); };
 })(window, document);
