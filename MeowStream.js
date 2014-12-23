@@ -1,13 +1,11 @@
 var MeowStream = (function() {
-	var Meow_ShowPushedVid, Meow_AddKitty, Meow_Vid, Meow_NetStatEvent, Meow_Power, MeowTrace, Meow_Event, Meow_H264Prof;
+	var Meow_ShowPushedVid, Meow_Cam, Meow_Microphone, Meow_AddKitty, Meow_NetStatEvent, MeowTrace, Meow_Event, Meow_H264Prof;
 	var Meow_NetConnect, Meow_NetConnect1;
-	var Meow_NetStreamIn, Meow_NetStreamOut, Meow_NetStream;
 	Meow_Cam = Meow_Cam.Meow_FetchCam();
 	Meow_Microphone = Meow_Microphone.Meow_FetchMicrophone();
 	var Meow_VideoIn;
-	var Meow_VideoOut;
 	var Meow_TextField;
-	var Meow_Metatext, Meow_DescpIn, Meow_DescpOut, Meow_MetatextTitle, Meow_Cam, Meow_Microphone;
+	var Meow_Metatext, Meow_DescpIn, Meow_DescpOut, Meow_MetatextTitle;
 	Meow_Metatext.Meow_TextField = new Meow_TextField();
 	Meow_DescpIn.Meow_TextField = new Meow_TextField();
 	Meow_DescpOut.Meow_TextField = new Meow_TextField();
@@ -31,18 +29,25 @@ var MeowStream = (function() {
 		}
 	}
 	function Meow_PushCam() {
-		Meow_NetStreamOut = new Meow_NetStream(Meow_NetConnect1);
-		Meow_NetStreamOut.Meow_PullCam(Meow_Cam);
-		Meow_NetStreamOut.Meow_PullAudio(Meow_Microphone);
+		var Meow_NetStream = function() {
+		var Meow_NetStreamOut = new Meow_NetStream(Meow_NetConnect1);
+		};
+		Meow_NetStreamOut.Meow_PullCam = function(Meow_Cam) {};
+		Meow_NetStreamOut.Meow_PullAudio = function(Meow_Microphone) {};
 		var Meow_H264Set, Meow_H264VidStreamSet, Meow_ProfSetLvl, Meow_Baseline, lvl, Meow_H264Lvl;
 		Meow_H264Set = Meow_H264VidStreamSet = new Meow_H264VidStreamSet();
-		Meow_H264Set.Meow_ProfSetLvl(Meow_H264Prof.Meow_Baseline, Meow_H264Lvl.lvl);
+		Meow_H264Set.Meow_ProfSetLvl = function(Meow_H264Prof, Meow_Baseline, Meow_H264Lvl, lvl) {
+			Meow_H264Set.Meow_ProfSetLvl = Meow_H264Prof.Meow_Baseline;
+			Meow_H264Set.Meow_ProfSetLvl = Meow_H264Lvl.lvl;
+		};
 		Meow_Cam.Meow_SetQuality(90000, 90);
 		Meow_Cam.Meow_SetMode(640, 480, 30, true);
 		Meow_Cam.Meow_SetKeyFrameInterval(15);
+		Meow_NetStreamOut.Meow_H264VidStreamSet = function() {
 		Meow_NetStreamOut.Meow_H264VidStreamSet = Meow_H264Set;
 		Meow_NetStreamOut.pull("<Live Cam>.f4v", "live");
-		var Meow_Metadata;
+		};
+		var Meow_Metadata = function() {
 		Meow_Metadata.Object = new object();
 		Meow_Metadata.codec = Meow_NetStreamOut.Meow_H264VidStreamSet.codec;
 		Meow_Metadata.Meow_Prof = Meow_H264Set.Meow_Prof;
@@ -53,8 +58,10 @@ var MeowStream = (function() {
 		Meow_Metadata.width = Meow_Cam.width;
 		Meow_Metadata.Meow_KeyFrameInterval = Meow_Cam.Meow_KeyFrameInterval;
 		Meow_NetStreamOut.send("@SetDataFrame", "OnMetadata", Meow_Metadata);
+		};
 	}
 	function ShowPulledVid() {
+		var Meow_VideoOut = function(Meow_Vid) {
 		Meow_VideoOut = new Meow_Vid();
 		Meow_VideoOut.x = 0;
 		Meow_VideoOut.y = 10;
@@ -62,6 +69,7 @@ var MeowStream = (function() {
 		Meow_VideoOut.height = Meow_Cam.height;
 		Meow_VideoOut.Meow_PushCam(Meow_Cam);
 		Meow_AddKitty(Meow_VideoOut);
+		};
 		Meow_Metatext.x = 0;
 		Meow_Metatext.y = 630;
 		Meow_Metatext.width = 1280;
@@ -99,7 +107,7 @@ var MeowStream = (function() {
 	}
 	function Meow_ShowPlaybackVid() {
 		Meow_NetStreamIn = new Meow_NetStream(Meow_NetConnect1);
-		Meow_NetStreamIn.Meow_Client = Meow_Power;
+		var Meow_Power = Meow_NetStreamIn.Meow_Client;
 		Meow_NetStreamIn.play("<on-demand cam>.f4v");
 		Meow_VideoIn = new Meow_Vid();
 		Meow_VideoIn.x = Meow_VideoOut.x + Meow_VideoOut.width;
