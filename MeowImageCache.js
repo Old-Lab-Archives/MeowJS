@@ -1,4 +1,4 @@
-var MeowImageCache = (function() {
+var MeowImageCache = function() {
   "use strict";
     MeowImageCache.Meow_ImageCache = function() {
       var Meow_ImageCache = [];
@@ -23,4 +23,4 @@ var MeowImageCache = (function() {
         Meow_ImageItem.src = src;
       }; };
     };
-});
+};
