@@ -1,4 +1,4 @@
-var MeowDOM = (function() {
+var MeowDOM = function() {
 	function Meow_DOMencode(Meow_String) {
 		var Meow_div = document.createElement('div');
 		Meow_div.appendChild(document.createTextNode(Meow_String));
@@ -14,4 +14,4 @@ var MeowDOM = (function() {
 		return Meow_String;
 	};
 	return (Meow_DOMencode.Meow_DOMencode = Meow_DOMencode);
-}(document));
+}(document);
