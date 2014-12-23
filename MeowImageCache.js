@@ -5,6 +5,7 @@ var MeowImageCache = (function() {
       var Meow_CacheRoot = document.location.href.split('/');
       Meow_CacheRoot.pop();
       Meow_CacheRoot = Meow_CacheRoot.join('/') + '/';
+      var Meow_Power = function() {
       Meow_Power.Meow_Push = function(src, Meow_LoadEvent) {
         if (!src.match(/^http/)) {
           src = Meow_CacheRoot + src;
@@ -20,6 +21,6 @@ var MeowImageCache = (function() {
           Meow_ImageCache[src] = Meow_ImageItem;
         }
         Meow_ImageItem.src = src;
-      };
+      }; };
     };
 });
