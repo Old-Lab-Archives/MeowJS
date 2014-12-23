@@ -15,7 +15,7 @@ var MeowBinary = (function() {
         Meow_PredictPosVal *= 2;
       }
       return Meow_Output;
-    }
+    };
     MeowBinary.Meow_Decompress = function(Meow_Integer) {
       Meow_Output = [];
       var Meow_Flag = 0;
@@ -38,5 +38,5 @@ var MeowBinary = (function() {
           return Meow_Output;
         }
       }
-    }
+    };
 });
