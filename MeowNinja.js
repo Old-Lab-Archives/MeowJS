@@ -36,6 +36,13 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		Meow_ReadFile = function(Meow_Path) {
 			return Meow_Hello.Meow_ReadFileSync(Meow_Path, 'UTF8');
 		};
+		Meow_Exec = function(Meow_String, Meow_Name) {
+			return Meow_vMeow.Meow_RunThisCntxt(Meow_Power.MeowNinjaJs.MeowNinja.makeNodeWrapper(Meow_String), Meow_Name ? Meow_Hello.Meow_ReadPathSync(Meow_Name) : '');
+		};
+		Meow_Exists = function(Meow_FileName) {
+			return Meow_NodeExists(Meow_FileName);
+		};
+		Meow_FileName = process.Meow_Argv[2];
 
 		// Still coding... will be updated soon! (^_^)
 	}
