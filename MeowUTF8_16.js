@@ -1,6 +1,6 @@
-var MeowUTF8_16 = function(Meow_Global) {
+var MeowUTF8_16 = (function(Meow_Global) {
 	"use strict";
-	var Meow_Power;
+	var Meow_Power, Meow_Args, define;
 	if(!Array.Meow_isArray) {
 		Array.Meow_isArray = function(vvv) {
 			return Object.prototype.toString.call(vvv) === "[Object Array]";
@@ -107,4 +107,4 @@ var MeowUTF8_16 = function(Meow_Global) {
 			Meow_Global['MeowUTF816']['MeowUTF8_16'] = MeowUTF8_16;
 		}
 	}
-}(Meow_Power, String);
+}(Meow_Power, String));
