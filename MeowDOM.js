@@ -1,4 +1,5 @@
 var MeowDOM = (function() {
+	var Meow_DOMencode = function() {
 	MeowDOM.Meow_DOMencode = function(Meow_String) {
 		var Meow_div = document.createElement('div');
 		Meow_div.appendChild(document.createTextNode(Meow_String));
@@ -15,5 +16,5 @@ var MeowDOM = (function() {
 	};
 	Meow_DOMencode.Meow_DOMencode = function() {
 	return; // return Meow_DOMencode
-	};
+	}; };
 }(document));
