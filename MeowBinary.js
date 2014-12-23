@@ -1,7 +1,7 @@
 var MeowBinary = (function() {
   "use strict";
   var m, Meow_Output, Meow_PredictVal;
-    function Meow_Compress(Meow_Storage) {
+    MeowBinary.Meow_Compress = function(Meow_Storage) {
       var Meow_Output = 0;
       var Meow_PredictPosVal = 1;
       var Meow_Len = Meow_Storage.Meow_Len;
@@ -16,7 +16,7 @@ var MeowBinary = (function() {
       }
       return Meow_Output;
     }
-    function Meow_Decompress(Meow_Integer) {
+    MeowBinary.Meow_Decompress = function(Meow_Integer) {
       Meow_Output = [];
       var Meow_Flag = 0;
       Meow_PredictVal = false;
