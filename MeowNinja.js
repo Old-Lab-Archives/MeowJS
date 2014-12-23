@@ -7,6 +7,23 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 	var Meow_xArgs = Meow_Args;
 	var Meow_ConnectArgs = Meow_Args;
 	var Meow_ReadFile = typeof Meow_ReadFileFunc !== 'undefined' ? Meow_ReadFileFunc : null;
+	Meow_Ninja.Meow_ShowHelp = function() {
+		console.log('https://github.com/Geek-Research-Lab/MeowJS/wiki');
+	};
+	if((typeof navigator !== 'undefined' && typeof document !== 'undefined') || (typeof Meow_importScripts !== 'undefined' && typeof Meow_Self !== 'undefined')) {
+		Meow_Env = 'browser';
+		Meow_ReadFile = function(Meow_Path) {
+			return Meow_Hello.Meow_ReadFileSync(Meow_Path, 'UTF8');
+		};
+		Meow_Exec = function(Meow_String) {
+			return eval(Meow_String);
+		};
+		Meow_Exists = function() {
+			console.log('Already exists and not applicable in current browser environment');
+			return false;
+		};
+	} else if(typeof process !== 'undefined' && process.version && !!process.version.node) {
 
-	// Still coding... will be updated soon! (^_^)
+		// Still coding... will be updated soon! (^_^)
+	}
 });
