@@ -219,6 +219,12 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				}
 			}
 		}
+		function Meow_HasProp(Meow_Obj, Meow_Prop) {
+			return Meow_Own.call(Meow_Obj, Meow_Prop);
+		}
+		function Meow_FetchOwn(Meow_Obj, Meow_Prop) {
+			return Meow_HasProp(Meow_Obj, Meow_Prop) && Meow_Obj[Meow_Prop];
+		}
 
 		// Still coding... will be updated soon!
 	};
