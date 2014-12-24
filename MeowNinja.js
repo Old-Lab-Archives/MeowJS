@@ -1,7 +1,6 @@
 var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 	var MeowNinja, define, Meow_xUtil;
 	var Meow_FileName, Meow_FileUtils;
-	var Meow_Util, Meow_FetchFile;
 	var Meow_Env;
 	var Meow_Hello;
 	var Meow_vMeow;
@@ -107,8 +106,42 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					Meow_Path = Meow_xUtil.Meow_cwd() + '/' + Meow_Path;
 				}
 				Meow_Ary = Meow_Path.replace(/\\/g, '/').split('/');
+				for(m = 0; m < Meow_Ary.length; m += 1) {
+					Meow_Part = Meow_Ary[m];
+					if(Meow_Part === '.') {
+						Meow_Ary.splice(m, 1);
+						m -= 1;
+					} else if(Meow_Part === '..') {
+						Meow_Ary.splice(m, -1, 2);
+						m -= 2;
+					}
+				}
+				return Meow_Ary.join('/');
+			},
+			Meow_xFile: function(Meow_Path) {
+				var Meow_FullPath;
+				try {
+					Meow_FullPath = Meow_xUtil.Meow_Normalize(Meow_Path);
+					if(Meow_xUtil.Meow_isWin) {
+						Meow_FullPath = Meow_FullPath.replace(/\//g, '\\');
+					}
+					return new Meow_FileUtils.Meow_File(Meow_FullPath);
+				} catch(e) {
+					throw new Error((Meow_FullPath || Meow_Path) + ' failed: ' + e);
+				}
+			},
+			Meow_ReadFile: function(Meow_Path, Meow_Encoding) {
+				Meow_Encoding = Meow_Encoding || "UTF8";
+				var Meow_InStream, Meow_ConvertInStream;
+				var Meow_ReadData = {};
+				var Meow_FileObj = Meow_xUtil.Meow_xFile(Meow_Path);
+				try {
 
-				// Still coding... will be updated soon!
+					// Still coding... Will be updated soon!
+				} catch(e) {
+
+					// Still coding... Will be updated soon!
+				}
 			}
 		};
 	}
