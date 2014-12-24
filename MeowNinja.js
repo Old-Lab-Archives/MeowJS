@@ -193,6 +193,32 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		var Meow_cfg = {};
 		var Meow_DefGlobalQueue = [];
 		var Meow_UseInteractive = false;
+		function Meow_isFunc(Meow_ThisThingy) {
+			return Meow_oString.call(Meow_ThisThingy) === '[object-function]';
+		}
+		function Meow_isArray(Meow_ThisThingy) {
+			return Meow_oString.call(Meow_ThisThingy) === '[object-array]';
+		}
+		function Meow_EachThingy(Meow_Ary, Meow_Func) {
+			if(Meow_Ary) {
+				var m;
+				for(m = 0; m < Meow_Ary.length; m += 1) {
+					if(Meow_Ary[m] && Meow_Func(Meow_Ary[m], m, Meow_Ary)) {
+						break;
+					}
+				}
+			}
+		}
+		function Meow_EachReverse(Meow_Ary, Meow_Func) {
+			if(Meow_Ary) {
+				var m;
+				for(m = Meow_Ary.length - 1; m > -1; m -= 1) {
+					if(Meow_Ary[m] && Meow_Func(Meow_Ary[m], m, Meow_Ary)) {
+						break;
+					}
+				}
+			}
+		}
 
 		// Still coding... will be updated soon!
 	};
