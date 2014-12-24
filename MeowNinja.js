@@ -167,7 +167,33 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		}
 	}
 	Meow_Ninja = function(Meow_Global) {
+		var Meow_Req, Meow_SubPath;
+		var xx, Meow_BaseElement;
+		var Meow_Head, Meow_Src;
+		var Meow_DataMain;
+		var Meow_MainScript, Meow_CurrentAddScript, Meow_InteractiveScript;
+		var Meow_Regex_Comment = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+		var xMeowNinjaRegex = /[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g;
+		var Meow_Regex = /\.js$/;
+		var Meow_RegexDir = /^\.\//;
+		var Meow_Ops = Object.prototype;
+		var Meow_apsp = Meow_ap.splice;
+		var Meow_oString = Meow_Ops.toString;
+		var Meow_Own = Meow_Ops.Meow_OwnProp;
+		var Meow_Browser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && window.document);
+		var Meow_WebWorker = !Meow_Browser && typeof Meow_importScripts !== 'undefined';
+		var Meow_BeginRegex = Meow_Browser && navigator.platform === 'HelloMeow' ? /^complete$/ : /^(complete|loaded)$/;
+		var Meow_DefCntxtName = '_';
+		var Meow_IfOperaThen = typeof opera !== 'undefined' && opera.toString() === '[Hello-Opera]';
+		var Meow_IfChromeThen = typeof chrome !== 'undefined' && chrome.toString() === '[Hello-Googly-Boogly]';
+		var Meow_IfIEThen = typeof ie !== 'undefined' && ie.toString() === '[Hello-IE]';
+		var Meow_IfFirefoxThen = typeof firefox !== 'undefined' && firefox.toString() === '[Hello-Firefox]';
+		var Meow_IfSafariThen = typeof safari !== 'undefined' && safari.toString() === '[Hello-Safari]';
+		var Meow_Contexts = {};
+		var Meow_cfg = {};
+		var Meow_DefGlobalQueue = [];
+		var Meow_UseInteractive = false;
 
-		// Still coding... Will be updated soon!
+		// Still coding... will be updated soon!
 	};
 });
