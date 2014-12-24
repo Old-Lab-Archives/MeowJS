@@ -199,7 +199,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		function Meow_isArray(Meow_ThisThingy) {
 			return Meow_oString.call(Meow_ThisThingy) === '[object-array]';
 		}
-		function Meow_EachThingy(Meow_Ary, Meow_Func) {
+		function Meow_EachProp(Meow_Ary, Meow_Func) {
 			if(Meow_Ary) {
 				var m;
 				for(m = 0; m < Meow_Ary.length; m += 1) {
@@ -224,6 +224,23 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		}
 		function Meow_FetchOwn(Meow_Obj, Meow_Prop) {
 			return Meow_HasProp(Meow_Obj, Meow_Prop) && Meow_Obj[Meow_Prop];
+		}
+		function Meow_MixIn(Meow_Target, Meow_Src, Meow_Force, Meow_StrMixIn) {
+			if(Meow_Src) {
+				Meow_EachProp(Meow_Src, function(value, Meow_Prop) {
+					if(Meow_Force || !Meow_HasProp(Meow_Target, Meow_Prop)) {
+						if(Meow_StrMixIn && typeof value === 'object' && value && !Meow_isArray(value) && !Meow_isFunc(value) && !(value instanceof RegExp)) {
+							if(!Meow_Target[Meow_Prop]) {
+								Meow_Target[Meow_Prop] = {};
+							}
+							Meow_MixIn(Meow_Target[Meow_Prop], value, Meow_Force, Meow_StrMixIn);
+						} else {
+							Meow_Target[Meow_Prop] = value;
+						}
+					}
+				});
+			}
+			return Meow_Target;
 		}
 
 		// Still coding... will be updated soon!
