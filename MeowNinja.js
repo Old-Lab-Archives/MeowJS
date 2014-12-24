@@ -158,7 +158,16 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		Meow_Exists = function(Meow_FileName) {
 			return Meow_xUtil.Meow_xFile(Meow_FileName).Meow_Exists();
 		};
+		if(typeof console === 'undefined') {
+			console = {
+				log: function() {
+					print.apply(undefined, Meow_Args);
+				}
+			};
+		}
+	}
+	Meow_Ninja = function(Meow_Global) {
 
 		// Still coding... Will be updated soon!
-	}
+	};
 });
