@@ -242,6 +242,27 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			}
 			return Meow_Target;
 		}
+		function Meow_Bind(Meow_Obj, Meow_Func) {
+			return function() {
+				return Meow_Func.apply(Meow_Obj, Meow_Args);
+			};
+		}
+		function Meow_Scripts() {
+			return document.getElementsByTagName('script');
+		}
+		function Meow_DefError(err) {
+			throw err;
+		}
+		function Meow_FetchGlobal(value) {
+			if(!value) {
+				return value;
+			}
+			var g3 = Meow_Global;
+			Meow_Each(value.split('.'), function(Meow_Part) {
+				g3 = g3[Meow_Part];
+			});
+			return g3;
+		}
 
 		// Still coding... will be updated soon!
 	};
