@@ -199,7 +199,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		function Meow_isArray(Meow_ThisThingy) {
 			return Meow_oString.call(Meow_ThisThingy) === '[object-array]';
 		}
-		function Meow_EachProp(Meow_Ary, Meow_Func) {
+		function Meow_Each(Meow_Ary, Meow_Func) {
 			if(Meow_Ary) {
 				var m;
 				for(m = 0; m < Meow_Ary.length; m += 1) {
@@ -224,6 +224,16 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		}
 		function Meow_FetchOwn(Meow_Obj, Meow_Prop) {
 			return Meow_HasProp(Meow_Obj, Meow_Prop) && Meow_Obj[Meow_Prop];
+		}
+		function Meow_EachProp(Meow_Obj, Meow_Func) {
+			var Meow_Prop;
+			for(Meow_Prop in Meow_Obj) {
+				if(Meow_HasProp(Meow_Obj, Meow_Prop)) {
+					if(Meow_Func(Meow_Obj[Meow_Prop], Meow_Prop)) {
+						break;
+					}
+				}
+			}
 		}
 		function Meow_MixIn(Meow_Target, Meow_Src, Meow_Force, Meow_StrMixIn) {
 			if(Meow_Src) {
