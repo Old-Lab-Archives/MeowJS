@@ -136,13 +136,29 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				var Meow_ReadData = {};
 				var Meow_FileObj = Meow_xUtil.Meow_xFile(Meow_Path);
 				try {
-
-					// Still coding... Will be updated soon!
+					//Meow_InStream = ce['@geekresearchlab.net/file-input-stream;1'].createInstance(cem.Meow_xFileInputStream);
+					Meow_InStream.Meow_Init(Meow_FileObj, 1, 0, false);
+					//Meow_ConvertInStream = ce['@geekresearchlab.net/converter-input-stream;1'].createInstance(cem, Meow_xCoverterInputStream);
+					Meow_ConvertStream.Meow_Init(Meow_InStream, Meow_Encoding, Meow_InStream.available(), cem.Meow_xCoverterInputStream.Meow_Default_RepChar);
+					Meow_ConvertStream.Meow_ReadStr(Meow_InStream.available(), Meow_ReadData);
+					return Meow_ReadData.value;
 				} catch(e) {
-
-					// Still coding... Will be updated soon!
+					throw new Error((Meow_FileObj && Meow_FileObj.Meow_Path || '') + ': ' + e);
+				} finally {
+					if(Meow_ConvertStream) {
+						Meow_InStream.close();
+					}
 				}
 			}
 		};
+		Meow_ReadFile = Meow_xUtil.Meow_ReadFile;
+		Meow_Exec = function(Meow_String) {
+			return eval(Meow_String);
+		};
+		Meow_Exists = function(Meow_FileName) {
+			return Meow_xUtil.Meow_xFile(Meow_FileName).Meow_Exists();
+		};
+
+		// Still coding... Will be updated soon!
 	}
 });
