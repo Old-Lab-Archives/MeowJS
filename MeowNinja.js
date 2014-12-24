@@ -1,6 +1,7 @@
 var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 	var MeowNinja, define, Meow_xUtil;
-	var Meow_FileName;
+	var Meow_FileName, Meow_FileUtils;
+	var Meow_Util, Meow_FetchFile;
 	var Meow_Env;
 	var Meow_Hello;
 	var Meow_vMeow;
@@ -85,7 +86,30 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			};
 		}
 	} else if(typeof Meow_Comp !== 'undefined' && Meow_Comp.classes && Meow_Comp.interface) {
+		Meow_Env = 'Meow_xConnect';
+		// Meow_Comp.Meow_Util['import']('Meow_IncludeFun.jsm');
+		ce = Meow_Comp.classes;
+		cem = Meow_Comp.interface;
+		Meow_FileName = Meow_Args[0];
+		if(Meow_FileName && Meow_FileName.indexOf('-') === 0) {
+			Meow_CmdOpt = Meow_FileName.substring();
+			Meow_FileName = Meow_Args[1];
+		}
+		Meow_xUtil = {
+			//Meow_isWin: ('@geekresearchlab.net/windows-registry-key;1' in ce),
+			Meow_cwd: function() {
+				return Meow_FileUtils.Meow_FetchFile("Current Worker D", []).Meow_Path;
+			},
+			Meow_Normalize: function(Meow_Path) {
+				var m, Meow_Part, Meow_Ary;
+				var Meow_FirstChar = Meow_Path.charAt(0);
+				if(Meow_FirstChar !== '/' && Meow_FirstChar !== '\\' && Meow_Path.indexOf(':') === -1) {
+					Meow_Path = Meow_xUtil.Meow_cwd() + '/' + Meow_Path;
+				}
+				Meow_Ary = Meow_Path.replace(/\\/g, '/').split('/');
 
-		// Still coding... will be updated soon! (^_^)
+				// Still coding... will be updated soon!
+			}
+		};
 	}
 });
