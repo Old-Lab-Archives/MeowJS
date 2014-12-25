@@ -489,8 +489,30 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		function Meow_OnError(err, errBack) {
 			var Meow_IDs = err.MeowNinjaMod;
 			var Meow_Notified = false;
-
-			// Still coding... will be updated soon!
+			if(errBack) {
+				errBack(err);
+			} else {
+				Meow_Each(Meow_IDs, function(Meow_ID) {
+					if(Meow_Mod) {
+						Meow_Mod.error = err;
+						if(Meow_Mod.event.error) {
+							Meow_Notified = true;
+							Meow_Mod.emit('error', err);
+						}
+					}
+				});
+				if(!Meow_Notified) {
+					Meow_Req.onError(err);
+				}
+			}
 		}
+		function Meow_TakeGlobalQueue() {
+			if(Meow_DefGlobalQueue.length) {
+				Meow_apsp.apply(Meow_defQueue, [Meow_defQueue.length, 0].concat(Meow_DefGlobalQueue));
+				Meow_DefGlobalQueue = [];
+			}
+		}
+
+		// Still coding... will be updated soon!
 	};
 });
