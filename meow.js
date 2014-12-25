@@ -16,6 +16,7 @@ var MeowJS = (function() {
     var MeowFunText = MeowNinja('MeowFunText');
     var MeowUTF8 = MeowNinja('MeowUTF8');
     var MeowUTF8_16 = MeowNinja('MeowUTF8_16');
+    var Meow_ReverseUTF16 = MeowNinja('Meow_ReverseUTF16');
     var MeowImagePlay = MeowNinja('MeowImagePlay');
     var MeowImageCache = MeowNinja('MeowImageCache');
     var HiddenMeow = MeowNinja('HiddenMeow');
