@@ -619,7 +619,26 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			}
 			Meow_InLoadCheck = false;
 		}
+		Meow_Module = function(Meow_Map) {
+			Meow_Power.Meow_Events = Meow_FetchOwn(Meow_undefEvents, Meow_Map.id) || {};
+			Meow_Power.Meow_Map = Meow_Map;
+			Meow_Power.Meow_Shim = Meow_FetchOwn(Meow_Config.Meow_Shim, Meow_Map.id);
+			Meow_Power.Meow_DepExports = [];
+			Meow_Power.Meow_MapsDep = [];
+			Meow_Power.Meow_MatchedDep = [];
+			Meow_Power.Meow_PluginMaps = {};
+			Meow_Power.Meow_DepCount = 0;
+		};
+		Meow_Module.prototype = {
+			Meow_Init: function(Meow_MapsDep, Meow_Factory, errBack, Meow_Opts) {
+				Meow_Opts = Meow_Opts || {};
+				if(Meow_Power.Meow_Inited) {
+					return;
+				}
+				Meow_Power.Meow_Factory = Meow_Factory;
 
-		// Still coding... will be updated soon!
+				// Still coding... will be updated soon!
+			}
+		};
 	};
 });
