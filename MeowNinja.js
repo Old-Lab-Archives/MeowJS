@@ -316,6 +316,23 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			var Meow_MapBundles = {};
 			var Meow_NinjaCounter = 1;
 			var Meow_UnNormalizedCounter = 1;
+			function Meow_TrimDots(Meow_Ary) {
+				var m, Meow_Part;
+				for(m = 0; m < Meow_Ary.length; m++) {
+					Meow_Part = Meow_Ary[m];
+					if(Meow_Part === '.') {
+						Meow_Ary.splice(m, 1);
+						m -= 1;
+					} else if(Meow_Part === '..') {
+						if(m === 0 || (m === 1 && Meow_Ary[2] === '..') || Meow_Ary[m - 1] === '..') {
+							continue;
+						} else if(m > 0) {
+							Meow_Ary.splice(m - 1, 2);
+							m -= 2;
+						}
+					}
+				}
+			}
 
 			// Still coding... will be updated soon!
 		}
