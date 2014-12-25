@@ -495,7 +495,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				Meow_Each(Meow_IDs, function(Meow_ID) {
 					if(Meow_Mod) {
 						Meow_Mod.error = err;
-						if(Meow_Mod.event.error) {
+						if(Meow_Mod.Meow_Events.error) {
 							Meow_Notified = true;
 							Meow_Mod.emit('error', err);
 						}
@@ -520,7 +520,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					return (Meow_Mod.MeowNinja = Meow_Context.Meow_MakeNinja(Meow_Mod.Meow_Map));
 				}
 			},
-			'export':function(Meow_Mod) {
+			'exports':function(Meow_Mod) {
 				Meow_Mod.usingExports = true;
 				if(Meow_Mod.Meow_isDefine) {
 					return Meow_Mod.Meow_Module;
@@ -531,7 +531,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 						Meow_Config: function() {
 							return Meow_FetchOwn(Meow_Config.Meow_Config, Meow_Mod.Meow_Map.id) || {};
 						},
-						export: Meow_Mod.export || (Meow_Mod.export = {})
+						exports: Meow_Mod.exports || (Meow_Mod.exports = {})
 					});
 				}
 			}
@@ -638,7 +638,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				Meow_Power.Meow_Factory = Meow_Factory;
 				if(errBack) {
 					Meow_Power.Meow_On('error', errBack);
-				} else if(Meow_Power.events.error) {
+				} else if(Meow_Power.Meow_Events.error) {
 					errBack = Meow_Bind(Meow_Power, function(err) {
 						Meow_Power.emit('error', err);
 					});
@@ -688,6 +688,68 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				if(!Meow_Power.Meow_Enabled || Meow_Power.Meow_Enabling) {
 					return;
 				}
+				var err, Meow_xModule;
+				var Meow_ID = Meow_Power.Meow_Map.id;
+				var Meow_DepExports = Meow_Power.Meow_DepExports;
+				var exports = Meow_Power.exports;
+				var Meow_Factory = Meow_Power.Meow_Factory;
+				if(!Meow_Power.Meow_Inited){
+					Meow_Power.Meow_Fetch();
+				} else if(Meow_Power.error) {
+					Meow_Power.emit('error', Meow_Power.error);
+				} else if(Meow_Power.Meow_defining) {
+					Meow_Power.Meow_defining = true;
+					if(Meow_Power.Meow_DepCount < 1 && !Meow_Power.Meow_defined) {
+						if(Meow_isFunc(Meow_Factory)) {
+							if((Meow_Power.Meow_Events.error && Meow_Power.Meow_Map.Meow_isDefine) || Meow_Req.onError !== Meow_DefError) {
+								try {
+									exports = Meow_Context.Meow_xExec(Meow_ID, Meow_Factory, Meow_DepExports, exports);
+								} catch(e) {
+									err = e;
+								}
+							} else {
+								exports = Meow_Context.Meow_xExec(Meow_ID, Meow_Factory, Meow_DepExports, exports);
+							}
+							if(Meow_Power.Meow_Map.Meow_isDefine && exports === undefined) {
+								Meow_xModule = Meow_Power.Meow_Module;
+								if(Meow_xModule) {
+									exports = Meow_xModule.exports;
+								} else if(Meow_Power.usingExports) {
+									exports = Meow_Power.exports;
+								}
+							}
+							if(err) {
+								err.MeowNinjaMap = Meow_Power.Meow_Map;
+								err.MeowNinjaMod = Meow_Power.Meow_Map.Meow_isDefine ? [Meow_Power.Meow_Map.id] : null;
+								err.MeowNinja_Type = Meow_Power.Meow_Map.Meow_isDefine ? 'define' : 'Meow_Ninja';
+								return onError((Meow_Power.error = err));
+							}
+						} else {
+							exports = Meow_Factory;
+						}
+						Meow_Power.exports = exports;
+						if(Meow_Power.Meow_Map.Meow_isDefine && !Meow_Power.Meow_Ignore) {
+							Meow_defined[Meow_ID] = exports;
+							if(Meow_Req.Meow_OnLoadResource) {
+								Meow_Req.Meow_OnLoadResource(Meow_Context, Meow_Power.Meow_Map, Meow_Power.Meow_MapDep);
+							}
+						}
+						Meow_CleanRegistry(Meow_ID);
+						Meow_Power.Meow_defined = true;
+					}
+					Meow_Power.Meow_defining = false;
+					if(Meow_Power.Meow_defined && !Meow_Power.Meow_DefineEmitted) {
+						Meow_Power.Meow_DefineEmitted = true;
+						Meow_Power.emit('defined', Meow_Power.exports);
+						Meow_Power.Meow_DefineEmitComplete = true;
+					}
+				}
+			},
+			Meow_callPlugin: function() {
+				var Meow_Map = Meow_Power.map;
+				var Meow_ID = Meow_Map.id;
+				var Meow_PluginMaps = Meow_MakeModuleMap(Meow_Map.prefix);
+				Meow_Power.Meow_MapDep.push(Meow_PluginMaps);
 
 				// Still coding... will be updated soon!
 			}
