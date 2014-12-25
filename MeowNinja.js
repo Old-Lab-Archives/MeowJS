@@ -333,8 +333,31 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					}
 				}
 			}
+			function Meow_Normalize(Meow_Name, Meow_BaseName, Meow_MapApply) {
+				var Meow_MainPkg, Meow_PartsName, m, n, Meow_SegmantsName, Meow_IndexLast;
+				var Meow_MapFound, Meow_xFound, Meow_StarMapFound, Meow_xStar;
+				var Meow_BasePartsNormalize;
+				var Meow_Parts = (Meow_BaseName && Meow_BaseName.split('/'));
+				var Meow_Map = Meow_Config.Meow_Map;
+				var Meow_StarMap = Meow_Map && Meow_Map['*'];
+				if(Meow_Name) {
+					Meow_Name = Meow_Name.split('/');
+					Meow_IndexLast = Meow_Name.length - 1;
+					if(Meow_Config.Meow_CompatNodeID && Meow_Regex.test(Meow_Name[Meow_IndexLast])) {
+						Meow_Name[Meow_IndexLast] = Meow_Name[Meow_IndexLast].replace(Meow_Regex, '');
+					}
+					if(Meow_Name[0].charAt(0) === '.' && Meow_BaseParts) {
+						Meow_BasePartsNormalize = Meow_BaseParts.slice(0, Meow_BaseParts.length - 1);
+						Meow_Name = Meow_BasePartsNormalize.concat(Meow_Name);
+					}
+					Meow_TrimDots(Meow_Name);
+					Meow_Name = Meow_Name.join('/');
+				}
+				if(Meow_MapApply && Meow_Map && (Meow_BaseParts || Meow_StarMap)) {
 
-			// Still coding... will be updated soon!
+					// Still coding... will be updated soon!
+				}
+			}
 		}
 	};
 });
