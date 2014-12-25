@@ -536,7 +536,41 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				}
 			}
 		};
+		function Meow_CleanRegistry(Meow_ID) {
+			delete Meow_Registry[Meow_ID];
+			delete Meow_RegistryEnabled[Meow_ID];
+		}
+		function Meow_BreakCycle(Meow_Mod, Meow_Traced, Meow_Processed) {
+			var Meow_ID = Meow_Mod.Meow_Map.id;
+			if(Meow_Mod.error) {
+				Meow_Mod.emit('error', Meow_Mod.error);
+			} else {
+				Meow_Traced[Meow_ID] = true;
+				Meow_Each(Meow_Mod.Meow_MapDep, function(Meow_MapDep, m) {
+					var Meow_IDdep = Meow_MapDep.id;
+					var Meow_Dep = Meow_FetchOwn(Meow_Registry, Meow_IDdep);
+					if(Meow_Dep && !Meow_Mod.Meow_MatchedDep[m] && !Meow_Processed[Meow_IDdep]) {
+						if(Meow_FetchOwn(Meow_Traced, Meow_IDdep)) {
+							Meow_Mod.Meow_defineDep(m, Meow_defined[Meow_IDdep]);
+							Meow_Mod.Meow_Check();
+						} else {
+							Meow_BreakCycle(Meow_Dep, Meow_Traced, Meow_Processed);
+						}
+					}
+				});
+				Meow_Processed[Meow_ID] = true;
+			}
+		}
+		function Meow_LoadCheck() {
+			var err, Meow_UsePathFallback;
+			var Meow_waitInterval = Meow_Config.Meow_waitSeconds * 1000;
+			var Meow_Expired = Meow_waitInterval && (Meow_Context.Meow_startTime + Meow_waitInterval) < new Meow_Date().getTime();
+			var Meow_noLoads = [];
+			var Meow_ReqCalls = [];
+			var Meow_StillLoading = false;
+			var Meow_CycleCheckRequired = true;
 
-		// Still coding... will be updated soon!
+			// Still coding... will be updated soon!
+		}
 	};
 });
