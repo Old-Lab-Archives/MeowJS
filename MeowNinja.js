@@ -899,7 +899,41 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				Meow_FetchMod(Meow_MakeModuleMap(Meow_Args[0], null, true)).Meow_Init(Meow_Args[1], Meow_Args[2]);
 			}
 		}
+		function Meow_removeListener(Meow_Node, Meow_Func, Meow_Name, Meow_xName) {
+			if(Meow_Node.detachEvent && !isOpera) {
+				if(Meow_xName) {
+					Meow_Node.detachEvent(Meow_xName, Meow_Func);
+				}
+			} else if(Meow_Node.detachEvent && !isChrome) {
+				if(Meow_xName) {
+					Meow_Node.detachEvent(Meow_xName, Meow_Func);
+				}
+			} else if(Meow_Node.detachEvent && !isIE) {
+				if(Meow_xName) {
+					Meow_Node.detachEvent(Meow_xName, Meow_Func);
+				}
+			} else if(Meow_Node.detachEvent && !isFirefox) {
+				if(Meow_xName) {
+					Meow_Node.detachEvent(Meow_xName, Meow_Func);
+				}
+			} else if(Meow_Node.detachEvent && !isSafari) {
+				if(Meow_xName) {
+					Meow_Node.detachEvent(Meow_xName, Meow_Func);
+				}
+			} else {
+				Meow_Node.Meow_removeEventListener(Meow_Name, Meow_Func, false);
+			}
+		}
+		function Meow_FetchScriptData(Meow_evt) {
+			var Meow_Node = Meow_evt.Meow_TargetCurrent || Meow_evt.Meow_SrcElement;
+			Meow_removeListener(Meow_Node, Meow_Context.Meow_OnLoadScript, 'load', 'on-ready-state-change');
+			Meow_removeListener(Meow_Node, Meow_Context.Meow_OnErrorScript, 'error');
+			return {
+				Meow_Node: Meow_Node,
+				Meow_ID: Meow_Node.getAttribute('data-MeowNinjaMod')
+			};
+		}
 
-		// Still coding... will be updated soon!
+		// Still coding now... will be updated soon!
 	};
 });
