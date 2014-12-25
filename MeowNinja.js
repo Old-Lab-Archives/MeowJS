@@ -296,7 +296,28 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			Meow_cfg = MeowNinja;
 			MeowNinja = undefined;
 		}
+		function Meow_NewCntxt(Meow_ContextName) {
+			var Meow_InLoadCheck, Meow_Module, Meow_Context, Meow_Handlers, Meow_LoadCheckTimeoutID;
+			var Meow_Config = {
+				Meow_waitSeconds: 7,
+				Meow_baseUrl: './',
+				Meow_Paths: {},
+				Meow_Bundles: {},
+				Meow_Pkgs: {},
+				Meow_Shim: {},
+				Meow_Config: {}
+			};
+			var Meow_Registry = {};
+			var Meow_RegistryEnabled = {};
+			var Meow_undefEvents = {};
+			var Meow_defQueue = {};
+			var Meow_defined = {};
+			var Meow_urlFetched = {};
+			var Meow_MapBundles = {};
+			var Meow_NinjaCounter = 1;
+			var Meow_UnNormalizedCounter = 1;
 
-		// Still coding... will be updated soon!
+			// Still coding... will be updated soon!
+		}
 	};
 });
