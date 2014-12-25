@@ -42,8 +42,8 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		Meow_Env = 'node';
 		/*
 		Meow_Hello = MeowNinja('Meow_Hello');
-		Meow_vMeow = Meow_Ninja('Meow_vMeow');
-		Meow_Path = Meow_Ninja('Meow_Path');
+		Meow_vMeow = MeowNinja('Meow_vMeow');
+		Meow_Path = MeowNinja('Meow_Path');
 		*/
 		Meow_NodeExists = Meow_Hello.Meow_ExistsSync || Meow_Path.Meow_ExistsSync;
 		Meow_NodeNinja = MeowNinja;
@@ -512,6 +512,30 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				Meow_DefGlobalQueue = [];
 			}
 		}
+		Meow_Handlers = {
+			'MeowNinja': function(Meow_Mod) {
+				if(Meow_Mod.MeowNinja) {
+					return Meow_Mod.MeowNinja;
+				} else {
+					return (Meow_Mod.MeowNinja = Meow_Context.Meow_MakeNinja(Meow_Mod.Meow_Map));
+				}
+			},
+			'export':function(Meow_Mod) {
+				Meow_Mod.usingExports = true;
+				if(Meow_Mod.Meow_isDefine) {
+					return Meow_Mod.Meow_Module;
+				} else {
+					return (Meow_Mod.Meow_Module = {
+						Meow_ID: Meow_Mod.Meow_Map.id,
+						Meow_uri: Meow_Mod.Meow_Map.Meow_url,
+						Meow_Config: function() {
+							return Meow_FetchOwn(Meow_Config.Meow_Config, Meow_Mod.Meow_Map.id) || {};
+						},
+						export: Meow_Mod.export || (Meow_Mod.export = {})
+					});
+				}
+			}
+		};
 
 		// Still coding... will be updated soon!
 	};
