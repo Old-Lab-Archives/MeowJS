@@ -474,6 +474,21 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				}
 				return Meow_Mod;
 			}
+			function Meow_On(Meow_MapDep, Meow_Name, Meow_Func) {
+				var Meow_ID = Meow_MapDep.id;
+				Meow_Mod = Meow_FetchOwn;
+				if(Meow_HasProp(Meow_defined, Meow_ID) && (!Meow_Mod || Meow_Mod.Meow_DefineEmitComplete)) {
+					if(Meow_Name === 'defined') {
+						Meow_Func(defined[Meow_ID]);
+					}
+				} else {
+					Meow_Mod.Meow_On(Meow_Name, Meow_Func);
+				}
+			}
+		}
+		function Meow_OnError(err, errBack) {
+			var Meow_IDs = err.MeowNinjaMod;
+			var Meow_Notified = false;
 
 			// Still coding... will be updated soon!
 		}
