@@ -569,8 +569,24 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			var Meow_ReqCalls = [];
 			var Meow_StillLoading = false;
 			var Meow_CycleCheckRequired = true;
+			if(Meow_InLoadCheck) {
+				return;
+			}
+			Meow_InLoadCheck = true;
+			Meow_EachProp(Meow_RegistryEnabled, function(Meow_Mod) {
+				var Meow_Map = Meow_Mod.Meow_Map;
+				var Meow_ModID = Meow_Map.Meow_ID;
+				if(!Meow_Mod.Meow_Enabled) {
+					return;
+				}
+				if(!Meow_Map.Meow_isDefine) {
+					Meow_ReqCalls.push(Meow_Mod);
+				}
+				if(!Meow_Mod.error) {
 
-			// Still coding... will be updated soon!
+					// Still coding... will be updated soon!
+				}
+			});
 		}
 	};
 });
