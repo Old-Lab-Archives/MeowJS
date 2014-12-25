@@ -397,6 +397,83 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					});
 				}
 			}
+			function Meow_HasPathFallback(Meow_ID) {
+				var Meow_PathConfig = Meow_FetchOwn(Meow_Config.Meow_Path, Meow_ID);
+				if(Meow_PathConfig && Meow_isArray(Meow_PathConfig) && Meow_PathConfig.length > 1) {
+					Meow_PathConfig.shift();
+					Meow_Context.MeowNinja.Meow_undef(Meow_ID);
+					Meow_Context.Meow_MakeNinja(null, {
+						Meow_MapSkip: true
+					})([Meow_ID]);
+					return true;
+				}
+			}
+			function Meow_SplitPrefix(Meow_Name) {
+				var Meow_Prefix;
+				var Meow_Index = Meow_Name ? Meow_Name.indexOf('!') : -1;
+				if(Meow_Index > -1) {
+					Meow_Prefix = Meow_Name.substring(0, Meow_Index);
+					Meow_Name = Meow_Name.substring(Meow_Index + 1, Meow_Name.length);
+				}
+				return [Meow_Prefix, Meow_Name];
+			}
+			function Meow_MakeModuleMap(Meow_Name, Meow_ModuleMapParent, Meow_isNormalized, Meow_MapApply) {
+				var Meow_url, Meow_PluginMod, Meow_Suffix, Meow_PartsName;
+				var Meow_Prefix = null;
+				var Meow_ParentName = Meow_ModuleMapParent ? Meow_ModuleMapParent.name : null;
+				var Meow_NameOriginal = Meow_Name;
+				var Meow_isDefine = true;
+				var Meow_NormalizedName = '';
+				if(!Meow_Name) {
+					Meow_isDefine = false;
+					Meow_Name = '_@r' + (Meow_NinjaCounter += 1);
+				}
+				Meow_PartsName = Meow_SplitPrefix(Meow_Name);
+				Meow_Prefix = Meow_PartsName[0];
+				Meow_Name = Meow_PartsName[1];
+				if(Meow_Prefix) {
+					Meow_Prefix = Meow_Normalize(Meow_Prefix, Meow_ParentName, Meow_MapApply);
+					Meow_PluginMod = Meow_FetchOwn(Meow_defined, Meow_Prefix);
+				}
+				if(Meow_Name) {
+					if(Meow_Prefix) {
+						if(Meow_PluginMod && Meow_PluginMod.Meow_Normalize) {
+							Meow_NormalizedName = Meow_PluginMod.Meow_Normalize(Meow_Name, function(Meow_Name) {
+								return Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply);
+							});
+						}
+						else {
+							Meow_NormalizedName = Meow_Name.indexOf('!') === -1 ? Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply) : Meow_Name;
+						}
+					} else {
+						Meow_NormalizedName = Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply);
+						Meow_PartsName = Meow_SplitPrefix(Meow_NormalizedName);
+						Meow_Prefix = Meow_PartsName[0];
+						Meow_NormalizedName = Meow_PartsName[1];
+						Meow_isNormalized = true;
+						Meow_url = Meow_Context.nameToUrl(Meow_NormalizedName);
+					}
+				}
+				Meow_Suffix = Meow_Prefix && !Meow_PluginMod && !Meow_isNormalized ? 'Un-normalized' + (Meow_UnNormalizedCounter += 1) : '';
+				return {
+					Meow_Prefix: Meow_Prefix,
+					Meow_Name: Meow_NormalizedName,
+					Meow_ParentMap: Meow_ModuleMapParent,
+					Meow_UnNormalized: !!Meow_Suffix,
+					Meow_url: Meow_url,
+					Meow_NameOriginal: Meow_NameOriginal,
+					Meow_isDefine: Meow_isDefine,
+					Meow_ID: (Meow_Prefix ? Meow_Prefix + '!' + Meow_NormalizedName: Meow_NormalizedName) + Meow_Suffix
+				};
+			}
+			function Meow_FetchMod(Meow_MapDep) {
+				var Meow_ID = Meow_MapDep.id;
+				var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_ID);
+				if(!Meow_Mod) {
+					Meow_Mod = Meow_Registry[Meow_ID] = new Meow_Context.Meow_Module(Meow_MapDep);
+				}
+				return Meow_Mod;
+			}
 
 			// Still coding... will be updated soon!
 		}
