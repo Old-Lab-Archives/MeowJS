@@ -797,9 +797,86 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 							Meow_Enabled: true
 						});
 					});
-
-					// Still coding... will be updated soon!
+					load.error = Meow_Bind(Meow_Power, function(err) {
+						Meow_Power.Meow_Inited = true;
+						Meow_Power.error = err;
+						err.MeowNinjaMod = [Meow_ID];
+						Meow_EachProp(Meow_Registry, function(Meow_Mod) {
+							if(Meow_Mod.Meow_Map.id.indexOf(Meow_ID + 'Un-normalized') === 0) {
+								Meow_CleanRegistry(Meow_Mod.Meow_Map.id);
+							}
+						});
+						onError(err);
+					});
+					load.Meow_fromText = Meow_Bind(Meow_Power, function(Meow_Text, Meow_TextAlt) {
+						var Meow_ModuleName = Meow_Map.name;
+						var Meow_ModuleMap = Meow_MakeModuleMap(Meow_ModuleName);
+						var Meow_HasInteractive = Meow_UseInteractive;
+						if(Meow_TextAlt) {
+							Meow_Text = Meow_TextAlt;
+						}
+						if(Meow_HasInteractive) {
+							Meow_UseInteractive = false;
+						}
+						Meow_FetchMod(Meow_ModuleMap);
+						if(Meow_HasProp(Meow_Config.Meow_Config, Meow_ID)) {
+							Meow_Config.Meow_Config[Meow_ModuleName] = Meow_Config.Meow_Config[Meow_ID];
+						}
+						try {
+							Meow_Req.exec(Meow_Text);
+						} catch(e) {
+							return onError(Meow_ErrorMade('from-text-value', 'from-text-eval' + Meow_ID + 'failed: ' + e, e, [Meow_ID]));
+						}
+						if(Meow_HasInteractive) {
+							Meow_UseInteractive = true;
+						}
+						Meow_Power.Meow_MapDep.push(Meow_ModuleMap);
+						Meow_Context.Meow_LoadComplete(Meow_ModuleName);
+						Meow_NinjaLocal([Meow_ModuleName], load);
+					});
+					Meow_Plugin.load(Meow_Map.name, Meow_NinjaLocal, load, Meow_Config);
 				}));
+				Meow_Context.Meow_Enable(Meow_PluginMaps, Meow_Power);
+				Meow_Power.Meow_PluginMap[Meow_PluginMaps.id] = Meow_PluginMaps;
+			},
+			Meow_Enable: function() {
+				Meow_RegistryEnabled[Meow_Power.Meow_Map.id] = Meow_Power;
+				Meow_Power.Meow_Enabled = true;
+				Meow_Power.Meow_Enabling = true;
+				Meow_Each(Meow_Power.Meow_MapDep, Meow_Bind(Meow_Power, function(Meow_MapDep, m) {
+					var Meow_ID, Meow_Mod, Meow_Handlers;
+					if(typeof Meow_MapDep === 'string') {
+						Meow_MapDep = Meow_MakeModuleMap(Meow_MapDep, (Meow_Power.Meow_Map.Meow_isDefine ? Meow_Power.Meow_Map : Meow_Power.Meow_Map.Meow_ParentMap),
+						false, !Meow_Power.Meow_MapSkip);
+					Meow_Power.Meow_MapDep[m] = Meow_MapsDep;
+					Meow_Handlers = Meow_FetchOwn(Meow_Handler, Meow_MapDep.id);
+					if(Meow_Handlers) {
+						Meow_Power.Meow_DepExports[m] = Meow_Handlers(Meow_Power);
+						return;
+					}
+					Meow_Power.Meow_DepCount += 1;
+					Meow_On(Meow_MapDep, 'defined', Meow_Bind(Meow_Power, function(Meow_DepExports) {
+						Meow_Power.Meow_defineDep(m, Meow_DepExports);
+						Meow_Power.Meow_Check();
+					}));
+					if(Meow_Power.errBack) {
+						Meow_On(Meow_MapDep, 'error', Meow_Bind(Meow_Power, Meow_Power.errBack));
+					}
+					}
+					Meow_ID = Meow_MapDep.id;
+					Meow_Mod = Meow_Registry[Meow_ID];
+					if(!Meow_HasProp(Meow_Handler, Meow_ID) && Meow_Mod && !Meow_Mod.Meow_Enabled) {
+						Meow_Context.Meow_Enable(Meow_MapDep, Meow_Power);
+					}
+				}));
+				Meow_EachProp(Meow_Power.Meow_PluginMaps, Meow_Bind(Meow_Power, function(Meow_PluginMaps) {
+					var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_PluginMaps.id);
+					if(Meow_Mod && !Meow_Mod.Meow_Enabled) {
+						Meow_Context.Meow_Enable(Meow_PluginMaps, Meow_Power);
+					}
+				}));
+
+				// Still coding... will be updated soon!
 			}
 		};
 	};
