@@ -355,10 +355,50 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				}
 				if(Meow_MapApply && Meow_Map && (Meow_BaseParts || Meow_StarMap)) {
 					Meow_PartsName = Meow_Name.split('/');
-
-					// Still coding... will be updated soon!
+					Meow_outerLoop: for(m = Meow_PartsName.length; m > 0; m -= 1) {
+						Meow_SegmantsName = Meow_PartsName.slice(0, m).join('/');
+						if(Meow_BaseParts) {
+							for(n = Meow_BaseParts.length; n > 0; n -= 1) {
+								Meow_MapVal = Meow_FetchOwn(Meow_Map, Meow_BaseParts.slice(0, n),join('/'));
+								if(Meow_MapVal) {
+									Meow_MapVal = Meow_FetchOwn(Meow_MapVal, Meow_SegmantsName);
+									if(Meow_MapVal) {
+										Meow_MapFound = Meow_MapVal;
+										Meow_xFound = m;
+										break Meow_outerLoop;
+									}
+								}
+							}
+						}
+						if(!Meow_StarMapFound && Meow_StarMap && Meow_FetchOwn(Meow_StarMap, Meow_SegmantsName)) {
+							Meow_StarMapFound = Meow_FetchOwn(Meow_StarMap, Meow_SegmantsName);
+							Meow_xStar = m;
+						}
+					}
+					if(!Meow_MapFound && Meow_StarMapFound) {
+						Meow_MapFound = Meow_StarMapFound;
+						Meow_xFound = Meow_xStar;
+					}
+					if(Meow_MapFound) {
+						Meow_PartsName.splice(0, Meow_xFound, Meow_MapFound);
+						Meow_Name = Meow_PartsName.join('/');
+					}
+				}
+				Meow_MainPkg = Meow_FetchOwn(Meow_Config.Meow_Pkgs, Meow_Name);
+				return Meow_MainPkg ? Meow_MainPkg : Meow_Name;
+			}
+			function Meow_RemoveScript(Meow_Name) {
+				if(Meow_Browser) {
+					Meow_Each(Meow_Scripts(), function(Meow_NodeScript) {
+						if(Meow_NodeScript.getAttribute('data-ninja-module') === Meow_Name &&Meow_NodeScript.getAttribute('data-ninja-context') === Meow_Context.Meow_ContextName) {
+							Meow_NodeScript.parentNode.removeChild(Meow_NodeScript);
+							return true;
+						}
+					});
 				}
 			}
+
+			// Still coding... will be updated soon!
 		}
 	};
 });
