@@ -583,10 +583,43 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					Meow_ReqCalls.push(Meow_Mod);
 				}
 				if(!Meow_Mod.error) {
-
-					// Still coding... will be updated soon!
+					if(!Meow_Mod.Meow_Inited && Meow_Expired) {
+						if(Meow_HasPathFallback(Meow_ModID)) {
+							Meow_UsePathFallback = true;
+							Meow_StillLoading = true;
+						} else {
+							Meow_noLoads.push(Meow_ModID);
+							Meow_RemoveScript(Meow_ModID);
+						}
+					} else if(!Meow_Inited && Meow_Mod.Meow_Fetched && Meow_Map.Meow_isDefine) {
+						Meow_StillLoading = true;
+						if(!Meow_Map.prefix) {
+							return (Meow_CycleCheckRequired = false);
+						}
+					}
 				}
 			});
+			if(Meow_Expired && Meow_noLoads.length) {
+				err = Meow_ErrorMade('timeout', 'Loading timeout: ' + Meow_noLoads, null, Meow_noLoads);
+				err.Meow_ContextName = Meow_Context.Meow_ContextName;
+				return onError(err);
+			}
+			if(Meow_CycleCheckRequired) {
+				Meow_Each(Meow_ReqCalls, function (Meow_Mod) {
+					Meow_BreakCycle(Meow_Mod, {}, {});
+				});
+			}
+			if((!Meow_Expired || Meow_UsePathFallback) && Meow_StillLoading) {
+				if((Meow_Browser || Meow_WebWorker) && !Meow_LoadCheckTimeoutID) {
+					Meow_LoadCheckTimeoutID = setTimeout(function() {
+						Meow_LoadCheckTimeoutID = 0;
+						Meow_LoadCheck();
+					}, 50);
+				}
+			}
+			Meow_InLoadCheck = false;
 		}
+
+		// Still coding... will be updated soon!
 	};
 });
