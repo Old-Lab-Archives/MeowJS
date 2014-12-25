@@ -624,18 +624,70 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			Meow_Power.Meow_Map = Meow_Map;
 			Meow_Power.Meow_Shim = Meow_FetchOwn(Meow_Config.Meow_Shim, Meow_Map.id);
 			Meow_Power.Meow_DepExports = [];
-			Meow_Power.Meow_MapsDep = [];
+			Meow_Power.Meow_MapDep = [];
 			Meow_Power.Meow_MatchedDep = [];
 			Meow_Power.Meow_PluginMaps = {};
 			Meow_Power.Meow_DepCount = 0;
 		};
 		Meow_Module.prototype = {
-			Meow_Init: function(Meow_MapsDep, Meow_Factory, errBack, Meow_Opts) {
+			Meow_Init: function(Meow_MapDep, Meow_Factory, errBack, Meow_Opts) {
 				Meow_Opts = Meow_Opts || {};
 				if(Meow_Power.Meow_Inited) {
 					return;
 				}
 				Meow_Power.Meow_Factory = Meow_Factory;
+				if(errBack) {
+					Meow_Power.Meow_On('error', errBack);
+				} else if(Meow_Power.events.error) {
+					errBack = Meow_Bind(Meow_Power, function(err) {
+						Meow_Power.emit('error', err);
+					});
+				}
+				Meow_Power.Meow_MapDep = Meow_MapDep && Meow_MapDep.slice(0);
+				Meow_Power.errBack = errBack;
+				Meow_Power.Meow_Inited = true;
+				Meow_Power.Meow_Ignore = Meow_Opts.Meow_Ignore;
+				if(Meow_Opts.Meow_Enabled || Meow_Power.Meow_Enabled) {
+					Meow_Power.Meow_Enable();
+				} else {
+					Meow_Power.Meow_Check();
+				}
+			},
+			Meow_defineDep: function(m, Meow_DepExports) {
+				if(!Meow_Power.Meow_MatchedDep[m]) {
+					Meow_Power.Meow_MatchedDep[m] = true;
+					Meow_Power.Meow_DepCount -= 1;
+					Meow_Power.Meow_DepExports[m] = Meow_DepExports;
+				}
+			},
+			Meow_Fetch: function() {
+				if(Meow_Power.Meow_Fetched) {
+					return;
+				}
+				Meow_Power.Meow_Fetched = true;
+				Meow_Context.Meow_startTime = (new Meow_Date()).getTime();
+				var Meow_Map = Meow_Power.Meow_Map;
+				if(Meow_Power.Meow_Shim) {
+					Meow_Context.Meow_MakeNinja(Meow_Power.Meow_Map, {
+						Meow_EnableBuildCallback: true
+					})(Meow_Power.Meow_Shim.Meow_Dep || [], Meow_Bind(Meow_Power, function() {
+						return Meow_Map.prefix ? Meow_Power.Meow_callPlugin() : Meow_Power.load();
+					}));
+				} else {
+					return Meow_Map.prefix ? Meow_Power.Meow_callPlugin() : Meow_Power.load();
+				}
+			},
+			load: function() {
+				var Meow_url = Meow_Power.Meow_Map.Meow_url;
+				if(!Meow_urlFetched[Meow_url]) {
+					Meow_urlFetched[Meow_url] = true;
+					Meow_Context.load(Meow_Power.Meow_Map.id, Meow_url);
+				}
+			},
+			Meow_Check: function() {
+				if(!Meow_Power.Meow_Enabled || Meow_Power.Meow_Enabling) {
+					return;
+				}
 
 				// Still coding... will be updated soon!
 			}
