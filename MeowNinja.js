@@ -875,9 +875,31 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 						Meow_Context.Meow_Enable(Meow_PluginMaps, Meow_Power);
 					}
 				}));
-
-				// Still coding... will be updated soon!
+				Meow_Power.Meow_Enabling = false;
+				Meow_Power.Meow_Check();
+			},
+			Meow_On: function(Meow_Name, Meow_cb) {
+				var Meow_cbs = Meow_Power.Meow_Events[Meow_Name];
+				if(!Meow_cbs) {
+					Meow_cbs = Meow_Power.Meow_Events[Meow_Name] = [];
+				}
+				Meow_cbs.push(Meow_cb);
+			},
+			emit: function(Meow_Name, Meow_evt) {
+				Meow_Each(Meow_Power.Meow_Events[Meow_Name], function(Meow_cb) {
+					Meow_cb(Meow_evt);
+				});
+				if(Meow_Name === 'error') {
+					delete Meow_Power.Meow_Events[Meow_Name];
+				}
 			}
 		};
+		function Meow_CallFetchModule(Meow_Args) {
+			if(!Meow_HasProp(Meow_defined, Meow_Args[0])) {
+				Meow_FetchMod(Meow_MakeModuleMap(Meow_Args[0], null, true)).Meow_Init(Meow_Args[1], Meow_Args[2]);
+			}
+		}
+
+		// Still coding... will be updated soon!
 	};
 });
