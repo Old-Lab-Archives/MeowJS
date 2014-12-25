@@ -750,8 +750,56 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				var Meow_ID = Meow_Map.id;
 				var Meow_PluginMaps = Meow_MakeModuleMap(Meow_Map.prefix);
 				Meow_Power.Meow_MapDep.push(Meow_PluginMaps);
+				Meow_On(Meow_PluginMaps, 'defined', Meow_Bind(Meow_Power, function(Meow_Plugin) {
+					var load, Meow_NormalizedMap, Meow_NormalizedMod;
+					var Meow_BundleID = Meow_FetchOwn(Meow_MapBundles, Meow_Power.Meow_Map.id);
+					var Meow_Name = Meow_Power.Meow_Map.name;
+					var Meow_ParentName = Meow_Power.Meow_Map.Meow_ParentMap ? Meow_Power.Meow_Map.Meow_ParentMap.name : null;
+					var Meow_NinjaLocal = Meow_Context.Meow_MakeNinja(Meow_Map.Meow_ParentMap, {
+						Meow_EnableBuildCallback: true
+					});
+					if(Meow_Power.Meow_Map.Meow_UnNormalized) {
+						if(Meow_Plugin.Meow_Normalize) {
+							Meow_Name = Meow_Plugin.Meow_Normalize(Meow_Name, function(Meow_Name) {
+								return Meow_Normalize(Meow_Name, Meow_ParentName, true);
+							}) || '';
+						}
+						Meow_NormalizedMap = Meow_MakeModuleMap(Meow_Map.prefix + '|' + Meow_Name, Meow_Power.Meow_Map.Meow_ParentMap);
+						Meow_On(Meow_NormalizedMap, 'defined', Meow_Bind(Meow_Power, function(value) {
+							Meow_Power.Meow_Init([], function() {
+								return value;
+							}, null, {
+								Meow_Enabled: true,
+								Meow_Ignore: true
+							});
+						}));
+						Meow_NormalizedMod = Meow_FetchOwn(Meow_Registry, Meow_NormalizedMap.id);
+						if(Meow_NormalizedMap) {
+							Meow_Power.Meow_MapDep.push(Meow_NormalizedMap);
+							if(Meow_Power.Meow_Events.error) {
+								Meow_NormalizedMod.Meow_On('error', Meow_Bind(Meow_Power,function(err) {
+									Meow_Power.emit('error', err);
+								}));
+							}
+							Meow_NormalizedMod.Meow_Enable();
+						}
+						return;
+					}
+					if(Meow_BundleID) {
+						Meow_Power.Meow_Map.Meow_url = Meow_Context.nameToUrl(Meow_BundleID);
+						Meow_Power.load();
+						return;
+					}
+					load = Meow_Bind(Meow_Power, function(value) {
+						Meow_Power.Meow_Init([], function() {
+							return value;
+						}, null, {
+							Meow_Enabled: true
+						});
+					});
 
-				// Still coding... will be updated soon!
+					// Still coding... will be updated soon!
+				}));
 			}
 		};
 	};
