@@ -354,6 +354,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					Meow_Name = Meow_Name.join('/');
 				}
 				if(Meow_MapApply && Meow_Map && (Meow_BaseParts || Meow_StarMap)) {
+					Meow_PartsName = Meow_Name.split('/');
 
 					// Still coding... will be updated soon!
 				}
