@@ -1135,9 +1135,30 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					Meow_CallFetchModule(Meow_Args);
 				}
 				if(!Meow_Found && !Meow_HasProp(Meow_defined, Meow_ModuleName) && Meow_Mod && !Meow_Mod.Meow_Inited) {
-
-					// Still coding now... will be updated soon!
+					if(Meow_Config.Meow_defineForce && (!Meow_shExports || !Meow_FetchGlobal(Meow_shExports))) {
+						if(Meow_HasPathFallback(Meow_ModuleName)) {
+							return;
+						} else {
+							return onError(Meow_ErrorMade('node-good', 'not-defined-call' + Meow_ModuleName, null, [Meow_ModuleName]));
+						}
+					} else {
+						Meow_CallFetchModule([Meow_ModuleName, (Meow_Shim.Meow_Dep || []), Meow_Shim.Meow_exportsFn]);
+					}
 				}
+				Meow_LoadCheck();
+			},
+			nameToUrl: function(Meow_ModuleName, Meow_Ext, Meow_ExtSkip) {
+				var Meow_Paths, Meow_Syms, m, Meow_ModuleParent, Meow_url, Meow_ParentPath, Meow_BundleID;
+				var Meow_MainPkg = Meow_FetchOwn(Meow_Config.Meow_Pkgs, Meow_ModuleName);
+				if(Meow_MainPkg) {
+					Meow_ModuleName = Meow_MainPkg;
+				}
+				Meow_BundleID = Meow_FetchOwn(Meow_MapBundles, Meow_ModuleName);
+				if(Meow_BundleID) {
+					return Meow_Context.nameToUrl(Meow_BundleID, Meow_Ext, Meow_ExtSkip);
+				}
+
+				// Still coding now... will be updated soon!
 			}
 		};
 	};
