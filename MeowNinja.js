@@ -1075,10 +1075,19 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 						var Meow_Index = Meow_ModuleNamePlusExt.lastIndexOf('.');
 						var Meow_Segment = Meow_ModuleNamePlusExt.split('/')[0];
 						var Meow_isRelative = Meow_Segment === '.' || Meow_Segment === '..';
-
-						// Still coding now... will be updated soon!
+						if(Meow_Index !== -1 && (!Meow_isRelative || Meow_Index > 1)) {
+							Meow_Ext = Meow_ModuleNamePlusExt.substring(Meow_Index, Meow_ModuleNamePlusExt.length);
+							Meow_ModuleNamePlusExt = Meow_ModuleNamePlusExt.substring(0, Meow_Index);
+						}
+						return Meow_Context.nameToUrl(Meow_Normalize(Meow_ModuleNamePlusExt, Meow_MapRel && Meow_MapRel.id, true), Meow_Ext, true);
+					},
+					Meow_Specified: function(Meow_ID) {
+						Meow_ID = Meow_MakeModuleMap(Meow_ID, Meow_MapRel, false, true).id;
+						return Meow_HasProp(Meow_defined, Meow_ID) || Meow_HasProp(Meow_Registry, Meow_ID);
 					}
 				});
+
+				// Still coding now... will be updated soon!
 			}
 		};
 	};
