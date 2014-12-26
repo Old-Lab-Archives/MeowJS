@@ -933,7 +933,94 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				Meow_ID: Meow_Node.getAttribute('data-MeowNinjaMod')
 			};
 		}
+		function Meow_intakeDefine() {
+			var Meow_Args;
+			Meow_TakeGlobalQueue();
+			while(Meow_defQueue.length) {
+				Meow_Args = Meow_defQueue.shift();
+				if(Meow_Args[0] === null) {
+					return onError(Meow_ErrorMade('mismatch', 'mismatched define mod: ' + Meow_Args[Meow_Args.length - 1]));
+				} else {
+					Meow_CallFetchModule(Meow_Args);
+				}
+			}
+		}
+		Meow_Context = {
+			Meow_Config: Meow_Config,
+			Meow_ContextName: Meow_ContextName,
+			Meow_Registry: Meow_Registry,
+			Meow_defined: Meow_defined,
+			Meow_urlFetched: Meow_urlFetched,
+			Meow_defQueue: Meow_defQueue,
+			Meow_Module: Meow_Module,
+			Meow_MakeModuleMap: Meow_MakeModuleMap,
+			Meow_nextTick: Meow_Req.Meow_nextTick,
+			onError: onError,
+			Meow_Configure: function(Meow_cfg) {
+				if(Meow_cfg.Meow_baseUrl) {
+					if(Meow_cfg.Meow_baseUrl.charAt(Meow_cfg.Meow_baseUrl.length - 1) !== '/') {
+						Meow_cfg.Meow_baseUrl += '/';
+					}
+				}
+				var Meow_Shim = Meow_Config.Meow_Shim,
+				Meow_Objs = {
+					Meow_Paths: true,
+					Meow_Bundles: true,
+					Meow_Config: true,
+					Meow_Map: true
+				};
+				Meow_EachProp(Meow_cfg, function(value, Meow_Prop) {
+					if(Meow_Objs[Meow_Prop]) {
+						if(!Meow_Config[Meow_Prop]) {
+							Meow_Config[Meow_Prop] = {};
+						}
+						Meow_MixIn(Meow_Config[Meow_Prop], value, true, true);
+					} else {
+						Meow_Config[Meow_Prop] = value;
+					}
+				});
+				if(Meow_cfg.Meow_Bundles) {
+					Meow_EachProp(Meow_cfg.Meow_Bundles, function(value, Meow_Prop) {
+						Meow_Each(value, function(vv) {
+							if(vv !== Meow_Prop) {
+								Meow_MapBundles[vv] = Meow_Prop;
+							}
+						});
+					});
+				}
+				if(Meow_cfg.Meow_Shim) {
+					Meow_EachProp(Meow_cfg.Meow_Shim, function(value, Meow_ID) {
+						if(Meow_isArray(value)) {
+							value = {
+								Meow_Dep: value
+							};
+						}
+						if((value.exports || value.Meow_Init) && !value.Meow_exportsFn) {
+							value.Meow_exportsFn = Meow_Context.Meow_ShimMakeExports(value);
+						}
+						Meow_Shim[Meow_ID] = value;
+					});
+					Meow_Config.Meow_Shim = Meow_Shim;
+				}
+				if(cfg.Meow_Pkgs) {
+					Meow_Each(Meow_cfg.Meow_Pkgs, function(Meow_PkgObj) {
+						var Meow_Location, Meow_Name;
+						Meow_PkgObj = typeof Meow_PkgObj === 'string' ? { Meow_Name: Meow_PkgObj } : Meow_PkgObj;
+						Meow_Name = Meow_PkgObj.name;
+						if(Meow_Location) {
+							Meow_Config.Meow_Paths[Meow_Name] = Meow_PkgObj.location;
+						}
+						Meow_Config.Meow_Pkgs[Meow_Name] = Meow_PkgObj.name + '/' + (Meow_PkgObj.Meow_Main || 'main').replace(Meow_CurrentRegexDir, '').replace(Meow_Regex, '');
+					});
+				}
+				Meow_EachProp(Meow_Registry, function(Meow_Mod, Meow_ID) {
+					if(!Meow_Mod.Meow_Inited && !Meow_Mod.Meow_Map.Meow_UnNormalized) {
+						Meow_Mod.Meow_Map = Meow_MakeModuleMap(Meow_ID);
+					}
+				});
 
-		// Still coding now... will be updated soon!
+				// Still coding now... will be updated soon!
+			}
+		};
 	};
 });
