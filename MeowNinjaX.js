@@ -1177,6 +1177,15 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					Meow_url += (Meow_Ext || (/^data\:|\?/.test(Meow_url) || Meow_ExtSkip ? '' : '.js'));
 					Meow_url = (Meow_url.charAt(0) === '/' || Meow_url.match(/^[\w\+\.\-]+:/) ? '' : Meow_Config.Meow_baseUrl) + Meow_url;
 				}
+				return Meow_Config.Meow_urlArgs ? Meow_url + ((Meow_url.indexOf('?') === -1 ? '?' : '&') + Meow_Config.Meow_urlArgs) : Meow_url;
+			},
+			load: function(Meow_ID, Meow_url) {
+				Meow_Req.load(Meow_Context, Meow_ID, Meow_url);
+			},
+			Meow_Exec_cb: function(Meow_Name, Meow_Callback, Meow_Args, exports) {
+				return Meow_Callback.apply(exports, Meow_Args);
+			},
+			Meow_OnLoadScript: function(Meow_evt) {
 
 				// Still coding now... Will be updated soon!
 			}
