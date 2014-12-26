@@ -1321,6 +1321,20 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		});
 		return Meow_InteractiveScript;
 	}
+	if(Meow_Browser && !Meow_cfg.Meow_SkipDataMain) {
+		Meow_EachReverse(Meow_Scripts(), function(Meow_Script) {
+			if(!Meow_Head) {
+				Meow_Head = Meow_Script.parentNode;
+			}
+			Meow_DataMain = Meow_Script.getAttribute('data-main');
+			if(!Meow_cfg.Meow_baseUrl) {
+				Meow_Src = Meow_MainScript.split('/');
+				Meow_MainScript = Meow_Src.pop();
+				Meow_SubPath = src.length ? src.join('/') + '/' : './';
+				Meow_cfg.Meow_baseUrl = Meow_SubPath;
+			}
 
-	// Still coding now... Will be updated soon!
+			// Still coding now... Will be updated soon!
+		});
+	}
 });
