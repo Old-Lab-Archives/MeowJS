@@ -1018,6 +1018,22 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 						Meow_Mod.Meow_Map = Meow_MakeModuleMap(Meow_ID);
 					}
 				});
+				if(Meow_cfg.Meow_Dep || Meow_cfg.Meow_Callback) {
+					Meow_Context.MeowNinja(Meow_cfg.Meow_Dep || [], Meow_cfg.Meow_Callback);
+				}
+			},
+			Meow_ShimMakeExports: function(value) {
+				function Meow_Fn() {
+					var Meow_ret;
+					if(value.Meow_Init) {
+						Meow_ret = value.Meow_Init.apply(Meow_Global, Meow_Args);
+					}
+					return Meow_ret || (value.exports && Meow_FetchGlobal(value.exports));
+				}
+				return Meow_Fn;
+			},
+			Meow_MainNinja: function(Meow_MapRel, Meow_Opts) {
+				Meow_Opts = Meow_Opts || {};
 
 				// Still coding now... will be updated soon!
 			}
