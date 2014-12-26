@@ -1068,8 +1068,17 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					});
 					return Meow_NinjaLocal;
 				}
+				Meow_MixIn(Meow_NinjaLocal, {
+					Meow_Browser: Meow_Browser,
+					Meow_toUrl: function(Meow_ModuleNamePlusExt) {
+						var Meow_Ext;
+						var Meow_Index = Meow_ModuleNamePlusExt.lastIndexOf('.');
+						var Meow_Segment = Meow_ModuleNamePlusExt.split('/')[0];
+						var Meow_isRelative = Meow_Segment === '.' || Meow_Segment === '..';
 
-				// Still coding now... will be updated soon!
+						// Still coding now... will be updated soon!
+					}
+				});
 			}
 		};
 	};
