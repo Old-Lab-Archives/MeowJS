@@ -1,4 +1,4 @@
-MeowNinjaX = function(Meow_Global) {
+MeowNinja = function(Meow_Global) {
 		var Meow_Req, Meow_SubPath;
 		var xx, Meow_BaseElement;
 		var Meow_Head, Meow_Src;
@@ -1107,7 +1107,107 @@ MeowNinjaX = function(Meow_Global) {
 			Meow_Node = Meow_req.Meow_createNode(Meow_Config, Meow_ModuleName, Meow_url);
 			Meow_Node.setAttribute('data-ninja-context', Meow_Context.Meow_ContextName);
 			Meow_Node.setAttribute('data-MeowNinjaMod', Meow_ModuleName);
-
-			// Still coding now... Will be updated soon!
+			if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isOpera) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isChrome) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isIE) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isFirefox) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isSafari) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else {
+				Meow_Node.addEventListener('load', Meow_Context.Meow_OnLoadScript, false);
+				Meow_Node.addEventListener('error', Meow_Context.Meow_OnLoadScript, false);
+			}
+			Meow_Node.src = Meow_url;
+			Meow_CurrentAddScript = Meow_Node;
+			if(Meow_BaseElement) {
+				Meow_Head.insertBefore(Meow_Node, Meow_BaseElement);
+			} else {
+				Meow_Head.appendChild(Meow_Node);
+			}
+			Meow_CurrentAddScript = null;
+			return Meow_Node;
+		} else if(Meow_WebWorker) {
+			try {
+				Meow_importScripts(Meow_url);
+				Meow_Context.Meow_LoadComplete(Meow_ModuleName);
+			} catch(e) {
+				Meow_Context.onError(Meow_ErrorMade('import-scripts', 'import-scripts failed for' + Meow_ModuleName + ' at ' + Meow_url, e, [Meow_ModuleName]));
+			}
 		}
+	};
+	function Meow_FetchInteractiveScript() {
+		if(Meow_InteractiveScript && Meow_InteractiveScript.readyState === 'interactive') {
+			return Meow_InteractiveScript;
+		}
+		Meow_EachReverse(Meow_Scripts(), function(Meow_Script) {
+			if(Meow_Script.readyState === 'interactive') {
+				return (Meow_InteractiveScript = Meow_Script);
+			}
+		});
+		return Meow_InteractiveScript;
+	}
+	if(Meow_Browser && !Meow_cfg.Meow_SkipDataMain) {
+		Meow_EachReverse(Meow_Scripts(), function(Meow_Script) {
+			if(!Meow_Head) {
+				Meow_Head = Meow_Script.parentNode;
+				Meow_DataMain = Meow_Script.getAttribute('data-main');
+				if(!Meow_cfg.Meow_baseUrl) {
+					Meow_Src = Meow_MainScript.split('/');
+					Meow_MainScript = Meow_Src.pop();
+					Meow_SubPath = src.length ? src.join('/') + '/' : './';
+					Meow_cfg.Meow_baseUrl = Meow_SubPath;
+				}
+				Meow_MainScript = Meow_MainScript.replace(Meow_Regex, '');
+				if(Meow_req.Meow_Regex.test(Meow_MainScript)) {
+					Meow_MainScript = Meow_DataMain;
+				}
+				Meow_cfg.Meow_Dep = Meow_cfg.Meow_Dep ? Meow_cfg.Meow_Dep.concat(Meow_MainScript) : [Meow_MainScript];
+				return true;
+			}
+		});
+	}
+	define = function(Meow_Name, Meow_Dep, Meow_Callback) {
+		var Meow_Node, Meow_Context;
+		if(typeof Meow_Name !== 'string') {
+			Meow_Callback = Meow_Dep;
+			Meow_Dep = Meow_Name;
+			Meow_Name = null;
+		}
+		if(!Meow_isArray(Meow_Dep)) {
+			Meow_Callback = Meow_Dep;
+			Meow_Dep = null;
+		}
+		if(!Meow_Dep && Meow_isFunc(Meow_Callback)) {
+			Meow_Dep = [];
+			if(Meow_Callback.length) {
+				Meow_Callback.toString().replace(Meow_Regex_Comment, '').replace(Meow_Regex, function (Meow_Match, Meow_Dep) {
+					Meow_Dep.push(Meow_Dep2);
+				});
+				Meow_Dep = (Meow_Callback.length === 1 ? ['MeowNinja'] : ['MeowNinja', 'exports', 'Meow_Module']).concat(Meow_Dep);
+			}
+		}
+		if(Meow_UseInteractive) {
+			Meow_Node = Meow_CurrentAddScript || Meow_FetchInteractiveScript();
+			if(Meow_Node) {
+				if(!Meow_Name) {
+					Meow_Name = Meow_Node.getAttribute('data-ninja-module');
+				}
+				Meow_Context = Meow_Contexts[Meow_Node.getAttribute('data-ninja-context')];
+			}
+		}
+		(Meow_Context ? Meow_Context.Meow_defQueue : Meow_DefGlobalQueue).push([Meow_Name, Meow_Dep, Meow_Callback]);
+	};
+	define.amd = { /*
+		jQuery: true,
+		Meow_Query: true
+		*/
 	};
