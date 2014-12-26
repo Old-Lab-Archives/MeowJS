@@ -1157,8 +1157,28 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				if(Meow_BundleID) {
 					return Meow_Context.nameToUrl(Meow_BundleID, Meow_Ext, Meow_ExtSkip);
 				}
+				if(Meow_Req.Meow_Regex.test(Meow_ModuleName)) {
+					Meow_url = Meow_ModuleName + (Meow_Ext || '');
+				} else {
+					Meow_Paths = Meow_Config.Meow_Paths;
+					Meow_Syms = Meow_ModuleName.split('/');
+					for(m = Meow_Syms.length; m > 0; m -= 1) {
+						Meow_ModuleParent = Meow_Syms.slice(0, m).join('/');
+						Meow_ParentPath = Meow_FetchOwn(Meow_Paths, Meow_ModuleParent);
+						if(Meow_ParentPath) {
+							if(Meow_isArray(Meow_ParentPath)) {
+								Meow_ParentPath = Meow_ParentPath[0];
+							}
+							Meow_Syms.splice(0, m, Meow_ParentPath);
+							break;
+						}
+					}
+					Meow_url = Meow_Syms.join('/');
+					Meow_url += (Meow_Ext || (/^data\:|\?/.test(Meow_url) || Meow_ExtSkip ? '' : '.js'));
+					Meow_url = (Meow_url.charAt(0) === '/' || Meow_url.match(/^[\w\+\.\-]+:/) ? '' : Meow_Config.Meow_baseUrl) + Meow_url;
+				}
 
-				// Still coding now... will be updated soon!
+				// Still coding now... Will be updated soon!
 			}
 		};
 	};
