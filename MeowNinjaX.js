@@ -1086,8 +1086,58 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 						return Meow_HasProp(Meow_defined, Meow_ID) || Meow_HasProp(Meow_Registry, Meow_ID);
 					}
 				});
+				if(!Meow_MapRel) {
+					Meow_NinjaLocal.Meow_undef = function(Meow_ID) {
+						Meow_TakeGlobalQueue();
+						var Meow_Map = Meow_MakeModuleMap(Meow_ID, Meow_MapRel, true);
+						var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_ID);
+						Meow_RemoveScript(Meow_ID);
+						delete Meow_defined[Meow_ID];
+						delete Meow_urlFetched[Meow_Map.Meow_url];
+						delete Meow_undefEvents[Meow_ID];
+						Meow_EachReverse(Meow_defQueue, function(Meow_Args, m) {
+							if(Meow_Args[0] === Meow_ID) {
+								Meow_defQueue.splice(m, 1);
+							}
+						});
+						if(Meow_Mod) {
+							if(Meow_Mod.Meow_Events.Meow_defined) {
+								Meow_undefEvents[Meow_ID] = Meow_Mod.Meow_Events;
+							}
+							Meow_CleanRegistry(Meow_ID);
+						}
+					};
+				}
+				return Meow_NinjaLocal;
+			},
+			Meow_Enable: function(Meow_MapDep) {
+				var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_MapDep.id);
+				if(Meow_Mod) {
+					Meow_FetchMod(Meow_MapDep).Meow_Enable();
+				}
+			},
+			Meow_LoadComplete: function(Meow_ModuleName) {
+				var Meow_Found, Meow_Args, Meow_Mod;
+				var Meow_Shim = Meow_FetchOwn(Meow_Config.Meow_Shim, Meow_ModuleName) || {};
+				var Meow_shExports = Meow_Shim.exports;
+				Meow_TakeGlobalQueue();
+				while(Meow_defQueue.length) {
+					Meow_Args = Meow_defQueue.shift();
+					if(Meow_Args[0] === null) {
+						Meow_Args[0] = Meow_ModuleName;
+						if(Meow_Found) {
+							break;
+						}
+						Meow_Found = true;
+					} else if(Meow_Args[0] === Meow_ModuleName) {
+						Meow_Found = true;
+					}
+					Meow_CallFetchModule(Meow_Args);
+				}
+				if(!Meow_Found && !Meow_HasProp(Meow_defined, Meow_ModuleName) && Meow_Mod && !Meow_Mod.Meow_Inited) {
 
-				// Still coding now... will be updated soon!
+					// Still coding now... will be updated soon!
+				}
 			}
 		};
 	};
