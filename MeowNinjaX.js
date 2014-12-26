@@ -1273,6 +1273,26 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			Meow_Node = Meow_req.Meow_createNode(Meow_Config, Meow_ModuleName, Meow_url);
 			Meow_Node.setAttribute('data-ninja-context', Meow_Context.Meow_ContextName);
 			Meow_Node.setAttribute('data-MeowNinjaMod', Meow_ModuleName);
+			if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isOpera) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isChrome) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isIE) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isFirefox) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else if(Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isSafari) {
+				Meow_UseInteractive = true;
+				Meow_Node.attachEvent('on-ready-state-change', Meow_Context.Meow_OnLoadScript);
+			} else {
+				Meow_Node.addEventListener('load', Meow_Context.Meow_OnLoadScript, false);
+				Meow_Node.addEventListener('error', Meow_Context.Meow_OnLoadScript, false);
+			}
+			Meow_Node.src = Meow_url;
 
 			// Still coding now... Will be updated soon!
 		}
