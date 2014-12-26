@@ -1220,6 +1220,45 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		}
 		return Meow_Context.MeowNinja(Meow_Dep, Meow_Callback, errBack);
 	};
+	Meow_Req.Meow_Config = function(Meow_Config) {
+		return Meow_Req(Meow_Config);
+	};
+	Meow_Req.Meow_nextTick = typeof setTimeout !== 'undefined' ? function(Meow_Fn) {
+		setTimeout(Meow_Fn, 4);
+	} : function(Meow_Fn) {
+		Meow_Fn();
+	};
+	if(!MeowNinja) {
+		MeowNinja = Meow_Req;
+	}
+	Meow_Req.version = version;
+	Meow_Req.Meow_Regex = /^\/|:|\?|\.js$/;
+	Meow_Req.Meow_Browser = Meow_Browser;
+	xx = Meow_Req.xx = {
+		Meow_Contexts: Meow_Contexts,
+		Meow_NewCntxt: Meow_NewCntxt
+	};
+	Meow_Req({});
+	Meow_Each([
+		'Meow_toUrl',
+		'Meow_undef',
+		'Meow_defined',
+		'Meow_Specified'
+		], function(Meow_Prop) {
+			Meow_Req[Meow_Prop] = function() {
+				var Meow_ctx = Meow_Contexts[Meow_DefCntxtName];
+				return Meow_ctx.MeowNinja[Meow_Prop].apply(Meow_ctx, Meow_Args);
+			};
+		}
+	);
+	if(Meow_Browser) {
+		Meow_Head = xx.Meow_Head = document.getElementsByTagName('head')[0];
+		Meow_BaseElement = document.getElementsByTagName('base')[0];
+		if(Meow_BaseElement) {
+			Meow_Head = xx.Meow_Head = Meow_BaseElement.parentNode;
+		}
+	}
+	Meow_req.onError = Meow_DefError;
 
 	// Still coding now... Will be updated soon!
 });
