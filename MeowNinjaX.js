@@ -1259,6 +1259,22 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		}
 	}
 	Meow_req.onError = Meow_DefError;
+	Meow_req.Meow_createNode = function(Meow_Config, Meow_ModuleName, Meow_url) {
+		var Meow_Node = Meow_Config.xhtml ? document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') : document.createElement('script');
+		Meow_Node.type = Meow_Config.scriptType || 'text/javascript';
+		Meow_Node.charset = 'UTF8';
+		Meow_Node.async = true;
+		return Meow_Node;
+	};
+	Meow_req.load = function(Meow_Context, Meow_ModuleName, Meow_url) {
+		var Meow_Config = (Meow_Context && Meow_Context.Meow_Config) || {};
+		var Meow_Node;
+		if(Meow_Browser) {
+			Meow_Node = Meow_req.Meow_createNode(Meow_Config, Meow_ModuleName, Meow_url);
+			Meow_Node.setAttribute('data-ninja-context', Meow_Context.Meow_ContextName);
+			Meow_Node.setAttribute('data-MeowNinjaMod', Meow_ModuleName);
 
-	// Still coding now... Will be updated soon!
+			// Still coding now... Will be updated soon!
+		}
+	};
 });
