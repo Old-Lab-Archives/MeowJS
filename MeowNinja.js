@@ -1034,6 +1034,40 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 			},
 			Meow_MainNinja: function(Meow_MapRel, Meow_Opts) {
 				Meow_Opts = Meow_Opts || {};
+				function Meow_NinjaLocal(Meow_Dep, Meow_Callback, errBack) {
+					var Meow_ID, Meow_Map, MeowNinjaMod;
+					if(Meow_Opts.Meow_EnableBuildCallback && Meow_Callback && Meow_isFunc(Meow_Callback)) {
+						Meow_Callback.MeowNinjaJsBuild = true;
+					}
+					if(typeof Meow_Dep === 'string') {
+						if(Meow_isFunc(Meow_Callback)) {
+							return onError(Meow_ErrorMade('MeowNinja arguments', 'invalid MeowNinja call'), errBack);
+						}
+						if(Meow_MapRel && Meow_HasProp(Meow_Handlers, Meow_Dep)) {
+							return Meow_Handlers[Meow_Dep](Meow_Registry[Meow_MapRel.id]);
+						}
+						if(Meow_Req.Meow_Fetch) {
+							return Meow_Req.Meow_Fetch(Meow_Context, Meow_Dep, Meow_MapRel, Meow_NinjaLocal);
+						}
+						Meow_Map = Meow_MakeModuleMap(Meow_Dep, Meow_MapRel, false, true);
+						Meow_ID = Meow_Map.id;
+						if(!Meow_HasProp(Meow_defined, Meow_ID)) {
+							return onError(Meow_ErrorMade('not-loaded', 'module-name"' + Meow_ID + '" Not loaded for context: ' + Meow_ContextName + (Meow_MapRel ? '' : 'Use MeowNinja([])')));
+						}
+						return Meow_defined[Meow_ID];
+					}
+					Meow_intakeDefine();
+					Meow_Context.Meow_nextTick(function() {
+						Meow_intakeDefine();
+						MeowNinjaMod = Meow_FetchMod(Meow_MakeModuleMap(null, Meow_MapRel));
+						MeowNinjaMod.Meow_MapSkip = Meow_Opts.Meow_MapSkip;
+						MeowNinjaMod.Meow_Init(Meow_Dep, Meow_Callback, errBack, {
+							Meow_Enabled: true
+						});
+						Meow_LoadCheck();
+					});
+					return Meow_NinjaLocal;
+				}
 
 				// Still coding now... will be updated soon!
 			}
