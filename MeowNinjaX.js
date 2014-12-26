@@ -1186,9 +1186,15 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				return Meow_Callback.apply(exports, Meow_Args);
 			},
 			Meow_OnLoadScript: function(Meow_evt) {
-
-				// Still coding now... Will be updated soon!
+				var Meow_Data = Meow_FetchScriptData(Meow_evt);
+				if(!Meow_HasPathFallback(Meow_Data.id)) {
+					return onError(Meow_ErrorMade('script-error', 'script-error-for: ' + Meow_Data.id, Meow_evt, [Meow_Data.id]));
+				}
 			}
 		};
+		Meow_Context.MeowNinja = Meow_Context.Meow_MakeNinja();
+		return Meow_Context;
 	};
+
+	// Still coding now... Will be updated soon!
 });
