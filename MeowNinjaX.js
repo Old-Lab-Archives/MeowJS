@@ -1195,6 +1195,31 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		Meow_Context.MeowNinja = Meow_Context.Meow_MakeNinja();
 		return Meow_Context;
 	};
+	Meow_Req = MeowNinja = function(Meow_Dep, Meow_Callback, errBack, Meow_Optional) {
+		var Meow_Context, Meow_Config;
+		var Meow_ContextName = Meow_DefCntxtName;
+		if(!Meow_isArray(Meow_Dep) && typeof Meow_Dep !== 'string') {
+			Meow_Config = Meow_Dep;
+			if(Meow_isArray(Meow_Callback)) {
+				Meow_Dep = Meow_Callback;
+				Meow_Callback = errBack;
+				errBack = Meow_Optional;
+			} else {
+				Meow_Dep = [];
+			}
+		}
+		if(Meow_Config && Meow_Config.Meow_Context) {
+			Meow_ContextName = Meow_Config.Meow_Context;
+		}
+		Meow_Context = Meow_FetchOwn(Meow_Contexts, Meow_ContextName);
+		if(!Meow_Context) {
+			Meow_Context = Meow_Contexts[Meow_ContextName] = Meow_Req.xx.Meow_NewCntxt(Meow_ContextName);
+		}
+		if(Meow_Config) {
+			Meow_Context.Meow_Configure(Meow_Config);
+		}
+		return Meow_Context.MeowNinja(Meow_Dep, Meow_Callback, errBack);
+	};
 
 	// Still coding now... Will be updated soon!
 });
