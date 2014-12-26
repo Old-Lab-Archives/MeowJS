@@ -844,14 +844,14 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				Meow_Power.Meow_Enabled = true;
 				Meow_Power.Meow_Enabling = true;
 				Meow_Each(Meow_Power.Meow_MapDep, Meow_Bind(Meow_Power, function(Meow_MapDep, m) {
-					var Meow_ID, Meow_Mod, Meow_Handlers;
+					var Meow_ID, Meow_Mod, Meow_Handler;
 					if(typeof Meow_MapDep === 'string') {
 						Meow_MapDep = Meow_MakeModuleMap(Meow_MapDep, (Meow_Power.Meow_Map.Meow_isDefine ? Meow_Power.Meow_Map : Meow_Power.Meow_Map.Meow_ParentMap),
 						false, !Meow_Power.Meow_MapSkip);
 					Meow_Power.Meow_MapDep[m] = Meow_MapsDep;
-					Meow_Handlers = Meow_FetchOwn(Meow_Handler, Meow_MapDep.id);
-					if(Meow_Handlers) {
-						Meow_Power.Meow_DepExports[m] = Meow_Handlers(Meow_Power);
+					Meow_Handler = Meow_FetchOwn(Meow_Handlers, Meow_MapDep.id);
+					if(Meow_Handler) {
+						Meow_Power.Meow_DepExports[m] = Meow_Handler(Meow_Power);
 						return;
 					}
 					Meow_Power.Meow_DepCount += 1;
@@ -865,7 +865,7 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 					}
 					Meow_ID = Meow_MapDep.id;
 					Meow_Mod = Meow_Registry[Meow_ID];
-					if(!Meow_HasProp(Meow_Handler, Meow_ID) && Meow_Mod && !Meow_Mod.Meow_Enabled) {
+					if(!Meow_HasProp(Meow_Handlers, Meow_ID) && Meow_Mod && !Meow_Mod.Meow_Enabled) {
 						Meow_Context.Meow_Enable(Meow_MapDep, Meow_Power);
 					}
 				}));
