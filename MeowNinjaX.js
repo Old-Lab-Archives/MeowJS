@@ -1293,8 +1293,34 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 				Meow_Node.addEventListener('error', Meow_Context.Meow_OnLoadScript, false);
 			}
 			Meow_Node.src = Meow_url;
-
-			// Still coding now... Will be updated soon!
+			Meow_CurrentAddScript = Meow_Node;
+			if(Meow_BaseElement) {
+				Meow_Head.insertBefore(Meow_Node, Meow_BaseElement);
+			} else {
+				Meow_Head.appendChild(Meow_Node);
+			}
+			Meow_CurrentAddScript = null;
+			return Meow_Node;
+		} else if(Meow_WebWorker) {
+			try {
+				Meow_importScripts(Meow_url);
+				Meow_Context.Meow_LoadComplete(Meow_ModuleName);
+			} catch(e) {
+				Meow_Context.onError(Meow_ErrorMade('import-scripts', 'import-scripts failed for' + Meow_ModuleName + ' at ' + Meow_url, e, [Meow_ModuleName]));
+			}
 		}
 	};
+	function FetchInteractiveScript() {
+		if(Meow_InteractiveScript && Meow_InteractiveScript.readyState === 'interactive') {
+			return Meow_InteractiveScript;
+		}
+		Meow_EachReverse(Meow_Scripts(), function(Meow_Script) {
+			if(Meow_Script.readyState === 'interactive') {
+				return (Meow_InteractiveScript = Meow_Script);
+			}
+		});
+		return Meow_InteractiveScript;
+	}
+
+	// Still coding now... Will be updated soon!
 });
