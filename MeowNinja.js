@@ -30,7 +30,6 @@ var MeowNinja = function(Meow_Global) {
     var Meow_cfg = {};
     var Meow_DefGlobalQueue = [];
     var Meow_UseInteractive = false;
-    MeowNinja = MeowNinja_Connect;
     isArray = new Meow_isArray();
     bind = new Meow_Bind();
     isFunction = new Meow_isFunc();
@@ -1058,9 +1057,11 @@ var MeowNinja = function(Meow_Global) {
   };
   var Meow_Req = function(Meow_Dep, Meow_Callback, errBack, Meow_Optional) {
     var Meow_Context,
+        Meow_Contexts,
         Meow_Config;
     var Meow_ContextName = Meow_DefCntxtName;
-    Meow_Req = MeowNinja_Connect;
+    var MeowNinja;
+    Meow_Req = MeowNinja;
     if (!Meow_isArray(Meow_Dep) && typeof Meow_Dep !== 'string') {
       Meow_Config = Meow_Dep;
       if (new Meow_isArray(Meow_Callback)) {
@@ -1094,6 +1095,13 @@ var MeowNinja = function(Meow_Global) {
   if (!MeowNinja) {
     MeowNinja = Meow_Req;
   }
+  var version,
+      Meow_Config,
+      Meow_Contexts,
+      Meow_DefCntxtName,
+      Meow_Browser,
+      Meow_NewCntxt,
+      xx;
   Meow_Req.version = version;
   Meow_Req.Meow_Regex = /^\/|:|\?|\.js$/;
   Meow_Req.Meow_Browser = Meow_Browser;
