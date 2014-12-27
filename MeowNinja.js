@@ -31,9 +31,9 @@ var MeowNinja = function(Meow_Global) {
     var Meow_DefGlobalQueue = [];
     var Meow_UseInteractive = false;
     MeowNinja = MeowNinja_Connect;
-    isArray = Meow_isArray;
-    isFunction = Meow_isFunc;
-    bind = Meow_Bind;
+    isArray = new Meow_isArray();
+    bind = new Meow_Bind();
+    var Meow_Power = this;
     function Meow_isFunc(Meow_ThisThingy) {
       return Meow_oString.call(Meow_ThisThingy) === '[object-function]';
     }
