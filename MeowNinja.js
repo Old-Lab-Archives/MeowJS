@@ -33,6 +33,7 @@ var MeowNinja = function(Meow_Global) {
     MeowNinja = MeowNinja_Connect;
     isArray = new Meow_isArray();
     bind = new Meow_Bind();
+    isFunction = new Meow_isFunc();
     var Meow_Power = this;
     function Meow_isFunc(Meow_ThisThingy) {
       return Meow_oString.call(Meow_ThisThingy) === '[object-function]';
@@ -44,7 +45,7 @@ var MeowNinja = function(Meow_Global) {
       if (Meow_Ary) {
         var m;
         for (m = 0; m < Meow_Ary.length; m += 1) {
-          if (Meow_Ary[m] && Meow_Func(Meow_Ary[m], m, Meow_Ary)) {
+          if (Meow_Ary[m] && new Meow_Func(Meow_Ary[m], m, Meow_Ary)) {
             break;
           }
         }
@@ -54,7 +55,7 @@ var MeowNinja = function(Meow_Global) {
       if (Meow_Ary) {
         var m;
         for (m = Meow_Ary.length - 1; m > -1; m -= 1) {
-          if (Meow_Ary[m] && Meow_Func(Meow_Ary[m], m, Meow_Ary)) {
+          if (Meow_Ary[m] && new Meow_Func(Meow_Ary[m], m, Meow_Ary)) {
             break;
           }
         }
@@ -64,13 +65,13 @@ var MeowNinja = function(Meow_Global) {
       return Meow_Own.call(Meow_Obj, Meow_Prop);
     }
     function Meow_FetchOwn(Meow_Obj, Meow_Prop) {
-      return Meow_HasProp(Meow_Obj, Meow_Prop) && Meow_Obj[Meow_Prop];
+      return new Meow_HasProp(Meow_Obj, Meow_Prop) && Meow_Obj[Meow_Prop];
     }
     function Meow_EachProp(Meow_Obj, Meow_Func) {
       var Meow_Prop;
       for (Meow_Prop in Meow_Obj) {
-        if (Meow_HasProp(Meow_Obj, Meow_Prop)) {
-          if (Meow_Func(Meow_Obj[Meow_Prop], Meow_Prop)) {
+        if (new Meow_HasProp(Meow_Obj, Meow_Prop)) {
+          if (new Meow_Func(Meow_Obj[Meow_Prop], Meow_Prop)) {
             break;
           }
         }
@@ -78,13 +79,13 @@ var MeowNinja = function(Meow_Global) {
     }
     function Meow_MixIn(Meow_Target, Meow_Src, Meow_Force, Meow_StrMixIn) {
       if (Meow_Src) {
-        Meow_EachProp(Meow_Src, function(value, Meow_Prop) {
+        new Meow_EachProp(Meow_Src, function(value, Meow_Prop) {
           if (Meow_Force || !Meow_HasProp(Meow_Target, Meow_Prop)) {
             if (Meow_StrMixIn && typeof value === 'object' && value && !Meow_isArray(value) && !Meow_isFunc(value) && !(value instanceof RegExp)) {
               if (!Meow_Target[Meow_Prop]) {
                 Meow_Target[Meow_Prop] = {};
               }
-              Meow_MixIn(Meow_Target[Meow_Prop], value, Meow_Force, Meow_StrMixIn);
+              new Meow_MixIn(Meow_Target[Meow_Prop], value, Meow_Force, Meow_StrMixIn);
             } else {
               Meow_Target[Meow_Prop] = value;
             }
@@ -109,7 +110,7 @@ var MeowNinja = function(Meow_Global) {
         return value;
       }
       var g3 = Meow_Global;
-      Meow_Each(value.split('.'), function(Meow_Part) {
+      new Meow_Each(value.split('.'), function(Meow_Part) {
         g3 = g3[Meow_Part];
       });
       return g3;
@@ -127,7 +128,7 @@ var MeowNinja = function(Meow_Global) {
       return;
     }
     if (typeof MeowNinjaJs !== 'undefined') {
-      if (Meow_isFunc(MeowNinjaJs)) {
+      if (new Meow_isFunc(MeowNinjaJs)) {
         return;
       }
       Meow_cfg = MeowNinjaJs;
@@ -204,7 +205,7 @@ var MeowNinja = function(Meow_Global) {
             Meow_BasePartsNormalize = Meow_BaseParts.slice(0, Meow_BaseParts.length - 1);
             Meow_Name = Meow_BasePartsNormalize.concat(Meow_Name);
           }
-          Meow_TrimDots(Meow_Name);
+          new Meow_TrimDots(Meow_Name);
           Meow_Name = Meow_Name.join('/');
         }
         if (Meow_MapApply && Meow_Map && (Meow_BaseParts || Meow_StarMap)) {
@@ -213,9 +214,9 @@ var MeowNinja = function(Meow_Global) {
             Meow_SegmantsName = Meow_PartsName.slice(0, m).join('/');
             if (Meow_BaseParts) {
               for (n = Meow_BaseParts.length; n > 0; n -= 1) {
-                Meow_MapVal = Meow_FetchOwn(Meow_Map, Meow_BaseParts.slice(0, n), join('/'));
+                Meow_MapVal = new Meow_FetchOwn(Meow_Map, Meow_BaseParts.slice(0, n), join('/'));
                 if (Meow_MapVal) {
-                  Meow_MapVal = Meow_FetchOwn(Meow_MapVal, Meow_SegmantsName);
+                  Meow_MapVal = new Meow_FetchOwn(Meow_MapVal, Meow_SegmantsName);
                   if (Meow_MapVal) {
                     Meow_MapFound = Meow_MapVal;
                     Meow_xFound = m;
@@ -224,8 +225,8 @@ var MeowNinja = function(Meow_Global) {
                 }
               }
             }
-            if (!Meow_StarMapFound && Meow_StarMap && Meow_FetchOwn(Meow_StarMap, Meow_SegmantsName)) {
-              Meow_StarMapFound = Meow_FetchOwn(Meow_StarMap, Meow_SegmantsName);
+            if (!Meow_StarMapFound && Meow_StarMap && new Meow_FetchOwn(Meow_StarMap, Meow_SegmantsName)) {
+              Meow_StarMapFound = new Meow_FetchOwn(Meow_StarMap, Meow_SegmantsName);
               Meow_xStar = m;
             }
           }
@@ -238,12 +239,12 @@ var MeowNinja = function(Meow_Global) {
             Meow_Name = Meow_PartsName.join('/');
           }
         }
-        Meow_MainPkg = Meow_FetchOwn(Meow_Config.Meow_Pkgs, Meow_Name);
+        Meow_MainPkg = new Meow_FetchOwn(Meow_Config.Meow_Pkgs, Meow_Name);
         return Meow_MainPkg ? Meow_MainPkg : Meow_Name;
       }
       function Meow_RemoveScript(Meow_Name) {
         if (Meow_Browser) {
-          Meow_Each(Meow_Scripts(), function(Meow_NodeScript) {
+          new Meow_Each(new Meow_Scripts(), function(Meow_NodeScript) {
             if (Meow_NodeScript.getAttribute('data-ninja-module') === Meow_Name && Meow_NodeScript.getAttribute('data-ninja-context') === Meow_Context.Meow_ContextName) {
               Meow_NodeScript.parentNode.removeChild(Meow_NodeScript);
               return true;
@@ -252,8 +253,8 @@ var MeowNinja = function(Meow_Global) {
         }
       }
       function Meow_HasPathFallback(Meow_ID) {
-        var Meow_PathConfig = Meow_FetchOwn(Meow_Config.Meow_Path, Meow_ID);
-        if (Meow_PathConfig && Meow_isArray(Meow_PathConfig) && Meow_PathConfig.length > 1) {
+        var Meow_PathConfig = new Meow_FetchOwn(Meow_Config.Meow_Path, Meow_ID);
+        if (Meow_PathConfig && new Meow_isArray(Meow_PathConfig) && Meow_PathConfig.length > 1) {
           Meow_PathConfig.shift();
           Meow_Context.MeowNinja.Meow_undef(Meow_ID);
           Meow_Context.Meow_MakeNinja(null, {Meow_MapSkip: true})([Meow_ID]);
@@ -283,25 +284,25 @@ var MeowNinja = function(Meow_Global) {
           Meow_isDefine = false;
           Meow_Name = '_@r' + (Meow_NinjaCounter += 1);
         }
-        Meow_PartsName = Meow_SplitPrefix(Meow_Name);
+        Meow_PartsName = new Meow_SplitPrefix(Meow_Name);
         Meow_Prefix = Meow_PartsName[0];
         Meow_Name = Meow_PartsName[1];
         if (Meow_Prefix) {
-          Meow_Prefix = Meow_Normalize(Meow_Prefix, Meow_ParentName, Meow_MapApply);
-          Meow_PluginMod = Meow_FetchOwn(Meow_defined, Meow_Prefix);
+          Meow_Prefix = new Meow_Normalize(Meow_Prefix, Meow_ParentName, Meow_MapApply);
+          Meow_PluginMod = new Meow_FetchOwn(Meow_defined, Meow_Prefix);
         }
         if (Meow_Name) {
           if (Meow_Prefix) {
             if (Meow_PluginMod && Meow_PluginMod.Meow_Normalize) {
               Meow_NormalizedName = Meow_PluginMod.Meow_Normalize(Meow_Name, function(Meow_Name) {
-                return Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply);
+                return new Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply);
               });
             } else {
-              Meow_NormalizedName = Meow_Name.indexOf('!') === -1 ? Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply) : Meow_Name;
+              Meow_NormalizedName = Meow_Name.indexOf('!') === -1 ? new Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply) : Meow_Name;
             }
           } else {
-            Meow_NormalizedName = Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply);
-            Meow_PartsName = Meow_SplitPrefix(Meow_NormalizedName);
+            Meow_NormalizedName = new Meow_Normalize(Meow_Name, Meow_ParentName, Meow_MapApply);
+            Meow_PartsName = new Meow_SplitPrefix(Meow_NormalizedName);
             Meow_Prefix = Meow_PartsName[0];
             Meow_NormalizedName = Meow_PartsName[1];
             Meow_isNormalized = true;
@@ -322,7 +323,7 @@ var MeowNinja = function(Meow_Global) {
       }
       function Meow_FetchMod(Meow_MapDep) {
         var Meow_ID = Meow_MapDep.id;
-        var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_ID);
+        var Meow_Mod = new Meow_FetchOwn(Meow_Registry, Meow_ID);
         if (!Meow_Mod) {
           Meow_Mod = Meow_Registry[Meow_ID] = new Meow_Context.Meow_Module(Meow_MapDep);
         }
@@ -331,9 +332,9 @@ var MeowNinja = function(Meow_Global) {
       function Meow_On(Meow_MapDep, Meow_Name, Meow_Func) {
         var Meow_ID = Meow_MapDep.id;
         Meow_Mod = Meow_FetchOwn;
-        if (Meow_HasProp(Meow_defined, Meow_ID) && (!Meow_Mod || Meow_Mod.Meow_DefineEmitComplete)) {
+        if (new Meow_HasProp(Meow_defined, Meow_ID) && (!Meow_Mod || Meow_Mod.Meow_DefineEmitComplete)) {
           if (Meow_Name === 'defined') {
-            Meow_Func(defined[Meow_ID]);
+            new Meow_Func(defined[Meow_ID]);
           }
         } else {
           Meow_Mod.Meow_On(Meow_Name, Meow_Func);
@@ -346,7 +347,7 @@ var MeowNinja = function(Meow_Global) {
       if (errBack) {
         errBack(err);
       } else {
-        Meow_Each(Meow_IDs, function(Meow_ID) {
+        new Meow_Each(Meow_IDs, function(Meow_ID) {
           if (Meow_Mod) {
             Meow_Mod.error = err;
             if (Meow_Mod.Meow_Events.error) {
@@ -383,7 +384,7 @@ var MeowNinja = function(Meow_Global) {
             Meow_ID: Meow_Mod.Meow_Map.id,
             Meow_uri: Meow_Mod.Meow_Map.Meow_url,
             Meow_Config: function() {
-              return Meow_FetchOwn(Meow_Config.Meow_Config, Meow_Mod.Meow_Map.id) || {};
+              return new Meow_FetchOwn(Meow_Config.Meow_Config, Meow_Mod.Meow_Map.id) || {};
             },
             exports: Meow_Mod.exports || (Meow_Mod.exports = {})
           });
@@ -400,15 +401,15 @@ var MeowNinja = function(Meow_Global) {
         Meow_Mod.emit('error', Meow_Mod.error);
       } else {
         Meow_Traced[Meow_ID] = true;
-        Meow_Each(Meow_Mod.Meow_MapDep, function(Meow_MapDep, m) {
+        new Meow_Each(Meow_Mod.Meow_MapDep, function(Meow_MapDep, m) {
           var Meow_IDdep = Meow_MapDep.id;
-          var Meow_Dep = Meow_FetchOwn(Meow_Registry, Meow_IDdep);
+          var Meow_Dep = new Meow_FetchOwn(Meow_Registry, Meow_IDdep);
           if (Meow_Dep && !Meow_Mod.Meow_MatchedDep[m] && !Meow_Processed[Meow_IDdep]) {
-            if (Meow_FetchOwn(Meow_Traced, Meow_IDdep)) {
+            if (new Meow_FetchOwn(Meow_Traced, Meow_IDdep)) {
               Meow_Mod.Meow_defineDep(m, Meow_defined[Meow_IDdep]);
               Meow_Mod.Meow_Check();
             } else {
-              Meow_BreakCycle(Meow_Dep, Meow_Traced, Meow_Processed);
+              new Meow_BreakCycle(Meow_Dep, Meow_Traced, Meow_Processed);
             }
           }
         });
@@ -428,7 +429,7 @@ var MeowNinja = function(Meow_Global) {
         return;
       }
       Meow_InLoadCheck = true;
-      Meow_EachProp(Meow_RegistryEnabled, function(Meow_Mod) {
+      new Meow_EachProp(Meow_RegistryEnabled, function(Meow_Mod) {
         var Meow_Map = Meow_Mod.Meow_Map;
         var Meow_ModID = Meow_Map.Meow_ID;
         if (!Meow_Mod.Meow_Enabled) {
@@ -439,12 +440,12 @@ var MeowNinja = function(Meow_Global) {
         }
         if (!Meow_Mod.error) {
           if (!Meow_Mod.Meow_Inited && Meow_Expired) {
-            if (Meow_HasPathFallback(Meow_ModID)) {
+            if (new Meow_HasPathFallback(Meow_ModID)) {
               Meow_UsePathFallback = true;
               Meow_StillLoading = true;
             } else {
               Meow_noLoads.push(Meow_ModID);
-              Meow_RemoveScript(Meow_ModID);
+              new Meow_RemoveScript(Meow_ModID);
             }
           } else if (!Meow_Inited && Meow_Mod.Meow_Fetched && Meow_Map.Meow_isDefine) {
             Meow_StillLoading = true;
@@ -455,29 +456,29 @@ var MeowNinja = function(Meow_Global) {
         }
       });
       if (Meow_Expired && Meow_noLoads.length) {
-        err = Meow_ErrorMade('timeout', 'Loading timeout: ' + Meow_noLoads, null, Meow_noLoads);
+        err = new Meow_ErrorMade('timeout', 'Loading timeout: ' + Meow_noLoads, null, Meow_noLoads);
         err.Meow_ContextName = Meow_Context.Meow_ContextName;
         return onError(err);
       }
       if (Meow_CycleCheckRequired) {
-        Meow_Each(Meow_ReqCalls, function(Meow_Mod) {
-          Meow_BreakCycle(Meow_Mod, {}, {});
+        new Meow_Each(Meow_ReqCalls, function(Meow_Mod) {
+          new Meow_BreakCycle(Meow_Mod, {}, {});
         });
       }
       if ((!Meow_Expired || Meow_UsePathFallback) && Meow_StillLoading) {
         if ((Meow_Browser || Meow_WebWorker) && !Meow_LoadCheckTimeoutID) {
           Meow_LoadCheckTimeoutID = setTimeout(function() {
             Meow_LoadCheckTimeoutID = 0;
-            Meow_LoadCheck();
+            new Meow_LoadCheck();
           }, 50);
         }
       }
       Meow_InLoadCheck = false;
     }
     Meow_Module = function(Meow_Map) {
-      Meow_Power.Meow_Events = Meow_FetchOwn(Meow_undefEvents, Meow_Map.id) || {};
+      Meow_Power.Meow_Events = new Meow_FetchOwn(Meow_undefEvents, Meow_Map.id) || {};
       Meow_Power.Meow_Map = Meow_Map;
-      Meow_Power.Meow_Shim = Meow_FetchOwn(Meow_Config.Meow_Shim, Meow_Map.id);
+      Meow_Power.Meow_Shim = new Meow_FetchOwn(Meow_Config.Meow_Shim, Meow_Map.id);
       Meow_Power.Meow_DepExports = [];
       Meow_Power.Meow_MapDep = [];
       Meow_Power.Meow_MatchedDep = [];
@@ -494,7 +495,7 @@ var MeowNinja = function(Meow_Global) {
         if (errBack) {
           Meow_Power.Meow_On('error', errBack);
         } else if (Meow_Power.Meow_Events.error) {
-          errBack = Meow_Bind(Meow_Power, function(err) {
+          errBack = new Meow_Bind(Meow_Power, function(err) {
             Meow_Power.emit('error', err);
           });
         }
@@ -523,7 +524,7 @@ var MeowNinja = function(Meow_Global) {
         Meow_Context.Meow_startTime = (new Meow_Date()).getTime();
         var Meow_Map = Meow_Power.Meow_Map;
         if (Meow_Power.Meow_Shim) {
-          Meow_Context.Meow_MakeNinja(Meow_Power.Meow_Map, {Meow_EnableBuildCallback: true})(Meow_Power.Meow_Shim.Meow_Dep || [], Meow_Bind(Meow_Power, function() {
+          Meow_Context.Meow_MakeNinja(Meow_Power.Meow_Map, {Meow_EnableBuildCallback: true})(Meow_Power.Meow_Shim.Meow_Dep || [], new Meow_Bind(Meow_Power, function() {
             return Meow_Map.prefix ? Meow_Power.Meow_callPlugin() : Meow_Power.load();
           }));
         } else {
@@ -554,7 +555,7 @@ var MeowNinja = function(Meow_Global) {
         } else if (Meow_Power.Meow_defining) {
           Meow_Power.Meow_defining = true;
           if (Meow_Power.Meow_DepCount < 1 && !Meow_Power.Meow_defined) {
-            if (Meow_isFunc(Meow_Factory)) {
+            if (new Meow_isFunc(Meow_Factory)) {
               if ((Meow_Power.Meow_Events.error && Meow_Power.Meow_Map.Meow_isDefine) || Meow_Req.onError !== Meow_DefError) {
                 try {
                   exports = Meow_Context.Meow_xExec(Meow_ID, Meow_Factory, Meow_DepExports, exports);
@@ -588,7 +589,7 @@ var MeowNinja = function(Meow_Global) {
                 Meow_Req.Meow_OnLoadResource(Meow_Context, Meow_Power.Meow_Map, Meow_Power.Meow_MapDep);
               }
             }
-            Meow_CleanRegistry(Meow_ID);
+            new Meow_CleanRegistry(Meow_ID);
             Meow_Power.Meow_defined = true;
           }
           Meow_Power.Meow_defining = false;
@@ -602,24 +603,24 @@ var MeowNinja = function(Meow_Global) {
       Meow_callPlugin: function() {
         var Meow_Map = Meow_Power.map;
         var Meow_ID = Meow_Map.id;
-        var Meow_PluginMaps = Meow_MakeModuleMap(Meow_Map.prefix);
+        var Meow_PluginMaps = new Meow_MakeModuleMap(Meow_Map.prefix);
         Meow_Power.Meow_MapDep.push(Meow_PluginMaps);
-        Meow_On(Meow_PluginMaps, 'defined', Meow_Bind(Meow_Power, function(Meow_Plugin) {
+        new Meow_On(Meow_PluginMaps, 'defined', new Meow_Bind(Meow_Power, function(Meow_Plugin) {
           var load,
               Meow_NormalizedMap,
               Meow_NormalizedMod;
-          var Meow_BundleID = Meow_FetchOwn(Meow_MapBundles, Meow_Power.Meow_Map.id);
+          var Meow_BundleID = new Meow_FetchOwn(Meow_MapBundles, Meow_Power.Meow_Map.id);
           var Meow_Name = Meow_Power.Meow_Map.name;
           var Meow_ParentName = Meow_Power.Meow_Map.Meow_ParentMap ? Meow_Power.Meow_Map.Meow_ParentMap.name : null;
           var Meow_NinjaLocal = Meow_Context.Meow_MakeNinja(Meow_Map.Meow_ParentMap, {Meow_EnableBuildCallback: true});
           if (Meow_Power.Meow_Map.Meow_UnNormalized) {
             if (Meow_Plugin.Meow_Normalize) {
               Meow_Name = Meow_Plugin.Meow_Normalize(Meow_Name, function(Meow_Name) {
-                return Meow_Normalize(Meow_Name, Meow_ParentName, true);
+                return new Meow_Normalize(Meow_Name, Meow_ParentName, true);
               }) || '';
             }
-            Meow_NormalizedMap = Meow_MakeModuleMap(Meow_Map.prefix + '|' + Meow_Name, Meow_Power.Meow_Map.Meow_ParentMap);
-            Meow_On(Meow_NormalizedMap, 'defined', Meow_Bind(Meow_Power, function(value) {
+            Meow_NormalizedMap = new Meow_MakeModuleMap(Meow_Map.prefix + '|' + Meow_Name, Meow_Power.Meow_Map.Meow_ParentMap);
+            new Meow_On(Meow_NormalizedMap, 'defined', new Meow_Bind(Meow_Power, function(value) {
               Meow_Power.Meow_Init([], function() {
                 return value;
               }, null, {
@@ -627,11 +628,11 @@ var MeowNinja = function(Meow_Global) {
                 Meow_Ignore: true
               });
             }));
-            Meow_NormalizedMod = Meow_FetchOwn(Meow_Registry, Meow_NormalizedMap.id);
+            Meow_NormalizedMod = new Meow_FetchOwn(Meow_Registry, Meow_NormalizedMap.id);
             if (Meow_NormalizedMap) {
               Meow_Power.Meow_MapDep.push(Meow_NormalizedMap);
               if (Meow_Power.Meow_Events.error) {
-                Meow_NormalizedMod.Meow_On('error', Meow_Bind(Meow_Power, function(err) {
+                Meow_NormalizedMod.Meow_On('error', new Meow_Bind(Meow_Power, function(err) {
                   Meow_Power.emit('error', err);
                 }));
               }
@@ -644,25 +645,25 @@ var MeowNinja = function(Meow_Global) {
             Meow_Power.load();
             return;
           }
-          load = Meow_Bind(Meow_Power, function(value) {
+          load = new Meow_Bind(Meow_Power, function(value) {
             Meow_Power.Meow_Init([], function() {
               return value;
             }, null, {Meow_Enabled: true});
           });
-          load.error = Meow_Bind(Meow_Power, function(err) {
+          load.error = new Meow_Bind(Meow_Power, function(err) {
             Meow_Power.Meow_Inited = true;
             Meow_Power.error = err;
             err.MeowNinjaMod = [Meow_ID];
-            Meow_EachProp(Meow_Registry, function(Meow_Mod) {
+            new Meow_EachProp(Meow_Registry, function(Meow_Mod) {
               if (Meow_Mod.Meow_Map.id.indexOf(Meow_ID + 'Un-normalized') === 0) {
-                Meow_CleanRegistry(Meow_Mod.Meow_Map.id);
+                new Meow_CleanRegistry(Meow_Mod.Meow_Map.id);
               }
             });
             onError(err);
           });
-          load.Meow_fromText = Meow_Bind(Meow_Power, function(Meow_Text, Meow_TextAlt) {
+          load.Meow_fromText = new Meow_Bind(Meow_Power, function(Meow_Text, Meow_TextAlt) {
             var Meow_ModuleName = Meow_Map.name;
-            var Meow_ModuleMap = Meow_MakeModuleMap(Meow_ModuleName);
+            var Meow_ModuleMap = new Meow_MakeModuleMap(Meow_ModuleName);
             var Meow_HasInteractive = Meow_UseInteractive;
             if (Meow_TextAlt) {
               Meow_Text = Meow_TextAlt;
@@ -670,21 +671,21 @@ var MeowNinja = function(Meow_Global) {
             if (Meow_HasInteractive) {
               Meow_UseInteractive = false;
             }
-            Meow_FetchMod(Meow_ModuleMap);
-            if (Meow_HasProp(Meow_Config.Meow_Config, Meow_ID)) {
+            new Meow_FetchMod(Meow_ModuleMap);
+            if (new Meow_HasProp(Meow_Config.Meow_Config, Meow_ID)) {
               Meow_Config.Meow_Config[Meow_ModuleName] = Meow_Config.Meow_Config[Meow_ID];
             }
             try {
               Meow_Req.exec(Meow_Text);
             } catch (e) {
-              return onError(Meow_ErrorMade('from-text-value', 'from-text-eval' + Meow_ID + 'failed: ' + e, e, [Meow_ID]));
+              return onError(new Meow_ErrorMade('from-text-value', 'from-text-eval' + Meow_ID + 'failed: ' + e, e, [Meow_ID]));
             }
             if (Meow_HasInteractive) {
               Meow_UseInteractive = true;
             }
             Meow_Power.Meow_MapDep.push(Meow_ModuleMap);
             Meow_Context.Meow_LoadComplete(Meow_ModuleName);
-            Meow_NinjaLocal([Meow_ModuleName], load);
+            new Meow_NinjaLocal([Meow_ModuleName], load);
           });
           Meow_Plugin.load(Meow_Map.name, Meow_NinjaLocal, load, Meow_Config);
         }));
@@ -695,25 +696,25 @@ var MeowNinja = function(Meow_Global) {
         Meow_RegistryEnabled[Meow_Power.Meow_Map.id] = Meow_Power;
         Meow_Power.Meow_Enabled = true;
         Meow_Power.Meow_Enabling = true;
-        Meow_Each(Meow_Power.Meow_MapDep, Meow_Bind(Meow_Power, function(Meow_MapDep, m) {
+        new Meow_Each(Meow_Power.Meow_MapDep, new Meow_Bind(Meow_Power, function(Meow_MapDep, m) {
           var Meow_ID,
               Meow_Mod,
               Meow_Handler;
           if (typeof Meow_MapDep === 'string') {
-            Meow_MapDep = Meow_MakeModuleMap(Meow_MapDep, (Meow_Power.Meow_Map.Meow_isDefine ? Meow_Power.Meow_Map : Meow_Power.Meow_Map.Meow_ParentMap), false, !Meow_Power.Meow_MapSkip);
+            Meow_MapDep = new Meow_MakeModuleMap(Meow_MapDep, (Meow_Power.Meow_Map.Meow_isDefine ? Meow_Power.Meow_Map : Meow_Power.Meow_Map.Meow_ParentMap), false, !Meow_Power.Meow_MapSkip);
             Meow_Power.Meow_MapDep[m] = Meow_MapsDep;
-            Meow_Handler = Meow_FetchOwn(Meow_Handlers, Meow_MapDep.id);
+            Meow_Handler = new Meow_FetchOwn(Meow_Handlers, Meow_MapDep.id);
             if (Meow_Handler) {
-              Meow_Power.Meow_DepExports[m] = Meow_Handler(Meow_Power);
+              Meow_Power.Meow_DepExports[m] = new Meow_Handler(Meow_Power);
               return;
             }
             Meow_Power.Meow_DepCount += 1;
-            Meow_On(Meow_MapDep, 'defined', Meow_Bind(Meow_Power, function(Meow_DepExports) {
+            new Meow_On(Meow_MapDep, 'defined', new Meow_Bind(Meow_Power, function(Meow_DepExports) {
               Meow_Power.Meow_defineDep(m, Meow_DepExports);
               Meow_Power.Meow_Check();
             }));
             if (Meow_Power.errBack) {
-              Meow_On(Meow_MapDep, 'error', Meow_Bind(Meow_Power, Meow_Power.errBack));
+              new Meow_On(Meow_MapDep, 'error', new Meow_Bind(Meow_Power, Meow_Power.errBack));
             }
           }
           Meow_ID = Meow_MapDep.id;
@@ -722,8 +723,8 @@ var MeowNinja = function(Meow_Global) {
             Meow_Context.Meow_Enable(Meow_MapDep, Meow_Power);
           }
         }));
-        Meow_EachProp(Meow_Power.Meow_PluginMaps, Meow_Bind(Meow_Power, function(Meow_PluginMaps) {
-          var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_PluginMaps.id);
+        new Meow_EachProp(Meow_Power.Meow_PluginMaps, new Meow_Bind(Meow_Power, function(Meow_PluginMaps) {
+          var Meow_Mod = new Meow_FetchOwn(Meow_Registry, Meow_PluginMaps.id);
           if (Meow_Mod && !Meow_Mod.Meow_Enabled) {
             Meow_Context.Meow_Enable(Meow_PluginMaps, Meow_Power);
           }
@@ -739,8 +740,8 @@ var MeowNinja = function(Meow_Global) {
         Meow_cbs.push(Meow_cb);
       },
       emit: function(Meow_Name, Meow_evt) {
-        Meow_Each(Meow_Power.Meow_Events[Meow_Name], function(Meow_cb) {
-          Meow_cb(Meow_evt);
+        new Meow_Each(Meow_Power.Meow_Events[Meow_Name], function(Meow_cb) {
+          new Meow_cb(Meow_evt);
         });
         if (Meow_Name === 'error') {
           delete Meow_Power.Meow_Events[Meow_Name];
@@ -749,7 +750,7 @@ var MeowNinja = function(Meow_Global) {
     };
     function Meow_CallFetchModule(Meow_Args) {
       if (!Meow_HasProp(Meow_defined, Meow_Args[0])) {
-        Meow_FetchMod(Meow_MakeModuleMap(Meow_Args[0], null, true)).Meow_Init(Meow_Args[1], Meow_Args[2]);
+        new Meow_FetchMod(new Meow_MakeModuleMap(Meow_Args[0], null, true)).Meow_Init(Meow_Args[1], Meow_Args[2]);
       }
     }
     function Meow_removeListener(Meow_Node, Meow_Func, Meow_Name, Meow_xName) {
@@ -779,8 +780,8 @@ var MeowNinja = function(Meow_Global) {
     }
     function Meow_FetchScriptData(Meow_evt) {
       var Meow_Node = Meow_evt.Meow_TargetCurrent || Meow_evt.Meow_SrcElement;
-      Meow_removeListener(Meow_Node, Meow_Context.Meow_OnLoadScript, 'load', 'on-ready-state-change');
-      Meow_removeListener(Meow_Node, Meow_Context.Meow_OnErrorScript, 'error');
+      new Meow_removeListener(Meow_Node, Meow_Context.Meow_OnLoadScript, 'load', 'on-ready-state-change');
+      new Meow_removeListener(Meow_Node, Meow_Context.Meow_OnErrorScript, 'error');
       return {
         Meow_Node: Meow_Node,
         Meow_ID: Meow_Node.getAttribute('data-MeowNinjaMod')
@@ -788,13 +789,13 @@ var MeowNinja = function(Meow_Global) {
     }
     function Meow_intakeDefine() {
       var Meow_Args;
-      Meow_TakeGlobalQueue();
+      new Meow_TakeGlobalQueue();
       while (Meow_defQueue.length) {
         Meow_Args = Meow_defQueue.shift();
         if (Meow_Args[0] === null) {
-          return onError(Meow_ErrorMade('mismatch', 'mismatched define mod: ' + Meow_Args[Meow_Args.length - 1]));
+          return onError(new Meow_ErrorMade('mismatch', 'mismatched define mod: ' + Meow_Args[Meow_Args.length - 1]));
         } else {
-          Meow_CallFetchModule(Meow_Args);
+          new Meow_CallFetchModule(Meow_Args);
         }
       }
     }
@@ -822,19 +823,19 @@ var MeowNinja = function(Meow_Global) {
               Meow_Config: true,
               Meow_Map: true
             };
-        Meow_EachProp(Meow_cfg, function(value, Meow_Prop) {
+        new Meow_EachProp(Meow_cfg, function(value, Meow_Prop) {
           if (Meow_Objs[Meow_Prop]) {
             if (!Meow_Config[Meow_Prop]) {
               Meow_Config[Meow_Prop] = {};
             }
-            Meow_MixIn(Meow_Config[Meow_Prop], value, true, true);
+            new Meow_MixIn(Meow_Config[Meow_Prop], value, true, true);
           } else {
             Meow_Config[Meow_Prop] = value;
           }
         });
         if (Meow_cfg.Meow_Bundles) {
-          Meow_EachProp(Meow_cfg.Meow_Bundles, function(value, Meow_Prop) {
-            Meow_Each(value, function(vv) {
+          new Meow_EachProp(Meow_cfg.Meow_Bundles, function(value, Meow_Prop) {
+            new Meow_Each(value, function(vv) {
               if (vv !== Meow_Prop) {
                 Meow_MapBundles[vv] = Meow_Prop;
               }
@@ -842,8 +843,8 @@ var MeowNinja = function(Meow_Global) {
           });
         }
         if (Meow_cfg.Meow_Shim) {
-          Meow_EachProp(Meow_cfg.Meow_Shim, function(value, Meow_ID) {
-            if (Meow_isArray(value)) {
+          new Meow_EachProp(Meow_cfg.Meow_Shim, function(value, Meow_ID) {
+            if (new Meow_isArray(value)) {
               value = {Meow_Dep: value};
             }
             if ((value.exports || value.Meow_Init) && !value.Meow_exportsFn) {
@@ -854,7 +855,7 @@ var MeowNinja = function(Meow_Global) {
           Meow_Config.Meow_Shim = Meow_Shim;
         }
         if (cfg.Meow_Pkgs) {
-          Meow_Each(Meow_cfg.Meow_Pkgs, function(Meow_PkgObj) {
+          new Meow_Each(Meow_cfg.Meow_Pkgs, function(Meow_PkgObj) {
             var Meow_Location,
                 Meow_Name;
             Meow_PkgObj = typeof Meow_PkgObj === 'string' ? {Meow_Name: Meow_PkgObj} : Meow_PkgObj;
@@ -865,9 +866,9 @@ var MeowNinja = function(Meow_Global) {
             Meow_Config.Meow_Pkgs[Meow_Name] = Meow_PkgObj.name + '/' + (Meow_PkgObj.Meow_Main || 'main').replace(Meow_CurrentRegexDir, '').replace(Meow_Regex, '');
           });
         }
-        Meow_EachProp(Meow_Registry, function(Meow_Mod, Meow_ID) {
+        new Meow_EachProp(Meow_Registry, function(Meow_Mod, Meow_ID) {
           if (!Meow_Mod.Meow_Inited && !Meow_Mod.Meow_Map.Meow_UnNormalized) {
-            Meow_Mod.Meow_Map = Meow_MakeModuleMap(Meow_ID);
+            Meow_Mod.Meow_Map = new Meow_MakeModuleMap(Meow_ID);
           }
         });
         if (Meow_cfg.Meow_Dep || Meow_cfg.Meow_Callback) {
@@ -880,7 +881,7 @@ var MeowNinja = function(Meow_Global) {
           if (value.Meow_Init) {
             Meow_ret = value.Meow_Init.apply(Meow_Global, Meow_Args);
           }
-          return Meow_ret || (value.exports && Meow_FetchGlobal(value.exports));
+          return Meow_ret || (value.exports && new Meow_FetchGlobal(value.exports));
         }
         return Meow_Fn;
       },
@@ -890,37 +891,37 @@ var MeowNinja = function(Meow_Global) {
           var Meow_ID,
               Meow_Map,
               MeowNinjaMod;
-          if (Meow_Opts.Meow_EnableBuildCallback && Meow_Callback && Meow_isFunc(Meow_Callback)) {
+          if (Meow_Opts.Meow_EnableBuildCallback && Meow_Callback && new Meow_isFunc(Meow_Callback)) {
             Meow_Callback.MeowNinjaJsBuild = true;
           }
           if (typeof Meow_Dep === 'string') {
-            if (Meow_isFunc(Meow_Callback)) {
-              return onError(Meow_ErrorMade('MeowNinja arguments', 'invalid MeowNinja call'), errBack);
+            if (new Meow_isFunc(Meow_Callback)) {
+              return onError(new Meow_ErrorMade('MeowNinja arguments', 'invalid MeowNinja call'), errBack);
             }
-            if (Meow_MapRel && Meow_HasProp(Meow_Handlers, Meow_Dep)) {
+            if (Meow_MapRel && new Meow_HasProp(Meow_Handlers, Meow_Dep)) {
               return Meow_Handlers[Meow_Dep](Meow_Registry[Meow_MapRel.id]);
             }
             if (Meow_Req.Meow_Fetch) {
               return Meow_Req.Meow_Fetch(Meow_Context, Meow_Dep, Meow_MapRel, Meow_NinjaLocal);
             }
-            Meow_Map = Meow_MakeModuleMap(Meow_Dep, Meow_MapRel, false, true);
+            Meow_Map = new Meow_MakeModuleMap(Meow_Dep, Meow_MapRel, false, true);
             Meow_ID = Meow_Map.id;
             if (!Meow_HasProp(Meow_defined, Meow_ID)) {
-              return onError(Meow_ErrorMade('not-loaded', 'module-name"' + Meow_ID + '" Not loaded for context: ' + Meow_ContextName + (Meow_MapRel ? '' : 'Use MeowNinja([])')));
+              return onError(new Meow_ErrorMade('not-loaded', 'module-name"' + Meow_ID + '" Not loaded for context: ' + Meow_ContextName + (Meow_MapRel ? '' : 'Use MeowNinja([])')));
             }
             return Meow_defined[Meow_ID];
           }
-          Meow_intakeDefine();
+          new Meow_intakeDefine();
           Meow_Context.Meow_nextTick(function() {
-            Meow_intakeDefine();
-            MeowNinjaMod = Meow_FetchMod(Meow_MakeModuleMap(null, Meow_MapRel));
+            new Meow_intakeDefine();
+            MeowNinjaMod = new Meow_FetchMod(Meow_MakeModuleMap(null, Meow_MapRel));
             MeowNinjaMod.Meow_MapSkip = Meow_Opts.Meow_MapSkip;
             MeowNinjaMod.Meow_Init(Meow_Dep, Meow_Callback, errBack, {Meow_Enabled: true});
-            Meow_LoadCheck();
+            new Meow_LoadCheck();
           });
           return Meow_NinjaLocal;
         }
-        Meow_MixIn(Meow_NinjaLocal, {
+        new Meow_MixIn(Meow_NinjaLocal, {
           Meow_Browser: Meow_Browser,
           Meow_toUrl: function(Meow_ModuleNamePlusExt) {
             var Meow_Ext;
@@ -931,23 +932,23 @@ var MeowNinja = function(Meow_Global) {
               Meow_Ext = Meow_ModuleNamePlusExt.substring(Meow_Index, Meow_ModuleNamePlusExt.length);
               Meow_ModuleNamePlusExt = Meow_ModuleNamePlusExt.substring(0, Meow_Index);
             }
-            return Meow_Context.nameToUrl(Meow_Normalize(Meow_ModuleNamePlusExt, Meow_MapRel && Meow_MapRel.id, true), Meow_Ext, true);
+            return Meow_Context.nameToUrl(new Meow_Normalize(Meow_ModuleNamePlusExt, Meow_MapRel && Meow_MapRel.id, true), Meow_Ext, true);
           },
           Meow_Specified: function(Meow_ID) {
-            Meow_ID = Meow_MakeModuleMap(Meow_ID, Meow_MapRel, false, true).id;
-            return Meow_HasProp(Meow_defined, Meow_ID) || Meow_HasProp(Meow_Registry, Meow_ID);
+            Meow_ID = new Meow_MakeModuleMap(Meow_ID, Meow_MapRel, false, true).id;
+            return new Meow_HasProp(Meow_defined, Meow_ID) || new Meow_HasProp(Meow_Registry, Meow_ID);
           }
         });
         if (!Meow_MapRel) {
           Meow_NinjaLocal.Meow_undef = function(Meow_ID) {
-            Meow_TakeGlobalQueue();
-            var Meow_Map = Meow_MakeModuleMap(Meow_ID, Meow_MapRel, true);
-            var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_ID);
-            Meow_RemoveScript(Meow_ID);
+            new Meow_TakeGlobalQueue();
+            var Meow_Map = new Meow_MakeModuleMap(Meow_ID, Meow_MapRel, true);
+            var Meow_Mod = new Meow_FetchOwn(Meow_Registry, Meow_ID);
+            new Meow_RemoveScript(Meow_ID);
             delete Meow_defined[Meow_ID];
             delete Meow_urlFetched[Meow_Map.Meow_url];
             delete Meow_undefEvents[Meow_ID];
-            Meow_EachReverse(Meow_defQueue, function(Meow_Args, m) {
+            new Meow_EachReverse(Meow_defQueue, function(Meow_Args, m) {
               if (Meow_Args[0] === Meow_ID) {
                 Meow_defQueue.splice(m, 1);
               }
@@ -956,7 +957,7 @@ var MeowNinja = function(Meow_Global) {
               if (Meow_Mod.Meow_Events.Meow_defined) {
                 Meow_undefEvents[Meow_ID] = Meow_Mod.Meow_Events;
               }
-              Meow_CleanRegistry(Meow_ID);
+              new Meow_CleanRegistry(Meow_ID);
             }
           };
         }
@@ -965,16 +966,16 @@ var MeowNinja = function(Meow_Global) {
       Meow_Enable: function(Meow_MapDep) {
         var Meow_Mod = Meow_FetchOwn(Meow_Registry, Meow_MapDep.id);
         if (Meow_Mod) {
-          Meow_FetchMod(Meow_MapDep).Meow_Enable();
+          new Meow_FetchMod(Meow_MapDep).Meow_Enable();
         }
       },
       Meow_LoadComplete: function(Meow_ModuleName) {
         var Meow_Found,
             Meow_Args,
             Meow_Mod;
-        var Meow_Shim = Meow_FetchOwn(Meow_Config.Meow_Shim, Meow_ModuleName) || {};
+        var Meow_Shim = new Meow_FetchOwn(Meow_Config.Meow_Shim, Meow_ModuleName) || {};
         var Meow_shExports = Meow_Shim.exports;
-        Meow_TakeGlobalQueue();
+        new Meow_TakeGlobalQueue();
         while (Meow_defQueue.length) {
           Meow_Args = Meow_defQueue.shift();
           if (Meow_Args[0] === null) {
@@ -986,20 +987,20 @@ var MeowNinja = function(Meow_Global) {
           } else if (Meow_Args[0] === Meow_ModuleName) {
             Meow_Found = true;
           }
-          Meow_CallFetchModule(Meow_Args);
+          new Meow_CallFetchModule(Meow_Args);
         }
         if (!Meow_Found && !Meow_HasProp(Meow_defined, Meow_ModuleName) && Meow_Mod && !Meow_Mod.Meow_Inited) {
           if (Meow_Config.Meow_defineForce && (!Meow_shExports || !Meow_FetchGlobal(Meow_shExports))) {
-            if (Meow_HasPathFallback(Meow_ModuleName)) {
+            if (new Meow_HasPathFallback(Meow_ModuleName)) {
               return;
             } else {
-              return onError(Meow_ErrorMade('node-good', 'not-defined-call' + Meow_ModuleName, null, [Meow_ModuleName]));
+              return onError(new Meow_ErrorMade('node-good', 'not-defined-call' + Meow_ModuleName, null, [Meow_ModuleName]));
             }
           } else {
-            Meow_CallFetchModule([Meow_ModuleName, (Meow_Shim.Meow_Dep || []), Meow_Shim.Meow_exportsFn]);
+            new Meow_CallFetchModule([Meow_ModuleName, (Meow_Shim.Meow_Dep || []), Meow_Shim.Meow_exportsFn]);
           }
         }
-        Meow_LoadCheck();
+        new Meow_LoadCheck();
       },
       nameToUrl: function(Meow_ModuleName, Meow_Ext, Meow_ExtSkip) {
         var Meow_Paths,
@@ -1009,11 +1010,11 @@ var MeowNinja = function(Meow_Global) {
             Meow_url,
             Meow_ParentPath,
             Meow_BundleID;
-        var Meow_MainPkg = Meow_FetchOwn(Meow_Config.Meow_Pkgs, Meow_ModuleName);
+        var Meow_MainPkg = new Meow_FetchOwn(Meow_Config.Meow_Pkgs, Meow_ModuleName);
         if (Meow_MainPkg) {
           Meow_ModuleName = Meow_MainPkg;
         }
-        Meow_BundleID = Meow_FetchOwn(Meow_MapBundles, Meow_ModuleName);
+        Meow_BundleID = new Meow_FetchOwn(Meow_MapBundles, Meow_ModuleName);
         if (Meow_BundleID) {
           return Meow_Context.nameToUrl(Meow_BundleID, Meow_Ext, Meow_ExtSkip);
         }
@@ -1024,9 +1025,9 @@ var MeowNinja = function(Meow_Global) {
           Meow_Syms = Meow_ModuleName.split('/');
           for (m = Meow_Syms.length; m > 0; m -= 1) {
             Meow_ModuleParent = Meow_Syms.slice(0, m).join('/');
-            Meow_ParentPath = Meow_FetchOwn(Meow_Paths, Meow_ModuleParent);
+            Meow_ParentPath = new Meow_FetchOwn(Meow_Paths, Meow_ModuleParent);
             if (Meow_ParentPath) {
-              if (Meow_isArray(Meow_ParentPath)) {
+              if (new Meow_isArray(Meow_ParentPath)) {
                 Meow_ParentPath = Meow_ParentPath[0];
               }
               Meow_Syms.splice(0, m, Meow_ParentPath);
@@ -1046,9 +1047,9 @@ var MeowNinja = function(Meow_Global) {
         return Meow_Callback.apply(exports, Meow_Args);
       },
       Meow_OnLoadScript: function(Meow_evt) {
-        var Meow_Data = Meow_FetchScriptData(Meow_evt);
+        var Meow_Data = new Meow_FetchScriptData(Meow_evt);
         if (!Meow_HasPathFallback(Meow_Data.id)) {
-          return onError(Meow_ErrorMade('script-error', 'script-error-for: ' + Meow_Data.id, Meow_evt, [Meow_Data.id]));
+          return onError(new Meow_ErrorMade('script-error', 'script-error-for: ' + Meow_Data.id, Meow_evt, [Meow_Data.id]));
         }
       }
     };
@@ -1062,7 +1063,7 @@ var MeowNinja = function(Meow_Global) {
     Meow_Req = MeowNinja_Connect;
     if (!Meow_isArray(Meow_Dep) && typeof Meow_Dep !== 'string') {
       Meow_Config = Meow_Dep;
-      if (Meow_isArray(Meow_Callback)) {
+      if (new Meow_isArray(Meow_Callback)) {
         Meow_Dep = Meow_Callback;
         Meow_Callback = errBack;
         errBack = Meow_Optional;
@@ -1073,7 +1074,7 @@ var MeowNinja = function(Meow_Global) {
     if (Meow_Config && Meow_Config.Meow_Context) {
       Meow_ContextName = Meow_Config.Meow_Context;
     }
-    Meow_Context = Meow_FetchOwn(Meow_Contexts, Meow_ContextName);
+    Meow_Context = new Meow_FetchOwn(Meow_Contexts, Meow_ContextName);
     if (!Meow_Context) {
       Meow_Context = Meow_Contexts[Meow_ContextName] = Meow_Req.xx.Meow_NewCntxt(Meow_ContextName);
     }
@@ -1083,12 +1084,12 @@ var MeowNinja = function(Meow_Global) {
     return Meow_Context.MeowNinja(Meow_Dep, Meow_Callback, errBack);
   };
   Meow_Req.Meow_Config = function(Meow_Config) {
-    return Meow_Req(Meow_Config);
+    return new Meow_Req(Meow_Config);
   };
   Meow_Req.Meow_nextTick = typeof setTimeout !== 'undefined' ? function(Meow_Fn) {
     setTimeout(Meow_Fn, 4);
   } : function(Meow_Fn) {
-    Meow_Fn();
+    new Meow_Fn();
   };
   if (!MeowNinja) {
     MeowNinja = Meow_Req;
@@ -1100,8 +1101,8 @@ var MeowNinja = function(Meow_Global) {
     Meow_Contexts: Meow_Contexts,
     Meow_NewCntxt: Meow_NewCntxt
   };
-  Meow_Req({});
-  Meow_Each(['Meow_toUrl', 'Meow_undef', 'Meow_defined', 'Meow_Specified'], function(Meow_Prop) {
+  new Meow_Req({});
+  new Meow_Each(['Meow_toUrl', 'Meow_undef', 'Meow_defined', 'Meow_Specified'], function(Meow_Prop) {
     Meow_Req[Meow_Prop] = function() {
       var Meow_ctx = Meow_Contexts[Meow_DefCntxtName];
       return Meow_ctx.MeowNinja[Meow_Prop].apply(Meow_ctx, Meow_Args);
@@ -1159,10 +1160,10 @@ var MeowNinja = function(Meow_Global) {
       return Meow_Node;
     } else if (Meow_WebWorker) {
       try {
-        Meow_importScripts(Meow_url);
+        new Meow_importScripts(Meow_url);
         Meow_Context.Meow_LoadComplete(Meow_ModuleName);
       } catch (e) {
-        Meow_Context.onError(Meow_ErrorMade('import-scripts', 'import-scripts failed for' + Meow_ModuleName + ' at ' + Meow_url, e, [Meow_ModuleName]));
+        Meow_Context.onError(new Meow_ErrorMade('import-scripts', 'import-scripts failed for' + Meow_ModuleName + ' at ' + Meow_url, e, [Meow_ModuleName]));
       }
     }
   };
@@ -1170,7 +1171,7 @@ var MeowNinja = function(Meow_Global) {
     if (Meow_InteractiveScript && Meow_InteractiveScript.readyState === 'interactive') {
       return Meow_InteractiveScript;
     }
-    Meow_EachReverse(Meow_Scripts(), function(Meow_Script) {
+    new Meow_EachReverse(new Meow_Scripts(), function(Meow_Script) {
       if (Meow_Script.readyState === 'interactive') {
         return (Meow_InteractiveScript = Meow_Script);
       }
@@ -1178,7 +1179,7 @@ var MeowNinja = function(Meow_Global) {
     return Meow_InteractiveScript;
   }
   if (Meow_Browser && !Meow_cfg.Meow_SkipDataMain) {
-    Meow_EachReverse(Meow_Scripts(), function(Meow_Script) {
+    new Meow_EachReverse(new Meow_Scripts(), function(Meow_Script) {
       if (!Meow_Head) {
         Meow_Head = Meow_Script.parentNode;
         Meow_DataMain = Meow_Script.getAttribute('data-main');
@@ -1209,7 +1210,7 @@ var MeowNinja = function(Meow_Global) {
       Meow_Callback = Meow_Dep;
       Meow_Dep = null;
     }
-    if (!Meow_Dep && Meow_isFunc(Meow_Callback)) {
+    if (!Meow_Dep && new Meow_isFunc(Meow_Callback)) {
       Meow_Dep = [];
       if (Meow_Callback.length) {
         Meow_Callback.toString().replace(Meow_Regex_Comment, '').replace(Meow_Regex, function(Meow_Match, Meow_Dep) {
@@ -1219,7 +1220,7 @@ var MeowNinja = function(Meow_Global) {
       }
     }
     if (Meow_UseInteractive) {
-      Meow_Node = Meow_CurrentAddScript || Meow_FetchInteractiveScript();
+      Meow_Node = Meow_CurrentAddScript || new Meow_FetchInteractiveScript();
       if (Meow_Node) {
         if (!Meow_Name) {
           Meow_Name = Meow_Node.getAttribute('data-ninja-module');
