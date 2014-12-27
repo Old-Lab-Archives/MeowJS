@@ -1120,5 +1120,4 @@ var MeowRangerPred = (function() {
     MeowRangerPred.Meow_PredictSetEndMarkMode = function(Meow_PredictEndMarkMode) {
       Meow_PredictWriteEndMark = Meow_PredictEndMarkMode;
     };
-  }
-);
+  });
