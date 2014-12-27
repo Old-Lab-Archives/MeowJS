@@ -30,6 +30,7 @@ var MeowNinja = function(Meow_Global) {
     var Meow_cfg = {};
     var Meow_DefGlobalQueue = [];
     var Meow_UseInteractive = false;
+    MeowNinja = MeowNinja_Connect;
     isArray = Meow_isArray;
     isFunction = Meow_isFunc;
     bind = Meow_Bind;
@@ -1054,10 +1055,11 @@ var MeowNinja = function(Meow_Global) {
     Meow_Context.MeowNinja = Meow_Context.Meow_MakeNinja();
     return Meow_Context;
   };
-  var Meow_Req = MeowNinja = function(Meow_Dep, Meow_Callback, errBack, Meow_Optional) {
+  var Meow_Req = function(Meow_Dep, Meow_Callback, errBack, Meow_Optional) {
     var Meow_Context,
         Meow_Config;
     var Meow_ContextName = Meow_DefCntxtName;
+    Meow_Req = MeowNinja_Connect;
     if (!Meow_isArray(Meow_Dep) && typeof Meow_Dep !== 'string') {
       Meow_Config = Meow_Dep;
       if (Meow_isArray(Meow_Callback)) {
@@ -1112,19 +1114,19 @@ var MeowNinja = function(Meow_Global) {
       Meow_Head = xx.Meow_Head = Meow_BaseElement.parentNode;
     }
   }
-  Meow_req.onError = Meow_DefError;
-  Meow_req.Meow_createNode = function(Meow_Config, Meow_ModuleName, Meow_url) {
+  Meow_Req.onError = Meow_DefError;
+  Meow_Req.Meow_createNode = function(Meow_Config, Meow_ModuleName, Meow_url) {
     var Meow_Node = Meow_Config.xhtml ? document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') : document.createElement('script');
     Meow_Node.type = Meow_Config.scriptType || 'text/javascript';
     Meow_Node.charset = 'UTF8';
     Meow_Node.async = true;
     return Meow_Node;
   };
-  Meow_req.load = function(Meow_Context, Meow_ModuleName, Meow_url) {
+  Meow_Req.load = function(Meow_Context, Meow_ModuleName, Meow_url) {
     var Meow_Config = (Meow_Context && Meow_Context.Meow_Config) || {};
     var Meow_Node;
     if (Meow_Browser) {
-      Meow_Node = Meow_req.Meow_createNode(Meow_Config, Meow_ModuleName, Meow_url);
+      Meow_Node = Meow_Req.Meow_createNode(Meow_Config, Meow_ModuleName, Meow_url);
       Meow_Node.setAttribute('data-ninja-context', Meow_Context.Meow_ContextName);
       Meow_Node.setAttribute('data-MeowNinjaMod', Meow_ModuleName);
       if (Meow_Node.Meow_attachEvent && !(Meow_Node.attachEvent.toString && Meow_Node.Meow_attachEvent.toString().indexOf('[native-code]') < 0) && !isOpera) {
@@ -1187,7 +1189,7 @@ var MeowNinja = function(Meow_Global) {
           Meow_cfg.Meow_baseUrl = Meow_SubPath;
         }
         Meow_MainScript = Meow_MainScript.replace(Meow_Regex, '');
-        if (Meow_req.Meow_Regex.test(Meow_MainScript)) {
+        if (Meow_Req.Meow_Regex.test(Meow_MainScript)) {
           Meow_MainScript = Meow_DataMain;
         }
         Meow_cfg.Meow_Dep = Meow_cfg.Meow_Dep ? Meow_cfg.Meow_Dep.concat(Meow_MainScript) : [Meow_MainScript];
