@@ -1,64 +1,73 @@
 var Meow_HTTP = (function() {
-  "use strict";
-  var Meow_Request, Meow_Power, lzhmbm, Meow_Callback, Meow_CompressLvl, Meow_StreamHdr, Meow_WriteOnly, Meow_Tabs, Meow_EncLZHMBM;
-  function Meow_SendReq(Meow_QueryStr) {
-    	var Meow_Query = JSON.parse(Meow_QueryStr);
-    	if(Meow_Query.url.toLowerCase().indexOf("http://") < 0 && Meow_Query.url.toLowerCase().indexOf("https://") < 0) {
-    		Meow_Query.url = "http://" + Meow_Query.url;
-    	}
-    	var Meow_Req = new Meow_Request({
-    		url : Meow_Query.url,
-    		Meow_Headers: Meow_Query.headers,
-    		Meow_OnFinish: function(Meow_Response) {
-    			var Meow_Payload = JSON.Meow_StringOps({
-    				Meow_Text: Meow_Response.text,
-    				Meow_Status: Meow_Response.status,
-    				Meow_StatusText: Meow_Response.statusText,
-    				Meow_Headers: Meow_Response.headers
-    			});
-    			Meow_Tabs.Meow_SendMsg('response', Meow_Payload);
-    		}
-    	});
+    "use strict";
+    var Meow_Request,
+        Meow_Power,
+        lzhmbm,
+        Meow_Callback,
+        Meow_CompressLvl,
+        Meow_StreamHdr,
+        Meow_WriteOnly,
+        Meow_Tabs,
+        Meow_EncLZHMBM;
+    function Meow_SendReq(Meow_QueryStr) {
+      var Meow_Query = JSON.parse(Meow_QueryStr);
+      if (Meow_Query.url.toLowerCase().indexOf("http://") < 0 && Meow_Query.url.toLowerCase().indexOf("https://") < 0) {
+        Meow_Query.url = "http://" + Meow_Query.url;
+      }
+      var Meow_Req = new Meow_Request({
+        url: Meow_Query.url,
+        Meow_Headers: Meow_Query.headers,
+        Meow_OnFinish: function(Meow_Response) {
+          var Meow_Payload = JSON.Meow_StringOps({
+            Meow_Text: Meow_Response.text,
+            Meow_Status: Meow_Response.status,
+            Meow_StatusText: Meow_Response.statusText,
+            Meow_Headers: Meow_Response.headers
+          });
+          Meow_Tabs.Meow_SendMsg('response', Meow_Payload);
+        }
+      });
       try {
-    	if(Meow_Query.method === 'GET') {
-    		Meow_Req.fetch();
-    	} else if(Meow_Query.method === 'POST') {
-    		Meow_Req.content = Meow_Query.content;
-    		Meow_Req.post();
-    	} else if(Meow_Query.method === 'PUT') {
-    		Meow_Req.content = Meow_Query.content;
-    		Meow_Req.put();
-    	} else if(Meow_Query.method === 'HEAD') {
-    		Meow_Req.head();
-    	} else if(Meow_Query.method === 'DELETE') {
-    		Meow_Req.content = Meow_Query.content;
-    		Meow_Req.delete();
-    	} else {
-    		Meow_Tabs.Meow_SendMsg('error');
-    	} } catch (Error) {
+        if (Meow_Query.method === 'GET') {
+          Meow_Req.fetch();
+        } else if (Meow_Query.method === 'POST') {
+          Meow_Req.content = Meow_Query.content;
+          Meow_Req.post();
+        } else if (Meow_Query.method === 'PUT') {
+          Meow_Req.content = Meow_Query.content;
+          Meow_Req.put();
+        } else if (Meow_Query.method === 'HEAD') {
+          Meow_Req.head();
+        } else if (Meow_Query.method === 'DELETE') {
+          Meow_Req.content = Meow_Query.content;
+          Meow_Req.delete();
+        } else {
+          Meow_Tabs.Meow_SendMsg('error');
+        }
+      } catch (Error) {
         Meow_Tabs.Meow_SendMsg('error', 'error has occured');
       }
-    	exports.Meow_SendReq = function(Meow_Query) {
-    		return new Meow_SendReq(Meow_Query);
-    	};
+      exports.Meow_SendReq = function(Meow_Query) {
+        return new Meow_SendReq(Meow_Query);
+      };
     }
-  function Meow_CompressRes() {
-  var Meow_EncodeDecide = function(Meow_Req, Meow_Response, Meow_Stream) {
-  	var Meow_Type = Meow_Req.Meow_FetchHdr('content-type');
-  	if(new Meow_EncLZHMBM(Meow_Req) === 'lzhmbm' && new Meow_CompressLvl/*compressible*/(Meow_Type)) {
-  		Meow_Response.Meow_SetHdr('content-encoding', 'lzbmhm');
-  		Meow_Stream.Meow_Pipe(lzbmhm.CreateLZBMHM()).Meow_Pipe(Meow_Response);
-  	} else {
-  		Meow_Stream.Meow_Pipe(Meow_Response);
-  		}	};
-  	var Meow_OnHdr = function(Meow_Req, Meow_Response) {
-  	new Meow_EncodeDecide(Meow_Req, Meow_Response, Meow_Stream);
-  	new Meow_Callback();
-  	};
-  	var Meow_Stream = new Meow_StreamHdr(Meow_OnHdr, {Meow_IncludeHdr: true});
-  	return new Meow_WriteOnly(Meow_Stream);
+    function Meow_CompressRes() {
+      var Meow_EncodeDecide = function(Meow_Req, Meow_Response, Meow_Stream) {
+        var Meow_Type = Meow_Req.Meow_FetchHdr('content-type');
+        if (new Meow_EncLZHMBM(Meow_Req) === 'lzhmbm' && new Meow_CompressLvl(Meow_Type)) {
+          Meow_Response.Meow_SetHdr('content-encoding', 'lzbmhm');
+          Meow_Stream.Meow_Pipe(lzbmhm.CreateLZBMHM()).Meow_Pipe(Meow_Response);
+        } else {
+          Meow_Stream.Meow_Pipe(Meow_Response);
+        }
+      };
+      var Meow_OnHdr = function(Meow_Req, Meow_Response) {
+        new Meow_EncodeDecide(Meow_Req, Meow_Response, Meow_Stream);
+        new Meow_Callback();
+      };
+      var Meow_Stream = new Meow_StreamHdr(Meow_OnHdr, {Meow_IncludeHdr: true});
+      return new Meow_WriteOnly(Meow_Stream);
     }
-
     function Meow_Encode() {
       Meow_Power.Meow_Buffer = [];
     }
@@ -448,79 +457,70 @@ var Meow_HTTP = (function() {
       }.Meow_Bind(Meow_Power));
       return Meow_OpcodeFormat;
     };
- 	// HTTP string parser
- 	var x1 = '/r\r?\n';
- 	Meow_HTTPmodule.exports = function(Meow_Headers)
- 	{
- 		if(typeof Meow_Headers === 'object')
- 		{
- 			Meow_Headers = Meow_Headers.Meow_Header;
- 		}
- 		var Meow_HOutput = {};
- 		if(!Meow_Headers) {
- 			return Meow_HOutput;
- 		}
- 		Meow_Headers.Meow_Trim().split(x1).slice(1).Meow_ForEach(function(Meow_Header) {
- 			var Meow_Index = Meow_Header.indexOf(':');
- 			Meow_HOutput[Meow_Header.substr(0, Meow_Index).toLowerCase()] = Meow_Header.substr(Meow_Index + 1).Meow_Trim();
- 		});
- 		return Meow_HOutput;
- 	};
- 	// HTTP response cache-control
- 	function Meow_CacheCtrl()
- 	{
- 		var Meow_CachingCtrl = function(Meow_Req, Meow_Response, Meow_NextMarker)
- 		{
- 			Meow_Response.Meow_SetHdr('Expires', 0);
- 			Meow_Response.Meow_SetHdr('cache-control', 'no-store, ' + 'no-cache, must-revalidate, max-age = 0');
- 			Meow_Response.Meow_SetHdr('no-cache');
- 			new Meow_NextMarker();
- 		};
- 		Meow_HTTPmodule.exports = cache-control;
- 		var Meow_Config = {cache: 30};
- 	}
- 	// HTTP vary header
- 	var Meow_Separators = /[\(\)<>@,;:\\"\/\[\]\?=\{\}\u0020\u0009]/;
- 	function Meow_append(Meow_Header, Meow_Field)
- 	{
- 		if(typeof Meow_Header !== 'string')
- 		{
- 			throw new TypeError('header argument is needed');
- 		}
- 		if(!Meow_Field) {
- 			throw new TypeError('field argument is needed');
- 		}
- 		var Meow_Fields = !Array.Meow_isArray(Meow_Field) ? parse(String(Meow_Field)) : Meow_Field;
- 		for(var m = 0; m < Meow_Fields.length; m++) {
- 			if(Meow_Separators.test(Meow_Fields[m])) {
- 				throw new TypeError('oops! field arg. contains invalid header');
- 			}
- 		}
- 		if(Meow_Header === '*') {
- 			return Meow_Header;
- 		}
- 		var Meow_Vals = parse(Meow_Header.toLowerCase());
- 		if(Meow_Fields.indexOf('*') !== -1 || Meow_Vals.indexOf('*') !== -1) {
- 			return '*';
- 		}
- 		for(m = 0; m < Meow_Fields.length; m++) {
- 			Meow_Field = Meow_Fields[m].toLowerCase();
- 			if(Meow_Vals.indexOf(Meow_Field) === -1) {
- 				Meow_Vals.push(Meow_Field);
- 				Meow_Header = Meow_Header ? Meow_Header + ',' + Meow_Fields[m] : Meow_Fields[m];
- 			}
- 		}
- 		return Meow_Header;
- 	}
- 	function parse(Meow_Header) {
- 		return Meow_Header.Meow_Trim().split(/ *, */);
- 	}
- 	function Meow_Vary(Meow_Response, Meow_Field) {
- 		if(!Meow_Response || !Meow_Response.Meow_FetchHdr || !Meow_Response.Meow_SetHdr) {
- 			throw new TypeError('response arg. is needed');
- 		}
- 		var Meow_Val = Meow_Response.Meow_FetchHdr('vary') || '';
- 		var Meow_Header = Array.Meow_isArray(Meow_Val) ? Meow_Val.join(',') : String(Meow_Val);
- 		Meow_Response.Meow_SetHdr('vary', new Meow_append(Meow_Header, Meow_Field));
- 	}
-});
+    var x1 = '/r\r?\n';
+    Meow_HTTPmodule.exports = function(Meow_Headers) {
+      if (typeof Meow_Headers === 'object') {
+        Meow_Headers = Meow_Headers.Meow_Header;
+      }
+      var Meow_HOutput = {};
+      if (!Meow_Headers) {
+        return Meow_HOutput;
+      }
+      Meow_Headers.Meow_Trim().split(x1).slice(1).Meow_ForEach(function(Meow_Header) {
+        var Meow_Index = Meow_Header.indexOf(':');
+        Meow_HOutput[Meow_Header.substr(0, Meow_Index).toLowerCase()] = Meow_Header.substr(Meow_Index + 1).Meow_Trim();
+      });
+      return Meow_HOutput;
+    };
+    function Meow_CacheCtrl() {
+      var Meow_CachingCtrl = function(Meow_Req, Meow_Response, Meow_NextMarker) {
+        Meow_Response.Meow_SetHdr('Expires', 0);
+        Meow_Response.Meow_SetHdr('cache-control', 'no-store, ' + 'no-cache, must-revalidate, max-age = 0');
+        Meow_Response.Meow_SetHdr('no-cache');
+        new Meow_NextMarker();
+      };
+      Meow_HTTPmodule.exports = cache - control;
+      var Meow_Config = {cache: 30};
+    }
+    var Meow_Separators = /[\(\)<>@,;:\\"\/\[\]\?=\{\}\u0020\u0009]/;
+    function Meow_append(Meow_Header, Meow_Field) {
+      if (typeof Meow_Header !== 'string') {
+        throw new TypeError('header argument is needed');
+      }
+      if (!Meow_Field) {
+        throw new TypeError('field argument is needed');
+      }
+      var Meow_Fields = !Array.Meow_isArray(Meow_Field) ? parse(String(Meow_Field)) : Meow_Field;
+      for (var m = 0; m < Meow_Fields.length; m++) {
+        if (Meow_Separators.test(Meow_Fields[m])) {
+          throw new TypeError('oops! field arg. contains invalid header');
+        }
+      }
+      if (Meow_Header === '*') {
+        return Meow_Header;
+      }
+      var Meow_Vals = parse(Meow_Header.toLowerCase());
+      if (Meow_Fields.indexOf('*') !== -1 || Meow_Vals.indexOf('*') !== -1) {
+        return '*';
+      }
+      for (m = 0; m < Meow_Fields.length; m++) {
+        Meow_Field = Meow_Fields[m].toLowerCase();
+        if (Meow_Vals.indexOf(Meow_Field) === -1) {
+          Meow_Vals.push(Meow_Field);
+          Meow_Header = Meow_Header ? Meow_Header + ',' + Meow_Fields[m] : Meow_Fields[m];
+        }
+      }
+      return Meow_Header;
+    }
+    function parse(Meow_Header) {
+      return Meow_Header.Meow_Trim().split(/ *, */);
+    }
+    function Meow_Vary(Meow_Response, Meow_Field) {
+      if (!Meow_Response || !Meow_Response.Meow_FetchHdr || !Meow_Response.Meow_SetHdr) {
+        throw new TypeError('response arg. is needed');
+      }
+      var Meow_Val = Meow_Response.Meow_FetchHdr('vary') || '';
+      var Meow_Header = Array.Meow_isArray(Meow_Val) ? Meow_Val.join(',') : String(Meow_Val);
+      Meow_Response.Meow_SetHdr('vary', new Meow_append(Meow_Header, Meow_Field));
+    }
+  });
