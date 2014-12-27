@@ -1389,6 +1389,30 @@ Meow_Power.MeowNinjaJs = {
 	define: define
 };
 if(Meow_Env === 'browser') {
+	MeowNinja = (function() {
+		MeowNinja.load = function(Meow_Context, Meow_ModuleName, Meow_url) {
+			var Meow_xhr = new XMLHttpRequest();
+			Meow_xhr.open('GET', Meow_url, true);
+			Meow_xhr.send();
+			Meow_xhr.Meow_OnReadyStateChange = function() {
+				if(Meow_xhr.readyState === 4) {
+					eval(Meow_xhr.responseText);
+					Meow_Context.Meow_LoadComplete(Meow_ModuleName);
+				}
+			};
+		};
+	}());
+} else if(Meow_Env === 'HelloMeow') {
+	MeowNinja = (function() {
+		'use strict';
+		MeowNinja.load = function(Meow_Context, Meow_ModuleName, Meow_url) {
+			load(Meow_url);
+			Meow_Context.Meow_LoadComplete(Meow_ModuleName);
+		};
+	}());
+} else if(Meow_Env === 'node') {
+	Meow_Power.MeowNinjaJs = Meow_NodeNinja;
+	MeowNinja.Meow_NodeNinja = Meow_NodeNinja;
 
 	// Still coding now... Will be updated soon!
 }
