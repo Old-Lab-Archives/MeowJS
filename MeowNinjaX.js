@@ -1377,6 +1377,18 @@ var Meow_Ninja = (function(console, Meow_Args, Meow_ReadFileFunc) {
 		Meow_Query: true
 		*/
 	};
+	Meow_req.Meow_Exec = function(Meow_Text) {
+		return eval(Meow_Text);
+	};
+	Meow_req(Meow_cfg);
+}(Meow_Power));
+
+Meow_Power.MeowNinjaJs = {
+	MeowNinja: MeowNinja,
+	Meow_Ninja: MeowNinja,
+	define: define
+};
+if(Meow_Env === 'browser') {
 
 	// Still coding now... Will be updated soon!
-});
+}
