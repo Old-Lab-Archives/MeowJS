@@ -1,4 +1,6 @@
-var MeowNinja = function(Meow_Global) {
+var MeowNinja = (function() {
+  "use strict";
+  MeowNinja = function(Meow_Global) {
     var Meow_Req,
         Meow_SubPath;
     var xx,
@@ -564,7 +566,7 @@ var MeowNinja = function(Meow_Global) {
               } else {
                 exports = Meow_Context.Meow_xExec(Meow_ID, Meow_Factory, Meow_DepExports, exports);
               }
-              if (Meow_Power.Meow_Map.Meow_isDefine && exports === 'undefined') {
+              if (Meow_Power.Meow_Map.Meow_isDefine && exports === undefined) {
                 Meow_xModule = Meow_Power.Meow_Module;
                 if (Meow_xModule) {
                   exports = Meow_xModule.exports;
@@ -1058,7 +1060,6 @@ var MeowNinja = function(Meow_Global) {
   var Meow_Req = function(Meow_Dep, Meow_Callback, errBack, Meow_Optional) {
     var Meow_Context,
         Meow_Contexts,
-        Meow_isArray,
         Meow_Config;
     var Meow_ContextName = Meow_DefCntxtName;
     var MeowNinja;
@@ -1240,3 +1241,4 @@ var MeowNinja = function(Meow_Global) {
     (Meow_Context ? Meow_Context.Meow_defQueue : Meow_DefGlobalQueue).push([Meow_Name, Meow_Dep, Meow_Callback]);
   };
   define.amd = {};
+});
