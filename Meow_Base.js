@@ -56,8 +56,32 @@ Meow_Base.prototype = {
 			}
 			build[Meow_Src] = Meow_Val;
 		} else if(Meow_Src) {
-
-			// Still coding... Will be updated soon!
+			var Meow_Extend = Meow_Base.prototype.Meow_Extend;
+			if(!Meow_Base.Meow_protoBuild && typeof build !== "function") {
+				Meow_Extend = build.Meow_Extend || Meow_Extend;
+			}
+			var Meow_proto = {
+				Meow_ToSrc: null
+			};
+			var Meow_Hidden = [
+			"Meow_Construct",
+			"toString",
+			"valueOf"
+			];
+			var m = Meow_Base.Meow_protoBuild ? 0 : 1;
+			while(Meow_Key == Meow_Hidden[m++]) {
+				if(Meow_Src[Meow_Key] !== Meow_proto[Meow_Key]) {
+					Meow_Extend.call(build, Meow_Key, Meow_Src[Meow_Key]);
+				}
+			}
+			for(var Meow_Key in Meow_Src) {
+				if(!Meow_proto[Meow_Key]) {
+					Meow_Extend.call(build, Meow_Key, Meow_Src[Meow_Key]);
+				}
+			}
 		}
+		return build;
 	}
 };
+
+// Still coding... Will be updated soon!
