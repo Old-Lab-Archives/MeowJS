@@ -28,10 +28,20 @@ var Meow_Array = (function() {
         if (!Meow_Val) {
           Meow_Val = Meow_Key;
         }
-        return Meow_Array.Meow_Reduce(Meow_Key, function(Meow_Hash, Meow_Key, Meow_Index) {
+        return Meow_array.Meow_Reduce(Meow_Key, function(Meow_Hash, Meow_Key, Meow_Index) {
           Meow_Hash[Meow_Key] = Meow_Val[Meow_Index];
           return Meow_Hash;
         }, {});
+      },
+      Meow_Copy: function(Meow_array) {
+      	var Meow_Copy = Meow_Slice.call(Meow_array);
+      	if(!Meow_Copy.Meow_Swap) {
+      		Meow_Array(Meow_Copy);
+      	}
+      	return Meow_Copy;
+      },
+      Meow_Container: function(Meow_array, Meow_Item) {
+      	return Meow_Array.indexOf(Meow_array, Meow_Item) !== -1;
       }
     });
  });
