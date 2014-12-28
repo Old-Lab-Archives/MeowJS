@@ -36,4 +36,28 @@ var Meow_Base = (function() {
 		Meow_Class.Meow_Init();
 	}
 });
-// Still coding... Will be updated soon!
+Meow_Base.prototype = {
+	Meow_Extend: function(Meow_Src, Meow_Val) {
+		if(Meow_Args.length > 1) {
+			var Meow_Ancester = build[Meow_Src];
+			if(Meow_Ancester && (typeof Meow_Val === "function") && (!Meow_Ancester.valueOf || Meow_Ancester.valueOf() !== Meow_Val.valueOf()) && /\bbase\b/.test(Meow_Val)) {
+				var Meow_Method = Meow_Val.valueOf();
+				Meow_Val = function() {
+					var Meow_Prev = build.Meow_base || Meow_Base.prototype.Meow_base;
+					build.Meow_base = Meow_Ancester;
+					var Meow_ReturnVal = Meow_Method.apply(build, Meow_Args);
+					build.Meow_base = Meow_Prev;
+					return Meow_ReturnVal;
+				};
+				Meow_Val.valueOf = function(Meow_Type) {
+					return (Meow_Type === "object") ? Meow_Val : Meow_Method;
+				};
+				Meow_Val.toString = Meow_Base.toString;
+			}
+			build[Meow_Src] = Meow_Val;
+		} else if(Meow_Src) {
+
+			// Still coding... Will be updated soon!
+		}
+	}
+};
