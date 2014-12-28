@@ -21,6 +21,19 @@ var Meow_Base = (function() {
 			}
 		}
 	};
-
-	// Still coding... Will be updated soon!
+	Meow_Class.Meow_Ancester = build;
+	Meow_Class.Meow_Extend = build.Meow_Extend;
+	Meow_Class.forEach = build.forEach;
+	Meow_Class.implement = build.implement;
+	Meow_Class.prototype = Meow_proto;
+	Meow_Class.toString = build.toString;
+	Meow_Class.valueOf = function(Meow_Type) {
+		//return (Meow_Type === "object") ? Meow_Class : Meow_Construct;
+		return (Meow_Type === "object") ? Meow_Class : Meow_Construct.valueOf();
+	};
+	Meow_Extend.call(Meow_Class, Meow_Static);
+	if(typeof Meow_Class.Meow_Init === "function") {
+		Meow_Class.Meow_Init();
+	}
 });
+// Still coding... Will be updated soon!
