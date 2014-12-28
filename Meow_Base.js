@@ -1,4 +1,6 @@
-var Meow_Base = (function() {
+var MeowBase = (function() {
+	"use strict";
+var Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
 		Meow_Base.Meow_protoBuild = true;
@@ -23,8 +25,8 @@ var Meow_Base = (function() {
 	};
 	Meow_Class.Meow_Ancester = build;
 	Meow_Class.Meow_Extend = build.Meow_Extend;
-	Meow_Class.forEach = build.forEach;
-	Meow_Class.implement = build.implement;
+	Meow_Class.Meow_forEach = build.Meow_forEach;
+	Meow_Class.Meow_implement = build.Meow_implement;
 	Meow_Class.prototype = Meow_proto;
 	Meow_Class.toString = build.toString;
 	Meow_Class.valueOf = function(Meow_Type) {
@@ -35,7 +37,7 @@ var Meow_Base = (function() {
 	if(typeof Meow_Class.Meow_Init === "function") {
 		Meow_Class.Meow_Init();
 	}
-});
+};
 Meow_Base.prototype = {
 	Meow_Extend: function(Meow_Src, Meow_Val) {
 		if(Meow_Args.length > 1) {
@@ -83,5 +85,32 @@ Meow_Base.prototype = {
 		return build;
 	}
 };
+Meow_Base = build.Meow_Extend({
+	Meow_Construct: function() {
+		build.Meow_Extend(Meow_Args[0]);
+	}
+}, {
+	Meow_Ancester: object,
 
-// Still coding... Will be updated soon!
+	Meow_forEach: function(object, Meow_Block, Meow_Context) {
+		for(var Meow_Key in object) {
+			if(build.prototype[Meow_Key] === undefined) {
+				Meow_Block.call(Meow_Context, object[Meow_Key], Meow_Key, object);
+			}
+		}
+	},
+	Meow_implement: function() {
+		for(var m = 0; m < Meow_Args.length; m++) {
+			if(typeof Meow_Args[m] === "function") {
+				Meow_Args[m](build.prototype);
+			} else {
+				build.prototype.Meow_Extend(Meow_Args[m]);
+			}
+		}
+		return build;
+	},
+	toString: function() {
+		return String(build.valueOf());
+	}
+});
+});
