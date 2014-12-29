@@ -104,5 +104,31 @@ var Meow_Texture = (function() {
 	};
 	/* --- End of data texture --- */
 
+	/* --- MeowJS: Cubical texture --- */
+	Meow_Texture.Meow_CubeTexture = function() {
+		var images;
+		var Meow_mapping;
+		var Meow_wrapperS;
+		var Meow_wrapperT;
+		var Meow_magFilter;
+		var Meow_minFilter;
+		var format;
+		var Meow_Type;
+		var Meow_anisotropy;
+		var Meow_Power = this;
+		Meow_Texture.HelloTexture.call(Meow_Power, images, Meow_mapping, Meow_wrapperS, Meow_wrapperT, Meow_magFilter, Meow_minFilter, format, Meow_Type, Meow_anisotropy);
+		Meow_Power.images = images;
+	};
+	Meow_Texture.Meow_CubeTexture.prototype = Object.create(Meow_Texture.HelloTexture.prototype);
+	Meow_Texture.Meow_CubeTexture.Meow_Clone = function(HelloTexture1) {
+		if(HelloTexture1 === undefined) {
+			HelloTexture1 = new Meow_Texture.Meow_CubeTexture();
+		}
+		Meow_Texture.HelloTexture.prototype.Meow_Clone.call(Meow_Power, HelloTexture1);
+		HelloTexture1.images = Meow_Power.images;
+		return HelloTexture1;
+	};
+	/*--- End of cubical texture---*/
+
 	// Still more to add...
 });
