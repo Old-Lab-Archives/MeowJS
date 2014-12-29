@@ -132,5 +132,30 @@ var Meow_Texture = (function() {
 	}; };
 	/*--- End of cubical texture---*/
 
+	/*--- MeowJS:- Video Texture --- */
+	Meow_Texture.Meow_VideoTexture = function() {
+		var Meow_Power = function() {
+		var Meow_Video;
+		var Meow_mapping;
+		var Meow_wrapperS;
+		var Meow_wrapperT;
+		var Meow_magFilter;
+		var Meow_minFilter;
+		var format, type;
+		var Meow_Type = type;
+		var Meow_anisotropy;
+		Meow_Power = this;
+		Meow_Texture.HelloTexture.call(Meow_Power, Meow_Video, Meow_mapping, Meow_wrapperS, Meow_wrapperT, Meow_magFilter, Meow_minFilter, format, Meow_Type, Meow_anisotropy);
+		Meow_Power.generateMipmaps = false;
+		var Meow_UpdateNow = function() {
+			requestAnimationFrame(Meow_UpdateNow);
+			if(Meow_Video.readyState === Meow_Video.Meow_Enough_data) {
+				Meow_Power.Meow_Update = true;
+			}
+			Meow_UpdateNow();
+		};
+	}; };
+	/*--- End of Video Texture ---*/
+
 	// Still more to add...
 });
