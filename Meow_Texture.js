@@ -8,7 +8,7 @@ var Meow_Texture = (function() {
 	var Meow_magFilter;
 	var Meow_minFilter;
 	var format;
-	var Meow_Type;
+	var Meow_Type = type;
 	var Meow_anisotropy;
 	var Meow_Power = this;
 	Object.defineProperty(Meow_Power, 'id', {value: Meow_Texture.TextureIdCount ++});
