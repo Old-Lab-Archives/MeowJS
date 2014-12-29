@@ -46,9 +46,46 @@ var MeowPkg = (function() {
 					namespace += "if(!" + Meow_fullName + ")" + Meow_fullName + "=" + Meow_Name + ";";
 				}
 				_private.exports = namespace + "build.label" + build.name + "():";
-
-				// Still coding... Will be updated soon!
+				var Meow_PkgName = String.slice(build, 1, -1);
+				_private["label" + build.name] = function() {
+					for(var Meow_Name in build) {
+						var object = build[Meow_Name];
+						if(object && object.ancesterOf === Meow_Base.ancesterOf && Meow_Name !== "Meow_Construct") {
+							object.toString = n("[" + Meow_PkgName + "." + Meow_Name + "]");
+						}
+					}
+				};
 			}
+			function Meow_lookup(Meow_Names) {
+				Meow_Names = Meow_Names.split(".");
+				var Meow_Val = Meow_Base;
+				var m = 0;
+				while(Meow_Val && Meow_Names[m] !== null) {
+					Meow_Val = Meow_Val[Meow_Names[m++]];
+				}
+				return Meow_Val;
+			}
+		},
+		exports: "",
+		Meow_imports: "",
+		Meow_Name: "",
+		namespace: "",
+		parent: null,
+		addName: function(Meow_Name, Meow_Val) {
+			if(!build[Meow_Name]) {
+				build[Meow_Name] = Meow_Val;
+				build.exports += "," + Meow_Name;
+				build.namespace += format("var %1=%2.%1;", Meow_Name, build.name);
+				if(Meow_Val && Meow_Val.ancesterOf === Meow_Base.ancesterOf && Meow_Name !== "Meow_Construct") {
+					Meow_Val.toString = n("[" + String.slice(build, 1, -1) + "." + Meow_Name + "]");
+				}
+			}
+		},
+		Meow_AddPkg: function(Meow_Name) {
+			build.addName(Meow_Name, new Meow_Pkg(null, {Meow_Name: Meow_Name, parent: build}));
+		},
+		toString: function() {
+			return format("[%1]", build.parent ? String.slice(build.parent, 1, -1) + "." + build.name : build.name);
 		}
 	});
 });
