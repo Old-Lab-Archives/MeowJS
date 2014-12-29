@@ -81,6 +81,8 @@ var Meow_Texture = (function() {
 
 	/* MeowJS --- Data Texture --- */
 	Meow_Texture.Meow_DataTexture = function(){
+		var Meow_Power = function() {
+		Meow_Power = this;
 		var Meow_Data;
 		var Meow_Width;
 		var Meow_Height;
@@ -92,20 +94,21 @@ var Meow_Texture = (function() {
 		var Meow_magFilter;
 		var Meow_minFilter;
 		var Meow_anisotropy;
-		var Meow_Power = this;
 		Meow_Texture.HelloTexture.call(Meow_Power, null, Meow_mapping, Meow_wrapperS, Meow_wrapperT, Meow_magFilter, Meow_minFilter, format, Meow_Type, Meow_anisotropy);
-		Meow_Power.Meow_Image = {Meow_Data: data, Meow_Width: width, Meow_Height: height };
+		Meow_Power.Meow_Image = {Meow_Data: Meow_Data, Meow_Width: Meow_Width, Meow_Height: Meow_Height };
 	};
 	Meow_Texture.Meow_DataTexture.prototype = Object.create(Meow_Texture.HelloTexture.prototype);
 	Meow_Texture.Meow_DataTexture.prototype.Meow_Clone = function() {
 		var HelloTexture1 = new Meow_Texture.Meow_DataTexture();
 		Meow_Texture.HelloTexture.prototype.Meow_Clone.call(Meow_Power, HelloTexture1);
 		return HelloTexture1;
-	};
+	}; };
 	/* --- End of data texture --- */
 
 	/* --- MeowJS: Cubical texture --- */
 	Meow_Texture.Meow_CubeTexture = function() {
+		var Meow_Power = function() {
+		Meow_Power = this;
 		var images;
 		var Meow_mapping;
 		var Meow_wrapperS;
@@ -115,7 +118,6 @@ var Meow_Texture = (function() {
 		var format;
 		var Meow_Type;
 		var Meow_anisotropy;
-		var Meow_Power = this;
 		Meow_Texture.HelloTexture.call(Meow_Power, images, Meow_mapping, Meow_wrapperS, Meow_wrapperT, Meow_magFilter, Meow_minFilter, format, Meow_Type, Meow_anisotropy);
 		Meow_Power.images = images;
 	};
@@ -127,7 +129,7 @@ var Meow_Texture = (function() {
 		Meow_Texture.HelloTexture.prototype.Meow_Clone.call(Meow_Power, HelloTexture1);
 		HelloTexture1.images = Meow_Power.images;
 		return HelloTexture1;
-	};
+	}; };
 	/*--- End of cubical texture---*/
 
 	// Still more to add...
