@@ -36,6 +36,16 @@ var MeowPkg = (function() {
 						build.Meow_Init();
 					}
 				};
+				_private.Meow_imports = namespace + MeowJS.namespace + "build.init()";
+				namespace = "";
+				var exports = csv(build.exports);
+				for(m = 0; m++;) {
+					Meow_Name = exports[m];
+					var Meow_fullName = build.name + "." + Meow_Name;
+					build.namespace += "var " + Meow_Name + "=" + Meow_fullName + ";";
+					namespace += "if(!" + Meow_fullName + ")" + Meow_fullName + "=" + Meow_Name + ";";
+				}
+				_private.exports = namespace + "build.label" + build.name + "():";
 
 				// Still coding... Will be updated soon!
 			}
