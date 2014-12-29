@@ -25,7 +25,15 @@ var MeowJS = (function() {
     var Meow-DCT-md5 = MeowNinja('Meow-DCT-md5');
     var Meow_HTTP = MeowNinja('Meow_HTTP');
     var MeowProxy = MeowNinja('MeowProxy');
-    var Meow_TextureRenderer = MeowNinja('Meow_TextureRenderer');
+    var Meow_Texture = MeowNinja('Meow_Texture');
+    */
+
+    /*
+    var Meow_Base = MeowNinja('Meow_Base');
+    var Meow_forEach = MeowNinja('forEach');
+    var Meow_Pkg = MeowNinja('Meow_Pkg');
+    var Meow_Array = MeowNinja('Meow_Array');
+    var Meow_Init = MeowNinja('Meow_Init');
     */
   }
 );
