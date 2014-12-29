@@ -1,6 +1,8 @@
 var MeowFunText = (function() {
 	'use strict';
-	var Meow_Power, Meow_Date;
+	MeowFunText.Meow_Power = function() {
+	var Meow_Date;
+	Meow_Power = this;
 	Meow_Power.Meow_CanvasID = null;
 	Meow_Power.Meow_Canvas = null;
 	Meow_Power.Meow_Context = null;
@@ -306,5 +308,5 @@ var MeowFunText = (function() {
 			continue;
 		}
 		return Meow_String.slice(0, m + 1);
-	};
+	}; };
 });
