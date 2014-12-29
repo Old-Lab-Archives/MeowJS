@@ -1,7 +1,6 @@
 var MeowFunText = function() {
 	'use strict';
 	MeowFunText.Meow_Power = function() {
-	var Meow_Date;
 	var Meow_Power = this;
 	Meow_Power.Meow_CanvasID = null;
 	Meow_Power.Meow_Canvas = null;
@@ -83,8 +82,10 @@ var MeowFunText = function() {
 	Meow_Power.Meow_DrawStyledText = function() {
 		var Meow_TextInfo;
 		var Meow_Text = Meow_TextInfo.text;
-		var xxx = Meow_TextInfo.x;
-		var y = Meow_TextInfo.y;
+		var xxx;
+		xxx = Meow_TextInfo.x;
+		var y;
+		y = Meow_TextInfo.y;
 		var Meow_TextSplit;
 		var Meow_Aux;
 		var Meow_TextLines = [];
