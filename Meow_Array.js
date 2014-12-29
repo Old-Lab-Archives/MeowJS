@@ -56,6 +56,12 @@ var Meow_Array = (function() {
           }
         }
         return -1;
+      },
+      Meow_Remove: function(Meow_array, Meow_Item) {
+        var Meow_Index = Meow_Array.indexOf(Meow_array, Meow_Item);
+        if(Meow_Index !== -1) {
+          Meow_Array.removeAt(Meow_array, Meow_Index);
+        }
       }
     });
  });
