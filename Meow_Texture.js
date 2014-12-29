@@ -2,7 +2,6 @@ var Meow_Texture = (function() {
 	/* Main File */
 	Meow_Texture.HelloTexture = function() {
 	var Meow_Image;
-	var Meow_mapping;
 	var Meow_wrapperS;
 	var Meow_wrapperT;
 	var Meow_magFilter;
@@ -87,6 +86,7 @@ var Meow_Texture = (function() {
 		var Meow_Width;
 		var Meow_Height;
 		var format;
+		var type;
 		var Meow_Type = type;
 		var Meow_mapping;
 		var Meow_wrapperS;
@@ -154,8 +154,42 @@ var Meow_Texture = (function() {
 			}
 			Meow_UpdateNow();
 		};
-	}; };
+	};
+	Meow_Texture.Meow_VideoTexture.prototype = Object.create(Meow_Texture.HelloTexture.prototype);
+	};
 	/*--- End of Video Texture ---*/
 
-	// Still more to add...
+	/* MeowJS --- Compression Texture ---*/
+	Meow_Texture.Meow_CompressedTexture = function() {
+		var Meow_Power = function() {
+			var mipmaps;
+			var Meow_Width;
+			var Meow_Height;
+			var format;
+			var type;
+			var Meow_Type = type;
+			var Meow_mapping;
+			var Meow_wrapperS;
+			var Meow_wrapperT;
+			var Meow_magFilter;
+			var Meow_minFilter;
+			var Meow_anisotropy;
+			Meow_Power = this;
+			Meow_Texture.HelloTexture.call(Meow_Power, null, Meow_mapping, Meow_wrapperS, Meow_wrapperT, Meow_magFilter, Meow_minFilter, format, Meow_Type, Meow_anisotropy);
+			Meow_Power.Meow_Image = {
+				Meow_Width: Meow_Width,
+				Meow_Height: Meow_Height
+			};
+			Meow_Power.mipmaps = mipmaps;
+			Meow_Power.flipY = false;
+			Meow_Power.generateMipmaps = false;
+		};
+		Meow_Texture.Meow_CompressedTexture.prototype = Object.create(Meow_Texture.HelloTexture.prototype);
+		Meow_Texture.Meow_CompressedTexture.prototype.Meow_Clone = function() {
+			var HelloTexture1 = new Meow_Texture.Meow_CompressedTexture();
+			Meow_Texture.HelloTexture.prototype.Meow_Clone.call(Meow_Power, HelloTexture1);
+			return HelloTexture1;
+		};
+	};
+	/*--- End of compression texture ---*/
 });
