@@ -42,6 +42,20 @@ var Meow_Array = (function() {
       },
       Meow_Container: function(Meow_array, Meow_Item) {
       	return Meow_Array.indexOf(Meow_array, Meow_Item) !== -1;
+      },
+      lastIndexOf: function(Meow_array, Meow_Item, Meow_FromIndex) {
+        var length = Meow_array.length;
+        if(Meow_FromIndex === null) {
+          Meow_FromIndex = length - 1;
+        } else if(Meow_FromIndex < 0) {
+          Meow_FromIndex = Math.max(0, length + Meow_FromIndex);
+        }
+        for(var m = Meow_FromIndex; m >= 0; m--) {
+          if(Meow_array[m] === Meow_Item) {
+            return m;
+          }
+        }
+        return -1;
       }
     });
  });
