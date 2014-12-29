@@ -76,8 +76,33 @@ var Meow_Texture = (function() {
 	};
 	Meow_Texture.EventDispatcher.prototype.apply(Meow_Texture.HelloTexture.prototype);
 	Meow_Texture.TextureIdCount = 0;
+	};
 	/* End of main file */
 
-	// Still more to add...
+	/* MeowJS --- Data Texture --- */
+	Meow_Texture.Meow_DataTexture = function(){
+		var Meow_Data;
+		var Meow_Width;
+		var Meow_Height;
+		var format;
+		var Meow_Type = type;
+		var Meow_mapping;
+		var Meow_wrapperS;
+		var Meow_wrapperT;
+		var Meow_magFilter;
+		var Meow_minFilter;
+		var Meow_anisotropy;
+		var Meow_Power = this;
+		Meow_Texture.HelloTexture.call(Meow_Power, null, Meow_mapping, Meow_wrapperS, Meow_wrapperT, Meow_magFilter, Meow_minFilter, format, Meow_Type, Meow_anisotropy);
+		Meow_Power.Meow_Image = {Meow_Data: data, Meow_Width: width, Meow_Height: height };
 	};
+	Meow_Texture.Meow_DataTexture.prototype = Object.create(Meow_Texture.HelloTexture.prototype);
+	Meow_Texture.Meow_DataTexture.prototype.Meow_Clone = function() {
+		var HelloTexture1 = new Meow_Texture.Meow_DataTexture();
+		Meow_Texture.HelloTexture.prototype.Meow_Clone.call(Meow_Power, HelloTexture1);
+		return HelloTexture1;
+	};
+	/* --- End of data texture --- */
+
+	// Still more to add...
 });
