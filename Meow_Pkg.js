@@ -1,13 +1,15 @@
-var MeowPkg = (function() {
+var MeowPkg = function() {
 	/*
 	var Meow_Base = MeowNinja('Meow_Base');
 	var Meow_Extend = MeowNinja('Meow_Base');
 	var Meow_Construct = MeowNinja('Meow_Base');
 	var Meow_Init = MeowNinja('Meow_Init');
 	*/
+	var Meow_Base, Meow_Extend, Meow_Construct, Meow_Init;
+	var build = this;
+	var format, csv;
 	var Meow_Pkg = Meow_Base.Meow_Extend({
 		Meow_Construct: function(_private, _public) {
-			var build = this;
 			build.Meow_Extend(_public);
 			if(build.name && build.name !== "Meow_Base") {
 				if(_public.parent === undefined) {
@@ -88,4 +90,4 @@ var MeowPkg = (function() {
 			return format("[%1]", build.parent ? String.slice(build.parent, 1, -1) + "." + build.name : build.name);
 		}
 	});
-});
+};
