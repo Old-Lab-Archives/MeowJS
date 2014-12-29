@@ -8,9 +8,10 @@ var Meow_Texture = (function() {
 	var Meow_magFilter;
 	var Meow_minFilter;
 	var format;
-	var Meow_Type = type;
+	var Meow_Type;
 	var Meow_anisotropy;
-	var Meow_Power = this;
+	var Meow_Power = function() {
+	Meow_Power = this;
 	Object.defineProperty(Meow_Power, 'id', {value: Meow_Texture.TextureIdCount ++});
 	Meow_Power.uuid = Meow_Texture.Math.generateUUID();
 	Meow_Power.name = '';
@@ -75,6 +76,8 @@ var Meow_Texture = (function() {
 	};
 	Meow_Texture.EventDispatcher.prototype.apply(Meow_Texture.HelloTexture.prototype);
 	Meow_Texture.TextureIdCount = 0;
+	/* End of main file */
 
 	// Still more to add...
+	};
 });
