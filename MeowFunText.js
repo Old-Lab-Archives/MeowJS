@@ -1,5 +1,5 @@
-var MeowFunText = (function() {
-	"use strict";
+var MeowFunText = function() {
+	'use strict';
 	MeowFunText.Meow_Power = function() {
 	var Meow_Date;
 	var Meow_Power = this;
@@ -35,7 +35,7 @@ var MeowFunText = (function() {
 			}
 		}
 	};
-	Meow_Power.Meow_DrawText = function(Meow_TextInfo) {
+	Meow_Power.Meow_DrawText = function(Meow_TextInfo, Meow_Date) {
 		Meow_Power.Meow_InitTime = new Meow_Date().getTime();
 		if(Meow_Power.Meow_Canvas === null) {
 			if(!Meow_Power.Meow_FetchCanvas()) {
@@ -80,11 +80,13 @@ var MeowFunText = (function() {
 			return Meow_Power.Meow_BufferCanvas;
 		}
 	};
-	Meow_Power.Meow_DrawStyledText = function(Meow_TextInfo) {
+	Meow_Power.Meow_DrawStyledText = function() {
+		var Meow_TextInfo;
 		var Meow_Text = Meow_TextInfo.text;
 		var xxx = Meow_TextInfo.x;
 		var y = Meow_TextInfo.y;
-		var Meow_TextSplit, Meow_Aux;
+		var Meow_TextSplit;
+		var Meow_Aux;
 		var Meow_TextLines = [];
 		var Meow_BoxWidth = Meow_TextInfo.Meow_BoxWidth;
 		var Meow_ProFont = [];
@@ -309,4 +311,4 @@ var MeowFunText = (function() {
 		}
 		return Meow_String.slice(0, m + 1);
 	}; };
-});
+};
