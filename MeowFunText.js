@@ -1,8 +1,8 @@
 var MeowFunText = (function() {
-	'use strict';
+	"use strict";
 	MeowFunText.Meow_Power = function() {
 	var Meow_Date;
-	Meow_Power = this;
+	var Meow_Power = this;
 	Meow_Power.Meow_CanvasID = null;
 	Meow_Power.Meow_Canvas = null;
 	Meow_Power.Meow_Context = null;
