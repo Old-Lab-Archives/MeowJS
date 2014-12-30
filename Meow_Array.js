@@ -62,6 +62,18 @@ var Meow_Array = (function() {
         if(Meow_Index !== -1) {
           Meow_Array.removeAt(Meow_array, Meow_Index);
         }
+      },
+      removeAt: function(Meow_array, Meow_Index) {
+        Meow_Array.splice(Meow_array, Meow_Index, 1);
+      },
+      Meow_Insert: function(Meow_array, Meow_Index, Meow_Item) {
+        Meow_Array.splice(Meow_array, Meow_Index, 0, Meow_Item);
+      },
+      Meow_Item: function(Meow_array, Meow_Index) {
+        if(Meow_Index < 0) {
+          Meow_Index += Meow_array.length;
+        }
+        return Meow_array[Meow_Index];
       }
     });
  });
