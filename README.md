@@ -20,8 +20,11 @@ $git clone https://github.com/Geek-Research-Lab/MeowJS.git<br><br>
 I have compiled here using Cygwin.<br><br>
 ![](http://geekresearchlab.net/experiments/meow.jpg)
 <br>
-Currently, it is non-production ready with no bugs.
+<b>Testing:-</b><br>
+Compling the cloned repo is meant to show that there are no bugs.<br>
+For testing, Make use of "test.html" <br>
+Currently, it is non-production ready.
 <br><br>
-A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided. <br>
+A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided and the documentation will be updated soon. <br>
 This is a <a href="http://geekresearchlab.net/mtechproject/">project</a> done by an individual. <br>
-Contributions are welcome. <br>
+Contributions are welcome in form of sending issues or pull requests. <br>
