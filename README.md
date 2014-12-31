@@ -22,8 +22,8 @@ I have compiled here using Cygwin.<br><br>
 <br>
 <b>Testing:-</b><br>
 Compling the cloned repo is meant to show that there are no bugs.<br>
-For testing, Make use of "test.html" <br>
-Currently, it is non-production ready.
+For testing, Make use of "test.html" <br> <br>
+Currently, MeowJS is non-production ready.
 <br><br>
 A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided and the documentation will be updated soon. <br>
 This is a <a href="http://geekresearchlab.net/mtechproject/">project</a> done by an individual. <br>
