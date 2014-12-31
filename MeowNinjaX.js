@@ -25,6 +25,7 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 	var Meow_Preloaded = 2;
 	var Meow_Loading = 3;
 	var Meow_Loaded = 4; // Yayyy! (^_^)
+	var Meow_Args = arguments;
 	function Meow_Idle() {}
 	function Meow_Each(Meow_array, Meow_Callback) {
 		if(!Meow_array) {
@@ -132,6 +133,33 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			});
 		}
 	}
+	function Meow_LoadAPI() {
+		var Meow_Rest = [].slice.call(Meow_Args, 1);
+		var Meow_Next = Meow_Rest[0];
+		if(!Meow_IsNinjaReady) {
+			Meow_Queue.push(function() {
+				MeowNinja_API.load.apply(null, Meow_Args);
+			});
+			return MeowNinja_API;
+		}
+		if(!!Meow_Next) {
+			Meow_Each(Meow_Rest, function(Meow_Item) {
+				if(!Meow_isFunc(Meow_Item) && !!Meow_Item) {
+					Meow_Preload(Meow_FetchAsset(Meow_Item));
+				}
+			});
+			load(Meow_FetchAsset(Meow_Args[0]), Meow_isFunc(Meow_Next) ? Meow_Next : function() {
+				MeowNinja_API.load.apply(null, Meow_Rest);
+			});
+		} else {
+			load(Meow_FetchAsset(Meow_Args[0]));
+		}
+		return MeowNinja_API;
+	}
+	function LoadAPIAsync() {
+		var Meow_Callback = Meow_Args[Meow_Args.length - 1];
+		var Meow_Items = {};
 
-	// Still coding... Will be updated soon!
+		// Still coding... Will be updated soon!
+	}
 });
