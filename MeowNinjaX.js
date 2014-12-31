@@ -344,6 +344,22 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			}());
 		}
 	}
-
-	// Still coding now... Will be updated soon!
-});
+	MeowNinja_API.load = MeowNinja_API.js = Meow_isAsync ? LoadAPIAsync : Meow_LoadAPI;
+	MeowNinja_API.test = Meow_ConditionType;
+	MeowNinja_API.ready = ready;
+	MeowNinja_API.ready(Meow_Doc, function() {
+		if(Meow_IsNinjaReady && Meow_FullyLoaded()) {
+			Meow_Each(Meow_Handlers.ALL, function(Meow_Callback) {
+				Meow_Unity(Meow_Callback);
+			});
+		} if(MeowNinja_API.feature) {
+			MeowNinja_API.feature("DOM loaded", true);
+		}
+	});
+	setTimeout(function() {
+		Meow_IsNinjaReady = true;
+		Meow_Each(Meow_Queue, function(Meow_Fn) {
+			Meow_Fn()
+		});
+	}, 500);
+}(window));
