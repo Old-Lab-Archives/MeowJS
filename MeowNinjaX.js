@@ -159,7 +159,59 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 	function LoadAPIAsync() {
 		var Meow_Callback = Meow_Args[Meow_Args.length - 1];
 		var Meow_Items = {};
-
-		// Still coding... Will be updated soon!
+		if(!Meow_isFunc(Meow_Callback)) {
+			Meow_Callback = null;
+		} if(Meow_Array(Meow_Args[0])) {
+			Meow_Args[0].push(Meow_Callback);
+			MeowNinja_API.load.apply(null, Meow_Args[0]);
+			return MeowNinja_API;
+		}
+		Meow_Each(Meow_Args, function(Meow_Item, m) {
+			if(Meow_Item !== Meow_Callback) {
+				Meow_Item = Meow_FetchAsset(Meow_Item);
+				Meow_Items[Meow_Item.name] = Meow_Item;
+			}
+		});
+		Meow_Each(Meow_Args, function(Meow_Item, m) {
+			if(Meow_Item !== Meow_Callback) {
+				Meow_Item = Meow_FetchAsset(Meow_Item);
+				load(Meow_Item, function() {
+					if(Meow_FullyLoaded(Meow_Items)) {
+						Meow_Unity(Meow_Callback);
+					}
+				});
+			}
+		});
+		return MeowNinja_API;
 	}
+	function load(Meow_Asset, Meow_Callback) {
+		Meow_Callback = Meow_Callback || Meow_Idle;
+		if(Meow_Asset.state === Meow_Loaded) {
+			Meow_Callback();
+			return;
+		} if(Meow_Asset.state === Meow_Loading) {
+			MeowNinja_API.ready(Meow_Asset.name, Meow_Callback);
+			return;
+		} if(Meow_Asset.state === Meow_Preloading) {
+			Meow_Asset.Meow_onPreload.push(function() {
+				load(Meow_Asset, Meow_Callback);
+			});
+			return;
+		}
+		Meow_Asset.state = Meow_Loading;
+		loadAsset(Meow_Asset, function() {
+			Meow_Asset.state = Meow_Loaded;
+			Meow_Callback();
+			Meow_Each(Meow_Handlers[Meow_Asset.name], function(Meow_Fn) {
+				Meow_Unity(Meow_Fn);
+			});
+			if(Meow_IsDOMReady && Meow_FullyLoaded()) {
+				Meow_Each(Meow_Handlers.ALL, function(Meow_Fn) {
+					Meow_Unity(Meow_Fn);
+				});
+			}
+		});
+	}
+
+	// Still coding... Will be updated soon!
 });
