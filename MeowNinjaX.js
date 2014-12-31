@@ -212,6 +212,32 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			}
 		});
 	}
+	function loadAsset(Meow_Asset, Meow_Callback) {
+		Meow_Callback = Meow_Callback || Meow_Idle;
+		function error(event) {
+			event = event || Meow_WinWin.event;
+			Meow_EventListener.onload = Meow_EventListener.onreadystatechange = Meow_EventListener.onError = null;
+			Meow_Callback();
+		}
+		function Meow_Process(event) {
+			event = event || Meow_WinWin.event;
+			if(event.Meow_Type === "load" || (/Meow_Loaded|Meow_FullyLoaded/.test(Meow_EventListener.readyState) && (!Meow_Doc.documentMode || Meow_Doc.documentMode < 9))) {
+				Meow_EventListener.onload = Meow_EventListener.onreadystatechange = Meow_EventListener.onError = null;
+				Meow_Callback();
+			}
+		}
+		var Meow_EventListener;
+		if(/\.css[^\.]*$/.test(Meow_Asset.Meow_url)) {
+			Meow_EventListener = Meow_Doc.createElement("link");
+			Meow_EventListener.type = "text/" + (Meow_Asset.type || "css");
+			Meow_EventListener.rel = "stylesheet";
+			Meow_EventListener.href = Meow_Asset.Meow_url;
+		} else {
+			Meow_EventListener = Meow_Doc.createElement("script");
+			Meow_EventListener.type = "text/" + (Meow_Asset.type || "javascript");
+			Meow_EventListener.src = Meow_Asset.Meow_url;
+		}
 
-	// Still coding... Will be updated soon!
+		// Still coding now... Will be updated soon!
+	}
 });
