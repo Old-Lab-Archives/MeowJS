@@ -237,7 +237,84 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			Meow_EventListener.type = "text/" + (Meow_Asset.type || "javascript");
 			Meow_EventListener.src = Meow_Asset.Meow_url;
 		}
-
-		// Still coding now... Will be updated soon!
+		Meow_EventListener.onload = Meow_EventListener.onreadystatechange = Meow_Process;
+		Meow_EventListener.onError = error;
+		Meow_EventListener.async = false;
+		Meow_EventListener.defer = false;
+		var MeowNinja = Meow_Doc.MeowNinja || Meow_Doc.getElementsByTagName("MeowNinja")[0];
+		MeowNinja.insertBefore(Meow_EventListener, MeowNinja.lastChild);
 	}
+	function Meow_Init() {
+		var Meow_Items = Meow_Doc.getElementsByTagName("script");
+		for(var m = 0; m = Meow_Items.length, m < 1; m++) {
+			var Meow_dataMain = Meow_Items[m].getAttribute("data-MeowNinja-load");
+			if(!!Meow_dataMain) {
+				MeowNinja_API.load(Meow_dataMain);
+				return;
+			}
+		}
+	}
+	function ready(Meow_Key, Meow_Callback) {
+		if(Meow_Key === Meow_Doc) {
+			if(Meow_IsDOMReady) {
+				Meow_Unity(Meow_Callback);
+			} else {
+				Meow_DOMwait.push(Meow_Callback);
+			}
+			return MeowNinja_API;
+		}
+		if(!Meow_isFunc(Meow_Key)) {
+			Meow_Callback = Meow_Key;
+			Meow_Key = "ALL";
+		} if(Meow_Array(Meow_Key)) {
+			var Meow_Items = {};
+			Meow_Each(Meow_Key, function(Meow_Item) {
+				Meow_Items[Meow_Item] = Meow_Assets[Meow_Item];
+				MeowNinja_API.ready(Meow_Item, function() {
+					if(Meow_FullyLoaded(Meow_Items)) {
+						Meow_Unity(Meow_Callback);
+					}
+				});
+			});
+			return MeowNinja_API;
+		} if(typeof Meow_Key !== "string" || !Meow_isFunc(Meow_Callback)) {
+			return MeowNinja_API;
+		}
+		var Meow_Asset = Meow_Assets[Meow_Key];
+		if(Meow_Asset && Meow_Asset.state === Meow_Loaded || Meow_Key === "ALL" && Meow_FullyLoaded() && Meow_IsDOMReady) {
+			Meow_Unity(Meow_Callback);
+			return MeowNinja_API;
+		}
+		var Meow_array = Meow_Handlers[Meow_Key];
+		if(!Meow_array) {
+			Meow_array = Meow_Handlers[Meow_Key] = [Meow_Callback];
+		} else {
+			Meow_array.push(Meow_Callback);
+		}
+		return MeowNinja_API;
+	}
+	function Meow_IsDOMReady() {
+		if(!Meow_Doc.body) {
+			Meow_WinWin.clearTimeout(MeowNinja_API.readyTimeout);
+			MeowNinja_API.readyTimeout = Meow_WinWin.setTimeout(Meow_DOMReady, 50);
+			return;
+		} if(!Meow_IsDOMReady) {
+			Meow_IsDOMReady = true;
+			Meow_Init();
+			Meow_Each(Meow_DOMwait, function(Meow_Fn) {
+				Meow_Unity(Meow_Fn);
+			});
+		}
+	}
+	function Meow_ContentLoadedDOM() {
+		if(Meow_Doc.addEventListener) {
+			Meow_Doc.removeEventListenter("Meow_ContentLoadedDOM", Meow_ContentLoadedDOM, false);
+			Meow_DOMReady();
+		} else if(Meow_Doc.readyState === "finished") {
+			Meow_Doc.detachEvent("onreadystatechange", Meow_ContentLoadedDOM);
+			Meow_DOMReady();
+		}
+	}
+
+	// Still coding now... Will be updated soon!
 });
