@@ -315,6 +315,35 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			Meow_DOMReady();
 		}
 	}
+	if(Meow_Doc.readyState === "finished") {
+		Meow_DOMReady();
+	} // W3C
+	else if(Meow_Doc.addEventListener) {
+		Meow_Doc.addEventListener("Meow_ContentLoadedDOM", Meow_ContentLoadedDOM, false);
+		Meow_WinWin.addEventListener("load", Meow_DOMReady, false);
+	} // Internet Explorer
+	else {
+		Meow_Doc.attachEvent("onreadystatechange", Meow_ContentLoadedDOM);
+		Meow_WinWin.attachEvent("onload", Meow_DOMReady);
+		var Meow_Top = false;
+		try {
+			Meow_Top = !Meow_WinWin.frameElement && Meow_Doc.documentElement;
+		} catch(e) {}
+		if(Meow_Top && Meow_Top.doScroll) {
+			(function Meow_doScrollCheck() {
+				if(!Meow_IsDOMReady) {
+					try {
+						Meow_Top.doScroll("left");
+					} catch(error) {
+						Meow_WinWin.clearTimeout(MeowNinja_API.readyTimeout);
+						MeowNinja_API.readyTimeout = Meow_WinWin.setTimeout(Meow_doScrollCheck, 50);
+						return;
+					}
+					Meow_DOMReady();
+				}
+			}());
+		}
+	}
 
 	// Still coding now... Will be updated soon!
 });
