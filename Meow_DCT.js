@@ -7,6 +7,12 @@ var Meow_DCT = (function() {
     var Meow_ctx = [];
     var Meow_ImageData = [];
     var Meow_Matrix = [];
+    var xxx, m3, um3;
+    var Meow_InitMatrix;
+    var Meow_ForwardDCT;
+    var Meow_InvDCT;
+    var Meow_ImageOffsetDist;
+    var Meow_ImageOffsetSrc;
     Meow_DCT.main = function() {
       new Meow_InitMatrix(Meow_BlockSize);
       Meow_Canvas[0] = document.getElementById("Canvas_Input");
@@ -37,7 +43,7 @@ var Meow_DCT = (function() {
     };
     Meow_DCT.Meow_CopyImageData = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
       for (var y = 0; y < Meow_Height; y++) {
-        for (var xxx = 0; xxx < Meow_Width; xxx++) {
+        for (xxx = 0; xxx < Meow_Width; xxx++) {
           var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
           Meow_ImageDist[Meow_ImageOffset + 0] = src[Meow_ImageOffset + 0];
           Meow_ImageDist[Meow_ImageOffset + 1] = src[Meow_ImageOffset + 1];
@@ -48,7 +54,7 @@ var Meow_DCT = (function() {
     };
     Meow_DCT.Meow_Grayscale = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
       for (var y = 0; y < Meow_Height; y++) {
-        for (var xxx = 0; xxx < Meow_Width; xxx++) {
+        for (xxx = 0; xxx < Meow_Width; xxx++) {
           var Meow_ImageOffset = (y * Meow_Width + xxx) * 4;
           var Meow_Rouge = src[Meow_ImageOffset + 0];
           var Meow_Vert = src[Meow_ImageOffset + 1];
@@ -93,7 +99,7 @@ var Meow_DCT = (function() {
             }
           }
           for (xxx = 0; xxx < Meow_BlockSize; xxx++) {
-            for (var m3 = 0; m3 < Meow_BlockSize; m3++) {
+            for (m3 = 0; m3 < Meow_BlockSize; m3++) {
               Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
               Meow_acc[0] = 0;
               Meow_acc[1] = 0;
@@ -122,7 +128,7 @@ var Meow_DCT = (function() {
       Meow_acc = [];
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
-          for (var xxx = 0; xxx < Meow_BlockSize; xxx++) {
+          for (xxx = 0; xxx < Meow_BlockSize; xxx++) {
             for (m3 = 0; m3 < Meow_BlockSize; m3++) {
               Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
               Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
@@ -163,7 +169,7 @@ var Meow_DCT = (function() {
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
           for (var y = 0; y < Meow_BlockSize; y++) {
-            for (var xxx = 0; xxx < Meow_BlockSize; xxx++) {
+            for (xxx = 0; xxx < Meow_BlockSize; xxx++) {
               var aa = xxx / (Meow_BlockSize - 1);
               var bb = y / (Meow_BlockSize - 1);
               var cc = 1 / (1 + Math.sqrt((aa * aa) + (bb * bb) / 0.4, (2 * x)));
