@@ -1,4 +1,4 @@
-var Meow_DCT = (function() {
+var Meow_DCT = function() {
   "use strict";
     var Meow_BlockSize = 8;
     var Meow_Coeff = 8;
@@ -16,8 +16,8 @@ var Meow_DCT = (function() {
     var Meow_ImageOffsetSrc;
     var Meow_acc, Meow_Main;
     var Meow_OnChangeImg, Meow_OnChangeCoeff;
-    var Meow_Height, Meow_Width;
-    var Meow_ImageDist;
+    //var Meow_Height, Meow_Width;
+    //var Meow_ImageDist;
     var Meow_CoeffRatio;
     Meow_DCT.main = function() {
       new Meow_InitMatrix(Meow_BlockSize);
@@ -129,8 +129,9 @@ var Meow_DCT = (function() {
         }
       }
     };
-    Meow_DCT.Meow_InvDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff) {
+    Meow_DCT.Meow_InvDCT = function(Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff) {
       var Meow_Temp = [];
+      var src;
       Meow_acc = [];
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
@@ -169,8 +170,8 @@ var Meow_DCT = (function() {
         }
       }
     };
-    Meow_DCT.Meow_FastForwardDCT = function(Meow_ImageDist, Meow_Width, Meow_Height) {};
-    Meow_DCT.Meow_FastInvDCT = function(Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio) {};
+    //Meow_DCT.Meow_FastForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {};
+    //Meow_DCT.Meow_FastInvDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio) {};
     Meow_DCT.Meow_Filter = function(Meow_ImageDist, Meow_Width, Meow_Height, x) {
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
@@ -180,6 +181,7 @@ var Meow_DCT = (function() {
               var bb = y / (Meow_BlockSize - 1);
               var cc = 1 / (1 + Math.sqrt((aa * aa) + (bb * bb) / 0.4, (2 * x)));
               var Meow_ImageOffset = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
+              var src;
               Meow_ImageDist[Meow_ImageOffset + 0] = cc * (src[Meow_ImageOffset + 0] - 128) + 128;
               Meow_ImageDist[Meow_ImageOffset + 1] = cc * (src[Meow_ImageOffset + 1] - 128) + 128;
               Meow_ImageDist[Meow_ImageOffset + 2] = cc * (src[Meow_ImageOffset + 2] - 128) + 128;
@@ -194,4 +196,4 @@ var Meow_DCT = (function() {
       Meow_OnChangeImg: Meow_OnChangeImg,
       Meow_OnChangeCoeff: Meow_OnChangeCoeff
     };
-});
+};
