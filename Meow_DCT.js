@@ -18,7 +18,7 @@ var Meow_DCT = function() {
     var Meow_OnChangeImg, Meow_OnChangeCoeff;
     //var Meow_Height, Meow_Width;
     //var Meow_ImageDist;
-    var Meow_CoeffRatio;
+    //var Meow_CoeffRatio;
     Meow_DCT.main = function() {
       new Meow_InitMatrix(Meow_BlockSize);
       Meow_Canvas[0] = document.getElementById("Canvas_Input");
@@ -81,7 +81,7 @@ var Meow_DCT = function() {
         }
       }
     };
-    Meow_DCT.Meow_ForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
+    Meow_ForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
       var Meow_Temp = [];
       var Meow_acc = [];
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
@@ -129,7 +129,7 @@ var Meow_DCT = function() {
         }
       }
     };
-    Meow_DCT.Meow_InvDCT = function(Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff) {
+    Meow_InvDCT = function(Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff) {
       var Meow_Temp = [];
       var src;
       Meow_acc = [];
@@ -190,7 +190,7 @@ var Meow_DCT = function() {
         }
       }
     };
-    Meow_DCT.Meow_GaussianFilter = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {};
+    //Meow_DCT.Meow_GaussianFilter = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {};
     return {
       Meow_Main: Meow_Main,
       Meow_OnChangeImg: Meow_OnChangeImg,
