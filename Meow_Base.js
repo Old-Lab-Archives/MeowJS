@@ -1,10 +1,10 @@
-var MeowBase = (function() {
+var MeowBase = function() {
 	"use strict";
+	var build = this;
 var Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
 		Meow_Base.Meow_protoBuild = true;
-		var build = this;
 		var Meow_proto = new build();
 		Meow_Extend.call(Meow_proto, Meow_Instance);
 		Meow_proto.Meow_Base = function() {};
@@ -71,7 +71,7 @@ Meow_Base.prototype = {
 			"valueOf"
 			];
 			var m = Meow_Base.Meow_protoBuild ? 0 : 1;
-			while(Meow_Key == Meow_Hidden[m++]) {
+			while(Meow_Key === Meow_Hidden[m++]) {
 				if(Meow_Src[Meow_Key] !== Meow_proto[Meow_Key]) {
 					Meow_Extend.call(build, Meow_Key, Meow_Src[Meow_Key]);
 				}
@@ -113,4 +113,4 @@ Meow_Base = build.Meow_Extend({
 		return String(build.valueOf());
 	}
 });
-});
+};
