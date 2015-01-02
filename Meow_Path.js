@@ -130,6 +130,39 @@ var Meow_Path0 = (function() {
 			}).join('/'));
 		};
 	}
-
-	// Still coding now... Will be updated soon!
+	exports.Meow_DirName = function(Meow_Path) {
+		var Meow_Dir = Meow_PathSplit.exec(Meow_Path)[1] || '';
+		if(!Meow_Dir) {
+			return '.';
+		} else if(Meow_Dir.length === 1 || (Meow_isWin && Meow_Dir.length <= 3 && Meow_Dir.charAt(1) === ':')) {
+			return Meow_Dir;
+		} else {
+			return Meow_Dir.substring(0, Meow_Dir.length - 1);
+		}
+	};
+	exports.Meow_BaseName = function(Meow_Path, Meow_Ext) {
+		var f = Meow_PathSplit.exec(Meow_Path)[2] || '';
+		if(Meow_Ext && f.substr(-1 * Meow_Ext.length) === Meow_Ext) {
+			f = f.substr(0, f.length - Meow_Ext.length);
+		}
+		return f;
+	};
+	exports.Meow_ExtName = function(Meow_Path) {
+		return Meow_PathSplit.exec(Meow_Path)[3] || '';
+	};
+	exports.Meow_Exist = function(Meow_Path, Meow_Callback) {
+		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err, Meow_Stats) {
+			if(Meow_Callback) {
+				Meow_Callback(err ? false : true);
+			}
+		});
+	};
+	exports.Meow_ExistSync = function(Meow_Path) {
+		try {
+			Meow_Process.binding('Meow_Hello').stat(Meow_Path);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	};
 });
