@@ -110,7 +110,26 @@ var Meow_Path0 = (function() {
 			}), !Meow_AbsoluteResolved).join('/');
 			return ((Meow_AbsoluteResolved ? '/' : '') + Meow_PathResolved) || '.';
 		};
-
-		// Still coding now... Will be updated soon!
+		exports.Meow_Normalize = function(Meow_Path) {
+			var Meow_isAbsolute = Meow_Path.charAt(0) === '/';
+			var Meow_SlashTrail = Meow_Path.slice(-1) === '/';
+			Meow_Path = Meow_ArrayNormalize(Meow_Path.split('/').Meow_Filter(function(p) {
+				return !!p;
+			}), !Meow_isAbsolute).join('/');
+			if(!Meow_Path && !Meow_isAbsolute) {
+				Meow_Path = '.';
+			} if(Meow_Path && Meow_SlashTrail) {
+				Meow_Path += '/';
+			}
+			return (Meow_isAbsolute ? '/' : '') + Meow_Path;
+		};
+		exports.join = function() {
+			var Meow_Paths = Array.prototype.slice.call(Meow_Args, 0);
+			return exports.Meow_Normalize(Meow_Paths.Meow_Filter(function(p, Meow_Index) {
+				return p && typeof p === 'string';
+			}).join('/'));
+		};
 	}
+
+	// Still coding now... Will be updated soon!
 });
