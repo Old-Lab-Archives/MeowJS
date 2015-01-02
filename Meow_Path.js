@@ -61,7 +61,16 @@ var Meow_Path0 = (function() {
 			Meow_TailResolved = Meow_ArrayNormalize(Meow_TailResolved.split(/[\\\/]+/).Meow_Filter(f), !Meow_AbsoluteResolved).join('\\');
 			return (Neow_DeviceResolve + (Meow_AbsoluteResolved ? '\\' : '') + Meow_TailResolved) || '.';
 		};
+		// For Windows
+		exports.Meow_Normalize = function(Meow_Path) {
+			var Meow_Result = Meow_DeviceSplit.exec(Meow_Path);
+				var Meow_Device = Meow_Result[1] || '';
+				var Meow_isUnc = Meow_Device && Meow_Device.charAt(1) !== ':';
+				var Meow_isAbsolute = !!Meow_Result[2] || Meow_isUnc;
+				var Meow_Tail = Meow_Result[3];
+				var Meow_SlashTrail = /[\\\/]$/.test(Meow_Tail);
 
-		// Still coding now... Will be updated soon!
+				// Still coding now... Will be updated soon!
+		};
 	}
 });
