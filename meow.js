@@ -1,5 +1,5 @@
 // Main File
-var MeowJS = (function() {
+var MeowJS = function() {
     "use strict";
     var xMeow = document.createElement('script');
     xMeow.src = 'MeowNinjaX.js';
@@ -7,6 +7,7 @@ var MeowJS = (function() {
 
     MeowNinja.load(
       "Meow_Hello.js",
+      "Meow_Path.js",
       "Meow_TextSemantics.js",
       "Meow_VideoSemantics.js",
       "Meow_DCT.js",
@@ -30,6 +31,6 @@ var MeowJS = (function() {
       "Meow_forEach.js",
       "Meow_Pkg.js",
       "Meow_Array.js",
-      "Meow_Init.js");
-  }
-);
+      "Meow_Init.js"
+    );
+};
