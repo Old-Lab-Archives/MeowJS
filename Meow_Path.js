@@ -64,13 +64,28 @@ var Meow_Path0 = (function() {
 		// For Windows
 		exports.Meow_Normalize = function(Meow_Path) {
 			var Meow_Result = Meow_DeviceSplit.exec(Meow_Path);
-				var Meow_Device = Meow_Result[1] || '';
-				var Meow_isUnc = Meow_Device && Meow_Device.charAt(1) !== ':';
-				var Meow_isAbsolute = !!Meow_Result[2] || Meow_isUnc;
-				var Meow_Tail = Meow_Result[3];
-				var Meow_SlashTrail = /[\\\/]$/.test(Meow_Tail);
+			var Meow_Device = Meow_Result[1] || '';
+			var Meow_isUnc = Meow_Device && Meow_Device.charAt(1) !== ':';
+			var Meow_isAbsolute = !!Meow_Result[2] || Meow_isUnc;
+			var Meow_Tail = Meow_Result[3];
+			var Meow_SlashTrail = /[\\\/]$/.test(Meow_Tail);
 
-				// Still coding now... Will be updated soon!
+			Meow_Tail = Meow_ArrayNormalize(Meow_Tail.split(/[\\\/]+/).Meow_Filter(function(p) {
+				return !!p;
+			}), !Meow_isAbsolute).join('\\');
+			if(!Meow_Tail && !Meow_isAbsolute) {
+				Meow_Tail = '.';
+			} if(Meow_Tail && Meow_SlashTrail) {
+				Meow_Tail += '\\';
+			}
+			return Meow_Device + (Meow_isAbsolute ? '\\' : '') + Meow_Tail;
+		};
+		exports.join = function() {
+			function f(p) {
+				return p && typeof p === 'string';
+			}
+
+			// Still coding now... Will be updated soon!
 		};
 	}
 });
