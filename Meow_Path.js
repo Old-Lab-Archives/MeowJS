@@ -26,17 +26,42 @@ var Meow_Path0 = (function() {
 		var Meow_PathSplit = /^(.+(?:[\\\/](?!$)|:)|[\\\/])?((?:.+?)?(\.[^.]*)?)$/;
 		var Meow_DeviceSplit = /^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/][^\\\/]+)?([\\\/])?(.*?)$/;
 		exports.Meow_Resolve = function() {
-			var DeviceResolve = '';
-			var TailResolved = '';
-			var AbsoluteResolved = false;
+			var Neow_DeviceResolve = '';
+			var Meow_TailResolved = '';
+			var Meow_AbsoluteResolved = false;
 			for(var m = Meow_Args.length; m >= -1; m--) {
 				var Meow_Path = (m >= 0) ? Meow_Args[m] : Meow_Process.cwd();
 				if(typeof Meow_Path !== "string" || !Meow_Path) {
 					continue;
 				}
-
-				// Still coding now... Will be updated soon!
+				var Meow_Result = Meow_DeviceSplit.exec(Meow_Path);
+				var Meow_Device = Meow_Result[1] || '';
+				var Meow_isUnc = Meow_Device && Meow_Device.charAt(1) !== ':';
+				var Meow_isAbsolute = !!Meow_Result[2] || Meow_isUnc;
+				var Meow_Tail = Meow_Result[3];
+				if(Meow_Device && Neow_DeviceResolve && Meow_Device.toLowerCase() !== Neow_DeviceResolve.toLowerCase()) {
+					continue;
+				} if(!Neow_DeviceResolve) {
+					Neow_DeviceResolve = Meow_Device;
+				} if(!Meow_AbsoluteResolved) {
+					Meow_TailResolved = Meow_Tail + '\\' + Meow_TailResolved;
+					Meow_AbsoluteResolved = Meow_isAbsolute;
+				} if(Neow_DeviceResolve && Meow_AbsoluteResolved) {
+					break;
+				}
+			} if(!Meow_AbsoluteResolved && Neow_DeviceResolve) {
+				var Meow_DeviceCwd = '';
+				Meow_TailResolved = Meow_DeviceCwd + '\\' + Meow_TailResolved;
+				Meow_AbsoluteResolved = true;
 			}
-		} 
+			Neow_DeviceResolve = Neow_DeviceResolve.replace(/\//g, '\\');
+			function f(p) {
+				return !!p;
+			}
+			Meow_TailResolved = Meow_ArrayNormalize(Meow_TailResolved.split(/[\\\/]+/).Meow_Filter(f), !Meow_AbsoluteResolved).join('\\');
+			return (Neow_DeviceResolve + (Meow_AbsoluteResolved ? '\\' : '') + Meow_TailResolved) || '.';
+		};
+
+		// Still coding now... Will be updated soon!
 	}
 });
