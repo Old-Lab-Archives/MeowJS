@@ -83,7 +83,7 @@ var Meow_DCT = function() {
     };
     Meow_ForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
       var Meow_Temp = [];
-      var Meow_acc = [];
+      Meow_acc = [];
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
           for (y = 0; y < Meow_BlockSize; y++) {
@@ -170,8 +170,8 @@ var Meow_DCT = function() {
         }
       }
     };
-    //Meow_DCT.Meow_FastForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {};
-    //Meow_DCT.Meow_FastInvDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio) {};
+    //Meow_FastForwardDCT(src, Meow_ImageDist, Meow_Width, Meow_Height);
+    //Meow_FastInvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio);
     Meow_DCT.Meow_Filter = function(Meow_ImageDist, Meow_Width, Meow_Height, x) {
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
@@ -190,7 +190,7 @@ var Meow_DCT = function() {
         }
       }
     };
-    //Meow_DCT.Meow_GaussianFilter = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {};
+    //Meow_GaussianFilter(src, Meow_ImageDist, Meow_Width, Meow_Height);
     return {
       Meow_Main: Meow_Main,
       Meow_OnChangeImg: Meow_OnChangeImg,
