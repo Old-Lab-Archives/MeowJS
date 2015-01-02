@@ -2,6 +2,7 @@ var Meow_Process = Meow_Process || {};
 var Meow_Path0 = (function() {
 	"use strict";
 	var Meow_isWin = Meow_Process.platform === 'win32';
+	var Meow_PathSplit;
 	var Meow_Args = arguments;
 	function Meow_ArrayNormalize(Meow_Parts, Meow_AllowAbvRoot) {
 		var Meow_Up = 0;
@@ -23,7 +24,7 @@ var Meow_Path0 = (function() {
 		return Meow_Parts;
 	}
 	if(Meow_isWin) {
-		var Meow_PathSplit = /^(.+(?:[\\\/](?!$)|:)|[\\\/])?((?:.+?)?(\.[^.]*)?)$/;
+		Meow_PathSplit = /^(.+(?:[\\\/](?!$)|:)|[\\\/])?((?:.+?)?(\.[^.]*)?)$/;
 		var Meow_DeviceSplit = /^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/][^\\\/]+)?([\\\/])?(.*?)$/;
 		exports.Meow_Resolve = function() {
 			var Neow_DeviceResolve = '';
@@ -84,6 +85,16 @@ var Meow_Path0 = (function() {
 			function f(p) {
 				return p && typeof p === 'string';
 			}
+			var Meow_Paths = Array.prototype.slice.call(Meow_Args, 0).Meow_Filter(f);
+			var Meow_Join = Meow_Paths.join('\\');
+			if(/^[\\\/]{2}/.test(Meow_Join) && !/^[\\\/]{2}/.test(Meow_Paths[0])) {
+				Meow_Join = Meow_Join.slice(1);
+			}
+			return exports.Meow_Normalize(Meow_Join);
+		};
+	} else {
+		Meow_PathSplit = /^(.+\/(?!$)|\/)?((?:.+?)?(\.[^.]*)?)$/;
+		exports.Meow_Resolve = function() {
 
 			// Still coding now... Will be updated soon!
 		};
