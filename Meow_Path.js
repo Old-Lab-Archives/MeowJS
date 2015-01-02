@@ -105,8 +105,12 @@ var Meow_Path0 = (function() {
 				Meow_PathResolved = Meow_Path + '/' + Meow_PathResolved;
 				Meow_PathAbsolute = Meow_Path.charAt(0) === '/';
 			}
-
-			// Still coding now... Will be updated soon!
+			Meow_PathResolved = Meow_ArrayNormalize(Meow_PathResolved.split('/').Meow_Filter(function(p) {
+				return !!p;
+			}), !Meow_AbsoluteResolved).join('/');
+			return ((Meow_AbsoluteResolved ? '/' : '') + Meow_PathResolved) || '.';
 		};
+
+		// Still coding now... Will be updated soon!
 	}
 });
