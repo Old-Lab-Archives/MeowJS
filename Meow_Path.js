@@ -95,6 +95,16 @@ var Meow_Path0 = (function() {
 	} else {
 		Meow_PathSplit = /^(.+\/(?!$)|\/)?((?:.+?)?(\.[^.]*)?)$/;
 		exports.Meow_Resolve = function() {
+			var Meow_PathResolved = '';
+			var Meow_PathAbsolute = false;
+			for(var m = Meow_Args.length; m >= -1 && !Meow_AbsoluteResolved; m--) {
+				var Meow_Path = (m >= 0) ? Meow_Args[m] : Meow_Process.cwd();
+				if(typeof Meow_Path !== 'string' || !Meow_Path) {
+					continue;
+				}
+				Meow_PathResolved = Meow_Path + '/' + Meow_PathResolved;
+				Meow_PathAbsolute = Meow_Path.charAt(0) === '/';
+			}
 
 			// Still coding now... Will be updated soon!
 		};
