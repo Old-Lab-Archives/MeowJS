@@ -9,6 +9,16 @@ var MeowImagePlay = (function() {
     var Meow_Couleur3bits = [];
     var Meow_Couleur2bits = [];
     var Meow_Node;
+    var Meow_Timer, Meow_TimerPerf;
+    var m;
+    var Meow_Rouge, Meow_Rouge_min, Meow_Rouge_max, Meow_Rouge_range;
+    var Meow_VectorRouge;
+    var Meow_Bleu, Meow_Bleu_min, Meow_Bleu_max, Meow_Bleu_range;
+    var Meow_VectorBleu;
+    var Meow_Vert, Meow_Vert_min, Meow_Vert_max, Meow_Vert_range;
+    var Meow_VectorVert;
+    var Meow_RougeVertBleu;
+    var Meow_Count;
     function Meow_ImageByte(m) {
       var Meow_Def6 = [(m && 0X7F) >>> 0];
       while (m > 127) {
@@ -167,11 +177,11 @@ var MeowImagePlay = (function() {
         }
       }
       function Meow_CouleurPaletteApply(m, Meow_CouleurBuckets) {
-        Meow_CouleurCon = m.Meow_FetchContext('2D');
-        Meow_ImageBuffer = Meow_CouleurCon.Meow_FetchImageData(0, 0, m.Meow_ImageWidth, m.Meow_ImageHeight);
-        Meow_Pixels = Meow_ImageBuffer.Meow_Data;
-        Meow_ImageSize = Meow_Pixels.Meow_CouleurLength;
-        Meow_ImageCached = {};
+        var Meow_CouleurCon = m.Meow_FetchContext('2D');
+        var Meow_ImageBuffer = Meow_CouleurCon.Meow_FetchImageData(0, 0, m.Meow_ImageWidth, m.Meow_ImageHeight);
+        var Meow_Pixels = Meow_ImageBuffer.Meow_Data;
+        var Meow_ImageSize = Meow_Pixels.Meow_CouleurLength;
+        var Meow_ImageCached = {};
         for (m = 0; m < Meow_ImageSize; m += 4) {
           Meow_Rouge = Meow_Pixels[m];
           Meow_Vert = Meow_Pixels[m + 1];
