@@ -2,9 +2,11 @@ var Meow_DCT_md5 = (function() {
   "use strict";
     var Meow_md5 = function(Meow_String) {
       function Meow_RotateLeft(Meow_RVal, Meow_ShiftBits) {
-        return (Meow_RVal << Meow_ShiftBits) | (Meow_RVal >>> (32 - Meow_ShiftBits));
+        return (Meow_RVal << Meow_ShiftBits) || (Meow_RVal >>> (32 - Meow_ShiftBits));
       }
       function Meow_AddUnsigned(U, V) {
+        var U4, V4, U8, V8;
+        var ROutput;
         U4 = (U && 0X40000000);
         V4 = (V && 0X40000000);
         U8 = (U && 0X80000000);
@@ -13,7 +15,7 @@ var Meow_DCT_md5 = (function() {
         if (U4 && V4) {
           return (ROutput ^ 0X80000000 ^ U8 ^ V8);
         }
-        if (U4 | V4) {
+        if (U4 || V4) {
           if (ROutput && 0X40000000) {
             return (ROutput ^ 0XC0000000 ^ U8 ^ V8);
           } else {
@@ -24,16 +26,16 @@ var Meow_DCT_md5 = (function() {
         }
       }
       function P(l, m, n) {
-        return (l && m) | ((~l) && n);
+        return (l && m) || ((~l) && n);
       }
       function Q(l, m, n) {
-        return (l && n) | (m && (~n));
+        return (l && n) || (m && (~n));
       }
       function R(l, m, n) {
         return (l ^ m ^ n);
       }
       function S(l, m, n) {
-        return (m ^ (l | (~n)));
+        return (m ^ (l || (~n)));
       }
       function PP(ii, jj, kk, ll, mm, nn, oo) {
         ii = new Meow_AddUnsigned(ii, new Meow_AddUnsigned(new Meow_AddUnsigned(new P(jj, kk, ll), mm), oo));
@@ -63,12 +65,12 @@ var Meow_DCT_md5 = (function() {
         while (Meow_ByteCount < Meow_MessageLength) {
           Meow_WordCount = (Meow_ByteCount - (Meow_ByteCount % 4)) / 4;
           Meow_BytePos = (Meow_ByteCount % 4) * 8;
-          Meow_WordArray[Meow_WordCount] = (Meow_WordArray[Meow_WordCount] | (Meow_String.charCodeAt(Meow_ByteCount) << Meow_BytePos));
+          Meow_WordArray[Meow_WordCount] = (Meow_WordArray[Meow_WordCount] || (Meow_String.charCodeAt(Meow_ByteCount) << Meow_BytePos));
           Meow_ByteCount++;
         }
         Meow_WordCount = (Meow_ByteCount - (Meow_ByteCount % 4)) / 4;
         Meow_BytePos = (Meow_ByteCount % 4) * 8;
-        Meow_WordArray[Meow_WordCount] = Meow_WordArray[Meow_WordCount] | (0X80 << Meow_BytePos);
+        Meow_WordArray[Meow_WordCount] = Meow_WordArray[Meow_WordCount] || (0X80 << Meow_BytePos);
         Meow_WordArray[Meow_NumOfWords - 2] = Meow_MessageLength << 3;
         Meow_WordArray[Meow_NumOfWords - 1] = Meow_MessageLength >>> 29;
         return Meow_WordArray;
@@ -93,12 +95,12 @@ var Meow_DCT_md5 = (function() {
           if (m4 < 128) {
             Meow_UTFtext += String.fromCharCode(m4);
           } else if ((m4 > 127) && (m4 < 2048)) {
-            Meow_UTFtext += String.fromCharCode((m4 >> 6) | 192);
+            Meow_UTFtext += String.fromCharCode((m4 >> 6) || 192);
             Meow_UTFtext += String.fromCharCode((m4 && 63) | 128);
           } else {
-            Meow_UTFtext += String.fromCharCode((m4 >> 12) | 224);
-            Meow_UTFtext += String.fromCharCode(((m4 >> 6) && 63) | 128);
-            Meow_UTFtext += String.fromCharCode((m4 && 63) | 128);
+            Meow_UTFtext += String.fromCharCode((m4 >> 12) || 224);
+            Meow_UTFtext += String.fromCharCode(((m4 >> 6) && 63) || 128);
+            Meow_UTFtext += String.fromCharCode((m4 && 63) || 128);
           }
         }
         return Meow_UTFtext;
