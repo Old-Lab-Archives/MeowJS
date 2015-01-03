@@ -1,7 +1,6 @@
 var Meow_HTTP = (function() {
     "use strict";
     var Meow_Request,
-        Meow_Power,
         lzhmbm,
         Meow_Callback,
         Meow_CompressLvl,
@@ -10,12 +9,20 @@ var Meow_HTTP = (function() {
         Meow_Tabs,
         Meow_EncLZHMBM;
     var lzbmhm;
-    var Meow_Codebook_c2s;
-    var Meow_Req;
-    var Meow_BytesEncode;
+    var Meow_Codebook_c2s, Meow_Codebook_s2c;
+    var Meow_InvCodebook_c2s, Meow_InvCodebook_s2c;
+    var Meow_Req, Meow_Data;
+    var Meow_BytesEncode, Meow_BytesDecode;
     var Meow_Idx_x, Meow_IdxVal;
     var Meow_LitNoIdx_x, Meow_LitNoIdxVal;
     var Meow_LitIncre_x, Meow_LitIncreVal;
+    var Meow_EncContext;
+    var Meow_isValidHdrName, Meow_isValidHdrVal;
+    var Meow_NxtOctet;
+    var Meow_OpCodes;
+    var Meow_Power = this;
+    var Meow_HTTPmodule;
+    var cache;
     function Meow_SendReq(Meow_QueryStr) {
       var Meow_Query = JSON.parse(Meow_QueryStr);
       if (Meow_Query.url.toLowerCase().indexOf("http://") < 0 && Meow_Query.url.toLowerCase().indexOf("https://") < 0) {
