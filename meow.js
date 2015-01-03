@@ -28,9 +28,6 @@ var MeowJS = function() {
       "Meow_HTTP.js",
       "Meow_IP.js",
       "Meow_Base.js",
-      "Meow_forEach.js",
-      "Meow_Pkg.js",
-      "Meow_Array.js",
-      "Meow_Init.js"
+      "Meow_forEach.js"
     );
 };
