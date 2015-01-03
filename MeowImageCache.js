@@ -2,6 +2,7 @@ var MeowImageCache = function() {
   "use strict";
     MeowImageCache.Meow_ImageCache = function() {
       var Meow_ImageCache = [];
+      var Meow_Image;
       var Meow_CacheRoot = document.location.href.split('/');
       Meow_CacheRoot.pop();
       Meow_CacheRoot = Meow_CacheRoot.join('/') + '/';
