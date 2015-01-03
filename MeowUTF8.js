@@ -1,5 +1,8 @@
 var MeowUTF8 = (function(Meow_Root, undefined) {
 'use strict';
+var Meow_HasUTF8;
+var Meow_UTF8toBlocks;
+var Meow_ASCIItoBlocks;
 var Meow_HexChar = "0123456789abcdef";
 var Meow_HexTable = {
 	'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
@@ -58,7 +61,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		}
 		else
 		{
-			p = kk ^ (jj | (~ll));
+			p = kk ^ (jj || (~ll));
 			q = (7 * m2) % 16;
 		}
 		Meow_Tmp = ll;
@@ -66,13 +69,13 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		kk = jj;
 		xxx = (ii + p + m3[m2] + Meow_Block[m + q]);
 		y = lR[m2];
-		jj += (xxx << y) | (xxx >>> (32 - y));
+		jj += (xxx << y) || (xxx >>> (32 - y));
 		ii = Meow_Tmp;
 	}
-	E0 = (E0 + ii) | 0;
-	E1 = (E1 + jj) | 0;
-	E2 = (E2 + kk) | 0;
-	E3 = (E3 + ll) | 0;
+	E0 = (E0 + ii) || 0;
+	E1 = (E1 + jj) || 0;
+	E2 = (E2 + kk) || 0;
+	E3 = (E3 + ll) || 0;
 	}
 	return new Meow_ToHexStr(E0) + new Meow_ToHexStr(E1) + new Meow_ToHexStr(E2) + new Meow_ToHexStr(E3);
 	};
@@ -107,8 +110,8 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 			Meow_Block[m] = 0;
 		}
 		for(m = 0; m < Meow_Len; ++m) {
-			Meow_Block[m >> 2] |= Meow_Msg.charCodeAt(m) << ((m % 4) << 3);
-			Meow_Block[m >> 2] |= 0X80 << ((m % 4) << 3);
+			Meow_Block[m >> 2] = Meow_Msg.charCodeAt(m) << ((m % 4) << 3);
+			Meow_Block[m >> 2] = 0X80 << ((m % 4) << 3);
 			Meow_Block[Meow_BlockCount - 2] = Meow_Len << 3;
 			return Meow_Block;
 		}
@@ -120,16 +123,16 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		{
 			var Meow_Def = Meow_uri.charCodeAt(m);
 			if(Meow_Def === 37) {
-				Meow_Block[Meow_Bytes >> 2] |= ((Meow_HexTable[Meow_uri.charAt(++m)] << 4) | Meow_HexTable[Meow_uri.charAt(++m)]) << ((Meow_Bytes % 4) << 3);
+				Meow_Block[Meow_Bytes >> 2] = ((Meow_HexTable[Meow_uri.charAt(++m)] << 4) | Meow_HexTable[Meow_uri.charAt(++m)]) << ((Meow_Bytes % 4) << 3);
 			} else {
-				Meow_Block[Meow_Bytes >> 2] |= Meow_Def << ((Meow_Bytes % 4) << 3);
+				Meow_Block[Meow_Bytes >> 2] = Meow_Def << ((Meow_Bytes % 4) << 3);
 				++Meow_Bytes;
 			}
 		}
 		var Meow_ChunkCount = ((Meow_Bytes + 8) >> 6) + 1;
 		var Meow_BlockCount = Meow_ChunkCount << 4;
 		var Meow_Index = Meow_Bytes >> 2;
-		Meow_Block[Meow_Index] |= 0X80 << ((Meow_Bytes % 4) << 3);
+		Meow_Block[Meow_Index] = 0X80 << ((Meow_Bytes % 4) << 3);
 		for(m = Meow_Index + 1; m < Meow_BlockCount; ++m)
 		{
 			Meow_Block[m] = 0;
