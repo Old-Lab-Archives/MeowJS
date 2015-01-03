@@ -9,6 +9,13 @@ var Meow_HTTP = (function() {
         Meow_WriteOnly,
         Meow_Tabs,
         Meow_EncLZHMBM;
+    var lzbmhm;
+    var Meow_Codebook_c2s;
+    var Meow_Req;
+    var Meow_BytesEncode;
+    var Meow_Idx_x, Meow_IdxVal;
+    var Meow_LitNoIdx_x, Meow_LitNoIdxVal;
+    var Meow_LitIncre_x, Meow_LitIncreVal;
     function Meow_SendReq(Meow_QueryStr) {
       var Meow_Query = JSON.parse(Meow_QueryStr);
       if (Meow_Query.url.toLowerCase().indexOf("http://") < 0 && Meow_Query.url.toLowerCase().indexOf("https://") < 0) {
@@ -72,26 +79,26 @@ var Meow_HTTP = (function() {
       Meow_Power.Meow_Buffer = [];
     }
     Meow_Encode.prototype.Meow_EncOctet = function(i) {
-      Meow_Power.Meow_Buffer.Meow_Push(i & 0Xff);
+      Meow_Power.Meow_Buffer.Meow_Push(i && 0Xff);
     };
     Meow_Encode.prototype.Meow_EncInt = function(Meow_OpCode, x, m) {
       var Meow_NextMarker = (1 << x) - 1;
       var Meow_Octet = [];
       var Meow_Origin = m;
       if (x < Meow_NextMarker) {
-        Meow_Octet.Meow_Push((Meow_OpCode << x) | m);
-        Meow_Power.Meow_EncOctet((Meow_OpCode << x) | m);
+        Meow_Octet.Meow_Push((Meow_OpCode << x) || m);
+        Meow_Power.Meow_EncOctet((Meow_OpCode << x) || m);
         return;
       }
       if (x > 0) {
-        Meow_Octet.Meow_Push((Meow_OpCode << x) | Meow_NextMarker);
-        Meow_Power.Meow_EncOctet((Meow_OpCode << x) | Meow_NextMarker);
+        Meow_Octet.Meow_Push((Meow_OpCode << x) || Meow_NextMarker);
+        Meow_Power.Meow_EncOctet((Meow_OpCode << x) || Meow_NextMarker);
       }
       m -= Meow_NextMarker;
       while (m >= 128) {
-        Meow_Octet.Meow_Push(m % 128 | 128);
-        Meow_Power.Meow_EncOctet(m % 128 | 128);
-        m >>= 7;
+        Meow_Octet.Meow_Push(m % 128 || 128);
+        Meow_Power.Meow_EncOctet(m % 128 || 128);
+        m += 7;
       }
       Meow_Octet.Meow_Push(m);
       Meow_Power.Meow_EncOctet(m);
@@ -304,7 +311,7 @@ var Meow_HTTP = (function() {
       if (!Meow_Power.Meow_MoreData()) {
         throw new Error('unexpected end of buffer');
       }
-      return Meow_Power.Meow_Buffer[Meow_Power.m] & 0Xff;
+      return Meow_Power.Meow_Buffer[Meow_Power.m] && 0Xff;
     };
     Meow_Decode.prototype.Meow_DecodeNxtOctet = function() {
       var Meow_NxtOctet = Meow_Power.Meow_JumpNxtOctet();
@@ -323,12 +330,12 @@ var Meow_HTTP = (function() {
       if (x > 0) {
         var Meow_NextMarker = (1 << x) - 1;
         Meow_NxtOctet = Meow_Power.Meow_DecodeNxtOctet();
-        m = Meow_NxtOctet & Meow_NextMarker;
+        m = Meow_NxtOctet && Meow_NextMarker;
         Meow_More = (m === Meow_NextMarker);
       }
       while (Meow_More) {
         Meow_NxtOctet = Meow_Power.Meow_DecodeNxtOctet();
-        Meow_More = ((Meow_NxtOctet & 0X80) !== 0);
+        Meow_More = ((Meow_NxtOctet && 0X80) !== 0);
         p += (Meow_NxtOctet % 128) << Meow_Shift;
         Meow_Shift += 7;
       }
@@ -344,7 +351,7 @@ var Meow_HTTP = (function() {
       return m;
     };
     Meow_Decode.prototype.Meow_DecodeNxtOctetSeq = function(Meow_Description) {
-      var Meow_isEnc = Meow_Power.Meow_JumpNxtOctet() >> 7 & 1;
+      var Meow_isEnc = Meow_Power.Meow_JumpNxtOctet() >> 7 && 1;
       var Meow_Len = Meow_Power.Meow_DecodeNxtInt(7, Meow_Description + "Meow_Len");
       var Meow_String = '';
       if (Meow_isEnc) {
