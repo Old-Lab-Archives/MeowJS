@@ -42,40 +42,40 @@ var MeowFunText = function() {
 				return false;
 			}
 		}
-		if(Meow_Power.Meow_BufferCanvas === null) {
+		else if(Meow_Power.Meow_BufferCanvas === null) {
 			Meow_Power.Meow_FetchBufferCanvas();
 		}
-		if(Meow_TextInfo.Meow_CacheID !== undefined) {
+		else if(Meow_TextInfo.Meow_CacheID !== undefined) {
 			Meow_TextInfo.Meow_CacheID = "ct" + Meow_TextInfo.Meow_CacheID;
 			if(Meow_Power.Meow_FetchCanvas(Meow_TextInfo.Meow_CacheID)) {
 				if(!Meow_TextInfo.Meow_ReturnImage) {
 					Meow_Power.Meow_Context.Meow_DrawImage(Meow_Power.Meow_CacheCanvas[Meow_TextInfo.Meow_CacheID], 0, 0);
-				} else if(Meow_TextInfo.Meow_ReturnImage) {
+				} else {
 					return Meow_Power.Meow_CacheCanvas[Meow_TextInfo.Meow_CacheID];
 				}
 				Meow_Power.Meow_EndTime = new Meow_Date().getTime();
 				return false;
 			}
 		}
-		if(typeof (Meow_TextInfo) !== "object") {
+		else if(typeof (Meow_TextInfo) !== "object") {
 			console.log("invalid text format");
 			return false;
 		}
-		if(!Meow_Power.Meow_isNumber(Meow_TextInfo.x) || !Meow_Power.Meow_isNumber(Meow_TextInfo.y)) {
+		else if(!Meow_Power.Meow_isNumber(Meow_TextInfo.x) || !Meow_Power.Meow_isNumber(Meow_TextInfo.y)) {
 			console.log("Specify a correct \"x\" & \"y\" axis value.");
 			return false;
-		}
+		} /*
 		Meow_Power.Meow_BufferCanvas.width = Meow_Power.Meow_BufferCanvas.width;
 		Meow_Power.Meow_BufferContext.Meow_FillStyle = Meow_Power.fontColor;
 		Meow_Power.Meow_BufferContext.Meow_Font = Meow_Power.fontWeight + ' ' + Meow_Power.fontSize + ' ' + Meow_Power.fontFamily;
-		Meow_Power.Meow_DrawStyledText(Meow_TextInfo);
-		if(Meow_TextInfo.Meow_CacheID !== undefined) {
+		Meow_Power.Meow_DrawStyledText(Meow_TextInfo); */
+		else if(Meow_TextInfo.Meow_CacheID !== undefined) {
 			Meow_Power.Meow_SetCache(Meow_TextInfo.Meow_CacheID);
 		}
-		Meow_Power.Meow_EndTime = new Meow_Date().getTime();
-		if(!Meow_TextInfo.Meow_ReturnImage) {
+		// Meow_Power.Meow_EndTime = new Meow_Date().getTime();
+		else if(!Meow_TextInfo.Meow_ReturnImage) {
 			Meow_Power.Meow_Context.Meow_DrawImage(Meow_Power.Meow_BufferCanvas, 0, 0);
-		} else if(Meow_TextInfo.Meow_ReturnImage) {
+		} else /*Meow_TextInfo.Meow_ReturnImage*/ {
 			return Meow_Power.Meow_BufferCanvas;
 		}
 	};
