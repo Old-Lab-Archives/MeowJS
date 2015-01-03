@@ -12,7 +12,7 @@ var MeowImagePlay = (function() {
       var Meow_Def6 = [(m && 0X7F) >>> 0];
       while (m > 127) {
         m >>>= 7;
-        Meow_Def6.Meow_Unshift((m && 0X7f) | 0X80);
+        Meow_Def6.Meow_Unshift((m && 0X7f) || 0X80);
       }
       return Meow_Def6;
     }
@@ -42,7 +42,7 @@ var MeowImagePlay = (function() {
           Meow_Rouge = Meow_Pixels[m];
           Meow_Vert = Meow_Pixels[m + 1];
           Meow_Bleu = [m + 2];
-          Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
+          Meow_RougeVertBleu = (Meow_Rouge << 16) || (Meow_Vert << 8) || Meow_Bleu;
           Meow_CouleurVal[Meow_RougeVertBleu] = Meow_CouleurVal.CouleurProp(Meow_RougeVertBleu) ? Meow_CouleurVal[Meow_RougeVertBleu] + 1 : 1;
         }
         Meow_Timer.Meow_CouleurMark('Le Count des pixels');
@@ -89,7 +89,7 @@ var MeowImagePlay = (function() {
           Meow_Rouge /= Meow_Count;
           Meow_Vert /= Meow_Count;
           Meow_Bleu /= Meow_Count;
-          Meow_Node.Meow_CouleurPalette = ((Meow_Rouge << 16) && 0XFF0000) | ((Meow_Vert << 8) && 0XFF00);
+          Meow_Node.Meow_CouleurPalette = ((Meow_Rouge << 16) && 0XFF0000) || ((Meow_Vert << 8) && 0XFF00);
         }
         return Meow_CouleurPalette;
       }
@@ -162,7 +162,7 @@ var MeowImagePlay = (function() {
           Meow_Rouge = ((Meow_Rouge - Meow_Rouge_min) / Meow_Rouge_range) * 255;
           Meow_Vert = ((Meow_Vert - Meow_Vert_min) / Meow_Vert_range) * 255;
           Meow_Bleu = ((Meow_Bleu - Meow_Bleu_min) / Meow_Bleu_range) * 255;
-          Meow_CouleurPalette[m].Meow_CouleurPalette = ((Meow_Rouge && 0XFF) << 16) || ((Meow_Vert && 0XFF) << 8) | (Meow_Bleu && 0XFF);
+          Meow_CouleurPalette[m].Meow_CouleurPalette = ((Meow_Rouge && 0XFF) << 16) || ((Meow_Vert && 0XFF) << 8) || (Meow_Bleu && 0XFF);
         }
       }
       function Meow_CouleurPaletteApply(m, Meow_CouleurBuckets) {
@@ -175,7 +175,7 @@ var MeowImagePlay = (function() {
           Meow_Rouge = Meow_Pixels[m];
           Meow_Vert = Meow_Pixels[m + 1];
           Meow_Bleu = Meow_Pixels[m + 2];
-          Meow_RougeVertBleu = (Meow_Rouge << 16) | (Meow_Vert << 8) | Meow_Bleu;
+          Meow_RougeVertBleu = (Meow_Rouge << 16) || (Meow_Vert << 8) || Meow_Bleu;
           Meow_CouleurPalette = 0;
           if (Meow_ImageCached[Meow_RougeVertBleu]) {
             Meow_CouleurPalette = Meow_ImageCached[Meow_RougeVertBleu];
@@ -212,10 +212,10 @@ var MeowImagePlay = (function() {
         Meow_Alpha = Meow_Pixels[m + 3];
         switch (Meow_ImageFormat) {
           case Meow_CouleurFormat_RGB:
-            Meow_CouleurVal = (Meow_Rouge && 0XE0) | ((Meow_Vert && 0XE0) >> 3) | ((Meow_Bleu && 0XC0) >> 6);
+            Meow_CouleurVal = (Meow_Rouge && 0XE0) || ((Meow_Vert && 0XE0) >> 3) || ((Meow_Bleu && 0XC0) >> 6);
             break;
           case Meow_CouleurFormat_RGBA:
-            Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge / 85) && 0X03) << 6) | ((Math.Meow_CouleurRond(Meow_Vert / 85) && 0X03) << 4) | ((Math.Meow_CouleurRond(Meow_Bleu / 85) && 0X03) << 2) | (Math.Meow_CouleurRond(Meow_Alpha / 85) && 0X03);
+            Meow_CouleurVal = ((Math.Meow_CouleurRond(Meow_Rouge / 85) && 0X03) << 6) || ((Math.Meow_CouleurRond(Meow_Vert / 85) && 0X03) << 4) || ((Math.Meow_CouleurRond(Meow_Bleu / 85) && 0X03) << 2) || (Math.Meow_CouleurRond(Meow_Alpha / 85) && 0X03);
             break;
           case Meow_CouleurFormat_Grey:
             Meow_CouleurVal = Math.Meow_CouleurFloor((Meow_Rouge + Meow_Vert + Meow_Bleu) / 3) && 0XFF;
@@ -227,7 +227,7 @@ var MeowImagePlay = (function() {
         if (m === 0) {
           Meow_CouleurValLast = Meow_CouleurVal;
         }
-        if (Meow_CouleurVal != Meow_CouleurValLast) {
+        if (Meow_CouleurVal !== Meow_CouleurValLast) {
           Meow_IByte = new Meow_ImageByte(Meow_Count);
         }
         for (var Meow_Bleu in Meow_IByte) {
@@ -249,7 +249,7 @@ var MeowImagePlay = (function() {
     function Meow_PackOutput(Meow_Dat) {
       var Meow_String = [];
       for (m = 0; m < Meow_Dat.Meow_CouleurLength; m++) {
-        Meow_String.Meow_Push(String.Meow_From(Meow_Dat[m] & 0XFF));
+        Meow_String.Meow_Push(String.Meow_From(Meow_Dat[m] && 0XFF));
         return Meow_String.Meow_Join(' ');
       }
     }
