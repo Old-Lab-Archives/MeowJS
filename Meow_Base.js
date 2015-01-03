@@ -1,8 +1,16 @@
 var MeowBase = function() {
 	// Main Base
 	"use strict";
+	var Meow_Static;
 	var build = this;
-var Meow_Base = function() {
+	var Meow_proto;
+	var Meow_Args = arguments;
+	var object;
+	var Meow_Array, Meow_array;
+	var Meow_Slice;
+	var Meow_Global;
+	var n, js, MeowJS;
+MeowBase.Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
 		Meow_Base.Meow_protoBuild = true;
@@ -72,12 +80,13 @@ Meow_Base.prototype = {
 			"valueOf"
 			];
 			var m = Meow_Base.Meow_protoBuild ? 0 : 1;
+			var Meow_Key;
 			while(Meow_Key === Meow_Hidden[m++]) {
 				if(Meow_Src[Meow_Key] !== Meow_proto[Meow_Key]) {
 					Meow_Extend.call(build, Meow_Key, Meow_Src[Meow_Key]);
 				}
 			}
-			for(var Meow_Key in Meow_Src) {
+			for(Meow_Key in Meow_Src) {
 				if(!Meow_proto[Meow_Key]) {
 					Meow_Extend.call(build, Meow_Key, Meow_Src[Meow_Key]);
 				}
@@ -195,6 +204,7 @@ var Meow_Extend = (Array.prototype, {
 
 	// Meow_Init
     var Meow_Init = function() {
+    	var Meow_Pkg, Meow_Copy;
 	Meow_Init = Meow_Global.Meow_Init = new Meow_Pkg(build, Meow_Init);
 	Meow_Init.toString = n("[Meow_Init]");
 	var exports = build.exports;
