@@ -44,7 +44,7 @@
       "Meow_Base.js",
       "Meow_forEach.js",
       "Meow_Pkg.js",
-      "Meow_Array.js",
+      "Meow_Path.js",
       "Meow_Init.js",
       "test.html",
       "test.css",
