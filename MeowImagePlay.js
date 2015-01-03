@@ -1,13 +1,14 @@
 var MeowImagePlay = (function() {
   "use strict";
-    Meow_CouleurFormat_Grey = 'G';
-    Meow_CouleurFormat_Alpha = 'A';
-    Meow_CouleurFormat_RGB = 'RGB';
-    Meow_CouleurFormat_RGBA = 'RGBA';
-    Meow_CouleurPalette = 'P';
-    Meow_CouleurPaletteBits = 8;
-    Meow_Couleur3bits = [];
-    Meow_Couleur2bits = [];
+    var Meow_CouleurFormat_Grey = 'G';
+    var Meow_CouleurFormat_Alpha = 'A';
+    var Meow_CouleurFormat_RGB = 'RGB';
+    var Meow_CouleurFormat_RGBA = 'RGBA';
+    var Meow_CouleurPalette = 'P';
+    var Meow_CouleurPaletteBits = 8;
+    var Meow_Couleur3bits = [];
+    var Meow_Couleur2bits = [];
+    var Meow_Node;
     function Meow_ImageByte(m) {
       var Meow_Def6 = [(m && 0X7F) >>> 0];
       while (m > 127) {
