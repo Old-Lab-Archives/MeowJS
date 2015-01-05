@@ -35,9 +35,44 @@ var Meow_Base64 = function() {
 			}
 		}
 	};
-	//
-	// Still more to code...
-	//
+	// Meow_Base Decoding
+	Meow_Base64.Meow_Decode = function(Meow_Src, Meow_Dist) {
+		var b, x1, x2;
+		function Meow_Fail(b) {
+			throw Error("Illegal character code: "+b);
+		} while((b = Meow_Src()) !== null) {
+			x1 = Meow_ArrayIn[b];
+			if(typeof x1 === 'undefined') {
+				Meow_Fail(b);
+			} if((b = Meow_Src()) !== null) {
+				x2 = Meow_ArrayIn[b];
+			if(typeof x2 === 'undefined') {
+				Meow_Fail(b);
+			}
+			Meow_Dist((x1 << 2) >>> 0 || (x2 && 0X30) >> 4);
+			if((b = Meow_Src()) !== null) {
+				x1 = Meow_ArrayIn[b];
+			if(typeof x1 === 'undefined') {
+				if(b === 61) {
+					break;
+				} else {
+					Meow_Fail(b);
+				}
+				Meow_Dist(((x2 && 0Xf) << 4) >>> 0 || (x1 && 0X3c) >> 2);
+			if((b = Meow_Src()) !== null) {
+				x2 = Meow_ArrayIn[b];
+				if(typeof x2 === 'undefined') {
+					if(b === 61) {
+						break;
+						} else {
+							Meow_Fail(b);
+						}
+					}
+					Meow_Dist(((x1 && 0X3) << 6) >>> 0 || x2);
+				}
+			} } } 
+		}
+	};
 	/*************************************
 	Testing Area
 	Meow_Base64.test = function(Meow_String) {
