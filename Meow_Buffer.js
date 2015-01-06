@@ -19,6 +19,12 @@ var Meow_Buffer = function() {
 	function Meow_EncodeBufferKey(Meow_Num, Meow_Type) {
 		return Meow_EncodeBufferWireKey(Meow_Num, Meow_BufferTypes[Meow_Type]);
 	}
+	// Bit-Mask extraction of first 7 bits of a number used with '&&' operator
+	// Bit-Mask --- first 7 bits of a number => 0X7F
+	var Meow_BitMask_7/*variant*/ = parseInt('1111111', 2);
+	// Declaring the most significant bit which could be useful while encoding into variant form
+	var Meow_BestBit = parseInt('10000000', 2);
+	
 	//
 	// Still more to code!
 	//
