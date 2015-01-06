@@ -142,6 +142,7 @@ var Meow_Buffer = function() {
 		// Returns Meow_Len and function -> Meow_EncodeCall
 		return {
 			Meow_Len: 2,
+			// Encoded value is 'called' when the buffer object size is allocated
 			Meow_EncodeCall: function(Meow_HelloBuffer, Meow_Offset) {
 				// writing key
 				Meow_HelloBuffer.writeUInt8(Meow_Key, Meow_Offset);
@@ -167,6 +168,7 @@ var Meow_Buffer = function() {
 		// Returns Meow_Len and function -> Meow_EncodeCall
 		return {
 			Meow_Len: 1 + Meow_Parsed.length + Meow_Val.length,
+			// Encoded value is 'called' when the buffer object size is allocated
 			Meow_EncodeCall: function(Meow_HelloBuffer, Meow_Offset) {
 				// writing key
 				Meow_HelloBuffer.writeUInt8(Meow_Key, Meow_Offset);
@@ -201,9 +203,35 @@ var Meow_Buffer = function() {
 		"float": Meow_EncodeFloat
 	};
 
-	//
-	// Still more to code!
-	//
+	// Buffer Encode Constructor
+	function Meow_ConstructBufferEncode(Meow_Defn) {
+		var Meow_BufferEncode = this;
+		// Encoded object is represented as embedded message within a message
+		var Meow_EmbedEncode = function(Meow_Val, Meow_FieldDefn) {
+			var Meow_BufferMsg = Meow_ConstructBufferEncode.Meow_BufferEncode(Meow_Val, Meow_FieldDefn.type);
+			// Returns Meow_Len and function -> Meow_EncodeCall
+			return {
+				Meow_Len: 1 + 1 + Meow_BufferMsg.length,
+				// Encoded value is 'called' when the buffer object size is allocated
+				Meow_EncodeCall: function(Meow_HelloBuffer, offset) {
+					var Meow_Key = Meow_EncodeBufferWireKey(Meow_FieldDefn.Meow_Num, 2);
+					// writing key
+					Meow_HelloBuffer.writeUInt8(Meow_Key, Meow_Offset);
+					Meow_Offset++;
+					// writing length
+					Meow_Offset = Meow_WriteVal(Meow_BufferMsg.length, Meow_HelloBuffer, Meow_Offset);
+					// writing the sub-message
+					Meow_BufferMsg.copy(Meow_HelloBuffer, Meow_Offset);
+					// Returns encoding object
+					return Meow_Offset + Meow_BufferMsg.length;
+				}
+			};
+		};
+
+		//
+		// Still more to code!
+		//
+	}
 };
 
 /*** Credits ***
