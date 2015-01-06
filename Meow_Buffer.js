@@ -101,6 +101,29 @@ var Meow_Buffer = function() {
 		// Returns the new offset position
 		return Meow_Offset;
 	}
+
+	// With the help of "varint algorithm", the numerical value is encoded into a protocol buffers encoding
+	function Meow_EncodeNumVal(Meow_Key, Meow_Val) {
+		var Meow_Len = Meow_ComputeLen(Meow_Val);
+		return {
+			Meow_Len: 1 + Meow_Len,
+			// Encoded value is 'called' when the buffer object size is allocated
+			Meow_EncodeCall: function(Meow_HelloBuffer, Meow_Offset) {
+				// writing key
+				Meow_HelloBuffer.writeUInt8(Meow_Key, Meow_Offset);
+				Meow_Offset++;
+				// Returns encoding object
+				return Meow_WriteVal(Meow_Val, Meow_HelloBuffer, Meow_Offset);
+			}
+		};
+	}
+
+	function Meow_EncodeEnum(Meow_Key, Meow_Val, Meow_Enum) {
+		// Searching or Finding for the matching value
+		var Meow_Code = Meow_Enum[Meow_Val];
+		return Meow_EncodeNumVal(Meow_Key, Meow_Code);
+	}
+
 	//
 	// Still more to code!
 	//
