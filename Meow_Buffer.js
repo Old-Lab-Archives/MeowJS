@@ -1,5 +1,5 @@
 var Meow_Buffer = function() {
-	// Main Meow Buffer
+// Main Meow Buffer
 	'use strict';
 
 /************************************
@@ -14,10 +14,22 @@ var Meow_Buffer = function() {
 
 	// Mapping between protocol buffer types and the wire types
 	var Meow_BufferTypes = {
-		"int32": 0, "int64": 0, "uint32": 0, "uint64": 0,
-		"sint32": 0, "sint64": 0, "bool": 0, "enum": 0,
-		"fixed64": 1, "sfixed62": 1, "double": 1, "string": 2,
-		"bytes": 2, "fixed32": 5, "sfixed32": 5, "float": 5
+		"int32": 0,
+		"int64": 0,
+		"uint32": 0,
+		"uint64": 0,
+		"sint32": 0,
+		"sint64": 0,
+		"bool": 0,
+		"enum": 0,
+		"fixed64": 1,
+		"sfixed62": 1,
+		"double": 1,
+		"string": 2,
+		"bytes": 2,
+		"fixed32": 5,
+		"sfixed32": 5,
+		"float": 5
 	};
 
 	// Encoding protocol buffers wire key
@@ -105,6 +117,7 @@ var Meow_Buffer = function() {
 	// With the help of "varint algorithm", the numerical value is encoded into a protocol buffers encoding
 	function Meow_EncodeNumVal(Meow_Key, Meow_Val) {
 		var Meow_Len = Meow_ComputeLen(Meow_Val);
+		// Returns Meow_Len and function -> Meow_EncodeCall
 		return {
 			Meow_Len: 1 + Meow_Len,
 			// Encoded value is 'called' when the buffer object size is allocated
@@ -122,6 +135,29 @@ var Meow_Buffer = function() {
 		// Searching or Finding for the matching value
 		var Meow_Code = Meow_Enum[Meow_Val];
 		return Meow_EncodeNumVal(Meow_Key, Meow_Code);
+	}
+
+	// Encoding JavaScript boolean value into a protocol buffers encoding
+	function Meow_EncodeBoolJS(Meow_Key, Meow_Val) {
+		// Returns Meow_Len and function -> Meow_EncodeCall
+		return {
+			Meow_Len: 2,
+			Meow_EncodeCall: function(Meow_HelloBuffer, Meow_Offset) {
+				// writing key
+				Meow_HelloBuffer.writeUInt8(Meow_Key, Meow_Offset);
+				Meow_Offset++;
+				// writing bool value
+				Meow_HelloBuffer.writeUInt8(Meow_Val ? 1 : 0, Meow_Offset);
+				Meow_Offset++;
+				// Returns encoding object
+				return Meow_Offset;
+			}
+		};
+	}
+
+	// Encoding Javascript float value into a protocol buffers encoding
+	function Meow_EncodeFloat(Meow_Key, Meow_Val) {
+		throw new Error("No support provided for 'Float' yet! :(");
 	}
 
 	//
