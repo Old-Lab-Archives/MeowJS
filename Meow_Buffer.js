@@ -23,7 +23,7 @@ var Meow_Buffer = function() {
 		"bool": 0,
 		"enum": 0,
 		"fixed64": 1,
-		"sfixed62": 1,
+		"sfixed64": 1,
 		"double": 1,
 		"string": 2,
 		"bytes": 2,
@@ -180,7 +180,27 @@ var Meow_Buffer = function() {
 			}
 		};
 	}
-	
+
+	// Buffer Encoders
+	var Meow_BufferEncoders = {
+		"int32": Meow_EncodeNumVal,
+		"int64": Meow_EncodeNumVal,
+		"uint32": Meow_EncodeNumVal,
+		"uint64": Meow_EncodeNumVal,
+		"sint32": undefined,
+		"sint64": undefined,
+		"bool": Meow_EncodeBoolJS,
+		"enum": Meow_EncodeEnum,
+		"fixed64": undefined,
+		"sfixed64": undefined,
+		"double": undefined,
+		"bytes": Meow_EncodeBytes,
+		"string": Meow_EncodeBytes,
+		"fixed32": undefined,
+		"sfixed32": undefined,
+		"float": Meow_EncodeFloat
+	};
+
 	//
 	// Still more to code!
 	//
