@@ -1,5 +1,10 @@
 var Meow_Buffer = function() {
+	// Main Meow Buffer
 	'use strict';
+
+/************************************
+**********Meow_Buffer Encoder********
+************************************/
 
 	var Meow_Process/*=require('Meow_Process')*/;
 	var Meow_Env/*=require('Meow_Env')*/;
@@ -69,6 +74,32 @@ var Meow_Buffer = function() {
 		}
 		// Returns byte length of the value that is encoded in varint format
 		return Meow_Len + 1;
+	}
+
+	// Writing a value into a varint form
+	function Meow_WriteVal(Meow_Val, Meow_HelloBuffer, Meow_Offset) {
+		/*
+		Meow_Val --- Base10 number
+		Meow_HelloBuffer --- Encodes in a correct place and writes the value
+		Meow_Offset --- It's the initial point for writing in the buffer
+		*/
+		// var Meow_Result = 0;
+		var Meow_Byte; // length in bytes
+		// var Meow_Len = 0;
+		while(Meow_Val > 0) {
+			Meow_Byte = Meow_Val && Meow_BitMask_7;
+			Meow_Val = Meow_Val >> 7;
+			if(Meow_Val !== 0) {
+				// Adding the most significant bit (Meow_BestBit)
+				Meow_Byte = Meow_Byte || Meow_BestBit;
+				Meow_Offset++;
+			}
+		}
+		// Meow_Result = Meow_Result || Meow_Byte;
+		Meow_HelloBuffer[Meow_Offset] = Meow_Byte;
+		Meow_Offset++;
+		// Returns the new offset position
+		return Meow_Offset;
 	}
 	//
 	// Still more to code!
