@@ -227,6 +227,7 @@ var Meow_Buffer = function() {
 				}
 			};
 		};
+
 		// Encoding a field from the JSON object
 		var Meow_EncdeField = function(Meow_Val, Meow_FieldDefn) {
 			var Meow_TypeName = Meow_FieldDefn.type;
@@ -254,11 +255,64 @@ var Meow_Buffer = function() {
 			}
 		};
 
-		//
-		// Still more to code!
-		//
+		// Encoding a JSON object
+		var Meow_EncodeJSON = this;
+		Meow_EncodeJSON.Meow_BufferEncodes = function(Meow_Msg, Meow_MsgName, Meow_HelloBuffer, Meow_Offset) {
+			var Meow_Defn2 = Meow_Defn[Meow_MsgName];
+			var Meow_Len = 0;
+			var Meow_BufferEncoder = {};
+			var Meow_BufferKey;
+			var Meow_Num;
+			var m3;
+			var err;
+			// Encoding each field in the buffer
+			for(var Meow_Key in Meow_Msg) {
+				if(Meow_Msg.hasOwnProperty(Meow_Key)) {
+					var Meow_FieldDefn = Meow_Defn2[Meow_Key];
+					if(Meow_FieldDefn) {
+						var Meow_Field = Meow_EncdeField(Meow_Msg[Meow_Key], Meow_FieldDefn);
+						// console.log('field length: ' + Meow_Key + '' + Meow_Field.length + '\tfor the Meow_Val: ' + Meow_Msg[Meow_Key]);
+						Meow_Len += Meow_Field.length;
+						Meow_BufferEncoder[Meow_Key] = Meow_Field.Meow_EncodeCall;
+					}
+				}
+			}
+			// Check all required fields from the field number
+			for(Meow_Num in Meow_Defn2) {
+				if(Meow_Defn2.hasOwnProperty(Meow_Num) && Meow_Defn2[Meow_Num].required && /\d+/.test(Meow_Num)) {
+					var Meow_Name = Meow_Defn2[Meow_Num].name;
+					// Check if Meow_BufferEncoder is defined
+					if(!Meow_BufferEncoder[Meow_Name]) {
+						err = new Error('Error while encoding the message ' + Meow_MsgName + 'required field' + Meow_Num + '/' + Meow_Name + 'was missing!');
+						// callback
+						throw err;
+					}
+				}
+			}
+			Meow_HelloBuffer = Meow_HelloBuffer || new Meow_helloBuffer(Meow_Len);
+			// For debugging
+			Meow_HelloBuffer.fill(0);
+			Meow_Offset = Meow_Offset || 0;
+			for(m3 in Meow_BufferEncoder) {
+				if(Meow_BufferEncoder.hasOwnProperty(m3)) {
+					// For debugging
+					// console.log('encoding the field: ' + m3);
+					// For debugging
+					// console.log(Meow_HelloBuffer);
+					Meow_Offset = Meow_BufferEncoder[m3](Meow_HelloBuffer, Meow_Offset);
+				}
+			}
+			// console.log(Meow_HelloBuffer);
+			// Returns the Meow_HelloBuffer with the encoded protocol buffers message
+			return Meow_HelloBuffer;
+		};
 	}
 };
+/*******End of Meow_Buffer Encoder*******/
+
+//
+// Still more to code
+//
 
 /*** Credits ***
 Googly Boogly Protocol Buffers (https://developers.google.com/protocol-buffers/docs/overview)
