@@ -227,6 +227,32 @@ var Meow_Buffer = function() {
 				}
 			};
 		};
+		// Encoding a field from the JSON object
+		var Meow_EncdeField = function(Meow_Val, Meow_FieldDefn) {
+			var Meow_TypeName = Meow_FieldDefn.type;
+			var Meow_BufferKey;
+			var Meow_BufferEncode = Meow_BufferEncoders[Meow_TypeName];
+			if(Meow_BufferEncode) {
+				Meow_BufferKey = Meow_EncodeBufferKey(Meow_FieldDefn.Meow_Num, Meow_TypeName);
+				return Meow_BufferEncode(Meow_BufferKey, Meow_Val);
+			} else {
+				var Meow_EmbedEnum = Meow_FieldDefn['EmbedEnums'];
+				var Meow_EmbedEnum2 = Meow_EmbedEnum ? Meow_EmbedEnum[Meow_TypeName] : undefined;
+				if(Meow_EmbedEnum2) {
+					return Meow_EncodeEnum(Meow_BufferKey, Meow_Val, Meow_EmbedEnum2);
+				} else {
+					// in case if the type name arrives from another Msg
+					var Meow_OtherMsg = Meow_Defn[Meow_FieldDefn.type];
+					if(Meow_OtherMsg) {
+						return Meow_EmbedEncode(Meow_Val, Meow_FieldDefn);
+					} else {
+						return {
+							err: new Error('type not found... :(' + Meow_FieldDefn.type)
+						};
+					}
+				}
+			}
+		};
 
 		//
 		// Still more to code!
