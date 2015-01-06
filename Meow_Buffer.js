@@ -160,6 +160,27 @@ var Meow_Buffer = function() {
 		throw new Error("No support provided for 'Float' yet! :(");
 	}
 
+	// Encoding a string value into bytes for protocol buffers encoding
+	function Meow_EncodeBytes(Meow_Key, Meow_Val) {
+		// Encoding the value length
+		var Meow_Parsed = Meow_EncodeNumVal(Meow_Val.length);
+		// Returns Meow_Len and function -> Meow_EncodeCall
+		return {
+			Meow_Len: 1 + Meow_Parsed.length + Meow_Val.length,
+			Meow_EncodeCall: function(Meow_HelloBuffer, Meow_Offset) {
+				// writing key
+				Meow_HelloBuffer.writeUInt8(Meow_Key, Meow_Offset);
+				Meow_Offset++;
+				// length in bytes
+				Meow_Offset = Meow_WriteVal(Meow_Val.length, Meow_HelloBuffer, Meow_Offset);
+				// data in bytes
+				Meow_HelloBuffer.write(Meow_Val, Meow_Offset, Meow_Val.length, 'UTF8');
+				// Returns encoding object
+				return Meow_Offset + Meow_Val.length;
+			}
+		};
+	}
+	
 	//
 	// Still more to code!
 	//
