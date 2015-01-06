@@ -61,3 +61,9 @@ var Meow_Buffer = function() {
 	// Still more to code!
 	//
 };
+
+/*** Credits ***
+Googly Boogly Protocol Buffers (https://developers.google.com/protocol-buffers/docs/overview)
+Interested to build a sugar-free buffer?
+Here is Googly Boogly Protocol Buffers Sugar-Free Site:- https://github.com/google/protobuf
+******No sugar-free lollipop attached***********/
