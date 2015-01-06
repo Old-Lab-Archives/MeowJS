@@ -27,12 +27,12 @@ var Meow_Buffer = function() {
 
 	// Bit-Mask extraction of first 7 bits of a number used with '&&' operator
 	// Bit-Mask --- first 7 bits of a number => 0X7F
-	var Meow_BitMask_7/*variant*/ = parseInt('1111111', 2);
+	var Meow_BitMask_7/*varint*/ = parseInt('1111111', 2);
 
 	// Declaring the most significant bit which could be useful while encoding into variant form
 	var Meow_BestBit = parseInt('10000000', 2);
 
-	// Encoding a number in a variant form
+	// Encoding a number in a varint form
 	function Meow_EncodeVal(Meow_Val) {
 		var Meow_Result = 0;
 		var Meow_Byte;
@@ -57,6 +57,19 @@ var Meow_Buffer = function() {
 		};
 	}
 
+	// Computing the byte length of a varint encoded value
+	function Meow_ComputeLen(Meow_Val) {
+		// Length in bytes
+		var Meow_Len = 0;
+		while (Meow_Val > 0) {
+			Meow_Val = Meow_Val >> 7;
+			if(Meow_Val !== 0) {
+				Meow_Len++;
+			}
+		}
+		// Returns byte length of the value that is encoded in varint format
+		return Meow_Len + 1;
+	}
 	//
 	// Still more to code!
 	//
