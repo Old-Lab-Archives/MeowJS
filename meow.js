@@ -29,6 +29,6 @@ var MeowJS = function() {
       "Meow_Base.js",
       "Meow_forEach.js",
       "Meow_Base64.js",
-      "Meow_ProtocolBuffer.js"
+      "Meow_Buffer.js"
     );
 };
