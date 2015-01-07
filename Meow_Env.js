@@ -43,6 +43,28 @@ Meow_Env.prototype.Meow_Fetch = function(Meow_Name) {
 		return Meow_Cur;
 	}, {});
 };
-	//
-	// Still more to code!
-	//
+
+// Setting Environment variables
+Meow_Env.prototype.Meow_Set = function(Meow_Name, Meow_Val) {
+	process.Meow_Env[Meow_Name] = Meow_Val;
+};
+
+// Deleting Environment variables
+Meow_Env.prototype.delete = function(Meow_Name) {
+	var Meow_Args = arguments;
+	var build = this;
+	// Fetching one to delete
+	if(Meow_Args.length === 1) {
+		delete process.Meow_Env[Meow_Name];
+	}
+	// Fetching multiple for deletion
+	var Meow_EnvVars = (Meow_Args.length === 0) ? build.Meow_EnvVars : Array.prototype.slice.call(Meow_Args);
+	for(var p in Meow_EnvVars) {
+		delete process.Meow_Env[p];
+	}
+};
+
+// Instantiating Environment
+function Meow_createEnv(Meow_EnvFile) {
+	return new Meow_Env(Meow_EnvFile);
+}
