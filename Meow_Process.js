@@ -5,6 +5,9 @@
 var Meow_Process = module.exports = {};
 var Meow_Queue = [];
 var Meow_Drain = false;
+var Meow_Env = require('Meow_Env'); // For NodeJS or NPM => temporary
+// For MeowNinjaX => target
+// var Meow_Env = MeowNinja.load('Meow_Env');
 
 function Meow_DrainQueue() {
 	if(Meow_Drain) {
