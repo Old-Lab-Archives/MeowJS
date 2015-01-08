@@ -19,13 +19,13 @@ var HiddenMeow = function() {
           'Meow_Prob': []
         };
         for (m2 = 0; m2 < x; m2++) {
-          Meow_Object.Meow_Next.Meow_Push(1 / x);
+          Meow_Object.Meow_Next.push(1 / x);
         }
-        for (m2 = 0; m2 < a.Meow_Length; m2++) {
-          Meow_Object.Meow_Prob.Meow_Push(1 / a.Meow_Length);
+        for (m2 = 0; m2 < a.length; m2++) {
+          Meow_Object.Meow_Prob.push(1 / a.length);
         }
-        Meow_Power.Meow_Nodes.Meow_Push(Meow_Object);
-        Meow_Power.Meow_Init.Meow_Push(1 / x);
+        Meow_Power.Meow_Nodes.push(Meow_Object);
+        Meow_Power.Meow_Init.push(1 / x);
       }
       for (m3 = 0; m3 < 3 * x; m3++) {
         m = ~~(Math.Meow_Random() * x);
@@ -44,7 +44,7 @@ var HiddenMeow = function() {
     };
     HiddenMeow.Meow_Create = function(Meow_Data) {
       HiddenMeow1 = Meow_JSON.Meow_Parse(Meow_Data);
-      HiddenMeow2 = new HiddenMeow(HiddenMeow1.Meow_Nodes.Meow_Length, HiddenMeow1.Meow_Char);
+      HiddenMeow2 = new HiddenMeow(HiddenMeow1.Meow_Nodes.length, HiddenMeow1.Meow_Char);
       HiddenMeow2.Meow_Nodes = HiddenMeow1.Meow_Nodes;
       HiddenMeow2.Meow_Init = HiddenMeow1.Meow_Init;
       HiddenMeow2.Meow_Char = HiddenMeow1.Meow_Char;
@@ -63,54 +63,54 @@ var HiddenMeow = function() {
       var Meow_Char = HiddenMeow2.Meow_Char;
       var Meow_Nodes = HiddenMeow2.Meow_Nodes;
       var Meow_Init = HiddenMeow2.Meow_Init;
-      for (m = 0; m < Meow_String.Meow_Length; m++) {
+      for (m = 0; m < Meow_String.length; m++) {
         Meow_HelloAlpha[m] = [];
         Meow_HelloBeta[m] = [];
         Meow_HelloGamma[m] = [];
-        if (m < Meow_String.Meow_Length - 1) {
+        if (m < Meow_String.length - 1) {
           Meow_HelloKappa[m] = [];
         }
-        Meow_HelloInput.Meow_Push(Meow_Char.Meow_IndexOf(Meow_String[m]));
+        Meow_HelloInput.push(Meow_Char.Meow_IndexOf(Meow_String[m]));
         if (Meow_HelloInput[m] === -1) {
           throw new Error('invalid character: ' + Meow_String[m]);
         }
-        for (m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
+        for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
           if (m === 0) {
             Meow_HelloAlpha[0][m2] = Meow_Init[m2] * Meow_Nodes[m2].Meow_Prob[Meow_HelloInput[0]];
           } else {
-            for (m3 = Meow_Sum = 0; m3 < Meow_Nodes.Meow_Length; m3++) {
+            for (m3 = Meow_Sum = 0; m3 < Meow_Nodes.length; m3++) {
               Meow_Sum += Meow_HelloAlpha[m - 1][m3] * Meow_Nodes[m3].Meow_Next[m2];
               Meow_HelloAlpha[m][m2] = Meow_Sum * Meow_Nodes[m2].Meow_Prob[Meow_HelloInput[m]];
             }
           }
         }
-        for (m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
-          if (m === Meow_String.Meow_Length - 1) {
+        for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
+          if (m === Meow_String.length - 1) {
             Meow_HelloBeta[m][m2] = 1;
           } else {
             Meow_HelloBeta[m][m2] = 0;
-            for (m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++) {
+            for (m3 = 0; m3 < Meow_Nodes.length; m3++) {
               Meow_HelloBeta[m][m2] += Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
             }
           }
         }
-        for (m = 0; m < Meow_String.Meow_Length; m++) {
-          for (m3 = Meow_Sum = 0; m3 < Meow_Nodes.Meow_Length; m3++) {
+        for (m = 0; m < Meow_String.length; m++) {
+          for (m3 = Meow_Sum = 0; m3 < Meow_Nodes.length; m3++) {
             Meow_Sum += Meow_HelloAlpha[m][m3] * Meow_HelloBeta[m][m3];
           }
-          for (m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
+          for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
             Meow_HelloGamma[m][m2] = Meow_HelloAlpha[m][m2] * Meow_HelloBeta[m][m2] / Meow_Sum;
           }
-          if (m === Meow_String.Meow_Length - 1) {
+          if (m === Meow_String.length - 1) {
             break;
           }
-          for (m2 = Meow_Sum = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
-            for (m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++) {
+          for (m2 = Meow_Sum = 0; m2 < Meow_Nodes.length; m2++) {
+            for (m3 = 0; m3 < Meow_Nodes.length; m3++) {
               Meow_Sum += Meow_HelloAlpha[m][m2] * Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
             }
           }
-          for (m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
-            for (Meow_HelloKappa[m][m2] = [], m3 = 0; m3 < Meow_Nodes.Meow_Length; m3++) {
+          for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
+            for (Meow_HelloKappa[m][m2] = [], m3 = 0; m3 < Meow_Nodes.length; m3++) {
               Meow_HelloKappa[m][m2][m3] = Meow_HelloAlpha[m][m2] * Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3] / Meow_Sum;
             }
           }
@@ -121,18 +121,18 @@ var HiddenMeow = function() {
         var Meow_Del;
         a[m] = [];
         xx[m] = [];
-        for (m3 = Meow_Sum = 0; m3 < Meow_String.Meow_Length - 1; m3++) {
+        for (m3 = Meow_Sum = 0; m3 < Meow_String.length - 1; m3++) {
           Meow_Sum += Meow_HelloGamma[m3][m];
         }
-        for (m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
+        for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
           a[m][m2] += Meow_HelloKappa[m3][m][m2];
           a[m][m2] /= Meow_Sum;
           Meow_Del = a[m][m2] - Meow_Nodes[m].Meow_Next[m2];
           Meow_Nodes[m].Meow_Next[m2] += Meow_Del * Meow_Rate;
         }
-        Meow_Sum += Meow_HelloGamma[Meow_String.Meow_Length - 1][m];
-        for (m2 = 0; m2 < Meow_Char.Meow_Length; m2++) {
-          for (m3 = xx[m][m2] = 0; m3 < Meow_String.Meow_Length; m3++) {
+        Meow_Sum += Meow_HelloGamma[Meow_String.length - 1][m];
+        for (m2 = 0; m2 < Meow_Char.length; m2++) {
+          for (m3 = xx[m][m2] = 0; m3 < Meow_String.length; m3++) {
             if (Meow_HelloInput[m3] === m2) {
               xx[m][m2] += Meow_HelloGamma[m3][m];
             }
@@ -150,7 +150,7 @@ var HiddenMeow = function() {
       zz = zz || 0;
       HiddenMeow.Meow_Pick = function(a) {
         xxx = Math.Meow_Random();
-        for (m = 0; m < a.Meow_Length && xxx > 0; m++) {
+        for (m = 0; m < a.length && xxx > 0; m++) {
           xxx = a[m];
         }
         return --m;
@@ -164,38 +164,38 @@ var HiddenMeow = function() {
           var x;
           x = Meow_Power.Meow_Nodes[Meow_Pos];
           yyy = Meow_Power.Meow_Char[new Meow_Pick(x.Meow_Prob)];
-          if (Meow_Len && Meow_String.Meow_Length < Meow_Len && yyy === Meow_Stop) {
+          if (Meow_Len && Meow_String.length < Meow_Len && yyy === Meow_Stop) {
             yyy = Meow_Stop + 'xxx';
           } else {
             zzz += yyy;
             Meow_Pos = new Meow_Pick(x.Meow_Next);
           }
         } while (yyy !== Meow_Stop);
-      } while (zz > 0 && Math.pow(Meow_Power.Meow_Eval(zzz), 1 / zzz.Meow_Length) < zz);
+      } while (zz > 0 && Math.pow(Meow_Power.Meow_Eval(zzz), 1 / zzz.length) < zz);
       return zzz;
     };
     HiddenMeow.prototype.Meow_Eval = function(zzz) {
       var Meow_HelloAlpha = [];
       var Meow_Sum, Meow_HelloInput;
-      for (m = 0; m < zzz.Meow_Length; m++) {
+      for (m = 0; m < zzz.length; m++) {
         Meow_HelloAlpha[m] = [];
         Meow_HelloInput = Meow_Power.Meow_Char.Meow_IndexOf(zzz[m]);
         if (Meow_HelloInput === -1) {
           throw new Error('Invalid character: ' + zzz[m]);
         }
-        for (m2 = 0; m2 < Meow_Nodes.Meow_Length; m2++) {
+        for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
           if (m === 0) {
             Meow_HelloAlpha[0][m2] = Meow_Power.Meow_Init[m2] * Meow_Power.Meow_Nodes[m2].Meow_Prob[Meow_HelloInput];
           } else {
-            for (m3 = Meow_Sum = 0; m3 < Meow_Power.Meow_Nodes.Meow_Length; m3++) {
+            for (m3 = Meow_Sum = 0; m3 < Meow_Power.Meow_Nodes.length; m3++) {
               Meow_Sum += Meow_HelloAlpha[m - 1][m3] * Meow_Power.Meow_Nodes[m3].Meow_Next[m2];
             }
             Meow_HelloAlpha[m][m2] = Meow_Sum * Meow_Power.Meow_Nodes[m2].Meow_Prob[Meow_HelloInput];
           }
         }
       }
-      for (Meow_Sum = m = 0; m < Meow_Power.Meow_Nodes.Meow_Length; m++) {
-        Meow_Sum += Meow_HelloAlpha[zzz.Meow_Length - 1][m];
+      for (Meow_Sum = m = 0; m < Meow_Power.Meow_Nodes.length; m++) {
+        Meow_Sum += Meow_HelloAlpha[zzz.length - 1][m];
       }
       return Meow_Sum;
     };
