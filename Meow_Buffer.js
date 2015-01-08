@@ -1,4 +1,4 @@
-var Meow_Buffer = function() {
+Meow_Buffer = function() {
 // Main Meow Buffer
 	'use strict';
 
@@ -7,10 +7,12 @@ var Meow_Buffer = function() {
 ************************************/
 
 	var Meow_Process/*=require('Meow_Process')*/;
-	var Meow_Env/*=require('Meow_Env')*/;
+	//var Meow_Env/*=require('Meow_Env')*/;
 
 	// Enabling as well as disbaling debugging mode
+	/*
 	var Meow_Debug = Meow_Process.Meow_Env['CLIENT_DEBUG'] || false;
+	*/
 
 	// Mapping between protocol buffer types and the wire types
 	var Meow_BufferTypes = {
@@ -157,9 +159,11 @@ var Meow_Buffer = function() {
 	}
 
 	// Encoding Javascript float value into a protocol buffers encoding
+	/*
 	function Meow_EncodeFloat(Meow_Key, Meow_Val) {
 		throw new Error("No support provided for 'Float' yet! :(");
 	}
+	*/
 
 	// Encoding a string value into bytes for protocol buffers encoding
 	function Meow_EncodeBytes(Meow_Key, Meow_Val) {
@@ -205,7 +209,7 @@ var Meow_Buffer = function() {
 
 	// Buffer Encode Constructor
 	function Meow_ConstructBufferEncode(Meow_Defn) {
-		var Meow_BufferEncode = this;
+		Meow_BufferEncode = this;
 		// Encoded object is represented as embedded message within a message
 		var Meow_EmbedEncode = function(Meow_Val, Meow_FieldDefn) {
 			var Meow_BufferMsg = Meow_ConstructBufferEncode.Meow_BufferEncode(Meow_Val, Meow_FieldDefn.type);
@@ -213,7 +217,7 @@ var Meow_Buffer = function() {
 			return {
 				Meow_Len: 1 + 1 + Meow_BufferMsg.length,
 				// Encoded value is 'called' when the buffer object size is allocated
-				Meow_EncodeCall: function(Meow_HelloBuffer, offset) {
+				Meow_EncodeCall: function(Meow_HelloBuffer, Meow_Offset) {
 					var Meow_Key = Meow_EncodeBufferWireKey(Meow_FieldDefn.Meow_Num, 2);
 					// writing key
 					Meow_HelloBuffer.writeUInt8(Meow_Key, Meow_Offset);
@@ -261,7 +265,6 @@ var Meow_Buffer = function() {
 			var Meow_Defn2 = Meow_Defn[Meow_MsgName];
 			var Meow_Len = 0;
 			var Meow_BufferEncoder = {};
-			var Meow_BufferKey;
 			var Meow_Num;
 			var m3;
 			var err;
