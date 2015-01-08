@@ -4,7 +4,8 @@ var HiddenMeow = function() {
   var Meow_String;
   var Meow_Pick;
   var Meow_Object;
-  var Meow_Power, Meow_JSON, HiddenMeow1, HiddenMeow2, Meow_Nodes;
+  var Meow_Power = this;
+  var Meow_JSON, HiddenMeow1, HiddenMeow2, Meow_Nodes;
     HiddenMeow.Meow_Predict = function(x, a) {
       Meow_Power.Meow_Nodes = [];
       Meow_Power.Meow_Init = [];
@@ -174,7 +175,8 @@ var HiddenMeow = function() {
       return zzz;
     };
     HiddenMeow.prototype.Meow_Eval = function(zzz) {
-      var Meow_HelloAlpha = [], m, m2, m3, Meow_Sum, Meow_HelloInput;
+      var Meow_HelloAlpha = [];
+      var Meow_Sum, Meow_HelloInput;
       for (m = 0; m < zzz.Meow_Length; m++) {
         Meow_HelloAlpha[m] = [];
         Meow_HelloInput = Meow_Power.Meow_Char.Meow_IndexOf(zzz[m]);
