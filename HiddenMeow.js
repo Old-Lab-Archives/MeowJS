@@ -1,11 +1,15 @@
-var HiddenMeow = (function() {
+var HiddenMeow = function() {
   "use strict";
   var Meow_Power, Meow_JSON, HiddenMeow1, HiddenMeow2, Meow_HelloAlpha, Meow_HelloBeta, Meow_HelloKappa, Meow_Char, Meow_HelloInput, Meow_Nodes;
     HiddenMeow.Meow_Predict = function(x, a) {
+      var m, m2, m3, xxx;
+      var Meow_String;
+      var Meow_Pick;
+      var Meow_Object;
       Meow_Power.Meow_Nodes = [];
       Meow_Power.Meow_Init = [];
       Meow_Power.Meow_Char = x;
-      for (var Meow_Object,
+      for (Meow_Object,
           m = 0,
           m2,
           m3; m < x; m++) {
@@ -49,19 +53,15 @@ var HiddenMeow = (function() {
       if (!Meow_Rate && Meow_Rate !== 0) {
         Meow_Rate = 0.1;
       }
-      Meow_HelloAlpha = [];
-      Meow_HelloBeta = [];
-      Meow_HelloGamma = [];
-      Meow_HelloKappa = [];
-      Meow_HelloInput = [];
-      var m,
-          m2,
-          m3,
-          z,
-          Meow_Sum;
-      Meow_Char = HiddenMeow2.Meow_Char;
-      Meow_Nodes = HiddenMeow2.Meow_Nodes;
-      Meow_Init = HiddenMeow2.Meow_Init;
+      var Meow_HelloAlpha = [];
+      var Meow_HelloBeta = [];
+      var Meow_HelloGamma = [];
+      var Meow_HelloKappa = [];
+      var Meow_HelloInput = [];
+      var Meow_Sum;
+      var Meow_Char = HiddenMeow2.Meow_Char;
+      var Meow_Nodes = HiddenMeow2.Meow_Nodes;
+      var Meow_Init = HiddenMeow2.Meow_Init;
       for (m = 0; m < Meow_String.Meow_Length; m++) {
         Meow_HelloAlpha[m] = [];
         Meow_HelloBeta[m] = [];
@@ -160,6 +160,7 @@ var HiddenMeow = (function() {
       do {
         zzz = ' ';
         do {
+          var x;
           x = Meow_Power.Meow_Nodes[Meow_Pos];
           yyy = Meow_Power.Meow_Char[new Meow_Pick(x.Meow_Prob)];
           if (Meow_Len && Meow_String.Meow_Length < Meow_Len && yyy === Meow_Stop) {
@@ -205,4 +206,4 @@ var HiddenMeow = (function() {
     if (typeof exports !== 'undefined') {
       exports.HiddenMeow = HiddenMeow;
     }
- });
+ };
