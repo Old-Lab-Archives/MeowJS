@@ -1,4 +1,4 @@
-Meow_Buffer = function() {
+var Meow_Buffer = function() {
 // Main Meow Buffer
 	'use strict';
 
@@ -209,7 +209,7 @@ Meow_Buffer = function() {
 
 	// Buffer Encode Constructor
 	function Meow_ConstructBufferEncode(Meow_Defn) {
-		Meow_BufferEncode = this;
+		var Meow_BufferEncode = this;
 		// Encoded object is represented as embedded message within a message
 		var Meow_EmbedEncode = function(Meow_Val, Meow_FieldDefn) {
 			var Meow_BufferMsg = Meow_ConstructBufferEncode.Meow_BufferEncode(Meow_Val, Meow_FieldDefn.type);
