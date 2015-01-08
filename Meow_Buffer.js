@@ -6,8 +6,8 @@ Meow_Buffer = function() {
 **********Meow_Buffer Encoder********
 ************************************/
 
-	var Meow_Process/*=require('Meow_Process')*/;
-	//var Meow_Env/*=require('Meow_Env')*/;
+	//var Meow_Process;
+	//var Meow_Env;
 
 	// Enabling as well as disbaling debugging mode
 	/*
@@ -204,7 +204,7 @@ Meow_Buffer = function() {
 		"string": Meow_EncodeBytes,
 		"fixed32": undefined,
 		"sfixed32": undefined,
-		"float": Meow_EncodeFloat
+		"float": undefined // Meow_EncodeFloat
 	};
 
 	// Buffer Encode Constructor
@@ -292,6 +292,7 @@ Meow_Buffer = function() {
 					}
 				}
 			}
+			var Meow_helloBuffer;
 			Meow_HelloBuffer = Meow_HelloBuffer || new Meow_helloBuffer(Meow_Len);
 			// For debugging
 			Meow_HelloBuffer.fill(0);
