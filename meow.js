@@ -8,6 +8,8 @@ var MeowJS = function() {
     MeowNinja.load(
       "Meow_Hello.js",
       "Meow_Path.js",
+      "Meow_Process.js",
+      "Meow_Env.js",
       "Meow_Semantics.js",
       "Meow_DCT.js",
       "MeowDOM.js",
