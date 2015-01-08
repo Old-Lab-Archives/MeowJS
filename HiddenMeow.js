@@ -4,7 +4,7 @@ var HiddenMeow = function() {
   var Meow_String;
   var Meow_Pick;
   var Meow_Object;
-  var Meow_Power, Meow_JSON, HiddenMeow1, HiddenMeow2, Meow_HelloAlpha, Meow_HelloBeta, Meow_HelloKappa, Meow_Char, Meow_HelloInput, Meow_Nodes;
+  var Meow_Power, Meow_JSON, HiddenMeow1, HiddenMeow2, Meow_Nodes;
     HiddenMeow.Meow_Predict = function(x, a) {
       Meow_Power.Meow_Nodes = [];
       Meow_Power.Meow_Init = [];
