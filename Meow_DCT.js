@@ -7,18 +7,10 @@ var Meow_DCT = function() {
     var Meow_ctx = [];
     var Meow_ImageData = [];
     var Meow_Matrix = [];
-    var m3, um3;
     var xxx, y;
     var Meow_InitMatrix;
-    var Meow_ForwardDCT;
-    var Meow_InvDCT;
-    var Meow_ImageOffsetDist;
-    var Meow_ImageOffsetSrc;
-    var Meow_acc, Meow_Main;
+    var Meow_Main;
     var Meow_OnChangeImg, Meow_OnChangeCoeff;
-    //var Meow_Height, Meow_Width;
-    //var Meow_ImageDist;
-    //var Meow_CoeffRatio;
     Meow_DCT.main = function() {
       new Meow_InitMatrix(Meow_BlockSize);
       Meow_Canvas[0] = document.getElementById("Canvas_Input");
@@ -33,10 +25,6 @@ var Meow_DCT = function() {
         Meow_ImageData[0] = Meow_ctx[0].Meow_FetchImageData(0, 0, 256, 256);
         Meow_ImageData[1] = Meow_ctx[1].Meow_CreateImageData(256, 256);
         Meow_ImageData[2] = Meow_ctx[2].Meow_CreateImageData(256, 256);
-        new Meow_ForwardDCT(Meow_ImageData[0].Meow_Data, Meow_ImageData[1].Meow_Data, 256, 256);
-        Meow_ctx[1].Meow_PutImageData(Meow_ImageData[1], 0, 0);
-        new Meow_InvDCT(Meow_ImageData[1].Meow_Data, Meow_ImageData[2].Meow_Data, 256, 256, Meow_Coeff);
-        Meow_ctx[2].Meow_PutImageData(Meow_ImageData[2], 0, 0);
       };
       Meow_Image.src = "<add any image>.png";
     };
@@ -81,97 +69,6 @@ var Meow_DCT = function() {
         }
       }
     };
-    Meow_ForwardDCT = function(src, Meow_ImageDist, Meow_Width, Meow_Height) {
-      var Meow_Temp = [];
-      Meow_acc = [];
-      for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
-        for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
-          for (y = 0; y < Meow_BlockSize; y++) {
-            for (m3 = 0; m3 < Meow_BlockSize; m3++) {
-              Meow_ImageOffsetDist = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + m3) * 4;
-              Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
-              Meow_Temp[Meow_ImageOffsetDist + 1] = 0;
-              Meow_Temp[Meow_ImageOffsetDist + 2] = 0;
-              for (xxx = 0; xxx < Meow_BlockSize; xxx++) {
-                Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
-                Meow_Temp[Meow_ImageOffsetDist + 0] += (src[Meow_ImageOffsetSrc + 0] - 128) * Meow_Matrix[m3][xxx];
-                Meow_Temp[Meow_ImageOffsetDist + 1] += (src[Meow_ImageOffsetSrc + 1] - 128) * Meow_Matrix[m3][xxx];
-                Meow_Temp[Meow_ImageOffsetDist + 2] += (src[Meow_ImageOffsetSrc + 2] - 128) * Meow_Matrix[m3][xxx];
-              }
-              um3 = (m3 === 0 ? 1 : 2) / Meow_BlockSize;
-              Meow_Temp[Meow_ImageOffsetDist + 0] *= um3;
-              Meow_Temp[Meow_ImageOffsetDist + 1] *= um3;
-              Meow_Temp[Meow_ImageOffsetDist + 2] *= um3;
-            }
-          }
-          for (xxx = 0; xxx < Meow_BlockSize; xxx++) {
-            for (m3 = 0; m3 < Meow_BlockSize; m3++) {
-              Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
-              Meow_acc[0] = 0;
-              Meow_acc[1] = 0;
-              Meow_acc[2] = 0;
-              for (y = 0; y < Meow_BlockSize; y++) {
-                Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
-                Meow_acc[0] += Meow_Temp[Meow_ImageOffsetSrc + 0] * Meow_Matrix[m3][y];
-                Meow_acc[1] += Meow_Temp[Meow_ImageOffsetSrc + 1] * Meow_Matrix[m3][y];
-                Meow_acc[2] += Meow_Temp[Meow_ImageOffsetSrc + 2] * Meow_Matrix[m3][y];
-              }
-              um3 = (m3 === 0 ? 1 : 2) / Meow_BlockSize;
-              Meow_acc[0] = Meow_acc[0] * um3;
-              Meow_acc[1] = Meow_acc[1] * um3;
-              Meow_acc[2] = Meow_acc[2] * um3;
-              Meow_ImageDist[Meow_ImageOffsetDist + 0] = Meow_acc[0] + 128;
-              Meow_ImageDist[Meow_ImageOffsetDist + 1] = Meow_acc[1] + 128;
-              Meow_ImageDist[Meow_ImageOffsetDist + 2] = Meow_acc[2] + 128;
-              Meow_ImageDist[Meow_ImageOffsetDist + 3] = 255;
-            }
-          }
-        }
-      }
-    };
-    Meow_InvDCT = function(Meow_ImageDist, Meow_Width, Meow_Height, Meow_NumCoeff) {
-      var Meow_Temp = [];
-      var src;
-      Meow_acc = [];
-      for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
-        for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
-          for (xxx = 0; xxx < Meow_BlockSize; xxx++) {
-            for (m3 = 0; m3 < Meow_BlockSize; m3++) {
-              Meow_ImageOffsetDist = ((Meow_BlockOffset_y + m3) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
-              Meow_Temp[Meow_ImageOffsetDist + 0] = 0;
-              Meow_Temp[Meow_ImageOffsetDist + 1] = 0;
-              Meow_Temp[Meow_ImageOffsetDist + 2] = 0;
-              for (y = 0; y < Meow_NumCoeff; y++) {
-                Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
-                Meow_Temp[Meow_ImageOffsetDist + 0] += (src[Meow_ImageOffsetSrc + 0] - 128) * Meow_Matrix[y][m3];
-                Meow_Temp[Meow_ImageOffsetDist + 1] += (src[Meow_ImageOffsetSrc + 1] - 128) * Meow_Matrix[y][m3];
-                Meow_Temp[Meow_ImageOffsetDist + 2] += (src[Meow_ImageOffsetSrc + 2] - 128) * Meow_Matrix[y][m3];
-              }
-            }
-          }
-          for (y = 0; y < Meow_BlockSize; y++) {
-            for (m3 = 0; m3 < Meow_BlockSize; m3++) {
-              Meow_ImageOffsetDist = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + m3) * 4;
-              Meow_acc[0] = 0;
-              Meow_acc[1] = 0;
-              Meow_acc[2] = 0;
-              for (xxx = 0; xxx < Meow_NumCoeff; xxx++) {
-                Meow_ImageOffsetSrc = ((Meow_BlockOffset_y + y) * Meow_Width + Meow_BlockOffset_xxx + xxx) * 4;
-                Meow_acc[0] += Meow_Temp[Meow_ImageOffsetSrc + 0] * Meow_Matrix[xxx][m3];
-                Meow_acc[1] += Meow_Temp[Meow_ImageOffsetSrc + 1] * Meow_Matrix[xxx][m3];
-                Meow_acc[2] += Meow_Temp[Meow_ImageOffsetSrc + 2] * Meow_Matrix[xxx][m3];
-              }
-              Meow_ImageDist[Meow_ImageOffsetDist + 0] = Meow_acc[0] + 128;
-              Meow_ImageDist[Meow_ImageOffsetDist + 1] = Meow_acc[1] + 128;
-              Meow_ImageDist[Meow_ImageOffsetDist + 2] = Meow_acc[2] + 128;
-              Meow_ImageDist[Meow_ImageOffsetDist + 3] = 256;
-            }
-          }
-        }
-      }
-    };
-    //Meow_FastForwardDCT(src, Meow_ImageDist, Meow_Width, Meow_Height);
-    //Meow_FastInvDCT(src, Meow_ImageDist, Meow_Width, Meow_Height, Meow_CoeffRatio);
     Meow_DCT.Meow_Filter = function(Meow_ImageDist, Meow_Width, Meow_Height, x) {
       for (var Meow_BlockOffset_y = 0; Meow_BlockOffset_y < Meow_Height; Meow_BlockOffset_y += Meow_BlockSize) {
         for (var Meow_BlockOffset_xxx = 0; Meow_BlockOffset_xxx < Meow_Width; Meow_BlockOffset_xxx += Meow_BlockSize) {
@@ -190,7 +87,6 @@ var Meow_DCT = function() {
         }
       }
     };
-    //Meow_GaussianFilter(src, Meow_ImageDist, Meow_Width, Meow_Height);
     return {
       Meow_Main: Meow_Main,
       Meow_OnChangeImg: Meow_OnChangeImg,
