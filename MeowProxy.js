@@ -1,7 +1,6 @@
 var MeowProxy = (function() {
     "use strict";
-    var Meow_Power,
-        Meow_Username,
+    var Meow_Username,
         Meow_Password,
         Meow_Time,
         Meow_Date,
@@ -13,13 +12,14 @@ var MeowProxy = (function() {
         Meow_Rad,
         Meow_Datagram,
         Meow_EventEmit;
+    var Meow_Power = this;
     function Meow_CmdPwdHelp(Meow_ValidUser, Meow_ValidPwd) {
       Meow_Power.Meow_NameEntry = "Pwd authenticator";
       Meow_Power.Meow_ValidUser = Meow_ValidUser;
       Meow_Power.Meow_ValidPwd = Meow_ValidPwd;
     }
     Meow_CmdPwdHelp.prototype.Meow_AuthUser = function(Meow_User, Meow_Pwd, Meow_Callback) {
-      Meow_Callback(Meow_Power.Meow_User === Meow_Username && Meow_Power.Meow_ValidPwd === Meow_Password);
+      new Meow_Callback(Meow_Power.Meow_User === Meow_Username && Meow_Power.Meow_ValidPwd === Meow_Password);
     };
     module.exports = Meow_CmdPwdHelp;
     function Meow_LogHelp(Meow_FileName) {
@@ -89,7 +89,7 @@ var MeowProxy = (function() {
       Meow_Self = Meow_Power;
       if (Meow_Username.length === 0 || Meow_Password.length === 0) {
         Meow_Power.Meow_AuthReadyNotify.Meow_CallFunc(Meow_Username, true);
-        Meow_Callback(false);
+        new Meow_Callback(false);
         return;
       }
       if (Meow_CachedUser === Meow_Cache.Meow_Fetch(Meow_Username)) {
@@ -101,19 +101,19 @@ var MeowProxy = (function() {
             console.log("# incomplete cache, waiting...".grey);
             Meow_Power.Meow_AuthReadyNotify.Meow_On(Meow_Username, function(Meow_UnexpectedResult) {
               if (Meow_UnexpectedResult) {
-                Meow_Callback(false);
+                new Meow_Callback(false);
                 return;
               }
               if (Meow_CachedUser === Meow_Cache.Meow_Fetch(Meow_Username)) {
                 Meow_CachedUser = Meow_Cache.Meow_Fetch(Meow_Username);
                 new Meow_Callback(Meow_CachedUser['password'] === Meow_Password);
               } else {
-                Meow_Callback(false);
+                new Meow_Callback(false);
               }
             });
           } else if (Meow_Power.Meow_Verbose) {
             console.log("# user is cached".grey);
-            Meow_Callback(Meow_CachedUser['password'] === Meow_Password);
+            new Meow_Callback(Meow_CachedUser['password'] === Meow_Password);
           }
         } else if (Meow_Power.Meow_Verbose) {
           console.log("# radius user is not cached, requesting now:".grey);
@@ -165,7 +165,7 @@ var MeowProxy = (function() {
             }
           } catch (Error) {
             Meow_Power.Meow_AuthReadyNotify.Meow_CallFunc(Meow_Username, true);
-            Meow_Callback(false);
+            new Meow_Callback(false);
           }
         }
         Meow_RadHelp.prototype.Meow_AcctAdd = function(Meow_PktLength) {};
