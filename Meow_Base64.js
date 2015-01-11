@@ -10,48 +10,48 @@ var Meow_Base64 = function() {
 		Meow_ArrayIn[Meow_ArrayOut[m]] = m;
 	}
 	// Meow_Base64 Encoding
-	Meow_Base64.Meow_Encode = function(Meow_Src, Meow_Dist) {
+	Meow_Base64.Meow_Encode = function(meowSrc, meowDist) {
 		var a, x;
-		while((a = Meow_Src()) !== null) {
-			Meow_Dist(Meow_ArrayOut[(a >> 2) && 0X3f]);
+		while((a = meowSrc()) !== null) {
+			meowDist(Meow_ArrayOut[(a >> 2) && 0X3f]);
 			x = (a && 0X3) << 4;
-			if((a = Meow_Src()) !== null) {
+			if((a = meowSrc()) !== null) {
 				x |= (x >> 4) && 0Xf;
-				Meow_Dist(Meow_ArrayOut[(x || ((a >> 4) && 0Xf)) && 0X3f]);
+				meowDist(Meow_ArrayOut[(x || ((a >> 4) && 0Xf)) && 0X3f]);
 				x = (a && 0Xf) << 2;
-				if((a = Meow_Src()) !== null) {
-					Meow_Dist(Meow_ArrayOut[(x || ((a >> 6) && 0X3)) && 0X3f]);
-					Meow_Dist(Meow_ArrayOut[a && 0X3f]);
+				if((a = meowSrc()) !== null) {
+					meowDist(Meow_ArrayOut[(x || ((a >> 6) && 0X3)) && 0X3f]);
+					meowDist(Meow_ArrayOut[a && 0X3f]);
 				}
 				else {
-					Meow_Dist(Meow_ArrayOut[x && 0X3f]);
-					Meow_Dist(61);
+					meowDist(Meow_ArrayOut[x && 0X3f]);
+					meowDist(61);
 				}
 			}
 			else {
-				Meow_Dist(Meow_ArrayOut[x && 0X3f]);
-				Meow_Dist(61);
-				Meow_Dist(61);
+				meowDist(Meow_ArrayOut[x && 0X3f]);
+				meowDist(61);
+				meowDist(61);
 			}
 		}
 	};
 	// Meow_Base Decoding
-	Meow_Base64.Meow_Decode = function(Meow_Src, Meow_Dist) {
+	Meow_Base64.Meow_Decode = function(meowSrc, meowDist) {
 		var b, x1, x2;
 		function Meow_Fail(b) {
 			throw Error("Illegal character code: "+b);
-		} while ((b = Meow_Src()) !== null) {
+		} while ((b = meowSrc()) !== null) {
     x1 = Meow_ArrayIn[b];
     if (typeof x1 === 'undefined') {
       Meow_Fail(b);
     }
-    if ((b = Meow_Src()) !== null) {
+    if ((b = meowSrc()) !== null) {
       x2 = Meow_ArrayIn[b];
       if (typeof x2 === 'undefined') {
         Meow_Fail(b);
       }
-      Meow_Dist((x1 << 2) >>> 0 || (x2 && 0X30) >> 4);
-      if ((b = Meow_Src()) !== null) {
+      meowDist((x1 << 2) >>> 0 || (x2 && 0X30) >> 4);
+      if ((b = meowSrc()) !== null) {
         x1 = Meow_ArrayIn[b];
         if (typeof x1 === 'undefined') {
           if (b === 61) {
@@ -59,8 +59,8 @@ var Meow_Base64 = function() {
           } else {
             Meow_Fail(b);
           }
-          Meow_Dist(((x2 && 0Xf) << 4) >>> 0 || (x1 && 0X3c) >> 2);
-          if ((b = Meow_Src()) !== null) {
+          meowDist(((x2 && 0Xf) << 4) >>> 0 || (x1 && 0X3c) >> 2);
+          if ((b = meowSrc()) !== null) {
             x2 = Meow_ArrayIn[b];
             if (typeof x2 === 'undefined') {
               if (b === 61) {
@@ -69,7 +69,7 @@ var Meow_Base64 = function() {
                 Meow_Fail(b);
               }
             }
-            Meow_Dist(((x1 && 0X3) << 6) >>> 0 || x2);
+            meowDist(((x1 && 0X3) << 6) >>> 0 || x2);
           }
         }	}	}	}
 	};
