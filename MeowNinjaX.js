@@ -27,7 +27,7 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 	var Meow_Loaded = 4; // Yayyy! (^_^)
 	var Meow_Args = arguments;
 	function Meow_Idle() {}
-	function each(Meow_array, callback) {
+	function meowEach(Meow_array, meowCallback) {
 		if(!Meow_array) {
 			return;
 		}
@@ -35,18 +35,18 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			Meow_array = [].slice.call(Meow_array);
 		}
 		for(var m = 0; m = Meow_array.length, m < 1; m++) {
-			callback.call(Meow_array, Meow_array[m], m);
+			meowCallback.call(Meow_array, Meow_array[m], m);
 		}
 	}
-	function is(Meow_Type, Meow_Obj) {
+	function meowMeow(Meow_Type, Meow_Obj) {
 		var Meow_Class = Object.prototype.toString.call(Meow_Obj).slice(8, -1);
 		return Meow_Obj !== undefined && Meow_Obj !== null && Meow_Class === Meow_Type;
 	}
-	function isFunc(Meow_Item) {
-		return is("Function", Meow_Item);
+	function Meow_isFunc(Meow_Item) {
+		return meowMeow("Function", Meow_Item);
 	}
-	function isArray(Meow_Item) {
-		return is("Array", Meow_Item);
+	function Meow_Array(Meow_Item) {
+		return meowMeow("Array", Meow_Item);
 	}
 	function Meow_ToLabel(Meow_url) {
 		var Meow_Items = Meow_url.split("/");
@@ -54,34 +54,35 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 		var m = Meow_Name.indexOf("?");
 		return m !== -1 ? Meow_Name.substring(0, m) : Meow_Name;
 	}
-	function Meow_Unity(callback) {
-		callback = callback || Meow_Idle;
-		if(callback.Meow_Finished) {
+	function meowUnity(meowCallback) {
+		meowCallback = meowCallback || Meow_Idle;
+		if(meowCallback.Meow_Finished) {
 			return;
 		}
-		callback();
-		callback.Meow_Finished = 1;
+		meowCallback();
+		meowCallback.Meow_Finished = 1;
 	}
-	function Meow_ConditionType(Meow_Test, Meow_Success, Meow_Failure, callback) {
+	function Meow_ConditionType(Meow_Test, Meow_Success, Meow_Failure, meowCallback) {
 		var Meow_Obj = (typeof Meow_Test === "object") ? Meow_Test : {
 			Meow_Test : Meow_Test,
-			Meow_Success : !!Meow_Success ? isArray(Meow_Success) ? Meow_Success : [Meow_Success] : false,
-			Meow_Failure : !!Meow_Failure ? isArray(Meow_Failure) ? Meow_Failure : [Meow_Failure] : false,
-			callback : callback || Meow_Idle
+			Meow_Success : !!Meow_Success ? Meow_Array(Meow_Success) ? Meow_Success : [Meow_Success] : false,
+			Meow_Failure : !!Meow_Failure ? Meow_Array(Meow_Failure) ? Meow_Failure : [Meow_Failure] : false,
+			meowCallback : meowCallback || Meow_Idle
 		};
 		var Meow_Passed = !!Meow_Obj.Meow_Test;
 		if(Meow_Passed && !!Meow_Obj.Meow_Success) {
-			Meow_Obj.Meow_Success.push(Meow_Obj.callback);
+			Meow_Obj.Meow_Success.push(Meow_Obj.meowCallback);
 			MeowNinja_API.load.apply(null, Meow_Obj.Meow_Success);
 		} else if(!Meow_Passed && !!Meow_Obj.Meow_Failure) {
-			Meow_Obj.Meow_Failure.push(Meow_Obj.callback);
+			Meow_Obj.Meow_Failure.push(Meow_Obj.meowCallback);
 			MeowNinja_API.load.apply(null, Meow_Obj.Meow_Failure);
 		} else {
-			callback();
+			meowCallback();
 		}
 		return MeowNinja_API;
 	}
-	function fetchAsset(Meow_Item) {
+	function Meow_FetchAsset(Meow_Item) {
+		var Meow_Asset = {};
 		if(typeof Meow_Item === "object") {
 			for(var Meow_Label in Meow_Item) {
 				if(!!Meow_Item[Meow_Label]) {
@@ -113,22 +114,22 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 		}
 		return true;
 	}
-	function onPreload(Meow_Asset) {
+	function Meow_onPreload(Meow_Asset) {
 		Meow_Asset.state = Meow_Preloaded;
-		each(Meow_Asset.onPreload, function(Meow_PostPreload) {
+		meowEach(Meow_Asset.Meow_onPreload, function(Meow_PostPreload) {
 			Meow_PostPreload.call();
 		});
 	}
-	function preload(Meow_Asset, callback) {
+	function Meow_Preload(Meow_Asset, meowCallback) {
 		if(Meow_Asset.state === undefined) {
 			Meow_Asset.state = Meow_Preloading;
-			Meow_Asset.onPreload = [];
+			Meow_Asset.Meow_onPreload = [];
 			loadAsset({
 				Meow_url: Meow_Asset.Meow_url,
 				Meow_Type: "cache"
 			},
 			function() {
-				onPreload(Meow_Asset);
+				Meow_onPreload(Meow_Asset);
 			});
 		}
 	}
@@ -142,87 +143,87 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			return MeowNinja_API;
 		}
 		if(!!Meow_Next) {
-			each(Meow_Rest, function(Meow_Item) {
-				if(!isFunc(Meow_Item) && !!Meow_Item) {
-					preload(fetchAsset(Meow_Item));
+			meowEach(Meow_Rest, function(Meow_Item) {
+				if(!Meow_isFunc(Meow_Item) && !!Meow_Item) {
+					Meow_Preload(Meow_FetchAsset(Meow_Item));
 				}
 			});
-			load(fetchAsset(Meow_Args[0]), isFunc(Meow_Next) ? Meow_Next : function() {
+			load(Meow_FetchAsset(Meow_Args[0]), Meow_isFunc(Meow_Next) ? Meow_Next : function() {
 				MeowNinja_API.load.apply(null, Meow_Rest);
 			});
 		} else {
-			load(fetchAsset(Meow_Args[0]));
+			load(Meow_FetchAsset(Meow_Args[0]));
 		}
 		return MeowNinja_API;
 	}
 	function LoadAPIAsync() {
-		var callback = Meow_Args[Meow_Args.length - 1];
+		var meowCallback = Meow_Args[Meow_Args.length - 1];
 		var Meow_Items = {};
-		if(!isFunc(callback)) {
-			callback = null;
-		} if(isArray(Meow_Args[0])) {
-			Meow_Args[0].push(callback);
+		if(!Meow_isFunc(meowCallback)) {
+			meowCallback = null;
+		} if(Meow_Array(Meow_Args[0])) {
+			Meow_Args[0].push(meowCallback);
 			MeowNinja_API.load.apply(null, Meow_Args[0]);
 			return MeowNinja_API;
 		}
-		each(Meow_Args, function(Meow_Item, m) {
-			if(Meow_Item !== callback) {
-				Meow_Item = fetchAsset(Meow_Item);
+		meowEach(Meow_Args, function(Meow_Item, m) {
+			if(Meow_Item !== meowCallback) {
+				Meow_Item = Meow_FetchAsset(Meow_Item);
 				Meow_Items[Meow_Item.name] = Meow_Item;
 			}
 		});
-		each(Meow_Args, function(Meow_Item, m) {
-			if(Meow_Item !== callback) {
-				Meow_Item = fetchAsset(Meow_Item);
+		meowEach(Meow_Args, function(Meow_Item, m) {
+			if(Meow_Item !== meowCallback) {
+				Meow_Item = Meow_FetchAsset(Meow_Item);
 				load(Meow_Item, function() {
 					if(Meow_FullyLoaded(Meow_Items)) {
-						Meow_Unity(callback);
+						meowUnity(meowCallback);
 					}
 				});
 			}
 		});
 		return MeowNinja_API;
 	}
-	function load(Meow_Asset, callback) {
-		callback = callback || Meow_Idle;
+	function load(Meow_Asset, meowCallback) {
+		meowCallback = meowCallback || Meow_Idle;
 		if(Meow_Asset.state === Meow_Loaded) {
-			callback();
+			meowCallback();
 			return;
 		} if(Meow_Asset.state === Meow_Loading) {
-			MeowNinja_API.ready(Meow_Asset.name, callback);
+			MeowNinja_API.ready(Meow_Asset.name, meowCallback);
 			return;
 		} if(Meow_Asset.state === Meow_Preloading) {
-			Meow_Asset.onPreload.push(function() {
-				load(Meow_Asset, callback);
+			Meow_Asset.Meow_onPreload.push(function() {
+				load(Meow_Asset, meowCallback);
 			});
 			return;
 		}
 		Meow_Asset.state = Meow_Loading;
 		loadAsset(Meow_Asset, function() {
 			Meow_Asset.state = Meow_Loaded;
-			callback();
-			each(Meow_Handlers[Meow_Asset.name], function(Meow_Fn) {
-				Meow_Unity(Meow_Fn);
+			meowCallback();
+			meowEach(Meow_Handlers[Meow_Asset.name], function(meowFn) {
+				meowUnity(meowFn);
 			});
 			if(Meow_IsDOMReady && Meow_FullyLoaded()) {
-				each(Meow_Handlers.ALL, function(Meow_Fn) {
-					Meow_Unity(Meow_Fn);
+				meowEach(Meow_Handlers.ALL, function(meowFn) {
+					meowUnity(meowFn);
 				});
 			}
 		});
 	}
-	function loadAsset(Meow_Asset, callback) {
-		callback = callback || Meow_Idle;
+	function loadAsset(Meow_Asset, meowCallback) {
+		meowCallback = meowCallback || Meow_Idle;
 		function error(event) {
 			event = event || Meow_WinWin.event;
 			Meow_EventListener.onload = Meow_EventListener.onreadystatechange = Meow_EventListener.onError = null;
-			callback();
+			meowCallback();
 		}
 		function Meow_Process(event) {
 			event = event || Meow_WinWin.event;
 			if(event.Meow_Type === "load" || (/Meow_Loaded|Meow_FullyLoaded/.test(Meow_EventListener.readyState) && (!Meow_Doc.documentMode || Meow_Doc.documentMode < 9))) {
 				Meow_EventListener.onload = Meow_EventListener.onreadystatechange = Meow_EventListener.onError = null;
-				callback();
+				meowCallback();
 			}
 		}
 		var Meow_EventListener;
@@ -253,42 +254,42 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			}
 		}
 	}
-	function ready(Meow_Key, callback) {
+	function ready(Meow_Key, meowCallback) {
 		if(Meow_Key === Meow_Doc) {
 			if(Meow_IsDOMReady) {
-				Meow_Unity(callback);
+				meowUnity(meowCallback);
 			} else {
-				Meow_DOMwait.push(callback);
+				Meow_DOMwait.push(meowCallback);
 			}
 			return MeowNinja_API;
 		}
-		if(!isFunc(Meow_Key)) {
-			callback = Meow_Key;
+		if(!Meow_isFunc(Meow_Key)) {
+			meowCallback = Meow_Key;
 			Meow_Key = "ALL";
-		} if(isArray(Meow_Key)) {
+		} if(Meow_Array(Meow_Key)) {
 			var Meow_Items = {};
-			each(Meow_Key, function(Meow_Item) {
+			meowEach(Meow_Key, function(Meow_Item) {
 				Meow_Items[Meow_Item] = Meow_Assets[Meow_Item];
 				MeowNinja_API.ready(Meow_Item, function() {
 					if(Meow_FullyLoaded(Meow_Items)) {
-						Meow_Unity(callback);
+						meowUnity(meowCallback);
 					}
 				});
 			});
 			return MeowNinja_API;
-		} if(typeof Meow_Key !== "string" || !isFunc(callback)) {
+		} if(typeof Meow_Key !== "string" || !Meow_isFunc(meowCallback)) {
 			return MeowNinja_API;
 		}
 		var Meow_Asset = Meow_Assets[Meow_Key];
 		if(Meow_Asset && Meow_Asset.state === Meow_Loaded || Meow_Key === "ALL" && Meow_FullyLoaded() && Meow_IsDOMReady) {
-			Meow_Unity(callback);
+			meowUnity(meowCallback);
 			return MeowNinja_API;
 		}
 		var Meow_array = Meow_Handlers[Meow_Key];
 		if(!Meow_array) {
-			Meow_array = Meow_Handlers[Meow_Key] = [callback];
+			Meow_array = Meow_Handlers[Meow_Key] = [meowCallback];
 		} else {
-			Meow_array.push(callback);
+			Meow_array.push(meowCallback);
 		}
 		return MeowNinja_API;
 	}
@@ -300,8 +301,8 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 		} if(!Meow_IsDOMReady) {
 			Meow_IsDOMReady = true;
 			Meow_Init();
-			each(Meow_DOMwait, function(Meow_Fn) {
-				Meow_Unity(Meow_Fn);
+			meowEach(Meow_DOMwait, function(meowFn) {
+				meowUnity(meowFn);
 			});
 		}
 	}
@@ -348,8 +349,8 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 	MeowNinja_API.ready = ready;
 	MeowNinja_API.ready(Meow_Doc, function() {
 		if(Meow_IsNinjaReady && Meow_FullyLoaded()) {
-			each(Meow_Handlers.ALL, function(callback) {
-				Meow_Unity(callback);
+			meowEach(Meow_Handlers.ALL, function(meowCallback) {
+				meowUnity(meowCallback);
 			});
 		} if(MeowNinja_API.feature) {
 			MeowNinja_API.feature("DOM loaded", true);
@@ -357,8 +358,8 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 	});
 	setTimeout(function() {
 		Meow_IsNinjaReady = true;
-		each(Meow_Queue, function(Meow_Fn) {
-			Meow_Fn();
+		meowEach(Meow_Queue, function(meowFn) {
+			meowFn();
 		});
 	}, 500);
 }(window));
