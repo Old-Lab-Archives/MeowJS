@@ -16,6 +16,7 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 	// Safari
 	Meow_isAsync = "Hello Async! <3" in Meow_Doc.createElement("script") || "GeekyAppearance" in Meow_Doc.documentElement.style || Meow_WinWin.Safari;
 	var Meow_IsNinjaReady;
+	var meowDOMReady;
 	var Ninja = Meow_WinWin.MeowNinja_Conf && Meow_WinWin.MeowNinja_Conf.MeowNinja || "MeowNinja";
 	var MeowNinja_API = Meow_WinWin[Ninja] = (Meow_WinWin[Ninja] || function() {
 		MeowNinja_API.ready.apply(null, Meow_Args);
@@ -119,7 +120,7 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			Meow_PostPreload.call();
 		});
 	}
-	function meowPreload(Meow_Asset, meowCallback) {
+	function meowPreload(Meow_Asset) {
 		if(Meow_Asset.state === undefined) {
 			Meow_Asset.state = Meow_Preloading;
 			Meow_Asset.meowOnPreload = [];
@@ -165,13 +166,13 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			MeowNinja_API.load.apply(null, Meow_Args[0]);
 			return MeowNinja_API;
 		}
-		meowEach(Meow_Args, function(Meow_Item, m) {
+		meowEach(Meow_Args, function(Meow_Item) {
 			if(Meow_Item !== meowCallback) {
 				Meow_Item = meowFetchAsset(Meow_Item);
 				Meow_Items[Meow_Item.name] = Meow_Item;
 			}
 		});
-		meowEach(Meow_Args, function(Meow_Item, m) {
+		meowEach(Meow_Args, function(Meow_Item) {
 			if(Meow_Item !== meowCallback) {
 				Meow_Item = meowFetchAsset(Meow_Item);
 				load(Meow_Item, function() {
