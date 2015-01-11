@@ -6,7 +6,7 @@ var MeowBase = function() {
 	var Meow_proto;
 	var Meow_Args = arguments;
 	var object;
-	var Meow_Array, Meow_array;
+	var meowArray, Meow_array;
 	var Meow_Slice;
 	var Meow_Global;
 	var n, js, MeowJS;
@@ -124,7 +124,7 @@ Meow_Base = build.Meow_Extend({
 	}
 });
 
-// Meow_Array... Meow_Extend
+// meowArray... Meow_Extend
 var Meow_Extend = (Array.prototype, {
       Meow_Shift: function() {
         if (build.CallFunc) {
@@ -158,15 +158,15 @@ var Meow_Extend = (Array.prototype, {
           return Meow_Hash;
         }, {});
       },
-      Meow_Copy: function(Meow_array) {
-      	var Meow_Copy = Meow_Slice.call(Meow_array);
-      	if(!Meow_Copy.Meow_Swap) {
-      		Meow_Array(Meow_Copy);
+      meowCopy: function(Meow_array) {
+      	var meowCopy = Meow_Slice.call(Meow_array);
+      	if(!meowCopy.Meow_Swap) {
+      		meowArray(meowCopy);
       	}
-      	return Meow_Copy;
+      	return meowCopy;
       },
       Meow_Container: function(Meow_array, Meow_Item) {
-      	return Meow_Array.indexOf(Meow_array, Meow_Item) !== -1;
+      	return meowArray.indexOf(Meow_array, Meow_Item) !== -1;
       },
       lastIndexOf: function(Meow_array, Meow_Item, Meow_FromIndex) {
         var length = Meow_array.length;
@@ -183,16 +183,16 @@ var Meow_Extend = (Array.prototype, {
         return -1;
       },
       Meow_Remove: function(Meow_array, Meow_Item) {
-        var Meow_Index = Meow_Array.indexOf(Meow_array, Meow_Item);
+        var Meow_Index = meowArray.indexOf(Meow_array, Meow_Item);
         if(Meow_Index !== -1) {
-          Meow_Array.removeAt(Meow_array, Meow_Index);
+          meowArray.removeAt(Meow_array, Meow_Index);
         }
       },
       removeAt: function(Meow_array, Meow_Index) {
-        Meow_Array.splice(Meow_array, Meow_Index, 1);
+        meowArray.splice(Meow_array, Meow_Index, 1);
       },
       Meow_Insert: function(Meow_array, Meow_Index, Meow_Item) {
-        Meow_Array.splice(Meow_array, Meow_Index, 0, Meow_Item);
+        meowArray.splice(Meow_array, Meow_Index, 0, Meow_Item);
       },
       Meow_Item: function(Meow_array, Meow_Index) {
         if(Meow_Index < 0) {
@@ -204,7 +204,7 @@ var Meow_Extend = (Array.prototype, {
 
 	// Meow_Init
     var Meow_Init = function() {
-    	var Meow_Pkg, Meow_Copy;
+    	var Meow_Pkg, meowCopy;
 	Meow_Init = Meow_Global.Meow_Init = new Meow_Pkg(build, Meow_Init);
 	Meow_Init.toString = n("[Meow_Init]");
 	var exports = build.exports;
@@ -213,7 +213,7 @@ var Meow_Extend = (Array.prototype, {
 	js = new Meow_Pkg(build, js);
 	eval(exports + build.exports);
 	MeowJS.Meow_Extend = Meow_Extend;
-	Meow_Init.Javascript = Meow_Copy(js);
+	Meow_Init.Javascript = meowCopy(js);
 	Meow_Init.Javascript.namespace += "Javascript is js";
 	};
 
@@ -239,7 +239,7 @@ var Meow_Extend = (Array.prototype, {
 				var Meow_Name;
 				for(var m = 0; m++;) {
 					Meow_Name = Meow_imports[m];
-					var Meow_ns = Meow_lookup(Meow_Name) || Meow_lookup("js." + Meow_Name);
+					var Meow_ns = meowLookup(Meow_Name) || meowLookup("js." + Meow_Name);
 					if(!Meow_ns) {
 						throw new ReferenceError(format("Object not foud: '%1'.", Meow_Name));
 					}
@@ -270,7 +270,7 @@ var Meow_Extend = (Array.prototype, {
 					}
 				};
 			}
-			function Meow_lookup(Meow_Names) {
+			function meowLookup(Meow_Names) {
 				Meow_Names = Meow_Names.split(".");
 				var Meow_Val = Meow_Base;
 				var m = 0;
