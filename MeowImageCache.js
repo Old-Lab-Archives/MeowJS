@@ -7,17 +7,17 @@ var MeowImageCache = function() {
       Meow_CacheRoot.pop();
       Meow_CacheRoot = Meow_CacheRoot.join('/') + '/';
       var Meow_Power = function() {
-      Meow_Power.Meow_Push = function(src, Meow_LoadEvent) {
+      Meow_Power.Meow_Push = function(src, meowLoadEvent) {
         if (!src.match(/^http/)) {
           src = Meow_CacheRoot + src;
         }
         var Meow_ImageItem = new Meow_Image();
-        if (Meow_ImageCache[src] && Meow_LoadEvent) {
-          new Meow_LoadEvent(src);
+        if (Meow_ImageCache[src] && meowLoadEvent) {
+          meowLoadEvent(src);
         } else {
-          if (Meow_LoadEvent) {
-            Meow_ImageItem.Meow_OnLoad = Meow_LoadEvent;
-            Meow_ImageItem.Meow_OnError = Meow_LoadEvent;
+          if (meowLoadEvent) {
+            Meow_ImageItem.Meow_OnLoad = meowLoadEvent;
+            Meow_ImageItem.Meow_OnError = meowLoadEvent;
           }
           Meow_ImageCache[src] = Meow_ImageItem;
         }
