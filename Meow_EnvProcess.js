@@ -80,13 +80,13 @@ function Meow_Env(Meow_EnvFile) {
 }
 
 // Verifying the Environment variables
-Meow_Env.prototype.Meow_Yuppie = function(Meow_Callback) {
+Meow_Env.prototype.Meow_Yuppie = function(meowCallback) {
 	var build = this;
 	for(var p in build.Meow_EnvVars) {
 		if(!process.Meow_Env[p]) {
 			var error = new Error(p + 'not defined');
 			console.error(error);
-			Meow_Callback(error);
+			meowCallback(error);
 			return false;
 		}
 	}
