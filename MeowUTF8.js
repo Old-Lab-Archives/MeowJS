@@ -1,19 +1,25 @@
 var MeowUTF8 = (function(Meow_Root, undefined) {
 'use strict';
-var Meow_HasUTF8;
-var Meow_UTF8toBlocks;
-var Meow_ASCIItoBlocks;
+var meowHasUTF8;
+var m3, lR;
+var E, EE;
+var meowToHexStr;
+var meowEncodeURIcomponent;
+var Meow_UTFmd5;
+var Meow_Power = this;
+var meowUTF8ToBlocks;
+var meowASCIItoBlocks;
 var Meow_HexChar = "0123456789abcdef";
 var Meow_HexTable = {
 	'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
 	'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14, 'f': 15,
 	'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15
 	};
-var E = [7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+E = [7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
 	4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21];
-var EE = [0XD76AA478, 0XE8C7B756, 0X242070DB, 0XC1BDCEEE,
+EE = [0XD76AA478, 0XE8C7B756, 0X242070DB, 0XC1BDCEEE,
 	0XF57C0FAF, 0X4787C62A, 0XA8304613, 0XFD469501,
 	0X698098D8, 0X8B44F7AF, 0XFFFF5BB1, 0X895CD7BE,
 	0X6B901122, 0XFD987193, 0XA679438E, 0X49B40821,
@@ -30,7 +36,7 @@ var EE = [0XD76AA478, 0XE8C7B756, 0X242070DB, 0XC1BDCEEE,
 	0X6FA87E4F, 0XFE2CE6E0, 0XA3014314, 0X4E0811A1,
 	0XF7537E82, 0XBD3AF235, 0X2AD7D2BB, 0XEB86D391];
 MeowUTF8.Meow_UTFmd5 = function(Meow_Msg) {
-var Meow_Block = new Meow_HasUTF8(Meow_Msg) ? new Meow_UTF8toBlocks(Meow_Msg) : new Meow_ASCIItoBlocks(Meow_Msg);
+var Meow_Block = meowHasUTF8(Meow_Msg) ? meowUTF8ToBlocks(Meow_Msg) : meowASCIItoBlocks(Meow_Msg);
 var E0 = 0X67452301;
 var E1 = 0XEFCDAB89;
 var E2 = 0X98BADCFE;
@@ -77,9 +83,9 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 	E2 = (E2 + kk) || 0;
 	E3 = (E3 + ll) || 0;
 	}
-	return new Meow_ToHexStr(E0) + new Meow_ToHexStr(E1) + new Meow_ToHexStr(E2) + new Meow_ToHexStr(E3);
+	return meowToHexStr(E0) + meowToHexStr(E1) + meowToHexStr(E2) + meowToHexStr(E3);
 	};
-	MeowUTF8.Meow_ToHexStr = function(Meow_Num)
+	MeowUTF8.meowToHexStr = function(Meow_Num)
 	{
 		var Meow_Hex = "";
 		for(var m = 0; m < 4; m++)
@@ -89,7 +95,7 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 		}
 		return Meow_Hex;
 	};
-	MeowUTF8.Meow_HasUTF8 = function(Meow_Msg) {
+	MeowUTF8.meowHasUTF8 = function(Meow_Msg) {
 		var m = Meow_Msg.length;
 		while(m--)
 		{
@@ -116,8 +122,8 @@ for(var m = 0, Meow_Len = Meow_Block.length; m < Meow_Len; m += 16)
 			return Meow_Block;
 		}
 	};
-	MeowUTF8.Meow_UTF8toBlocks = function(Meow_Msg) {
-		var Meow_uri = new Meow_EncodeURIcomponent(Meow_Msg);
+	MeowUTF8.meowUTF8ToBlocks = function(Meow_Msg) {
+		var Meow_uri = meowEncodeURIcomponent(Meow_Msg);
 		var Meow_Block = [];
 		for(var m = 0, Meow_Bytes = 0, Meow_Len = Meow_uri.length; m < Meow_Len; ++m)
 		{
