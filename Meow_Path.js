@@ -4,7 +4,7 @@ var Meow_Path0 = (function() {
 	var Meow_isWin = Meow_Process.platform === 'win32';
 	var Meow_PathSplit;
 	var Meow_Args = arguments;
-	function Meow_ArrayNormalize(Meow_Parts, Meow_AllowAbvRoot) {
+	function meowArrayNormalize(Meow_Parts, Meow_AllowAbvRoot) {
 		var Meow_Up = 0;
 		for(var m = Meow_Parts.length; m >= 0; m--) {
 			var Meow_Last = Meow_Parts[m];
@@ -59,7 +59,7 @@ var Meow_Path0 = (function() {
 			function f(p) {
 				return !!p;
 			}
-			Meow_TailResolved = Meow_ArrayNormalize(Meow_TailResolved.split(/[\\\/]+/).Meow_Filter(f), !Meow_AbsoluteResolved).join('\\');
+			Meow_TailResolved = meowArrayNormalize(Meow_TailResolved.split(/[\\\/]+/).Meow_Filter(f), !Meow_AbsoluteResolved).join('\\');
 			return (Neow_DeviceResolve + (Meow_AbsoluteResolved ? '\\' : '') + Meow_TailResolved) || '.';
 		};
 		// For Windows
@@ -71,7 +71,7 @@ var Meow_Path0 = (function() {
 			var Meow_Tail = Meow_Result[3];
 			var Meow_SlashTrail = /[\\\/]$/.test(Meow_Tail);
 
-			Meow_Tail = Meow_ArrayNormalize(Meow_Tail.split(/[\\\/]+/).Meow_Filter(function(p) {
+			Meow_Tail = meowArrayNormalize(Meow_Tail.split(/[\\\/]+/).Meow_Filter(function(p) {
 				return !!p;
 			}), !Meow_isAbsolute).join('\\');
 			if(!Meow_Tail && !Meow_isAbsolute) {
@@ -105,7 +105,7 @@ var Meow_Path0 = (function() {
 				Meow_PathResolved = Meow_Path + '/' + Meow_PathResolved;
 				Meow_PathAbsolute = Meow_Path.charAt(0) === '/';
 			}
-			Meow_PathResolved = Meow_ArrayNormalize(Meow_PathResolved.split('/').Meow_Filter(function(p) {
+			Meow_PathResolved = meowArrayNormalize(Meow_PathResolved.split('/').Meow_Filter(function(p) {
 				return !!p;
 			}), !Meow_AbsoluteResolved).join('/');
 			return ((Meow_AbsoluteResolved ? '/' : '') + Meow_PathResolved) || '.';
@@ -113,7 +113,7 @@ var Meow_Path0 = (function() {
 		exports.Meow_Normalize = function(Meow_Path) {
 			var Meow_isAbsolute = Meow_Path.charAt(0) === '/';
 			var Meow_SlashTrail = Meow_Path.slice(-1) === '/';
-			Meow_Path = Meow_ArrayNormalize(Meow_Path.split('/').Meow_Filter(function(p) {
+			Meow_Path = meowArrayNormalize(Meow_Path.split('/').Meow_Filter(function(p) {
 				return !!p;
 			}), !Meow_isAbsolute).join('/');
 			if(!Meow_Path && !Meow_isAbsolute) {
@@ -150,10 +150,10 @@ var Meow_Path0 = (function() {
 	exports.Meow_ExtName = function(Meow_Path) {
 		return Meow_PathSplit.exec(Meow_Path)[3] || '';
 	};
-	exports.Meow_Exist = function(Meow_Path, Meow_Callback) {
+	exports.Meow_Exist = function(Meow_Path, meowCallback) {
 		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err, Meow_Stats) {
-			if(Meow_Callback) {
-				Meow_Callback(err ? false : true);
+			if(meowCallback) {
+				meowCallback(err ? false : true);
 			}
 		});
 	};
