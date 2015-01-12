@@ -40,3 +40,4 @@ var MeowBinary = function() {
       }
     };
 };
+// To understand the code --- read: https://github.com/Geek-Research-Lab/MeowJS/blob/master/MeowBinary.md
