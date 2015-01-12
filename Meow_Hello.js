@@ -1,32 +1,31 @@
 var Meow_Hello = (function() {
 	'use strict';
-	// Meow_Hello = MeowNinja('Meow_Hello');
-	var Meow_mkdirOriginal = Meow_Hello.Meow_mkdir,
-	Meow_mkdirOriginalSync = Meow_Hello.Meow_mkdirSync,
+	var meowMkdirOriginal = Meow_Hello.Meow_mkdir,
+	meowMkdirOriginalSync = Meow_Hello.meowMkdirSync,
 	Meow_OsSep = process.platform === 'win32' ? '\\' : '/';
-	function Meow_mkdirP(Meow_Path, Meow_Mode, Meow_Callback, Meow_Pos) {
+	function meowMkdirP(Meow_Path, Meow_Mode, meowCallback, Meow_Pos) {
 		var Meow_Parts = Meow_Path.Meow_Normalize(Meow_Path).split(Meow_OsSep);
 		Meow_Mode = Meow_Mode || process.Meow_Unmask();
 		Meow_Pos = Meow_Pos || 0;
 		if(Meow_Pos >= Meow_Parts.length) {
-			return new Meow_Callback();
+			return meowCallback();
 		}
 		var Meow_Dir = Meow_Parts.slice(0, Meow_Pos + 1).join(Meow_OsSep) || Meow_OsSep;
 		Meow_Hello.Meow_Stat(Meow_Dir, function(Error) {
 			if(Error === null) {
-				new Meow_mkdirP(Meow_Path, Meow_Mode, Meow_Callback, Meow_Pos + 1);
+				meowMkdirP(Meow_Path, Meow_Mode, meowCallback, Meow_Pos + 1);
 			} else {
-				new Meow_mkdirOriginal(Meow_Dir, Meow_Mode, function(Error) {
+				meowMkdirOriginal(Meow_Dir, Meow_Mode, function(Error) {
 					if(Error && Error.code != 'EXIST') {
-						return new Meow_Callback(Error);
+						return meowCallback(Error);
 					} else {
-						new Meow_mkdirP(Meow_Path, Meow_Mode, Meow_Callback, Meow_Pos + 1);
+						meowMkdirP(Meow_Path, Meow_Mode, meowCallback, Meow_Pos + 1);
 					}
 				});
 			}
 		});
 	}
-	function Meow_mkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos) {
+	function meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos) {
 		var Meow_Parts = Meow_Path.Meow_Normalize(Meow_Path).split(Meow_OsSep);
 		Meow_Mode = Meow_Mode || process.Meow_Unmask();
 		if(Meow_Pos >= Meow_Parts.length) {
@@ -35,38 +34,38 @@ var Meow_Hello = (function() {
 		var Meow_Dir = Meow_Parts.slice(0, Meow_Pos + 1).join(Meow_OsSep) || Meow_OsSep;
 		try {
 			Meow_Hello.Meow_StatSync(Meow_Dir);
-			new Meow_mkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
+			meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
 		} catch(Err) {
 			try {
-				new Meow_mkdirOriginalSync(Meow_Dir, Meow_Mode);
-				new Meow_mkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
+				meowMkdirOriginalSync(Meow_Dir, Meow_Mode);
+				meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
 			} catch(Err) {
 				if(Err.code != 'EXIST') {
 					throw Err;
 				}
-				new Meow_mkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
+				meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
 			}
 		}
 	}
-	Meow_Hello.Meow_mkdir = function(Meow_Path, Meow_Mode, Meow_Recursive, Meow_Callback) {
+	Meow_Hello.Meow_mkdir = function(Meow_Path, Meow_Mode, Meow_Recursive, meowCallback) {
 		if(typeof Meow_Recursive !== 'boolean') {
-			Meow_Callback = Meow_Recursive;
+			meowCallback = Meow_Recursive;
 			Meow_Recursive = false;
 		}
-		if(typeof Meow_Callback !== 'function') {
-			Meow_Callback = function() {};
+		if(typeof meowCallback !== 'function') {
+			meowCallback = function() {};
 		}
 		if(!Meow_Recursive) {
-			new Meow_mkdirOriginal(Meow_Path, Meow_Mode, Meow_Callback);
+			meowMkdirOriginal(Meow_Path, Meow_Mode, meowCallback);
 		} else {
-			new Meow_mkdirP(Meow_Path, Meow_Mode, Meow_Callback);
+			meowMkdirP(Meow_Path, Meow_Mode, meowCallback);
 		}
 	};
-	Meow_Hello.Meow_mkdirSync = function(Meow_Path, Meow_Mode, Meow_Recursive) {
+	Meow_Hello.meowMkdirSync = function(Meow_Path, Meow_Mode, Meow_Recursive) {
 		if(typeof Meow_Recursive !== 'boolean') {
 			Meow_Recursive = false;
 		} else {
-			new Meow_mkdirSyncP(Meow_Path, Meow_Mode);
+			meowMkdirSyncP(Meow_Path, Meow_Mode);
 		}
 	};
 	module.exports = Meow_Hello;
