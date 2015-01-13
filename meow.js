@@ -21,7 +21,6 @@ var MeowJS = function() {
       "meowSVG_Loader.js",
       "HiddenMeow.js",
       "MeowStream.js",
-      "Meow-DCT-md5.js",
       "MeowProxy.js",
       "Meow_HTTP.js",
       "Meow_IP.js",
