@@ -1,8 +1,7 @@
 var Meow_ImageLoader = function() {
-
+"use strict";
 // MeowJS DCT Image Loader
 var MeowDCT_ImageLoader = function() {
-  "use strict";
     var Meow_BlockSize = 8;
     var Meow_Coeff = 8;
     var Meow_Image;
@@ -101,7 +100,6 @@ var MeowDCT_ImageLoader = function() {
 
 // MeowJS Image Cache
 var MeowImageCache = function() {
-  "use strict";
     MeowImageCache.Meow_ImageCache = function() {
       var Meow_ImageCache = [];
       var Meow_Image;
