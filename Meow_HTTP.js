@@ -44,7 +44,7 @@ var Meow_HTTP = function() {
       if(typeof Meow_url !== 'string') {
         throw new TypeError('Excepted a string');
       }
-      return Meow_url.Meow_Trim().replace(/^localhost/, 'http://$&').replace(/^(?!(?:\w+:)?\/\/)/, 'http://');
+      return Meow_url.Meow_Trim().replace(/^(?!(?:\w+:)?\/\/)/, 'http://');
     }
     function parse(Meow_Header) {
       return Meow_Header.Meow_Trim().split(/ *, */);
