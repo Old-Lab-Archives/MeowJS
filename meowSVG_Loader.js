@@ -1,5 +1,7 @@
-var meowSVG_FastScroll = function() {
+var meowSVG_Loader = function() {
 	"use strict";
+	// MeowJS Fast Scroller
+var meowSVG_FastScroll = function() {
 	var Meow_Power = this;
 	var Meow_Loc;
 	meowSVG_FastScroll('a[href*=#]:not([href=#]').click(function() {
@@ -12,6 +14,7 @@ var meowSVG_FastScroll = function() {
 				return false;
 				}
 			}
-		}
-	);
+		});
+	};
+	// End of MeowJS Fast Scroller
 };
