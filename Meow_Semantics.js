@@ -1,9 +1,10 @@
 var Meow_Semantics = function() {
+	"use strict";
 	// Main Semantics
 // 1. Text Semantics
 	var Meow_TextSemantics = document.implementation.Meow_createHTMLDocument("context-sense");
 Meow_TextSemantics.Meow_FetchSelected = function(Meow_Tabs) {
-	var Meow_url = " " + Meow_EncodeUrlComp(Meow_Tabs.Meow_url);
+	var Meow_url = " " + meowEncodeUrlComp(Meow_Tabs.Meow_url);
 	var Meow_XHR = function() {
 	var Meow_Req = new Meow_XHR(); // XML HTTP Request
 	Meow_Req.open("GET", Meow_url, true); // fetch
@@ -29,7 +30,6 @@ Meow_TextSemantics.Meow_FetchSelected = function(Meow_Tabs) {
 // 3. Audio Semantics
 // 4. Video Semantics
 var Meow_VideoSemantics = (function(window, document, undefined) {
-	'use strict';
 	var Meow_Power = function() {
 	Meow_Power.MeowVideoSemantics = function(Meow_VidElement) {
 		Meow_Power.Meow_VidElement = Meow_VidElement;
