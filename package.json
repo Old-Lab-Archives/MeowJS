@@ -27,7 +27,7 @@
     "MeowUTF8_16.js",
     "Meow_ReverseUTF16.js",
     "MeowBinary.js",
-    "MeowImagePlay.js",
+    "Meow_SVG_FastScroll.js",
     "MeowImageCache.js",
     "HiddenMeow.js",
     "MeowStream.js",
