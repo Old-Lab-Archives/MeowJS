@@ -7,6 +7,7 @@ var MeowJS = function() {
 
     MeowNinja.load(
       "Meow_Hello.js",
+      "Meow_ColorParser.js",
       "Meow_Path.js",
       "Meow_EnvProcess.js",
       "Meow_Semantics.js",
