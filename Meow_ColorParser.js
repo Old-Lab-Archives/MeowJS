@@ -2,6 +2,7 @@ var Meow_ColorParser = function() {
 	"use strict";
 	function Meow_RGBColor(Meow_ColorStr) {
 		var Meow_Power = this;
+		var document, Meow_Channels;
 		if(Meow_ColorStr.charAt(0) === '#') {
 			Meow_ColorStr = Meow_ColorStr.substr(1, 6);
 		}
