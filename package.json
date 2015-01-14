@@ -17,6 +17,7 @@
   "files": [
     "meow.js",
     "MeowNinjaX.js",
+    "Meow_ColorParser.js",
     "Meow_Hello.js",
     "Meow_Semantics.js",
     "Meow_ImageLoader.js",
