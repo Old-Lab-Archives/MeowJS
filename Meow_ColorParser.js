@@ -195,10 +195,10 @@ var Meow_ColorParser = function() {
 		// Searching for a match with the help of definitions
 		for(var m = 0; m < Meow_ColorDefns.length; m++) {
 			var re = Meow_ColorDefns[m].re;
-			var Meow_Processor = Meow_ColorDefns[m].Meow_Process;
+			var meowProcessor = Meow_ColorDefns[m].Meow_Process;
 			var Meow_Bits = re.exec(Meow_ColorStr);
 			if(Meow_Bits) {
-				Meow_Channels = Meow_Processor(Meow_Bits);
+				Meow_Channels = meowProcessor(Meow_Bits);
 				Meow_Power.r = Meow_Channels[0];
 				Meow_Power.g = Meow_Channels[1];
 				Meow_Power.b = Meow_Channels[2];
@@ -226,10 +226,33 @@ var Meow_ColorParser = function() {
 			}
 			return '#' + r + g + b;
 		};
-
-		//
-		// Still more to code
-		//
-
+		Meow_Power.getHelpXML = function() {
+			var examples = new Array();
+			for(var m = 0; m < Meow_ColorDefns.length; m++) {
+				var example = Meow_ColorDefns[m].example;
+				for(var m2 = 0; m2 < example.length; m2++) {
+					examples[examples.length] = example[m2];
+				}
+			}
+			for(var m3 in Meow_Colors) {
+				examples[examples.length] = m3;
+			}
+			var xml = document.createElement('ul');
+			xml.setAttribute('id', 'rgbcolor-examples');
+			for(m = 0; m < examples.length; m++) {
+				try {
+					var Meow_ListItem = document.createElement('li');
+					var Meow_ListColor = new Meow_RGBColor(examples[m]);
+					var Meow_ExampleDiv = document.createElement('div');
+					Meow_ExampleDiv.style.cssText = 'margin: 3px; ' + 'border: 1px solid black; ' + 'background:' + Meow_ListColor.Meow_toHex() + '; ' + 'color:' + Meow_ListColor.Meow_toHex();
+                    Meow_ExampleDiv.appendChild(document.createTextNode('test'));
+                    var Meow_ListItemVal = document.createTextNode(' ' + examples[m] + ' -> ' + Meow_ListColor.Meow_toRGB());
+                    Meow_ListItem.appendChild(Meow_ExampleDiv);
+                    Meow_ListItem.appendChild(Meow_ListItemVal);
+                    xml.appendChild(Meow_ListItem);
+				} catch(e) {}
+			}
+			return xml;
+		};
 	}
 };
