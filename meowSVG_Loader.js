@@ -1,7 +1,7 @@
 var meowSVG_Loader = function() {
 	"use strict";
 	// MeowJS Fast Scroller
-var meowSVG_FastScroll = function() {
+	var meowSVG_FastScroll = function() {
 	var Meow_Power = this;
 	var Meow_Loc;
 	meowSVG_FastScroll('a[href*=#]:not([href=#]').click(function() {
@@ -17,4 +17,10 @@ var meowSVG_FastScroll = function() {
 		});
 	};
 	// End of MeowJS Fast Scroller
+
+	// Checks if a string/buffer is SVG or not
+	module.exports = function(StrOrBuf) {
+		return /<svg[^>]*>/.test(StrOrBuf);
+	};
+	//
 };
