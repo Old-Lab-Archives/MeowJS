@@ -11,9 +11,7 @@
     "email": "ashumeow@live.com",
     "url": "http://windowsgeekpro.in"
   },
-  "engines": {
-    "node": ">=0.10.0",
-  },
+  "repository": "Geek-Research-Lab/MeowJS",
   "files": [
     "meow.js",
     "MeowNinjaX.js",
