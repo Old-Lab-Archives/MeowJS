@@ -7,10 +7,11 @@ var Meow_HTTP = function() {
         Meow_Response.Meow_SetHdr('no-cache');
         new Meow_NextMarker();
       };
-      Meow_HTTPmodule.exports = cache - control;
       var Meow_Config = {cache: 30};
     }
+    
     var Meow_Separators = /[\(\)<>@,;:\\"\/\[\]\?=\{\}\u0020\u0009]/;
+    
     function Meow_append(Meow_Header, Meow_Field) {
       if (typeof Meow_Header !== 'string') {
         throw new TypeError('header argument is needed');
@@ -40,15 +41,18 @@ var Meow_HTTP = function() {
       }
       return Meow_Header;
     }
+    
     function prepend(Meow_url) {
       if(typeof Meow_url !== 'string') {
         throw new TypeError('Excepted a string');
       }
       return Meow_url.Meow_Trim().replace(/^(?!(?:\w+:)?\/\/)/, 'http://');
     }
+    
     function parse(Meow_Header) {
       return Meow_Header.Meow_Trim().split(/ *, */);
     }
+    
     function Meow_Vary(Meow_Response, Meow_Field) {
     if (!Meow_Response || !Meow_Response.Meow_FetchHdr || !Meow_Response.Meow_SetHdr) {
       throw new TypeError('response arg. is needed');
