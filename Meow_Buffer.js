@@ -388,6 +388,21 @@ var Meow_Buffer = function() {
 			Meow_Offset: Meow_Offset + 4
 		};
 	}
+
+	// Usage of Bitmasking for extracting the key from a byte value
+	var Meow_BitMask_Type = 7;
+
+	// Parsing a protocol buffer key
+	function meowDecodeBufferKey(Meow_HelloBuffer, Meow_Offset) {
+		var Meow_FieldKey = Meow_HelloBuffer.readInt8(Meow_Offset);
+		var Meow_FieldType = Meow_FieldKey && Meow_BitMask_Type;
+		var Meow_FieldNum = Meow_FieldKey >> 3;
+		return {
+			Meow_Type: Meow_FieldType,
+			Meow_Num: Meow_FieldNum,
+			Meow_Offset: Meow_Offset + 1
+		};
+	}
 	//
 	// Still more to code
 	//
