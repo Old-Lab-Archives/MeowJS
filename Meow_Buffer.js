@@ -571,7 +571,7 @@ var Meow_Buffer = function() {
 		};
 	}
 	/************************************
-	******End of Meow_Buffer Encoder*****
+	******End of Meow_Buffer decoder*****
 	************************************/
 };
 
