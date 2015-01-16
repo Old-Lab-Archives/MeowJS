@@ -28,4 +28,5 @@ Currently, MeowJS is non-production ready.
 <br><br>
 A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided and the documentation will be updated soon. <br>
 This is a <a href="http://geekresearchlab.net/mtechproject/">project</a> done by an individual. <br>
+The existing research works/books/codes/articles that were used as reference or customized for this project, the list of those researchers/authors/developers/writers will be credited in the credits.md (contents not-yet updated, it will be updated later after the successful completion of this project since it's a tedious process).<br>
 Contributions are welcome in form of sending issues or pull requests. <br>
