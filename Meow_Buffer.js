@@ -403,6 +403,30 @@ var Meow_Buffer = function() {
 			Meow_Offset: Meow_Offset + 1
 		};
 	}
+
+	// Parsing protocol buffer "length delimited" value
+	function meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, Meow_Opts) {
+		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
+		var Meow_FieldLen = Meow_Parsed.Meow_Num;
+		//Updating the buffer's offset
+		Meow_Offset = Meow_Parsed.Meow_Offset;
+		var Meow_Val;
+		if(Meow_Opts.encoding) {
+			Meow_Val = Meow_HelloBuffer.toString(Meow_Opts.encoding, Meow_Offset, Meow_Offset + Meow_FieldLen);
+		} else {
+			Meow_Val = Meow_HelloBuffer.slice(Meow_Offset, Meow_Offset + Meow_FieldLen);
+		}
+		return {
+			Meow_Val: Meow_Val,
+			Meow_Offset: Meow_Offset + Meow_FieldLen
+		};
+	}
+
+	// Decoding a string field
+	function Meow_DecodeStr(Meow_HelloBuffer, Meow_Offset, Meow_Opts) {
+		Meow_Opts.encoding = Meow_Opts.encoding || 'UTF8';
+		return meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, Meow_Opts);
+	}
 	//
 	// Still more to code
 	//
