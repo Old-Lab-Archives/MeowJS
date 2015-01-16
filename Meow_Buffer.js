@@ -354,7 +354,7 @@ var Meow_Buffer = function() {
 	}
 
 	// Decoding a varint numerical value
-	function DecodeNumVal(Meow_HelloBuffer, Meow_Offset) {
+	function meowDecodeNumVal(Meow_HelloBuffer, Meow_Offset) {
 		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
 		return {
 			Meow_Val: Meow_Parsed.Meow_Num,
@@ -445,6 +445,36 @@ var Meow_Buffer = function() {
 		}, Meow_FieldLen);
 	}
 
+	// Message Structures
+		Meow_BufferTypes = {
+		0: { meaning: "varint", Meow_Parsers: {
+			int32: meowDecodeNumVal,
+			int64: meowDecodeNumVal,
+			uint32: meowDecodeNumVal,
+			uint64: meowDecodeNumVal,
+			sint32: undefined,
+			sint64: undefined,
+			bool: Meow_DecodeBool,
+			enum: Meow_DecodeEnum
+		} },
+		1: { meaning: "64-bit", Meow_Parsers: {
+			fixed64: undefined,
+			sfixed64: undefined,
+			double: undefined
+		} },
+		2: { meaning: "Length-delimited", Meow_Parsers: {
+			string: Meow_DecodeStr,
+			Meow_Byte: meowDecodeDelimitedVal
+		} },
+		3: { meaning: "start group" },
+		4: { meaning: "End group" },
+		5: { meaning: "32-bit", Meow_Parsers: {
+			fixed32: undefined,
+			sfixed32: undefined,
+			float: Meow_DecodeFloat
+		} }
+	};
+
 	// Decoding instance
 	function Meow_Decoder(Meow_Defn2, Meow_Opts) {
 		/*
@@ -452,7 +482,7 @@ var Meow_Buffer = function() {
 		*/
 		Meow_Opts = Meow_Opts || function() {};
 		var Meow_Parse = function(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName) {
-			var Meow_ParsedKey = Meow_DecodeKey(Meow_HelloBuffer, Meow_Offset);
+			var Meow_ParsedKey = meowDecodeKey(Meow_HelloBuffer, Meow_Offset);
 			Meow_Offset = Meow_ParsedKey.Meow_Offset;
 			//
 			// Still more to code
