@@ -427,6 +427,16 @@ var Meow_Buffer = function() {
 		Meow_Opts.encoding = Meow_Opts.encoding || 'UTF8';
 		return meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, Meow_Opts);
 	}
+
+	// Decoding an embedded object
+	function Meow_DecodeEmbed(Meow_Decoder, Meow_Defn, Meow_HelloBuffer, Meow_Offset, callback) {
+		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
+		var Meow_FieldLen = Meow_Parsed.Meow_Num;
+		Meow_Offset = Meow_Parsed.Meow_Offset;
+		Meow_Decoder.Meow_Decode(Meow_HelloBuffer, Meow_Offset, Meow_Defn, function(err, data) {
+			callback(err, data, Meow_Offset + Meow_FieldLen);
+		}, Meow_FieldLen);
+	}
 	//
 	// Still more to code
 	//
