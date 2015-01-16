@@ -372,7 +372,7 @@ var Meow_Buffer = function() {
 	}
 
 	// Decoding an enum field
-	function Meow_DecodeEnum(Meow_HelloBuffer, Meow_Offset, Meow_Enum) {
+	function meowDecodeEnum(Meow_HelloBuffer, Meow_Offset, Meow_Enum) {
 		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
 		var Meow_Val = Meow_Enum[Meow_Parsed.Meow_Num];
 		return {
@@ -405,14 +405,14 @@ var Meow_Buffer = function() {
 	}
 
 	// Parsing protocol buffer "length delimited" value
-	function meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, Meow_Opts) {
+	function meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, meowOpts) {
 		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
 		var Meow_FieldLen = Meow_Parsed.Meow_Num;
 		//Updating the buffer's offset
 		Meow_Offset = Meow_Parsed.Meow_Offset;
 		var Meow_Val;
-		if(Meow_Opts.encoding) {
-			Meow_Val = Meow_HelloBuffer.toString(Meow_Opts.encoding, Meow_Offset, Meow_Offset + Meow_FieldLen);
+		if(meowOpts.encoding) {
+			Meow_Val = Meow_HelloBuffer.toString(meowOpts.encoding, Meow_Offset, Meow_Offset + Meow_FieldLen);
 		} else {
 			Meow_Val = Meow_HelloBuffer.slice(Meow_Offset, Meow_Offset + Meow_FieldLen);
 		}
@@ -423,13 +423,13 @@ var Meow_Buffer = function() {
 	}
 
 	// Decoding a string field
-	function Meow_DecodeStr(Meow_HelloBuffer, Meow_Offset, Meow_Opts) {
-		Meow_Opts.encoding = Meow_Opts.encoding || 'UTF8';
-		return meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, Meow_Opts);
+	function Meow_DecodeStr(Meow_HelloBuffer, Meow_Offset, meowOpts) {
+		meow_Opts.encoding = meowOpts.encoding || 'UTF8';
+		return meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, meowOpts);
 	}
 
 	// Decoding an embedded object
-	function Meow_DecodeEmbed(Meow_Decoder, Meow_Defn, Meow_HelloBuffer, Meow_Offset, callback) {
+	function meowDecodeEmbed(Meow_Decoder, Meow_Defn, Meow_HelloBuffer, Meow_Offset, callback) {
 		/*
 		Meow_Decoder => a decoder instance
 		Meow_Defn => Definition of the object to decode
@@ -455,7 +455,7 @@ var Meow_Buffer = function() {
 			sint32: undefined,
 			sint64: undefined,
 			bool: Meow_DecodeBool,
-			enum: Meow_DecodeEnum
+			enum: meowDecodeEnum
 		} },
 		1: { meaning: "64-bit", Meow_Parsers: {
 			fixed64: undefined,
@@ -476,12 +476,12 @@ var Meow_Buffer = function() {
 	};
 
 	// Decoding instance
-	function Meow_Decoder(Meow_Defn2, Meow_Opts) {
+	function Meow_Decoder(Meow_Defn2, meowOpts) {
 		/*
 		Meow_Defn2 => Maps where all protocol buffer message is defined.
 		*/
-		Meow_Opts = Meow_Opts || function() {};
-		var Meow_Parse = function(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName) {
+		meowOpts = meowOpts || function() {};
+		var parse = function(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName) {
 			var Meow_ParsedKey = meowDecodeKey(Meow_HelloBuffer, Meow_Offset);
 			Meow_Offset = Meow_ParsedKey.Meow_Offset;
 			var Meow_Parsers = Meow_BufferTypes[Meow_ParsedKey.type].Meow_Parsers;
@@ -491,20 +491,20 @@ var Meow_Buffer = function() {
 				console.log(Meow_ParsedKey);
 			}
 			var Meow_TypeName = Meow_Defn[Meow_ParsedKey.Meow_Num].type;
-			var Meow_Parse = Meow_Parsers[Meow_TypeName];
+			var parse = Meow_Parsers[Meow_TypeName];
 			var Meow_ParsedVal = {};
-			if(Meow_Parse) {
-				var Meow_Opts = Meow_Opts(Meow_MsgName, Meow_Defn[Meow_ParsedKey.Meow_Num]) || {};
-				Meow_ParsedVal = Meow_Parse(Meow_HelloBuffer, Meow_Offset, Meow_Opts);
+			if(parse) {
+				meowOpts = meowOpts(Meow_MsgName, Meow_Defn[Meow_ParsedKey.Meow_Num]) || {};
+				Meow_ParsedVal = parse(Meow_HelloBuffer, Meow_Offset, meowOpts);
 			} else {
 				// checking if Meow_TypeName is an embed enum or not
 				var meowEnums = Meow_Defn['EmbedEnums'];
 				var Meow_Enum = meowEnums ? meowEnums[Meow_TypeName] : undefined;
 				if(Meow_Enum) {
-					Meow_ParsedVal = Meow_DecodeEnum(Meow_helloBuffer, Meow_Offset, Meow_Enum);
+					Meow_ParsedVal = meowDecodeEnum(Meow_helloBuffer, Meow_Offset, Meow_Enum);
 				} else {
 					if(Meow_Defn2.hasOwnProperty(Meow_TypeName)) {
-						Meow_DecodeEmbed(Meow_Decoder, Meow_TypeName, Meow_HelloBuffer, Meow_Offset, function(err, data, Meow_Offset) {
+						meowDecodeEmbed(Meow_Decoder, Meow_TypeName, Meow_HelloBuffer, Meow_Offset, function(err, data, Meow_Offset) {
 							Meow_ParsedVal.err = err;
 							Meow_ParsedVal.Meow_Val = data;
 							Meow_ParsedVal.Meow_Offset = Meow_Offset;
@@ -531,7 +531,7 @@ var Meow_Buffer = function() {
 			end = end || Meow_HelloBuffer.length;
 			// Parsing all the buffer content
 			while(Meow_Offset < end) {
-				var Meow_Parsed = Meow_Parse(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName);
+				var Meow_Parsed = parse(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName);
 				if(Meow_Parsed.err) {
 					callback(Meow_Parsed.err);
 					return;
