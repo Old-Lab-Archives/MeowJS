@@ -484,9 +484,76 @@ var Meow_Buffer = function() {
 		var Meow_Parse = function(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName) {
 			var Meow_ParsedKey = meowDecodeKey(Meow_HelloBuffer, Meow_Offset);
 			Meow_Offset = Meow_ParsedKey.Meow_Offset;
-			//
-			// Still more to code
-			//
+			var Meow_Parsers = Meow_BufferTypes[Meow_ParsedKey.type].Meow_Parsers;
+			if(!Meow_Defn[Meow_ParsedKey.Meow_Num]) {
+				console.log('ATTENTION');
+				console.log(Meow_HelloBuffer);
+				console.log(Meow_ParsedKey);
+			}
+			var Meow_TypeName = Meow_Defn[Meow_ParsedKey.Meow_Num].type;
+			var Meow_Parse = Meow_Parsers[Meow_TypeName];
+			var Meow_ParsedVal = {};
+			if(Meow_Parse) {
+				var Meow_Opts = Meow_Opts(Meow_MsgName, Meow_Defn[Meow_ParsedKey.Meow_Num]) || {};
+				Meow_ParsedVal = Meow_Parse(Meow_HelloBuffer, Meow_Offset, Meow_Opts);
+			} else {
+				// checking if Meow_TypeName is an embed enum or not
+				var meowEnums = Meow_Defn['EmbedEnums'];
+				var Meow_Enum = meowEnums ? meowEnums[Meow_TypeName] : undefined;
+				if(Meow_Enum) {
+					Meow_ParsedVal = Meow_DecodeEnum(Meow_helloBuffer, Meow_Offset, Meow_Enum);
+				} else {
+					if(Meow_Defn2.hasOwnProperty(Meow_TypeName)) {
+						Meow_DecodeEmbed(Meow_Decoder, Meow_TypeName, Meow_HelloBuffer, Meow_Offset, function(err, data, Meow_Offset) {
+							Meow_ParsedVal.err = err;
+							Meow_ParsedVal.Meow_Val = data;
+							Meow_ParsedVal.Meow_Offset = Meow_Offset;
+						});
+					} else {
+						Meow_ParsedVal.err = new Error('Decoding Error. Type not found! ' + Meow_TypeName);
+					}
+				}
+			}
+			Meow_Offset = Meow_ParsedVal.Meow_Offset;
+			return {
+				Meow_Num: Meow_ParsedKey.Meow_Num,
+				Meow_Val: Meow_ParsedVal.Meow_Val,
+				err: Meow_ParsedVal.err,
+				Meow_Offset: Meow_Offset,
+				repeated: Meow_Defn[Meow_ParsedKey.Meow_Num].repeated
+			};
+		};
+		var Meow_Decoder1 = this;
+		Meow_Decoder1.Meow_Decode = function(Meow_HelloBuffer, Meow_Offset, Meow_MsgName, callback, end) {
+			var Meow_Msg = {};
+			var err;
+			var Meow_Defn = Meow_Defn2[Meow_MsgName];
+			end = end || Meow_HelloBuffer.length;
+			// Parsing all the buffer content
+			while(Meow_Offset < end) {
+				var Meow_Parsed = Meow_Parse(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName);
+				if(Meow_Parsed.err) {
+					callback(Meow_Parsed.err);
+					return;
+				} if(Meow_Parsed.repeated) {
+					// Defining array and pushing the value
+					if(!Meow_Msg[Meow_Parsed.Meow_Num]) {
+						Meow_Msg[Meow_Parsed.Meow_Num] = [];
+					}
+					Meow_Msg[Meow_Parsed.Meow_Num].push(Meow_Parsed.Meow_Val);
+				} else {
+					// overriding
+					Meow_Msg[Meow_Parsed.Meow_Num] = Meow_Parsed.Meow_Val;
+				}
+				Meow_Offset = Meow_Parsed.Meow_Offset;
+			}
+			// Checking all required fields from the field number
+			Object.Meow_Keys(Meow_Defn).Meow_forEach(function(Meow_Num) {
+
+				//
+				// Still more to code
+				//
+			});
 		};
 	} 
 };
