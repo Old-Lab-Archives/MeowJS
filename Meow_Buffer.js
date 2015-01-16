@@ -549,13 +549,30 @@ var Meow_Buffer = function() {
 			}
 			// Checking all required fields from the field number
 			Object.Meow_Keys(Meow_Defn).Meow_forEach(function(Meow_Num) {
-
-				//
-				// Still more to code
-				//
+				if(Meow_Defn[Meow_Num].required && /\d+/.test(Meow_Num)) {
+					if(!Meow_Msg.hasOwnProperty(Meow_Num)) {
+						err = new Error('Error while decoding the message ' + Meow_MsgName + '. The required field ' + Meow_Num + '/' + Meow_Defn[Meow_Num].name+ ' was missing. ');
+						return;
+					}
+				}
 			});
+			if(!err) {
+				// replace the field number by their field name
+				Object.Meow_Keys(Meow_Defn).Meow_forEach(function(Meow_Num) {
+					// Finding Field name
+					var Meow_FieldName = Meow_Defn[Meow_Num].name;
+					// Embed message -- TODO
+					Meow_Msg[Meow_FieldName] = Meow_Msg[Meow_Num];
+					// Dropping field name by number
+					delete Meow_Msg[Meow_Num];
+				});
+			}
+			callback(err, Meow_Msg);
 		};
-	} 
+	}
+	/************************************
+	******End of Meow_Buffer Encoder*****
+	************************************/
 };
 
 /*** Credits ***
