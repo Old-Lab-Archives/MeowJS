@@ -430,6 +430,13 @@ var Meow_Buffer = function() {
 
 	// Decoding an embedded object
 	function Meow_DecodeEmbed(Meow_Decoder, Meow_Defn, Meow_HelloBuffer, Meow_Offset, callback) {
+		/*
+		Meow_Decoder => a decoder instance
+		Meow_Defn => Definition of the object to decode
+		Meow_HelloBuffer => To read
+		Meow_Offset => The offset used in the buffer to read
+		callback => The functions that calls the new object if decoded.
+		*/
 		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
 		var Meow_FieldLen = Meow_Parsed.Meow_Num;
 		Meow_Offset = Meow_Parsed.Meow_Offset;
@@ -437,9 +444,21 @@ var Meow_Buffer = function() {
 			callback(err, data, Meow_Offset + Meow_FieldLen);
 		}, Meow_FieldLen);
 	}
-	//
-	// Still more to code
-	//
+
+	// Decoding instance
+	function Meow_Decoder(Meow_Defn2, Meow_Opts) {
+		/*
+		Meow_Defn2 => Maps where all protocol buffer message is defined.
+		*/
+		Meow_Opts = Meow_Opts || function() {};
+		var Meow_Parse = function(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName) {
+			var Meow_ParsedKey = Meow_DecodeKey(Meow_HelloBuffer, Meow_Offset);
+			Meow_Offset = Meow_ParsedKey.Meow_Offset;
+			//
+			// Still more to code
+			//
+		};
+	} 
 };
 
 /*** Credits ***
