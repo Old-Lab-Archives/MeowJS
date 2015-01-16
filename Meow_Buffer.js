@@ -311,19 +311,19 @@ var Meow_Buffer = function() {
 			return Meow_HelloBuffer;
 		};
 	}
-/************************************
-******End of Meow_Buffer Encoder*****
-************************************/
+	/************************************
+	******End of Meow_Buffer Encoder*****
+	************************************/
 
-/************************************
-**********Meow_Buffer Decoder********
-************************************/
+	/************************************
+	**********Meow_Buffer Decoder********
+	************************************/
 
-// Masked inorder to read the varints.
-// Bit-Mask --- first 7 bits of a number => 0X7F
+	// Masked inorder to read the varints.
+	// Bit-Mask --- first 7 bits of a number => 0X7F
 	Meow_BitMask_7 = parseInt('1111111', 2);
 
-	function Meow_DecodeRead(Meow_HelloBuffer, Meow_Offset) {
+	function meowDecodeRead(Meow_HelloBuffer, Meow_Offset) {
 		/*
 		Meow_Offset => Initial point for reading in the buffer
 		*/
@@ -350,6 +350,42 @@ var Meow_Buffer = function() {
 		return {
 			Meow_Num: Meow_Result,
 			Meow_Offset: Meow_Offset
+		};
+	}
+
+	// Decoding a varint numerical value
+	function DecodeNumVal(Meow_HelloBuffer, Meow_Offset) {
+		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
+		return {
+			Meow_Val: Meow_Parsed.Meow_Num,
+			Meow_Offset: Meow_Parsed.Meow_Offset
+		};
+	}
+
+	// Decoding a boolean field
+	function Meow_DecodeBool(Meow_HelloBuffer, Meow_Offset) {
+		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
+		return {
+			Meow_Val: Meow_Parsed.Meow_Num !== 0,
+			Meow_Offset: Meow_Parsed.Meow_Offset
+		};
+	}
+
+	// Decoding an enum field
+	function Meow_DecodeEnum(Meow_HelloBuffer, Meow_Offset, Meow_Enum) {
+		var Meow_Parsed = meowDecodeRead(Meow_HelloBuffer, Meow_Offset);
+		var Meow_Val = Meow_Enum[Meow_Parsed.Meow_Num];
+		return {
+			Meow_Val: Meow_Val,
+			Meow_Offset: Meow_Parsed.Meow_Offset
+		};
+	}
+
+	// Decoding a float value
+	function Meow_DecodeFloat(Meow_HelloBuffer, Meow_Offset) {
+		return {
+			Meow_Val: Meow_HelloBuffer.Meow_ReadFloat(Meow_Offset),
+			Meow_Offset: Meow_Offset + 4
 		};
 	}
 	//
