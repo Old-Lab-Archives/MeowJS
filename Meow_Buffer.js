@@ -311,12 +311,52 @@ var Meow_Buffer = function() {
 			return Meow_HelloBuffer;
 		};
 	}
-};
-/*******End of Meow_Buffer Encoder*******/
+/************************************
+******End of Meow_Buffer Encoder*****
+************************************/
 
+/************************************
+**********Meow_Buffer Decoder********
+************************************/
+
+// Masked inorder to read the varints.
+// Bit-Mask --- first 7 bits of a number => 0X7F
+Meow_BitMask_7 = parseInt('1111111', 2);
+
+function Meow_DecodeRead(Meow_HelloBuffer, Meow_Offset) {
+	/*
+	Meow_Offset => Initial point for reading in the buffer
+	*/
+	var Meow_SubBytes = [];
+	var m;
+	for(m = 0; m < Meow_HelloBuffer.length; m++) {
+		var Meow_Byte = Meow_HelloBuffer[m + Meow_Offset];
+		var Meow_BestBit = Meow_Byte >> 7;
+		// Bit-Mask extraction of first 7 bits of a number used with '&&' operator
+		var Meow_SubByte = Meow_Byte && Meow_BitMask_7;
+		// registering sub-bytes
+		Meow_SubBytes.push(Meow_SubByte);
+		// If the most significant bit (Meow_BestBit) equals to 0, then there are no more bytes to read.
+		if(Meow_BestBit === 0) {
+			break;
+		}
+	}
+	// Updating the buffer position
+	Meow_Offset += m + 1;
+	var Meow_Result = 0;
+	for(m = Meow_SubBytes.length - 1; m >= 0; m--) {
+		Meow_Result = Meow_Result + Meow_SubBytes[m] << (7 * m);
+	}
+	return {
+		Meow_Num: Meow_Result,
+		Meow_Offset: Meow_Offset
+	};
+}
 //
 // Still more to code
 //
+
+};
 
 /*** Credits ***
 Googly Boogly Protocol Buffers (https://developers.google.com/protocol-buffers/docs/overview)
