@@ -652,6 +652,9 @@ var Meow_Buffer = function() {
 			def[Meow_Key] = Meow_Msg[Meow_Key];
 		});
 	};
+	/************************************
+	**********End of Dictionary**********
+	************************************/
 };
 
 /*** Credits ***
