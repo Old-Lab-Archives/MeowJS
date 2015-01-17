@@ -10,19 +10,7 @@ var MeowFunText = function() {
 	Meow_Power.Meow_CacheCanvas = [];
 	Meow_Power.Meow_CacheContext = [];
 	Meow_Power.Meow_SavedClasses = [];
-	/*
-	Meow_Power.fontFamily = " ";
-	Meow_Power.fontWeight = " ";
-	Meow_Power.fontSize = " ";
-	Meow_Power.fontColor = " ";
-	Meow_Power.fontStyle = " ";
-	Meow_Power.textAlign = " ";
-	Meow_Power.textBaseline = " ";
-	Meow_Power.lineHeight = " ";
-	Meow_Power.textShadow = null;
-	Meow_Power.Meow_InitTime = null;
-	Meow_Power.Meow_EndTime = null;
-	*/
+
 	Meow_Power.Meow_Config = function(Meow_Config) {
 		var Meow_Property;
 		if(typeof(Meow_Config) !== "object") {
