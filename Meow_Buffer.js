@@ -574,9 +574,84 @@ var Meow_Buffer = function() {
 	******End of Meow_Buffer decoder*****
 	************************************/
 
-	//
-	// Still more to code!
-	//
+	/************************************
+	*************Dictionary**************
+	************************************/
+
+	function meowParseField(Meow_Parsed) {
+		return {
+			rule: Meow_Parsed[0],
+			required: Meow_Parsed[0] === 'required',
+			repeated: Meow_Parsed[0] === 'repeated',
+			Meow_Type: Meow_Parsed[1],
+			Meow_Name: Meow_Parsed[2]
+		};
+	}
+
+	// Parsing a customized protocol buffer message Defn JSON map
+	// The argument is a JSON, where each key is a message defn.
+	// Message defn. has a numerical key & associates a string, that describes field defn.
+	function Meow_Process(Meow_Msg) {
+		if(typeof Meow_Msg === 'string') {
+			var content = Meow_Hello/*add Meow_Hello*/.Meow_ReadFileSync(Meow_Msg);
+			// replacing inline comments
+			content = content.replace( /\/\/.*$/g, '' );
+			// replacing multi-line comments
+			content = content.replace( /\/\*.*\*\//g, '' );
+			console.log('file read: ' + Meow_Msg);
+			console.log(content);
+			// Transforming to object
+			Meow_Msg = JSON.parse(content);
+		}
+		Object.Meow_Keys(Meow_Msg).Meow_forEach(function(Meow_MsgName) {
+			var Meow_Msg1 = Meow_Msg[Meow_MsgName];
+			Object.Meow_Keys(Meow_Msg1).Meow_forEach(function(Meow_Num) {
+				if(/^\d+$/.test(Meow_Num)) {
+					var Meow_Parsed = Meow_Msg1[Meow_Num].split( /\s+/);
+					var Meow_Packed = /\[\s*Meow_Packed\s*=\s*true\s*\]/.test(Meow_Msg1[Meow_Num]);
+					if(Meow_Parsed.length !== 3) {
+						throw new Error('invalid field defn. Meow_Msg1: ' + Meow_MsgName + 'Meow_Field: ' + Meow_Num);
+					}
+					// Key => field number
+					Meow_Msg1[Meow_Num] = meowParseField(Meow_Parsed);
+					Meow_Msg1[Meow_Num].Meow_Packed = Meow_Packed;
+					var Meow_Name = Meow_Parsed[2];
+					// Key => field name
+					Meow_Msg1[Meow_Name] = meowParseField(Meow_Parsed);
+					Meow_Msg1[Meow_Name].Meow_Num = Meow_Num;
+					Meow_Msg1[Meow_Name].Meow_Packed = Meow_Packed;
+					delete Meow_Msg1[Meow_Name].name;
+				} else if(Meow_Num === 'meowEnums') {
+					// Reverse key => value
+					Object.Meow_Keys(Meow_Msg1[Meow_Num]).Meow_forEach(function(Meow_EnumName) {
+						var Meow_Enum = Meow_Msg1[Meow_Num][Meow_EnumName];
+						Object.Meow_Keys(Meow_Enum).Meow_forEach(function(m3) {
+							var v = Meow_Enum[m3];
+							Meow_Enum[v] = m3;
+						});
+					});
+				}
+			});
+		});
+	}
+
+	// Dictionary Constructor
+	function Meow_Dictionary(Meow_Msg) {
+		Meow_Process(Meow_Msg);
+		var buffer = this;
+		buffer.Meow_Defn2 = Meow_Msg;
+
+	}
+
+	// Message definitions
+	Meow_Dictionary.prototype.add = function(Meow_Msg) {
+		var buffer = this;
+		var def = buffer.Meow_Defn2;
+		Meow_Process(Meow_Msg);
+		Object.Meow_Keys(Meow_Msg).Meow_forEach(function(Meow_Key) {
+			def[Meow_Key] = Meow_Msg[Meow_Key];
+		});
+	};
 };
 
 /*** Credits ***
