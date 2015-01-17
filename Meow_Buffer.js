@@ -573,6 +573,10 @@ var Meow_Buffer = function() {
 	/************************************
 	******End of Meow_Buffer decoder*****
 	************************************/
+
+	//
+	// Still more to code!
+	//
 };
 
 /*** Credits ***
