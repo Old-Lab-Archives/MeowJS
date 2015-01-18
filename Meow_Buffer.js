@@ -52,7 +52,7 @@ var Meow_Buffer = function() {
 	var Meow_BestBit = parseInt('10000000', 2);
 
 	// Encoding a number in a varint form
-	function Meow_EncodeVal(Meow_Val) {
+	Meow_Buffer.Meow_EncodeVal = function(Meow_Val) {
 		var Meow_Result = 0;
 		var Meow_Byte;
 		// Length expressed in bytes
@@ -639,7 +639,7 @@ var Meow_Buffer = function() {
 	}
 
 	// Dictionary Constructor
-	Meow_Buffer.Meow_Dictionary = function(Meow_Msg) {
+	var Meow_Dictionary = function(Meow_Msg) {
 		meowProcess(Meow_Msg);
 		var buffer = this;
 		buffer.Meow_Defn2 = Meow_Msg;
