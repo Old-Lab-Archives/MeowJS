@@ -188,7 +188,7 @@ var Meow_Buffer = function() {
 	}
 
 	// Buffer Encoders
-	var Meow_BufferEncoders = {
+	Meow_BufferTypes = {
 		"int32": meowEncodeNumVal,
 		"int64": meowEncodeNumVal,
 		"uint32": meowEncodeNumVal,
@@ -209,7 +209,8 @@ var Meow_Buffer = function() {
 
 	// Buffer Encode Constructor
 	function Meow_ConstructBufferEncode(Meow_Defn) {
-		var meowBufferEncode = this;
+		//var meowBufferEncode = this;
+		
 		// Encoded object is represented as embedded message within a message
 		var meowEmbedEncode = function(Meow_Val, Meow_FieldDefn) {
 			var Meow_BufferMsg = Meow_ConstructBufferEncode.meowBufferEncode(Meow_Val, Meow_FieldDefn.type);
@@ -235,7 +236,7 @@ var Meow_Buffer = function() {
 		// Encoding a field from the JSON object
 		var meowEncodeField = function(Meow_Val, Meow_FieldDefn) {
 			var Meow_TypeName = Meow_FieldDefn.type;
-			var Meow_BufferKey, Meow_BufferEncoders;
+			var Meow_BufferKey, meowBufferEncoders;
 			var meowBufferEncode = meowBufferEncoders[Meow_TypeName];
 			if(meowBufferEncode) {
 				Meow_BufferKey = meowEncodeBufferKey(Meow_FieldDefn.Meow_Num, Meow_TypeName);
