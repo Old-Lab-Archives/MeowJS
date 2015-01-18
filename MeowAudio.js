@@ -1,3 +1,6 @@
+// MeowJS --- Audio
+
+// MeowJS Audio Codec
 var Meow_AudioCodec = function(x, meowCodec) {
 	'use strict';
 	var meowAudioLib;
