@@ -235,7 +235,7 @@ var Meow_Buffer = function() {
 		// Encoding a field from the JSON object
 		var meowEncodeField = function(Meow_Val, Meow_FieldDefn) {
 			var Meow_TypeName = Meow_FieldDefn.type;
-			var Meow_BufferKey;
+			var Meow_BufferKey, Meow_BufferEncoders;
 			var meowBufferEncode = meowBufferEncoders[Meow_TypeName];
 			if(meowBufferEncode) {
 				Meow_BufferKey = meowEncodeBufferKey(Meow_FieldDefn.Meow_Num, Meow_TypeName);
@@ -424,7 +424,7 @@ var Meow_Buffer = function() {
 
 	// Decoding a string field
 	function Meow_DecodeStr(Meow_HelloBuffer, Meow_Offset, meowOpts) {
-		meow_Opts.encoding = meowOpts.encoding || 'UTF8';
+		meowOpts.encoding = meowOpts.encoding || 'UTF8';
 		return meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, meowOpts);
 	}
 
@@ -482,6 +482,7 @@ var Meow_Buffer = function() {
 		*/
 		meowOpts = meowOpts || function() {};
 		var parse = function(Meow_Decoder, Meow_HelloBuffer, Meow_Offset, Meow_Defn, Meow_MsgName) {
+			var meowDecodeKey;
 			var Meow_ParsedKey = meowDecodeKey(Meow_HelloBuffer, Meow_Offset);
 			Meow_Offset = Meow_ParsedKey.Meow_Offset;
 			var Meow_Parsers = Meow_BufferTypes[Meow_ParsedKey.type].Meow_Parsers;
@@ -501,7 +502,7 @@ var Meow_Buffer = function() {
 				var meowEnums = Meow_Defn['EmbedEnums'];
 				var Meow_Enum = meowEnums ? meowEnums[Meow_TypeName] : undefined;
 				if(Meow_Enum) {
-					Meow_ParsedVal = meowDecodeEnum(Meow_helloBuffer, Meow_Offset, Meow_Enum);
+					Meow_ParsedVal = meowDecodeEnum(Meow_HelloBuffer, Meow_Offset, Meow_Enum);
 				} else {
 					if(Meow_Defn2.hasOwnProperty(Meow_TypeName)) {
 						meowDecodeEmbed(Meow_Decoder, Meow_TypeName, Meow_HelloBuffer, Meow_Offset, function(err, data, Meow_Offset) {
@@ -591,8 +592,9 @@ var Meow_Buffer = function() {
 	// Parsing a customized protocol buffer message Defn JSON map
 	// The argument is a JSON, where each key is a message defn.
 	// Message defn. has a numerical key & associates a string, that describes field defn.
-	function Meow_Process(Meow_Msg) {
+	function meowProcess(Meow_Msg) {
 		if(typeof Meow_Msg === 'string') {
+			var Meow_Hello;
 			var content = Meow_Hello/*add Meow_Hello*/.Meow_ReadFileSync(Meow_Msg);
 			// replacing inline comments
 			content = content.replace( /\/\/.*$/g, '' );
@@ -637,7 +639,7 @@ var Meow_Buffer = function() {
 
 	// Dictionary Constructor
 	function Meow_Dictionary(Meow_Msg) {
-		Meow_Process(Meow_Msg);
+		meowProcess(Meow_Msg);
 		var buffer = this;
 		buffer.Meow_Defn2 = Meow_Msg;
 
@@ -647,7 +649,7 @@ var Meow_Buffer = function() {
 	Meow_Dictionary.prototype.add = function(Meow_Msg) {
 		var buffer = this;
 		var def = buffer.Meow_Defn2;
-		Meow_Process(Meow_Msg);
+		meowProcess(Meow_Msg);
 		Object.Meow_Keys(Meow_Msg).Meow_forEach(function(Meow_Key) {
 			def[Meow_Key] = Meow_Msg[Meow_Key];
 		});
