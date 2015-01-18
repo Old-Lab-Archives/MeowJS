@@ -34,6 +34,6 @@
     "Meow_forEach.js",
     "Meow_Path.js",
     "Meow_EnvProcess.js",
-    "Meow_AudioCodec.js"
+    "MeowAudio.js"
   ]
 }
