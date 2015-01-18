@@ -210,9 +210,9 @@ var Meow_Buffer = function() {
 	// Buffer Encode Constructor
 	function Meow_ConstructBufferEncode(Meow_Defn) {
 		//var meowBufferEncode = this;
-		
+
 		// Encoded object is represented as embedded message within a message
-		var meowEmbedEncode = function(Meow_Val, Meow_FieldDefn) {
+		Meow_ConstructBufferEncode.meowEmbedEncode = function(Meow_Val, Meow_FieldDefn) {
 			var Meow_BufferMsg = Meow_ConstructBufferEncode.meowBufferEncode(Meow_Val, Meow_FieldDefn.type);
 			// Returns Meow_Len and function -> Meow_EncodeCall
 			return {
@@ -639,12 +639,12 @@ var Meow_Buffer = function() {
 	}
 
 	// Dictionary Constructor
-	function Meow_Dictionary(Meow_Msg) {
+	Meow_Buffer.Meow_Dictionary = function(Meow_Msg) {
 		meowProcess(Meow_Msg);
 		var buffer = this;
 		buffer.Meow_Defn2 = Meow_Msg;
 
-	}
+	};
 
 	// Message definitions
 	Meow_Dictionary.prototype.add = function(Meow_Msg) {
