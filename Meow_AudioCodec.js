@@ -1,11 +1,6 @@
 var Meow_AudioCodec = function(x, meowCodec) {
 	'use strict';
-	var meowAudioLib, meowAudioDevice;
-	var meowEncode, meowDecode;
-	var record, xSample;
-	var Meow_Data;
-	var Meow_SampleRate;
-	var Meow_ChannelCount;
+	var meowAudioLib;
 	var Meow_Power = this;
 	var xx = x[0].toUpperCase() + x.substr(1).toLowerCase();
 	Meow_AudioCodec[x] = meowCodec;
