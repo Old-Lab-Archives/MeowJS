@@ -74,7 +74,7 @@ var Meow_Buffer = function() {
 			// Returns object.Meow_Len byte length of the format
 			Meow_Len: Meow_Len + 1
 		};
-	}
+	};
 
 	// Computing the byte length of a varint encoded value
 	function meowComputeLen(Meow_Val) {
@@ -210,6 +210,7 @@ var Meow_Buffer = function() {
 	// Buffer Encode Constructor
 	function Meow_ConstructBufferEncode(Meow_Defn) {
 		//var meowBufferEncode = this;
+		var meowEmbedEncode;
 
 		// Encoded object is represented as embedded message within a message
 		Meow_ConstructBufferEncode.meowEmbedEncode = function(Meow_Val, Meow_FieldDefn) {
