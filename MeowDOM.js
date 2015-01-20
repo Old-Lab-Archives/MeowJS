@@ -1,5 +1,6 @@
 var MeowDOM = (function() {
 	'use strict';
+	var document;
 	var Meow_DOMencode = function() {
 	MeowDOM.Meow_DOMencode = function(Meow_String) {
 		var Meow_div = document.createElement('div');
@@ -17,6 +18,7 @@ var MeowDOM = (function() {
 	}; };
 	MeowDOM.prototype.Meow_Init = function(meowCallback) {
 		var Meow_Power = this;
+		var err, window;
 		if(err) {
 			return meowCallback(err);
 		}
