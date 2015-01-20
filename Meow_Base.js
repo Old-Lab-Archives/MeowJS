@@ -10,6 +10,7 @@ var MeowBase = function() {
 	var Meow_Slice;
 	var Meow_Global;
 	var n, js, MeowJS;
+	var Meow_Base;
 MeowBase.Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
