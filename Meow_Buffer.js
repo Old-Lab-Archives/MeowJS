@@ -526,7 +526,8 @@ var Meow_Buffer = function() {
 				repeated: Meow_Defn[Meow_ParsedKey.Meow_Num].repeated
 			};
 		};
-		var Meow_Decoder1 = this;
+		var Meow_Decoder1 = Meow_Decoder;
+		Meow_Decoder1 = this;
 		Meow_Decoder1.Meow_Decode = function(Meow_HelloBuffer, Meow_Offset, Meow_MsgName, callback, end) {
 			var Meow_Msg = {};
 			var err;
