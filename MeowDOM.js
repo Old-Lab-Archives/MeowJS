@@ -1,6 +1,8 @@
 var MeowDOM = (function() {
 	'use strict';
 	var document;
+	var Meow_Buffer;
+	var meowProcess;
 	var Meow_DOMencode = function() {
 	MeowDOM.Meow_DOMencode = function(Meow_String) {
 		var Meow_div = document.createElement('div');
