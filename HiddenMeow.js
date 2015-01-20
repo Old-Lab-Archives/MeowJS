@@ -50,102 +50,6 @@ var HiddenMeow = function() {
       HiddenMeow2.Meow_Char = HiddenMeow1.Meow_Char;
       return HiddenMeow2;
     };
-    HiddenMeow.Meow_Rails = function(HiddenMeow2, Meow_String, Meow_Rate) {
-      if (!Meow_Rate && Meow_Rate !== 0) {
-        Meow_Rate = 0.1;
-      }
-      var Meow_HelloAlpha = [];
-      var Meow_HelloBeta = [];
-      var Meow_HelloGamma = [];
-      var Meow_HelloKappa = [];
-      var Meow_HelloInput = [];
-      var Meow_Sum;
-      var Meow_Char = HiddenMeow2.Meow_Char;
-      var Meow_Nodes = HiddenMeow2.Meow_Nodes;
-      var Meow_Init = HiddenMeow2.Meow_Init;
-      for (m = 0; m < Meow_String.length; m++) {
-        Meow_HelloAlpha[m] = [];
-        Meow_HelloBeta[m] = [];
-        Meow_HelloGamma[m] = [];
-        if (m < Meow_String.length - 1) {
-          Meow_HelloKappa[m] = [];
-        }
-        Meow_HelloInput.push(Meow_Char.Meow_IndexOf(Meow_String[m]));
-        if (Meow_HelloInput[m] === -1) {
-          throw new Error('invalid character: ' + Meow_String[m]);
-        }
-        for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
-          if (m === 0) {
-            Meow_HelloAlpha[0][m2] = Meow_Init[m2] * Meow_Nodes[m2].Meow_Prob[Meow_HelloInput[0]];
-          } else {
-            for (m3 = Meow_Sum = 0; m3 < Meow_Nodes.length; m3++) {
-              Meow_Sum += Meow_HelloAlpha[m - 1][m3] * Meow_Nodes[m3].Meow_Next[m2];
-              Meow_HelloAlpha[m][m2] = Meow_Sum * Meow_Nodes[m2].Meow_Prob[Meow_HelloInput[m]];
-            }
-          }
-        }
-        for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
-          if (m === Meow_String.length - 1) {
-            Meow_HelloBeta[m][m2] = 1;
-          } else {
-            Meow_HelloBeta[m][m2] = 0;
-            for (m3 = 0; m3 < Meow_Nodes.length; m3++) {
-              Meow_HelloBeta[m][m2] += Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
-            }
-          }
-        }
-        for (m = 0; m < Meow_String.length; m++) {
-          for (m3 = Meow_Sum = 0; m3 < Meow_Nodes.length; m3++) {
-            Meow_Sum += Meow_HelloAlpha[m][m3] * Meow_HelloBeta[m][m3];
-          }
-          for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
-            Meow_HelloGamma[m][m2] = Meow_HelloAlpha[m][m2] * Meow_HelloBeta[m][m2] / Meow_Sum;
-          }
-          if (m === Meow_String.length - 1) {
-            break;
-          }
-          for (m2 = Meow_Sum = 0; m2 < Meow_Nodes.length; m2++) {
-            for (m3 = 0; m3 < Meow_Nodes.length; m3++) {
-              Meow_Sum += Meow_HelloAlpha[m][m2] * Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3];
-            }
-          }
-          for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
-            for (Meow_HelloKappa[m][m2] = [], m3 = 0; m3 < Meow_Nodes.length; m3++) {
-              Meow_HelloKappa[m][m2][m3] = Meow_HelloAlpha[m][m2] * Meow_Nodes[m2].Meow_Next[m3] * Meow_Nodes[m3].Meow_Prob[Meow_HelloInput[m + 1]] * Meow_HelloBeta[m + 1][m3] / Meow_Sum;
-            }
-          }
-        }
-        var a = [];
-        var xx = [];
-        var yy = [];
-        var Meow_Del;
-        a[m] = [];
-        xx[m] = [];
-        for (m3 = Meow_Sum = 0; m3 < Meow_String.length - 1; m3++) {
-          Meow_Sum += Meow_HelloGamma[m3][m];
-        }
-        for (m2 = 0; m2 < Meow_Nodes.length; m2++) {
-          a[m][m2] += Meow_HelloKappa[m3][m][m2];
-          a[m][m2] /= Meow_Sum;
-          Meow_Del = a[m][m2] - Meow_Nodes[m].Meow_Next[m2];
-          Meow_Nodes[m].Meow_Next[m2] += Meow_Del * Meow_Rate;
-        }
-        Meow_Sum += Meow_HelloGamma[Meow_String.length - 1][m];
-        for (m2 = 0; m2 < Meow_Char.length; m2++) {
-          for (m3 = xx[m][m2] = 0; m3 < Meow_String.length; m3++) {
-            if (Meow_HelloInput[m3] === m2) {
-              xx[m][m2] += Meow_HelloGamma[m3][m];
-            }
-            xx[m][m2] /= Meow_Sum;
-            Meow_Del = xx[m][m2] - Meow_Nodes[m].Meow_Prob[m2];
-            Meow_Nodes[m].Meow_Prob[m2] += Meow_Del * Meow_Rate;
-          }
-        }
-        yy[m] = Meow_HelloGamma[0][m];
-        Meow_Del = yy[m] - Meow_Init[m];
-        Meow_Init[m] += Meow_Del * Meow_Rate;
-      }
-    };
     HiddenMeow.prototype.Meow_Generate = function(Meow_Stop, Meow_Len, zz) {
       zz = zz || 0;
       HiddenMeow.Meow_Pick = function(a) {
@@ -199,13 +103,4 @@ var HiddenMeow = function() {
       }
       return Meow_Sum;
     };
-    HiddenMeow.Meow_RailsWords = function(HiddenMeow2, Meow_Words, Meow_Overall) {
-      Meow_Words.Meow_ForEach = function(zzz) {
-        console.log("Working: " + zzz);
-        HiddenMeow.Meow_Rails(HiddenMeow2, zzz, Meow_Overall);
-      };
-    };
-    if (typeof exports !== 'undefined') {
-      exports.HiddenMeow = HiddenMeow;
-    }
  };
