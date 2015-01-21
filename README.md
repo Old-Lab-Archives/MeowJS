@@ -23,7 +23,7 @@ $git clone https://github.com/Geek-Research-Lab/MeowJS.git<br>
 Then, directly download --- <a href="https://github.com/Geek-Research-Lab/MeowJS/archive/master.zip">click here</a><br>
 or<br>
 Download as per latest release --- <a href="https://github.com/Geek-Research-Lab/MeowJS/releases">click here</a><br>
-Note:- The repository is active and gets updated everyday. So, everytime it needs to be freshly updated inorder to keep it updated.<br>
+Note:- The repository is active and gets updated everyday. So, everytime, you need to freshly update inorder to keep it updated.<br>
 <br>
 <b>Okay, done! Now, What am i going to do with all these scripts?</b><br>
 1. Initialize the script<br>
