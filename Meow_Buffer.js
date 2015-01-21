@@ -208,6 +208,7 @@ var Meow_Buffer = function() {
 	};
 
 	// Buffer Encode Constructor
+	var Meow_ConstructBufferEncode;
 	Meow_Buffer.Meow_ConstructBufferEncode = function(Meow_Defn) {
 		//var meowBufferEncode = this;
 		var meowEmbedEncode;
@@ -324,6 +325,8 @@ var Meow_Buffer = function() {
 	// Masked inorder to read the varints.
 	// Bit-Mask --- first 7 bits of a number => 0X7F
 	Meow_BitMask_7 = parseInt('1111111', 2);
+
+	var Meow_Decoder;
 
 	function meowDecodeRead(Meow_HelloBuffer, Meow_Offset) {
 		/*
