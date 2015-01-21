@@ -208,7 +208,7 @@ var Meow_Buffer = function() {
 	};
 
 	// Buffer Encode Constructor
-	function Meow_ConstructBufferEncode(Meow_Defn) {
+	Meow_Buffer.Meow_ConstructBufferEncode = function(Meow_Defn) {
 		//var meowBufferEncode = this;
 		var meowEmbedEncode;
 
@@ -312,7 +312,7 @@ var Meow_Buffer = function() {
 			// Returns the Meow_HelloBuffer with the encoded protocol buffers message
 			return Meow_HelloBuffer;
 		};
-	}
+	};
 	/************************************
 	******End of Meow_Buffer Encoder*****
 	************************************/
@@ -395,7 +395,7 @@ var Meow_Buffer = function() {
 	var Meow_BitMask_Type = 7;
 
 	// Parsing a protocol buffer key
-	function meowDecodeBufferKey(Meow_HelloBuffer, Meow_Offset) {
+	Meow_Buffer.meowDecodeBufferKey = function(Meow_HelloBuffer, Meow_Offset) {
 		var Meow_FieldKey = Meow_HelloBuffer.readInt8(Meow_Offset);
 		var Meow_FieldType = Meow_FieldKey && Meow_BitMask_Type;
 		var Meow_FieldNum = Meow_FieldKey >> 3;
@@ -404,7 +404,7 @@ var Meow_Buffer = function() {
 			Meow_Num: Meow_FieldNum,
 			Meow_Offset: Meow_Offset + 1
 		};
-	}
+	};
 
 	// Parsing protocol buffer "length delimited" value
 	function meowDecodeDelimitedVal(Meow_HelloBuffer, Meow_Offset, meowOpts) {
@@ -478,7 +478,7 @@ var Meow_Buffer = function() {
 	};
 
 	// Decoding instance
-	function Meow_Decoder(Meow_Defn2, meowOpts) {
+	Meow_Buffer.Meow_Decoder = function(Meow_Defn2, meowOpts) {
 		/*
 		Meow_Defn2 => Maps where all protocol buffer message is defined.
 		*/
@@ -526,8 +526,7 @@ var Meow_Buffer = function() {
 				repeated: Meow_Defn[Meow_ParsedKey.Meow_Num].repeated
 			};
 		};
-		var Meow_Decoder1 = Meow_Decoder;
-		Meow_Decoder1 = this;
+		var Meow_Decoder1 = this;
 		Meow_Decoder1.Meow_Decode = function(Meow_HelloBuffer, Meow_Offset, Meow_MsgName, callback, end) {
 			var Meow_Msg = {};
 			var err;
@@ -573,7 +572,7 @@ var Meow_Buffer = function() {
 			}
 			callback(err, Meow_Msg);
 		};
-	}
+	};
 	/************************************
 	******End of Meow_Buffer decoder*****
 	************************************/
