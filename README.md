@@ -25,12 +25,31 @@ or<br>
 Download as per latest release --- <a href="https://github.com/Geek-Research-Lab/MeowJS/releases">click here</a><br>
 The repository is active and gets updated everyday.<br>
 <br>
+<b>Okay, done! Now, What am i going to do with all these scripts?</b><br>
+//TODO<br>
+<br>
 <b>Testing:-</b><br>
+//TODO <br>
 For testing, Make use of "test.html" <br>
+<br>
+Like this repository? <br>
+Then, star it.<br>
+<br>
+Wanna stalk updates? <br>
+Then, watch it.<br>
+<br>
+I am a developer... I wanna contribute?<br>
+Sure! Fork this repo and send clean pull requests. <br>
+<br>
+Bugs/Questions/Suggestion!!!<br>
+Then, open an issue.<br>
 <br>
 Currently, MeowJS is non-production ready.
 <br><br>
 A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided and the documentation will be updated soon. <br>
+<br>
+<b>About:</b><br>
 This is a <a href="http://geekresearchlab.net/mtechproject/">project</a> done by an individual. <br>
+<br>
+<b>Credits</b><br>
 The existing research works/books/codes/articles that were used as reference or customized for this project, the list of those researchers/authors/developers/writers will be credited in the credits.md (contents not-yet updated, it will be updated later after the successful completion of this project since it's a tedious process).<br>
-Contributions are welcome in form of sending issues or pull requests. <br>
