@@ -59,7 +59,7 @@ Sure! Fork this repo and send clean pull requests. <br>
 Bugs/Questions/Suggestion!!!<br>
 Then, open an issue.<br>
 <br>
-Currently, MeowJS is non-production ready.
+Currently, MeowJS is in-development and non-production ready.
 <br><br>
 A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided and the documentation will be updated soon. <br>
 <br>
