@@ -13,7 +13,6 @@
   },
   "repository": "Geek-Research-Lab/MeowJS",
   "files": [
-    "meow.js",
     "MeowNinjaX.js",
     "Meow_ColorParser.js",
     "Meow_Hello.js",
