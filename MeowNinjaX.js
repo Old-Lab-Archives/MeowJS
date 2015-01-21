@@ -1,4 +1,4 @@
-var MeowNinjaX = (function(Meow_WinWin, undefined) {
+var MeowNinjaX = function(Meow_WinWin, undefined) {
 	"use strict";
 	var Meow_Doc = Meow_WinWin.document;
 	var Meow_DOMwait = [];
@@ -299,7 +299,7 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			MeowNinja_API.readyTimeout = Meow_WinWin.setTimeout(meowDOMReady, 50);
 			return;
 		} if(!Meow_IsDOMReady) {
-			Meow_IsDOMReady = true;
+			meowDOMReady = true;
 			meowInit();
 			meowEach(Meow_DOMwait, function(meowFn) {
 				meowUnity(meowFn);
@@ -362,4 +362,4 @@ var MeowNinjaX = (function(Meow_WinWin, undefined) {
 			meowFn();
 		});
 	}, 500);
-}(window));
+};
