@@ -3,11 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="test.css"/>
-    <script src="MeowNinjaX.js">
-	MeowNinja_API.load();
+    <script>
+    var Meow_Items = document.getElementsByTagName("script");
+	Meow_Items.src = 'MeowNinjaX.js';
+	document.getElementsByTagName("script")[0].appendChild(Meow_Items);
+	MeowNinja_API.load("Meow_ColorParser.js");
 	</script>
 </head>
 <meow>
-Testing...outdated!  // Working on newer one... :|
+Testing... :|
 </meow>
 </html>
