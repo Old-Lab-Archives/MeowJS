@@ -26,12 +26,26 @@ Download as per latest release --- <a href="https://github.com/Geek-Research-Lab
 Note:- The repository is active and gets updated everyday. So, everytime it needs to be freshly updated inorder to keep it updated.<br>
 <br>
 <b>Okay, done! Now, What am i going to do with all these scripts?</b><br>
-//TODO<br>
+1. Initialize the script<br>
+```js
+var abcd = document.getElementsByTagName("script");
+```
+<br>2. Add script loader<br>
+```js
+abcd.src = 'MeowNinjaX.js';
+```
+<br>3. Load the scripts<br>
+Load any relevant script from the list of scripts in MeowJS<br>
+Let's take MeowFunText.js and see how to load it.<br>
+```js
+MeowNinja_API.load("MeowFunText.js");
+```
+<br>Try an example test file --- <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.html">test.html</a>
+<br>
 <br>
 <b>Testing:-</b><br>
-//TODO <br>
-For testing, Make use of "test.html" <br>
-///////////////////////////////////////
+For testing, Make use of test.html and test.css <br>
+///////////////////////////////////////<br>
 <br>
 Like this repository? <br>
 Then, star it.<br>
