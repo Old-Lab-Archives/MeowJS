@@ -244,7 +244,7 @@ var Meow_Buffer = function() {
 				Meow_BufferKey = meowEncodeBufferKey(Meow_FieldDefn.Meow_Num, Meow_TypeName);
 				return meowBufferEncode(Meow_BufferKey, Meow_Val);
 			} else {
-				var Meow_EmbedEnum = Meow_FieldDefn['EmbedEnums'];
+				var Meow_EmbedEnum = Meow_FieldDefn['@EmbedEnums'];
 				var Meow_EmbedEnum2 = Meow_EmbedEnum ? Meow_EmbedEnum[Meow_TypeName] : undefined;
 				if(Meow_EmbedEnum2) {
 					return meowEncodeEnum(Meow_BufferKey, Meow_Val, Meow_EmbedEnum2);
@@ -504,7 +504,7 @@ var Meow_Buffer = function() {
 				Meow_ParsedVal = parse(Meow_HelloBuffer, Meow_Offset, meowOpts);
 			} else {
 				// checking if Meow_TypeName is an embed enum or not
-				var meowEnums = Meow_Defn['EmbedEnums'];
+				var meowEnums = Meow_Defn['@EmbedEnums'];
 				var Meow_Enum = meowEnums ? meowEnums[Meow_TypeName] : undefined;
 				if(Meow_Enum) {
 					Meow_ParsedVal = meowDecodeEnum(Meow_HelloBuffer, Meow_Offset, Meow_Enum);
