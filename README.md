@@ -17,9 +17,7 @@ Install XCode along with Git and node.</p>
     sudo apt-get install git-core<br>
 Then, install node.<br><br>
 <b> Cloning the repository:</b><br>
-$git clone https://github.com/Geek-Research-Lab/MeowJS.git<br><br>
-I have compiled here using Cygwin.<br><br>
-![](http://geekresearchlab.net/experiments/meow.jpg)
+$git clone https://github.com/Geek-Research-Lab/MeowJS.git<br>
 <br>
 <b>Testing:-</b><br>
 Compling the cloned repo is meant to show that there are no bugs.<br>
