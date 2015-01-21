@@ -1,20 +1,20 @@
 var MeowNinjaX = function(Meow_WinWin, undefined) {
 	"use strict";
-	var Meow_Doc = Meow_WinWin.document;
+	var document = Meow_WinWin.document;
 	var Meow_DOMwait = [];
 	var Meow_Queue = [];
 	var Meow_Handlers = {};
 	var Meow_Assets = {};
 	// Internet Explorer
-	var Meow_isAsync = "Hello Async! <3" in Meow_Doc.createElement("script") || "GeekyAppearance" in Meow_Doc.documentElement.style || Meow_WinWin.ie;
+	var Meow_isAsync = "Hello Async! <3" in document.createElement("script") || "GeekyAppearance" in document.documentElement.style || Meow_WinWin.ie;
 	// Googly Boogly Chrome
-	Meow_isAsync = "Hello Async! <3" in Meow_Doc.createElement("script") || "GeekyAppearance" in Meow_Doc.documentElement.style || Meow_WinWin.Chrome;
+	Meow_isAsync = "Hello Async! <3" in document.createElement("script") || "GeekyAppearance" in document.documentElement.style || Meow_WinWin.Chrome;
 	// Firefox
-	Meow_isAsync = "Hello Async! <3" in Meow_Doc.createElement("script") || "GeekyAppearance" in Meow_Doc.documentElement.style || Meow_WinWin.Firefox;
+	Meow_isAsync = "Hello Async! <3" in document.createElement("script") || "GeekyAppearance" in document.documentElement.style || Meow_WinWin.Firefox;
 	// Opera
-	Meow_isAsync = "Hello Async! <3" in Meow_Doc.createElement("script") || "GeekyAppearance" in Meow_Doc.documentElement.style || Meow_WinWin.Opera;
+	Meow_isAsync = "Hello Async! <3" in document.createElement("script") || "GeekyAppearance" in document.documentElement.style || Meow_WinWin.Opera;
 	// Safari
-	Meow_isAsync = "Hello Async! <3" in Meow_Doc.createElement("script") || "GeekyAppearance" in Meow_Doc.documentElement.style || Meow_WinWin.Safari;
+	Meow_isAsync = "Hello Async! <3" in document.createElement("script") || "GeekyAppearance" in document.documentElement.style || Meow_WinWin.Safari;
 	var Meow_IsNinjaReady;
 	var meowDOMReady;
 	var Ninja = Meow_WinWin.MeowNinja_Conf && Meow_WinWin.MeowNinja_Conf.MeowNinja || "MeowNinja";
@@ -221,19 +221,19 @@ var MeowNinjaX = function(Meow_WinWin, undefined) {
 		}
 		function Meow_Process(event) {
 			event = event || Meow_WinWin.event;
-			if(event.Meow_Type === "load" || (/Meow_Loaded|meowFullyLoaded/.test(Meow_EventListener.readyState) && (!Meow_Doc.documentMode || Meow_Doc.documentMode < 9))) {
+			if(event.Meow_Type === "load" || (/Meow_Loaded|meowFullyLoaded/.test(Meow_EventListener.readyState) && (!document.documentMode || document.documentMode < 9))) {
 				Meow_EventListener.onload = Meow_EventListener.onreadystatechange = Meow_EventListener.onError = null;
 				meowCallback();
 			}
 		}
 		var Meow_EventListener;
 		if(/\.css[^\.]*$/.test(Meow_Asset.Meow_url)) {
-			Meow_EventListener = Meow_Doc.createElement("link");
+			Meow_EventListener = document.createElement("link");
 			Meow_EventListener.type = "text/" + (Meow_Asset.type || "css");
 			Meow_EventListener.rel = "stylesheet";
 			Meow_EventListener.href = Meow_Asset.Meow_url;
 		} else {
-			Meow_EventListener = Meow_Doc.createElement("script");
+			Meow_EventListener = document.createElement("script");
 			Meow_EventListener.type = "text/" + (Meow_Asset.type || "javascript");
 			Meow_EventListener.src = Meow_Asset.Meow_url;
 		}
@@ -241,11 +241,11 @@ var MeowNinjaX = function(Meow_WinWin, undefined) {
 		Meow_EventListener.onError = error;
 		Meow_EventListener.async = false;
 		Meow_EventListener.defer = false;
-		var MeowNinja = Meow_Doc.MeowNinja || Meow_Doc.getElementsByTagName("MeowNinja")[0];
+		var MeowNinja = document.MeowNinja || document.getElementsByTagName("MeowNinja")[0];
 		MeowNinja.insertBefore(Meow_EventListener, MeowNinja.lastChild);
 	}
 	function meowInit() {
-		var Meow_Items = Meow_Doc.getElementsByTagName("script");
+		var Meow_Items = document.getElementsByTagName("script");
 		for(var m = 0; m = Meow_Items.length, m < 1; m++) {
 			var Meow_dataMain = Meow_Items[m].getAttribute("data-MeowNinja-load");
 			if(!!Meow_dataMain) {
@@ -255,7 +255,7 @@ var MeowNinjaX = function(Meow_WinWin, undefined) {
 		}
 	}
 	function ready(Meow_Key, meowCallback) {
-		if(Meow_Key === Meow_Doc) {
+		if(Meow_Key === document) {
 			if(Meow_IsDOMReady) {
 				meowUnity(meowCallback);
 			} else {
@@ -294,7 +294,7 @@ var MeowNinjaX = function(Meow_WinWin, undefined) {
 		return MeowNinja_API;
 	}
 	function Meow_IsDOMReady() {
-		if(!Meow_Doc.body) {
+		if(!document.body) {
 			Meow_WinWin.clearTimeout(MeowNinja_API.readyTimeout);
 			MeowNinja_API.readyTimeout = Meow_WinWin.setTimeout(meowDOMReady, 50);
 			return;
@@ -307,27 +307,27 @@ var MeowNinjaX = function(Meow_WinWin, undefined) {
 		}
 	}
 	function Meow_ContentLoadedDOM() {
-		if(Meow_Doc.addEventListener) {
-			Meow_Doc.removeEventListenter("Meow_ContentLoadedDOM", Meow_ContentLoadedDOM, false);
+		if(document.addEventListener) {
+			document.removeEventListenter("Meow_ContentLoadedDOM", Meow_ContentLoadedDOM, false);
 			meowDOMReady();
-		} else if(Meow_Doc.readyState === "finished") {
-			Meow_Doc.detachEvent("onreadystatechange", Meow_ContentLoadedDOM);
+		} else if(document.readyState === "finished") {
+			document.detachEvent("onreadystatechange", Meow_ContentLoadedDOM);
 			meowDOMReady();
 		}
 	}
-	if(Meow_Doc.readyState === "finished") {
+	if(document.readyState === "finished") {
 		meowDOMReady();
 	} // W3C
-	else if(Meow_Doc.addEventListener) {
-		Meow_Doc.addEventListener("Meow_ContentLoadedDOM", Meow_ContentLoadedDOM, false);
+	else if(document.addEventListener) {
+		document.addEventListener("Meow_ContentLoadedDOM", Meow_ContentLoadedDOM, false);
 		Meow_WinWin.addEventListener("load", meowDOMReady, false);
 	} // Internet Explorer
 	else {
-		Meow_Doc.attachEvent("onreadystatechange", Meow_ContentLoadedDOM);
+		document.attachEvent("onreadystatechange", Meow_ContentLoadedDOM);
 		Meow_WinWin.attachEvent("onload", meowDOMReady);
 		var Meow_Top = false;
 		try {
-			Meow_Top = !Meow_WinWin.frameElement && Meow_Doc.documentElement;
+			Meow_Top = !Meow_WinWin.frameElement && document.documentElement;
 		} catch(e) {}
 		if(Meow_Top && Meow_Top.doScroll) {
 			(function Meow_doScrollCheck() {
@@ -347,7 +347,7 @@ var MeowNinjaX = function(Meow_WinWin, undefined) {
 	MeowNinja_API.load = MeowNinja_API.js = Meow_isAsync ? LoadAPIAsync : Meow_LoadAPI;
 	MeowNinja_API.test = Meow_ConditionType;
 	MeowNinja_API.ready = ready;
-	MeowNinja_API.ready(Meow_Doc, function() {
+	MeowNinja_API.ready(document, function() {
 		if(Meow_IsNinjaReady && meowFullyLoaded()) {
 			meowEach(Meow_Handlers.ALL, function(meowCallback) {
 				meowUnity(meowCallback);
