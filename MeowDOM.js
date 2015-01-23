@@ -165,7 +165,7 @@ var MeowDOM = (function() {
 		meowCallback(null);
 	};
 
-	MeowDOM.prototype.Meow_DOMRender = function(Meow_innerHTML, MeowStream, box) {
+	MeowDOM.prototype.Meow_DOMRender = function(html, MeowStream, box) {
 		var MeowCharm = module.exports = function(xx) {
 			function meowBytes(x) {
 				if(typeof x === 'string') {
@@ -187,9 +187,9 @@ var MeowDOM = (function() {
 		var me = Meow_Power;
 		MeowCharm.on('^C', meowProcess.exit);
 		var div = window.document.createElement('div');
-		Meow_innerHTML = Meow_innerHTML.replace(/^\W+/g, "");
-		Meow_innerHTML = Meow_innerHTML.replace(/\n/g, "");
-		div.Meow_innerHTML = Meow_innerHTML;
+		html = html.replace(/^\W+/g, "");
+		html = html.replace(/\n/g, "");
+		div.Meow_innerHTML = html;
 		MeowCharm.reset();
 		MeowCharm.down(2);
 		var MeowRowCount = me.elements.Meow_DOMRender(xy, xy('body div', div), MeowCharm);
