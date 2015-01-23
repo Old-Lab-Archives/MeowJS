@@ -137,7 +137,7 @@ var MeowDOM = (function() {
 		};
 		elements.footer = function(xy, el, MeowStream) {
 			MeowStream.write(xy.Meow_Trim(xy(el).text()));
-			elements.Meow_DOMRender(xy, xy(el, MeowStream);)
+			elements.Meow_DOMRender(xy, xy(el), MeowStream);
 		};
 	};
 	var Meow_DOMencode = function() {
