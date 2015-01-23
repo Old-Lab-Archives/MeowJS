@@ -3,6 +3,68 @@ var MeowDOM = (function() {
 	var document;
 	var Meow_Buffer;
 	var meowProcess;
+	var elements = module.exports = function() {
+		elements.Meow_DOMRender = function(xy, el, MeowStream) {
+			var Meow_Power = this;
+			var MeowRow = 0;
+			xy(el).children().each(function(m, v) {
+				MeowStream.col(3);
+				elements[v.tagName](xy, v, MeowStream);
+				if(['h1', 'h2', 'ul', 'li', 'p', 'div', 'code', 'br', 'hr', 'meow'].indexOf(v.tagName) !== -1) {
+					MeowStream.down(2);
+					MeowRow += 2;
+				}
+				MeowRow += 1;
+			});
+			return MeowRow;
+		};
+		elements.h1 = function(xy, el, MeowStream) {
+			MeowStream.write(xy(el).text().bold.underline);
+		};
+		elements.h2 = function(xy, el, MeowStream) {
+			MeowStream.write(xy(el).text().bold);
+		};
+		elements.h3 = function(xy, el, MeowStream) {
+			elements.h1(xy, el, MeowStream);
+		};
+		elements.h4 = function(xy, el, MeowStream) {
+			elements.h1(xy, el, MeowStream);
+		};
+		elements.h5 = function(xy, el, MeowStream) {
+			elements.h1(xy, el, MeowStream);
+		};
+		elements.div = function(xy, el, MeowStream) {
+			MeowStream.write(xy.Meow_Trim(xy(el).text()));
+		};
+		elements.p = function(xy, el, MeowStream) {
+			MeowStream.write(wrap(xy.trim(xy(el).text())));
+		};
+		elements.a = function(xy, el, MeowStream) {
+			MeowStream.write(' [' + xy(el).html() + "](" + xy(el).attr('href') + ')');
+		};
+		elements.span = function(xy, el, MeowStream) {
+			elements.h1(xy, el,MeowStream);
+		};
+		elements.img = function(xy, el, MeowStream) {
+			elements.h1(xy, el, MeowStream);
+		};
+		elements.iframe = function(xy, el, MeowStream) {
+			//elements.h1(xy, el, MeowStream);
+		};
+		elements.script = function(xy, el, MeowStream) {
+			//elements.h1(xy, el, MeowStream);
+		};
+		elements.time = function(xy, el, MeowStream) {
+			elements.h1(xy, el, MeowStream);
+		};
+		elements.acronym = function(xy, el, MeowStream) {
+			elements.h1(xy, el, MeowStream);
+		};
+
+		//
+		// Still more to code
+		//
+	};
 	var Meow_DOMencode = function() {
 	MeowDOM.Meow_DOMencode = function(Meow_String) {
 		var Meow_div = document.createElement('div');
