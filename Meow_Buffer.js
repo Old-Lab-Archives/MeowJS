@@ -6,12 +6,15 @@ var Meow_Buffer = function() {
 **********Meow_Buffer Encoder********
 ************************************/
 
-	//var Meow_Process;
-	//var Meow_Env;
+var document;
+var xx = document.getElementsByTagName("script");
+xx.src = 'MeowNinjaX.js';
+document.getElementsByTagName("script")[0].appendChild(xx);
+MeowNinja_API.load("Meow_EnvProcess.js");
 
 	// Enabling as well as disbaling debugging mode
 	/*
-	var Meow_Debug = Meow_Process.Meow_Env['CLIENT_DEBUG'] || false;
+	var Meow_Debug = Meow_EnvProcess['CLIENT_DEBUG'] || false;
 	*/
 
 	// Mapping between protocol buffer types and the wire types
