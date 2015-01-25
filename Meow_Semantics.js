@@ -30,6 +30,7 @@ Meow_TextSemantics.Meow_FetchSelected = function(Meow_Tabs) {
 };
 // 2. Image Semantics
 // 3. Audio Semantics
+/* Currently MeowAudio.js is present that includes encoding and decoding */
 // 4. Video Semantics
 var Meow_VideoSemantics = (function(window, document, undefined) {
 	var Meow_Power = function() {
