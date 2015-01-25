@@ -1,4 +1,4 @@
-var MeowString = (function() {
+var Meow_String = function() {
   "use strict";
     var c = "";
     var d = "";
@@ -92,4 +92,4 @@ var MeowString = (function() {
         window.MeowBytesToString = MeowBytesToString;
       }
     })();
-});
+};
