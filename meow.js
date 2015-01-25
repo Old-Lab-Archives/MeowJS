@@ -1,6 +1,6 @@
 var MeowJS = function() {
 	'use strict';
-// MeowJS bundled scripts
+
 	// Meow_Hello
 	var Meow_Hello = function() {
 	var meowMkdirOriginal = Meow_Hello.Meow_mkdir,
@@ -19,7 +19,7 @@ var MeowJS = function() {
 				meowMkdirP(Meow_Path, Meow_Mode, meowCallback, Meow_Pos + 1);
 			} else {
 				meowMkdirOriginal(Meow_Dir, Meow_Mode, function(Error) {
-					if(Error && Error.code != 'EXIST') {
+					if(Error && Error.code !== 'EXIST') {
 						return meowCallback(Error);
 					} else {
 						meowMkdirP(Meow_Path, Meow_Mode, meowCallback, Meow_Pos + 1);
@@ -43,7 +43,7 @@ var MeowJS = function() {
 				meowMkdirOriginalSync(Meow_Dir, Meow_Mode);
 				meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
 			} catch(err) {
-				if(err.code != 'EXIST') {
+				if(err.code !== 'EXIST') {
 					throw err;
 				}
 				meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
@@ -173,6 +173,7 @@ var MeowJS = function() {
 		exports.Meow_Resolve = function() {
 			var Meow_PathResolved = '';
 			var Meow_PathAbsolute = false;
+			var Meow_AbsoluteResolved;
 			for(var m = Meow_Args.length; m >= -1 && !Meow_AbsoluteResolved; m--) {
 				var Meow_Path = (m >= 0) ? Meow_Args[m] : Meow_Process.cwd();
 				if(typeof Meow_Path !== 'string' || !Meow_Path) {
@@ -309,9 +310,6 @@ Meow_Process.Meow_BitUnmask = function() {
 
 // Meow_Env => MeowJS Environment
 
-// Exporting
-exports = module.exports = Meow_createEnv;
-
 // Environment Manager
 function Meow_Env(Meow_EnvFile) {
 	var build = this;
@@ -374,6 +372,9 @@ Meow_Env.prototype.delete = function(Meow_Name) {
 function Meow_createEnv(Meow_EnvFile) {
 	return new Meow_Env(Meow_EnvFile);
 	}
+
+// Exporting
+exports = module.exports = Meow_createEnv;
 
 // Meow_HTTP
 var Meow_HTTP = function() {
@@ -442,6 +443,7 @@ var Meow_HTTP = function() {
   //Meow_IP
   	var Meow_IP = function() {
 	// Matching IP addresses
+	var Meow_RegEx;
 	var meow_IPv4 = '(?:25[0-5]|2[0-4][0-9]|1?[0-9][0-9]{1,2}|[0-9]){1,}(?:\\.(?:25[0-5]|2[0-4][0-9]|1?[0-9]{1,2}|0)){3}';
 	var meow_IPv6 = '(?:(?:[0-9a-fA-F:]){1,4}(?:(?::(?:[0-9a-fA-F]){1,4}|:)){2,7})+';
 	Meow_IP = module.exports = function(Meow_Opts) {
@@ -470,7 +472,7 @@ var MeowUTF = function() {
 // main file
 
 // UTF8_16
-var MeowUTF8_16 = (function(Meow_Global) {
+var MeowUTF8_16 = function(Meow_Global) {
 	var Meow_Power, Meow_Args, define;
 	if(!Array.Meow_isArray) {
 		Array.Meow_isArray = function(vvv) {
@@ -551,11 +553,11 @@ var MeowUTF8_16 = (function(Meow_Global) {
 		if(m < 0 || m >= (c = mm.length)) {
 			return;
 		}
-		MeowUTF8_16.MeowUTF8To16 = (function() {
+		MeowUTF8_16.MeowUTF8To16 = function() {
 			return typeof ef === 'undefined' && m < c ? mm.charCodeAt(m++) : null;
 		}, function(mef) {
 			ef = mef;
-		});
+		};
 		return ef;
 	};
 	MeowUTF8_16.Meow_Polyfill = function(Meow_Override) {
@@ -578,7 +580,7 @@ var MeowUTF8_16 = (function(Meow_Global) {
 			Meow_Global['@MeowUTF816']['@MeowUTF8_16'] = MeowUTF8_16;
 		}
 	}
-}(Meow_Power, String));
+};
 // End
 
 // Reverse UTF16
@@ -635,7 +637,7 @@ MeowBase.Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
 		Meow_Base.Meow_protoBuild = true;
-		var Meow_proto = new build();
+		var Meow_proto = new Build();
 		Meow_Extend.call(Meow_proto, Meow_Instance);
 		Meow_proto.Meow_Base = function() {};
 		delete Meow_Base.Meow_protoBuild;
@@ -832,7 +834,6 @@ var Meow_Extend = (Array.prototype, {
 	var MeowJS = new Meow_Pkg(build, MeowJS);
 	exports += build.exports;
 	js = new Meow_Pkg(build, js);
-	eval(exports + build.exports);
 	MeowJS.Meow_Extend = Meow_Extend;
 	Meow_Init.Javascript = meowCopy(js);
 	Meow_Init.Javascript.namespace += "Javascript is js";
@@ -841,6 +842,15 @@ var Meow_Extend = (Array.prototype, {
 	// Meow_Pkg
 	var MeowPkg = function() {
 	var format, csv;
+	function meowLookup(Meow_Names) {
+				Meow_Names = Meow_Names.split(".");
+				var Meow_Val = Meow_Base;
+				var m = 0;
+				while(Meow_Val && Meow_Names[m] !== null) {
+					Meow_Val = Meow_Val[Meow_Names[m++]];
+				}
+				return Meow_Val;
+			}
 	var Meow_Pkg = Meow_Base.Meow_Extend({
 		Meow_Construct: function(_private, _public) {
 			build.Meow_Extend(_public);
@@ -890,15 +900,6 @@ var Meow_Extend = (Array.prototype, {
 						}
 					}
 				};
-			}
-			function meowLookup(Meow_Names) {
-				Meow_Names = Meow_Names.split(".");
-				var Meow_Val = Meow_Base;
-				var m = 0;
-				while(Meow_Val && Meow_Names[m] !== null) {
-					Meow_Val = Meow_Val[Meow_Names[m++]];
-				}
-				return Meow_Val;
 			}
 		},
 		exports: "",
