@@ -16,7 +16,7 @@ var Meow_Hello = function() {
 				meowMkdirP(Meow_Path, Meow_Mode, meowCallback, Meow_Pos + 1);
 			} else {
 				meowMkdirOriginal(Meow_Dir, Meow_Mode, function(Error) {
-					if(Error && Error.code != 'EXIST') {
+					if(Error && Error.code !== 'EXIST') {
 						return meowCallback(Error);
 					} else {
 						meowMkdirP(Meow_Path, Meow_Mode, meowCallback, Meow_Pos + 1);
@@ -40,7 +40,7 @@ var Meow_Hello = function() {
 				meowMkdirOriginalSync(Meow_Dir, Meow_Mode);
 				meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
 			} catch(Err) {
-				if(Err.code != 'EXIST') {
+				if(Err.code !== 'EXIST') {
 					throw Err;
 				}
 				meowMkdirSyncP(Meow_Path, Meow_Mode, Meow_Pos + 1);
