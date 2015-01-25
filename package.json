@@ -14,6 +14,7 @@
   "repository": "Geek-Research-Lab/MeowJS",
   "files": [
     "MeowNinjaX.js",
+    "meow.js",
     "Meow_ColorParser.js",
     "Meow_Hello.js",
     "Meow_Semantics.js",
