@@ -65,7 +65,7 @@ var MeowKernel = function(meowClients, modules) {
 				var xVersion = modules[module];
 				var xNormalized = meowClient.Meow_Dep[module] = [];
 				if(Array.meowArray(xVersion))
-					xVersion.Meow_forEach(function(xVersion1, m) {
+					xVersion.Meow_forEach(function(xVersion1, m2) {
 						if(typeof xVersion1 === 'number') {
 							xNormalized.push([xVersion1, [0]]);
 						} else if(Array.meowArray(xVersion1)) {
