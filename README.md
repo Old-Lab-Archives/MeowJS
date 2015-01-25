@@ -34,7 +34,7 @@ var abcd = document.getElementsByTagName("script");
 ```js
 abcd.src = 'MeowNinjaX.js';
 ```
-<br>3. <b><i>Load the scripts</b></i><br>
+<br><b><i>3. Load the scripts</b></i><br>
 Load a main script (meow.js) along with any relevant script from the list of scripts in MeowJS<br>
 To know in detail --> refer <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/status.md">status.md</a><br>
 Let's take MeowFunText.js as an example and see how to load it.<br>
