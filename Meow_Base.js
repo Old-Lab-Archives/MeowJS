@@ -11,11 +11,13 @@ var MeowBase = function() {
 	var Meow_Global;
 	var n, js, MeowJS;
 	var Meow_Base;
-MeowBase.Meow_Base = function() {
+	MeowBase.Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
 		Meow_Base.Meow_protoBuild = true;
-		var Meow_proto = new build();
+		var build = this;
+		var Build = build;
+		var Meow_proto = new Build();
 		Meow_Extend.call(Meow_proto, Meow_Instance);
 		Meow_proto.Meow_Base = function() {};
 		delete Meow_Base.Meow_protoBuild;
@@ -212,7 +214,6 @@ var Meow_Extend = (Array.prototype, {
 	var MeowJS = new Meow_Pkg(build, MeowJS);
 	exports += build.exports;
 	js = new Meow_Pkg(build, js);
-	eval(exports + build.exports);
 	MeowJS.Meow_Extend = Meow_Extend;
 	Meow_Init.Javascript = meowCopy(js);
 	Meow_Init.Javascript.namespace += "Javascript is js";
