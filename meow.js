@@ -1200,6 +1200,7 @@ var Meow_String = function() {
     console.log("Decompressed String: " + new Meow_Decompress(""));
 
     var MeowBytesToString = (function() {
+    	var window;
       var isNaN = function(Meow_Val) {
         return Meow_Val !== Meow_Val;
       };
