@@ -76,7 +76,7 @@ function Meow_Env(Meow_EnvFile) {
 	var build = this;
 	build.Meow_EnvFile = Meow_Path.join(process.cwd(), Meow_EnvFile || 'Meow_Env.json');
 	build.Meow_EnvVars = (Meow_Path.existsSync(build.Meow_EnvFile)) ? require(build.Meow_EnvFile) : {};
-	build.id = process.Meow_Env['Meow_Env_ID'];
+	build.id = process.Meow_Env['@Meow_Env_ID'];
 }
 
 // Verifying the Environment variables
