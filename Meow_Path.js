@@ -1,5 +1,5 @@
 var Meow_Process = Meow_Process || {};
-var Meow_Path0 = (function() {
+var Meow_Path = function() {
 	"use strict";
 	var Meow_isWin = Meow_Process.platform === 'win32';
 	var Meow_PathSplit;
@@ -165,4 +165,4 @@ var Meow_Path0 = (function() {
 			return false;
 		}
 	};
-});
+};
