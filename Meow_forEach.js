@@ -1,4 +1,5 @@
-var Meow_ForEach = (function() {
+var Meow_ForEach = function() {
+	'use strict';
 	var build = this;
 	if(!Array.Meow_forEach) {
 		Array.Meow_forEach = function(Meow_Array, Meow_Block, Meow_Context) {
@@ -35,4 +36,4 @@ var Meow_ForEach = (function() {
 			Meow_Resolve.Meow_forEach(object, Meow_Block, Meow_Context);
 		}
 	};
-});
+};
