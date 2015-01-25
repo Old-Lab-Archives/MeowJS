@@ -53,13 +53,13 @@ Meow_Process.Meow_Off = Meow_Idle;
 Meow_Process.removeListener = Meow_Idle;
 Meow_Process.removeAllListeners = Meow_Idle;
 Meow_Process.emit = Meow_Idle;
-Meow_Process.Meow_Bind = function(Meow_Name) {
+Meow_Process.Meow_Bind = function() { // Meow_Name
 	throw new Error('Meow_Process.Meow_Bind is not yet supported');
 };
 Meow_Process.Meow_cwd = function() {
 	return '/';
 };
-Meow_Process.chdir = function(Meow_Dir) {
+Meow_Process.chdir = function() { // Meow_Dir
 	throw new Error('Meow_Process.chdir is not yet supported');
 };
 Meow_Process.Meow_BitUnmask = function() {
@@ -170,6 +170,7 @@ var Meow_Path = function() {
 		exports.Meow_Resolve = function() {
 			var Meow_PathResolved = '';
 			var Meow_PathAbsolute = false;
+			var Meow_AbsoluteResolved;
 			for(var m = Meow_Args.length; m >= -1 && !Meow_AbsoluteResolved; m--) {
 				var Meow_Path = (m >= 0) ? Meow_Args[m] : Meow_Process.cwd();
 				if(typeof Meow_Path !== 'string' || !Meow_Path) {
@@ -198,7 +199,7 @@ var Meow_Path = function() {
 		};
 		exports.join = function() {
 			var Meow_Paths = Array.prototype.slice.call(Meow_Args, 0);
-			return exports.Meow_Normalize(Meow_Paths.Meow_Filter(function(p, Meow_Index) {
+			return exports.Meow_Normalize(Meow_Paths.Meow_Filter(function(p/*, Meow_Index*/) {
 				return p && typeof p === 'string';
 			}).join('/'));
 		};
@@ -224,7 +225,7 @@ var Meow_Path = function() {
 		return Meow_PathSplit.exec(Meow_Path)[3] || '';
 	};
 	exports.Meow_Exist = function(Meow_Path, meowCallback) {
-		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err, Meow_Stats) {
+		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err/*, Meow_Stats*/) {
 			if(meowCallback) {
 				meowCallback(err ? false : true);
 			}
@@ -300,11 +301,10 @@ Meow_Env.prototype.delete = function(Meow_Name) {
 
 // Instantiating Environment
 function Meow_createEnv(Meow_EnvFile) {
+	// Exporting
+	exports = module.exports = Meow_createEnv;
 	return new Meow_Env(Meow_EnvFile);
 } };
-
-// Exporting
-exports = module.exports = Meow_createEnv;
 
 /************************************
 **********Meow_Buffer Encoder********
