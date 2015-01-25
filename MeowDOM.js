@@ -2,6 +2,8 @@ var MeowDOM = function() {
 	'use strict';
 	var Meow_Buffer;
 	var meowProcess;
+	var document;
+	var wrap;
 	var elements = module.exports = function() {
 		elements.Meow_DOMRender = function(xy, el, MeowStream) {
 			var MeowRow = 0;
@@ -197,5 +199,4 @@ var MeowDOM = function() {
 		MeowCharm.col(1).down(3).write('');
 		MeowCharm.cursor(0, 60);
 	};
-
 };
