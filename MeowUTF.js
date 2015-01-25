@@ -91,23 +91,23 @@ var MeowUTF8_16 = (function(Meow_Global) {
 		return ef;
 	};
 	MeowUTF8_16.Meow_Polyfill = function(Meow_Override) {
-		if(!String['Meow_FromCodePoint'] || Meow_Override) {
-			String['Meow_FromCodePoint'] = MeowUTF8_16.Meow_FromCodePoint;
+		if(!String['@Meow_FromCodePoint'] || Meow_Override) {
+			String['@Meow_FromCodePoint'] = MeowUTF8_16.Meow_FromCodePoint;
 		}
-		if(!String.prototype['Meow_CodePtAt'] || Meow_Override) {
-			String.prototype['Meow_CodePtAt'] = function(m) {
+		if(!String.prototype['@Meow_CodePtAt'] || Meow_Override) {
+			String.prototype['@Meow_CodePtAt'] = function(m) {
 				return MeowUTF8_16.Meow_CodePtAt(Meow_Power, m);
 			};
 		}
 		return MeowUTF8_16;
 	};
-	if(typeof module === 'object' && module && module['exports']) {
-		module['exports'] = MeowUTF8_16;
-	} else if(typeof define === 'function' && define['amd']) {
+	if(typeof module === 'object' && module && module['@exports']) {
+		module['@exports'] = MeowUTF8_16;
+	} else if(typeof define === 'function' && define['@amd']) {
 		define(MeowUTF8_16);
 	} else {
-		if(!Meow_Global['MeowUTF816']) {
-			Meow_Global['MeowUTF816']['MeowUTF8_16'] = MeowUTF8_16;
+		if(!Meow_Global['@MeowUTF816']) {
+			Meow_Global['@MeowUTF816']['@MeowUTF8_16'] = MeowUTF8_16;
 		}
 	}
 }(Meow_Power, String));
