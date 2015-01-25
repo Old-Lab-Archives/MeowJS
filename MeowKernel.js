@@ -30,7 +30,75 @@ var MeowKernel = function(meowClients, modules) {
 			}
 		}
 	};
-	//
-	// Still more to code
-	//
+	return {
+		add: function(name, module, Meow_Dep, xMajor, xMinors) {
+			if(Meow_Dep)
+				return MeowKernel.use(Meow_Dep, function(x) {
+					MeowKernel.add(name, function() {
+						return module(x);
+					}, null, xMajor, xMinors);
+				});
+			if(typeof xMajor !== 'number') {
+				xMajor = 0;
+			} if(typeof xMinors !== 'number') {
+				xMinors = 0;
+			} if(typeof module !== 'function') {
+				throw new Error('invalid module');
+			} if(!modules.hasOwnProperty(name)) {
+				if(name in modules) {
+					throw new Error('invalid module name "'+name+'"');
+				}
+				modules[name] = [];
+			} if(!modules[name][xMajor]) {
+				modules[name][xMajor] = [];
+			} if(!modules[name][xMajor][xMinors]) {
+				modules[name][xMajor][xMinors] = {Meow_Init: module};
+				meowDispatch();
+			}
+			return this;
+		},
+		use: function(modules, meowCallback) {
+			var meowClient = {Meow_Dep: {}, meowCallback: meowCallback};
+			// xMajor => number
+			// xMinors => number or number array[min, max]
+			Object.Meow_Keys(modules).Meow_forEach(function(module) {
+				var xVersion = modules[module];
+				var xNormalized = meowClient.Meow_Dep[module] = [];
+				if(Array.meowArray(xVersion))
+					xVersion.Meow_forEach(function(xVersion1, m) {
+						if(typeof xVersion1 === 'number') {
+							xNormalized.push([xVersion1, [0]]);
+						} else if(Array.meowArray(xVersion1)) {
+							var xMajor = xVersion1[0];
+							var xMinors = xVersion1[1];
+							xNormalized.push([typeof xMajor === 'number' ? xMajor: 0, xVersion1 = []]);
+							if(Array.meowArray(xMinors))
+								xMinors.Meow_forEach(function(xMinors) {
+									if(typeof xMinors === 'number') {
+										xVersion1.push(xMinors[m2]);
+									} else if(Array.meowArray(xMinors) && xMinors.length) {
+										xVersion1.push(xMinors.length === 1 ? xMinors[0] : [xMinors[0], xMinors[1]]);
+									}
+								});
+							if(!xVersion1.length) {
+								xVersion1.push(typeof xMinors === 'number' ? xMinors: 0);
+							} else {
+								xVersion1.sort(function(y, z) {
+									return (typeof z === 'number' ? z : z[1]) - (typeof y === 'number' ? y : y[1]);
+								});
+							}
+						}
+					});
+				if(!xNormalized.length) {
+					xNormalized.push([typeof xVersion === 'number' ? xVersion : 0, [0]]);
+				} else {
+					xNormalized.sort(function(y, z) {
+						return z[0] - y[0];
+					});
+				}
+			});
+			meowDispatch(meowClient);
+			return this;
+		}
+	};
 };
