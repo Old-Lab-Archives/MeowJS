@@ -555,9 +555,9 @@ var MeowUTF8_16 = function(Meow_Global) {
 		}
 		MeowUTF8_16.MeowUTF8To16 = function() {
 			return typeof ef === 'undefined' && m < c ? mm.charCodeAt(m++) : null;
-		}, function(mef) {
-			ef = mef;
 		};
+		var mef;
+		ef = mef;
 		return ef;
 	};
 	MeowUTF8_16.Meow_Polyfill = function(Meow_Override) {
@@ -637,6 +637,8 @@ MeowBase.Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
 		Meow_Base.Meow_protoBuild = true;
+		var build = this;
+		var Build = build;
 		var Meow_proto = new Build();
 		Meow_Extend.call(Meow_proto, Meow_Instance);
 		Meow_proto.Meow_Base = function() {};
