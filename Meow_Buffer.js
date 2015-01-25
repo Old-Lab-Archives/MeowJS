@@ -13,9 +13,7 @@ document.getElementsByTagName("script")[0].appendChild(xx);
 MeowNinja_API.load("Meow_EnvProcess.js");
 
 	// Enabling as well as disbaling debugging mode
-	/*
-	var Meow_Debug = Meow_EnvProcess['CLIENT_DEBUG'] || false;
-	*/
+	var Meow_Debug = Meow_EnvProcess['@CLIENT_DEBUG'] || false;
 
 	// Mapping between protocol buffer types and the wire types
 	var Meow_BufferTypes = {
