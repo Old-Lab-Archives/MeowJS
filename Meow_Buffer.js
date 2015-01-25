@@ -2,12 +2,8 @@ var Meow_Buffer = function() {
 // Main Meow Buffer
 	'use strict';
 
-/************************************
-**********Meow_Buffer Encoder********
-************************************/
-
+// MeowJS Processing Environment
 var Meow_EnvProcess = function() {
-	// MeowJS Processing Environment
 
 // Main Meow_Process
 
@@ -142,6 +138,10 @@ Meow_Env.prototype.delete = function(Meow_Name) {
 function Meow_createEnv(Meow_EnvFile) {
 	return new Meow_Env(Meow_EnvFile);
 } };
+
+/************************************
+**********Meow_Buffer Encoder********
+************************************/
 
 	// Enabling as well as disbaling debugging mode
 	var Meow_Debug = Meow_EnvProcess['@CLIENT_DEBUG'] || false;
