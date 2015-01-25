@@ -1,11 +1,9 @@
-var MeowDOM = (function() {
+var MeowDOM = function() {
 	'use strict';
-	var document;
 	var Meow_Buffer;
 	var meowProcess;
 	var elements = module.exports = function() {
 		elements.Meow_DOMRender = function(xy, el, MeowStream) {
-			var Meow_Power = this;
 			var MeowRow = 0;
 			xy(el).children().each(function(m, v) {
 				MeowStream.col(3);
@@ -49,10 +47,10 @@ var MeowDOM = (function() {
 			elements.h1(xy, el, MeowStream);
 		};
 		elements.iframe = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.script = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.time = function(xy, el, MeowStream) {
 			elements.h1(xy, el, MeowStream);
@@ -73,16 +71,16 @@ var MeowDOM = (function() {
 			elements.h1(xy, el, MeowStream);
 		};
 		elements.table = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.tr = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.td = function(xy, el, MeowStream) {
 			elements.h1(xy, el, MeowStream);
 		};
 		elements.th = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.br = function(xy, el, MeowStream) {
 			elements.h1(xy, el, MeowStream);
@@ -91,29 +89,29 @@ var MeowDOM = (function() {
 			elements.h1(xy, el, MeowStream);
 		};
 		elements.form = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.input = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.button = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.label = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.select = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.option = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.ol = function(xy, el, MeowStream) {
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.ul = function(xy, el, MeowStream) {
 			elements.Meow_DOMRender(xy, xy(el), MeowStream);
-			//elements.h1(xy, el, MeowStream);
+			elements.h1(xy, el, MeowStream);
 		};
 		elements.li = function(xy, el, MeowStream) {
 			//console.log(xy(el).childNodesList.length);
@@ -200,4 +198,4 @@ var MeowDOM = (function() {
 		MeowCharm.cursor(0, 60);
 	};
 
-}(document));
+};
