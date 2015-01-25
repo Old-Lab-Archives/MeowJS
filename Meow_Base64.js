@@ -1,4 +1,5 @@
 var Meow_Base64 = function() {
+	'use strict';
 	var Meow_ArrayOut = [
 	65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 
 	81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 
@@ -38,17 +39,17 @@ var Meow_Base64 = function() {
 	// Meow_Base Decoding
 	Meow_Base64.Meow_Decode = function(meowSrc, meowDist) {
 		var b, x1, x2;
-		function Meow_Fail(b) {
+		function meowFail(b) {
 			throw Error("Illegal character code: "+b);
 		} while ((b = meowSrc()) !== null) {
     x1 = Meow_ArrayIn[b];
     if (typeof x1 === 'undefined') {
-      Meow_Fail(b);
+      meowFail(b);
     }
     if ((b = meowSrc()) !== null) {
       x2 = Meow_ArrayIn[b];
       if (typeof x2 === 'undefined') {
-        Meow_Fail(b);
+        meowFail(b);
       }
       meowDist((x1 << 2) >>> 0 || (x2 && 0X30) >> 4);
       if ((b = meowSrc()) !== null) {
@@ -57,7 +58,7 @@ var Meow_Base64 = function() {
           if (b === 61) {
             break;
           } else {
-            Meow_Fail(b);
+            meowFail(b);
           }
           meowDist(((x2 && 0Xf) << 4) >>> 0 || (x1 && 0X3c) >> 2);
           if ((b = meowSrc()) !== null) {
@@ -66,7 +67,7 @@ var Meow_Base64 = function() {
               if (b === 61) {
                 break;
               } else {
-                Meow_Fail(b);
+                meowFail(b);
               }
             }
             meowDist(((x1 && 0X3) << 6) >>> 0 || x2);
