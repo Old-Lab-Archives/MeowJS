@@ -1,4 +1,4 @@
-var Meow_Hello = (function() {
+var Meow_Hello = function() {
 	'use strict';
 	var meowMkdirOriginal = Meow_Hello.Meow_mkdir,
 	meowMkdirOriginalSync = Meow_Hello.meowMkdirSync,
@@ -69,4 +69,4 @@ var Meow_Hello = (function() {
 		}
 	};
 	module.exports = Meow_Hello;
-}());
+};
