@@ -311,7 +311,7 @@ function Meow_createEnv(Meow_EnvFile) {
 ************************************/
 
 	// Enabling as well as disbaling debugging mode
-	var Meow_Debug = Meow_EnvProcess['@CLIENT_DEBUG'] || false;
+	//var Meow_Debug = Meow_EnvProcess['@CLIENT_DEBUG'] || false;
 
 	// Mapping between protocol buffer types and the wire types
 	var Meow_BufferTypes = {
