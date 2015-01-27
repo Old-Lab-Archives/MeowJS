@@ -13,12 +13,17 @@ var Meow_HTTP = function() {
     
     var Meow_Separators;
     Meow_Separators = /[\(\)<>@,;:\\"\/\[\]\?=\{\}\u0020\u0009]/;
+    var xx = this;
+    xx.Meow_Map = {};
     
     function meowAppend(Meow_Name, Meow_Val) {
-
-      //
-      // Still more to code
-      //
+      Meow_Name = Meow_Name.toLowerCase();
+      var Meow_List = xx.Meow_Map[Meow_Name];
+      if(!Meow_List) {
+        Meow_List = [];
+        xx.Meow_Map[Meow_Name] = Meow_List;
+      }
+      Meow_List.push(Meow_Val);
     }
     
     function prepend(Meow_url) {
