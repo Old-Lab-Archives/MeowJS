@@ -25,7 +25,7 @@
     "meowSVG_Loader.js",
     "HiddenMeow.js",
     "MeowStream.js",
-    "MeowProxy.js",
+    "NotAdded/MeowProxy.js",
     "Meow_HTTP.js",
     "Meow_IP.js",
     "Meow_Buffer",
