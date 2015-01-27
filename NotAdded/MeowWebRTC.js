@@ -15,9 +15,22 @@ MeowWebRTC.MeowWebRTC_audio= x(document).ready(function() {
 			MeowPeer.on('open', function(Meow_ID) {
 				x('#id').text('Your ID is ' +Meow_ID);
 			});
-			//
-			// Still more to code
-			//
+			
+			// Receiving a call
+			MeowPeer.on('call', function(MeowCall) {
+				// Answering the call
+				MeowCall.answer(MeowStream);
+				// Received data from call
+				MeowCall.on('stream', xHandleStream);
+			});
+			var audio = document.querySelector('audio');
+			audio.src = window.URL.createObjectURL(MeowStream);
+		},
+		function(err) {
+			console.log("Error occured! " +err);
 		});
+	//
+	// Still more to code
+	//
 	});
 };
