@@ -35,6 +35,6 @@
     "Meow_Path.js",
     "Meow_EnvProcess.js",
     "MeowAudio.js",
-    "MeowKernel.js"
+    "NotAdded/MeowKernel.js"
   ]
 }
