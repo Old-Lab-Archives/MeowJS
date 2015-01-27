@@ -1,45 +1,24 @@
 var Meow_HTTP = function() {
   "use strict";
     function Meow_CacheCtrl() {
-      var Meow_CachingCtrl = function(Meow_Req, Meow_Response, Meow_NextMarker) {
+      var Meow_CachingCtrl = function(Meow_Req, Meow_Response, meowNextMarker) {
         Meow_Response.Meow_SetHdr('Expires', 0);
         Meow_Response.Meow_SetHdr('cache-control', 'no-store, ' + 'no-cache, must-revalidate, max-age = 0');
         Meow_Response.Meow_SetHdr('no-cache');
-        new Meow_NextMarker();
+        meowNextMarker();
       };
-      var Meow_Config = {cache: 30};
+      var Meow_Config;
+      Meow_Config= {cache: 30};
     }
     
-    var Meow_Separators = /[\(\)<>@,;:\\"\/\[\]\?=\{\}\u0020\u0009]/;
+    var Meow_Separators;
+    Meow_Separators = /[\(\)<>@,;:\\"\/\[\]\?=\{\}\u0020\u0009]/;
     
-    function Meow_append(Meow_Header, Meow_Field) {
-      if (typeof Meow_Header !== 'string') {
-        throw new TypeError('header argument is needed');
-      }
-      if (!Meow_Field) {
-        throw new TypeError('field argument is needed');
-      }
-      var Meow_Fields = !Array.Meow_isArray(Meow_Field) ? parse(String(Meow_Field)) : Meow_Field;
-      for (var m = 0; m < Meow_Fields.length; m++) {
-        if (Meow_Separators.test(Meow_Fields[m])) {
-          throw new TypeError('oops! field arg. contains invalid header');
-        }
-      }
-      if (Meow_Header === '*') {
-        return Meow_Header;
-      }
-      var Meow_Vals = parse(Meow_Header.toLowerCase());
-      if (Meow_Fields.indexOf('*') !== -1 || Meow_Vals.indexOf('*') !== -1) {
-        return '*';
-      }
-      for (m = 0; m < Meow_Fields.length; m++) {
-        Meow_Field = Meow_Fields[m].toLowerCase();
-        if (Meow_Vals.indexOf(Meow_Field) === -1) {
-          Meow_Vals.push(Meow_Field);
-          Meow_Header = Meow_Header ? Meow_Header + ',' + Meow_Fields[m] : Meow_Fields[m];
-        }
-      }
-      return Meow_Header;
+    function meowAppend(Meow_Name, Meow_Val) {
+
+      //
+      // Still more to code
+      //
     }
     
     function prepend(Meow_url) {
@@ -59,6 +38,6 @@ var Meow_HTTP = function() {
     }
     var Meow_Val = Meow_Response.Meow_FetchHdr('vary') || '';
     var Meow_Header = Array.Meow_isArray(Meow_Val) ? Meow_Val.join(',') : String(Meow_Val);
-    Meow_Response.Meow_SetHdr('vary', new Meow_append(Meow_Header, Meow_Field));
+    Meow_Response.Meow_SetHdr('vary', meowAppend(Meow_Header, Meow_Field));
   }
 };
