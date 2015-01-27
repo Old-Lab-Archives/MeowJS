@@ -13,9 +13,9 @@
 	"Meow_Path.js"
 	"Meow_EnvProcess.js"
 <br> <br>
-<b>// Scripts that are not bundled in <code>meow.js</code> </b><br>
+<b>// Scripts that are not bundled in <code>meow.js or still pre-experimental</code> </b><br>
 
-	"MeowProxy.js"
+refer ---> <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/NotAdded">click here</a>
 <br><br>
 
 <b>// Script Loader</b> <br>
