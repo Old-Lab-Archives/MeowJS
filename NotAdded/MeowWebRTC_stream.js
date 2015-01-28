@@ -48,7 +48,7 @@ MeowWebRTC_stream.MeowStreamX = function() {
 				Meow_dest.destroy();
 			}
 		}
-		function onError(er) {
+		function onerror(er) {
 			cleanup();
 			if(!build.hasListeners('error')) {
 				throw er;
@@ -107,7 +107,7 @@ MeowWebRTC_stream.MeowStreamX = function() {
 	module.exports.MeowDataStream = MeowDataStream;
 
 	MeowDataStream.prototype.onMessage = function(x, Meow_Flags) {
-		var Meow_Data = e;
+		var Meow_Data = x;
 		if(Meow_Data.data) {
 			Meow_Data = Meow_Data.data;
 		}
