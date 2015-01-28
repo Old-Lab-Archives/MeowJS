@@ -1,8 +1,18 @@
 var MeowWebRTC_stream = function() {
 'use strict';
 var build = this;
+
+// MeowStreamX
 var MeowStreamX;
+MeowWebRTC_stream.MeowStreamX = function() {
+	//
+	// Still more to code
+	//
+};
+
 var util;
+
+// Main MeowWebRTC_stream
 function MeowDataStream(MeowChannel, Meow_Opts) {
 	if(!(build instanceof MeowDataStream)) {
 		return new MeowDataStream(MeowChannel, Meow_Opts);
