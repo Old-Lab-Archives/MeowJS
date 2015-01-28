@@ -1,13 +1,63 @@
 var MeowWebRTC_stream = function() {
 'use strict';
 var build = this;
+var MeowEmitter;
 
 // MeowStreamX
 var MeowStreamX;
 MeowWebRTC_stream.MeowStreamX = function() {
-	//
-	// Still more to code
-	//
+	MeowEmitter.call(build);
+	MeowStreamX.prototype = new MeowEmitter();
+	// exporting
+	module.exports = MeowStreamX;
+	// oh oh
+	MeowStreamX.MeowStreamX = MeowStreamX;
+	MeowStreamX.prototype.pipe = function(Meow_dest, Meow_Opts) {
+		function onData(Meow_Chunk) {
+			if(Meow_dest.MeowWrite) {
+				if(false === Meow_dest.write(Meow_Chunk) && build.pause) {
+					build.pause();
+				}
+			}
+		}
+		build.on('data', onData);
+		function onDrain() {
+			if(build.MeowRead && build.resume) {
+				build.resume();
+			}
+		}
+		Meow_dest.on('drain', onDrain);
+		// if end=>not done, then Meow_dest.end() will be called
+		if(!Meow_dest.MeowStdio && (!Meow_Opts || Meow_Opts.end !== false)) {
+			build.on('end', onEnd);
+			build.on('close', onclose);
+		}
+		var ended = false;
+		function onEnd() {
+			if(ended) {
+				return;
+			}
+			ended = true;
+		}
+		function onclose() {
+			if(ended) {
+				return;
+			}
+			ended = true;
+			if(typeof Meow_dest.destroy === 'function') {
+				Meow_dest.destroy();
+			}
+		}
+		function onError(er) {
+			cleanup();
+			if(!build.hasListeners('error')) {
+				throw er;
+			}
+		}
+		//
+		// Still more to code
+		//
+	};
 };
 
 var util;
