@@ -51,6 +51,21 @@ function MeowDataStream(MeowChannel, Meow_Opts) {
 		build.emit('end');
 		build.emit('close');
 	};
+	MeowDataStream.prototype.onOpen = function(err) {
+		if(build.destroy) {
+			return;
+		}
+		build.open = true;
+		for(var m = 0; m < build.Meow_Buffer.length; m++) {
+			build.MeowWrite(build.Meow_Buffer[m]);
+		}
+		build.Meow_Buffer = undefined;
+		build.emit('open');
+		build.emit('connect');
+		if(build.end) {
+			build.MeowRTC.close();
+		}
+	};
 	//
 	// Still more to code
 	//
