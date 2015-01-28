@@ -1,7 +1,21 @@
 var MeowWebRTC_stream = function() {
 'use strict';
 var build = this;
+var util;
 var MeowEmitter;
+MeowWebRTC_stream.MeowEmitter = function() {
+	var MeowAsyncList;
+	var MeowAsync;
+	MeowAsync = Meow_Process.nextTick;
+	var MeowEmitObj;
+	MeowEmitObj = {
+		eventListeners: {},
+		eventHandler: {},
+		//
+		// Still more to code!
+		//
+	};
+};
 
 // MeowStreamX
 var MeowStreamX;
@@ -77,8 +91,6 @@ MeowWebRTC_stream.MeowStreamX = function() {
 		return Meow_dest;
 		};
 	};
-
-	var util;
 
 	// Main MeowWebRTC_stream
 	function MeowDataStream(MeowChannel, Meow_Opts) {
