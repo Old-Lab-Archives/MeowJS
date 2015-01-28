@@ -54,16 +54,34 @@ MeowWebRTC_stream.MeowStreamX = function() {
 				throw er;
 			}
 		}
-		//
-		// Still more to code
-		//
+		build.on('error', onerror);
+		Meow_dest.on('error', onerror);
+		// removing all the added event listeners
+		function cleanup() {
+			build.off('data', onData);
+			Meow_dest.off('drain', onDrain);
+			build.off('end', onEnd);
+			build.off('close', onclose);
+			build.off('error', onerror);
+			Meow_dest.off('error', onerror);
+			build.off('end', cleanup);
+			build.off('close', cleanup);
+			Meow_dest.off('end', cleanup);
+			Meow_dest.off('close', cleanup);
+		}
+		build.on('end', cleanup);
+		build.on('close', cleanup);
+		Meow_dest.on('end', cleanup);
+		Meow_dest.on('close', cleanup);
+		Meow_dest.emit('pipe', build);
+		return Meow_dest;
+		};
 	};
-};
 
-var util;
+	var util;
 
-// Main MeowWebRTC_stream
-function MeowDataStream(MeowChannel, Meow_Opts) {
+	// Main MeowWebRTC_stream
+	function MeowDataStream(MeowChannel, Meow_Opts) {
 	if(!(build instanceof MeowDataStream)) {
 		return new MeowDataStream(MeowChannel, Meow_Opts);
 	}
