@@ -57,7 +57,7 @@ function MeowDataStream(MeowChannel, Meow_Opts) {
 		}
 		build.open = true;
 		for(var m = 0; m < build.Meow_Buffer.length; m++) {
-			build.MeowWrite(build.Meow_Buffer[m]);
+			build.xWrite(build.Meow_Buffer[m]);
 		}
 		build.Meow_Buffer = undefined;
 		build.emit('open');
@@ -66,8 +66,34 @@ function MeowDataStream(MeowChannel, Meow_Opts) {
 			build.MeowRTC.close();
 		}
 	};
-	//
-	// Still more to code
-	//
-	}
+	MeowDataStream.prototype.write = function(Meow_Data) {
+		if(!build.open) {
+			build.Meow_Buffer.push(Meow_Data);
+		} else {
+			build.xWrite(Meow_Data);
+		}
+	};
+	MeowDataStream.prototype.xWrite = function(Meow_Data) {
+		try {
+			build.MeowRTC.send(Meow_Data);
+		} catch(e) {
+			if(e.name === 'NetworkError') {
+				build.onClose(e);
+			} else {
+				build.onError(e);
+			}
+		}
+	};
+	MeowDataStream.prototype.end = function(Meow_Data) {
+		if(Meow_Data !== undefined) {
+			build.write(Meow_Data);
+		} if(build.open) {
+			build.MeowRTC.close();
+		}
+		build.end = true;
+	};
+	MeowDataStream.prototype.destroy = function() {
+		build.destroy = true;
+		build.MeowRTC.close();
+	}; }
 };
