@@ -36,6 +36,6 @@
     "Meow_EnvProcess.js",
     "MeowAudio.js",
     "NotAdded/MeowKernel.js",
-    "NotAdded/MeowWebRTC.js"
+    "NotAdded/MeowWebRTC_audio.js"
   ]
 }
