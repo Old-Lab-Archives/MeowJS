@@ -1,6 +1,39 @@
 <html>
 <head>
+<script type="text/javascript" src="MeowWebRTC_audio.js"/>
 </head>
 <body>
+<div class ="container">
+<div class='row'>
+<div class='col-row'>
+<h1>ashumeow</h1>
+<h3 id='id'>Grant access</h3>
+<h3 id='connection'>No Peer connection</h3>
+<i>Tip: Use headphones...</i>
+</div>
+<div class='col-row'>
+<h3>Make a call</h3>
+<input type='text' placeholder='PeerID' id='text'>
+<button class="primary-button" id='call-button'>Call</button>
+<br><br>
+<h4>Your audio</h4>
+<audio controls></audio>
+<h4>Peer audio</h4>
+<audio controls id='peer-audio'></audio>
+</div> </div>
+<div class='row'>
+<div class='col-row2'>
+<form id='chorus-format'>
+<h4>Song name</h4>
+<input type='text' name='song' placeholder='Song Name'>
+<h4>Song Chorus</h4>
+<input type='text' name='chorus' placeholder='Song Chorus'>
+<h4>Chorus Verse</h4>
+<input type='text' name='verse' placeholder='verse chorus'>
+<input type='submit'>
+</form>
+</div>
+<div class='col-row2' id='song-info'>
+</div></div></div>
 </body>
 </html>
