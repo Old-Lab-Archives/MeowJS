@@ -41,6 +41,12 @@ MeowWebRTC.MeowWebRTC_audio= x(document).ready(function() {
 	 		MeowCall.on('stream', xHandleStream);
 	 	}
 	 });
+	 xHandleStream = function(MeowPeerStream) {
+	 	x('#connection').text('connected-to-peer');
+	 	var MeowPeerAudio = x('#peer-audio');
+	 	MeowPeerAudio.attr('src', URL.createObjectURL(MeowPeerStream));
+	 	MeowPeerAudio.get(0).play();
+	 }
 	 //
 	 // Still more to code
 	 //
