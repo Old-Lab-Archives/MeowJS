@@ -46,9 +46,16 @@ MeowWebRTC.MeowWebRTC_audio= x(document).ready(function() {
 	 	var MeowPeerAudio = x('#peer-audio');
 	 	MeowPeerAudio.attr('src', URL.createObjectURL(MeowPeerStream));
 	 	MeowPeerAudio.get(0).play();
-	 }
-	 //
-	 // Still more to code
-	 //
+	 };
+	 x('#chorus-format').submit(function(format) {
+	 	var song = x(format.target)[0][0].value;
+	 	var chorus = x(format.target)[0][1].value;
+	 	var verse = x(format.target)[0][2].value;
+	 	var html = '<h3>'+ song + '</h3>';
+	 	html += '<h4>Chorus: '+chorus+ '</h4>';
+	 	html += '<h4>Verse: '+verse+ '</h4>';
+	 	x('#song-info').meowAppend(html);
+	 	return false;
+	 	});
 	});
 };
