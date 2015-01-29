@@ -1,6 +1,6 @@
 {
   "name": "MeowJS",
-  "version": "v0.4.16",
+  "version": "v0.4.17",
   "description": "Simple Fast Javascript Library",
   "license": "GNU GPL v2.0",
   "repository": "Geek-Research-Lab/MeowJS",
@@ -36,7 +36,7 @@
     "Meow_EnvProcess.js",
     "MeowAudio.js",
     "NotAdded/MeowKernel.js",
-    "NotAdded/MeowWebRTC_audio.js",
+    "MeowWebRTC_audio.js",
     "NotAdded/MeowWebRTC_stream.js"
   ]
 }
