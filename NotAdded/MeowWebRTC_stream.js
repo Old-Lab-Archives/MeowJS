@@ -21,6 +21,16 @@ MeowWebRTC_stream.MeowEmitter = function() {
 			});
 			return build;
 		},
+		addListener: function(event, handler) {
+			meowAsync(function() {
+				if(build.eventListeners[event] === undefined) {
+					build.eventListeners[event] = [handler];
+				} else {
+					build.eventListeners[event].push(handler);
+				}
+			});
+			return build;
+		},
 		//
 		// Still more to code
 		//
