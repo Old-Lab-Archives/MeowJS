@@ -42,7 +42,7 @@ Let's take MeowFunText.js as an example and see how to load it.<br>
 MeowNinja_API.load("meow.js");
 MeowNinja_API.load("MeowFunText.js");
 ```
-<br>Try an example test file --- <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.html">test.html</a>
+<br>Try some example test files --- <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/tests">click here</a>
 <br>
 <br>
 <b>Testing:-</b><br>
