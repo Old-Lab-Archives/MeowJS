@@ -46,7 +46,7 @@ MeowNinja_API.load("MeowFunText.js");
 <br>
 <br>
 <b>Testing:-</b><br>
-For testing, Make use of test.html and test.css <br>
+For testing, Make use of test files mentioned above. <br>
 ///////////////////////////////////////<br>
 <br>
 Like this repository? <br>
