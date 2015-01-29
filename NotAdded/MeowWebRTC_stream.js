@@ -48,6 +48,26 @@ MeowWebRTC_stream.MeowEmitter = function() {
 			});
 			return build;
 		},
+		removeAllListener: function(event) {
+			meowAsync(function() {
+				build.eventListeners[event] = [];
+			});
+			return build;
+		},
+		emit: function(event) {
+			var Meow_Args, Meow_Args2, Meow_Args3, Meow_Args4, Meow_Args5;
+			meowAsync(function() {
+				var then = build.eventHandler[event] ? build.eventHandler[event] : function() {};
+				var handlers = build.eventListeners[event] !== undefined ? build.eventListeners[event] : [];
+				var tasks = new MeowAsyncList(handlers);
+				tasks.assign(then).run(Meow_Args, Meow_Args2, Meow_Args3, Meow_Args4, Meow_Args5);
+			});
+			return build;
+		},
+		then: function(event, cb) {
+			build.eventHandler[event] = cb;
+			return build;
+		},
 		//
 		// Still more to code
 		//
