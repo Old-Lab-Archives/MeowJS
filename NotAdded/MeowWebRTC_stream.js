@@ -88,6 +88,33 @@ MeowWebRTC_stream.MeowEmitter = function() {
 		});
 		return build;
 	};
+	MeowEmitterClass.prototype.once = function(event, handler) {
+		meowAsync(function() {
+			if(build.eventListeners[event] === undefined) {
+				build.eventListeners[event] = [handler];
+			} else {
+				build.eventListeners[event].push(handler);
+			}
+		});
+		return build;
+	};
+	MeowEmitterClass.prototype.addListener = function(event, handler) {
+		meowAsync(function() {
+			if(build.eventListeners[event] === undefined) {
+				build.eventListeners[event] = [handler];
+			} else {
+				build.eventListeners[event].push(handler);
+			}
+		});
+		return build;
+	};
+	MeowEmitterClass.prototype.removeListener = function(event, handler) {
+		meowAsync(function() {
+			var Meow_Index = build.eventListeners[event].indexOf(handler);
+			build.eventListeners[event].splice(Meow_Index, 1);
+		});
+		return build;
+	};
 	//
 	// Still more to code!
 	//
