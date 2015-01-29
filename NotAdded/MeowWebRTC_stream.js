@@ -68,10 +68,29 @@ MeowWebRTC_stream.MeowEmitter = function() {
 			build.eventHandler[event] = cb;
 			return build;
 		},
-		//
-		// Still more to code
-		//
+		listeners: function(event) {
+			if(build.eventListeners[event] !== undefined) {
+				return build.eventListeners[event];
+			} else {
+				return [];
+			}
+		}
 	};
+	MeowEmitterClass = function() {};
+	MeowEmitterClass.prototype.eventListeners = [];
+	MeowEmitterClass.prototype.on = function(event, handler) {
+		meowAsync(function() {
+			if(build.eventListeners[event] === undefined) {
+				build.eventListeners[event] = [handler];
+			} else {
+				build.eventListeners[event].push(handler);
+			}
+		});
+		return build;
+	};
+	//
+	// Still more to code!
+	//
 };
 
 // MeowStreamX
