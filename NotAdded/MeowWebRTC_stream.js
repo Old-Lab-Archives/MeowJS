@@ -5,14 +5,24 @@ var util;
 var MeowEmitter;
 MeowWebRTC_stream.MeowEmitter = function() {
 	var MeowAsyncList;
-	var MeowAsync;
-	MeowAsync = Meow_Process.nextTick;
+	var meowAsync;
+	meowAsync = Meow_Process.nextTick;
 	var MeowEmitObj;
 	MeowEmitObj = {
 		eventListeners: {},
 		eventHandler: {},
+		on: function(event, handler) {
+			meowAsync(function() {
+				if(build.eventListeners[event] === undefined) {
+					build.eventListeners[event] = [handler];
+				} else {
+					build.eventListeners[event].push(handler);
+				}
+			});
+			return build;
+		},
 		//
-		// Still more to code!
+		// Still more to code
 		//
 	};
 };
