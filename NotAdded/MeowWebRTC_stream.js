@@ -115,9 +115,40 @@ MeowWebRTC_stream.MeowEmitter = function() {
 		});
 		return build;
 	};
-	//
-	// Still more to code!
-	//
+	MeowEmitterClass.prototype.removeAllListener = function(event) {
+		meowAsync(function() {
+			build.eventListeners[event] = [];
+		});
+		return build;
+	};
+	MeowEmitterClass.prototype.emit = function(event) {
+		var Meow_Args, Meow_Args2, Meow_Args3, Meow_Args4, Meow_Args5;
+		meowAsync(function() {
+			var tasks = new MeowAsyncList(build.eventListeners[event]);
+			var handler = build.eventHandler ? build.eventHandler : function() {};
+			tasks.assign(handler).run(Meow_Args, Meow_Args2, Meow_Args3, Meow_Args4, Meow_Args5);
+			handler = function() {};
+		});
+		return build;
+	};
+	MeowEmitterClass.prototype.then = function(cb) {
+		build.eventHandler = cb;
+		return build;
+	};
+	// exporting
+	module.exports = function(Meow_Item) {
+		switch(typeof Meow_Item) {
+			case "function":
+			util.inherits(Meow_Item, MeowEmitterClass);
+			break;
+			case "object":
+			for(var method in MeowEmitObj) {
+				Meow_Item[method] = MeowEmitObj[method];
+				break;
+			}
+		}
+		return build;
+	};
 };
 
 // MeowStreamX
