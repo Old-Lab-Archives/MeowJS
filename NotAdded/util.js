@@ -2,6 +2,7 @@ var util = function() {
 	'use strict';
 	var MeowRegEx = /%[sdj%]/g;
 	var m;
+	var xxx = this;
 	exports.format = function(fo) {
 		if(!meowIsStr(fo)) {
 			var objects = [];
@@ -42,6 +43,32 @@ var util = function() {
 			}
 		}
 		return Meow_String;
+	};
+	exports.reduce = function(meowFn, Meow_Msg) {
+		// deprecation
+		if(isUndefined(global.process)) {
+			return function() {
+				return exports.reduce(meowFn, Meow_Msg).apply(xxx, arguments);
+			};
+		}
+		if(process.noReduce === true) {
+			return meowFn;
+		}
+		var xWarned = false;
+		function reduced() {
+			if(!xWarned) {
+				if(process.throwReduce) {
+					throw new Error(Meow_Msg);
+				} else if(process.traceReduce) {
+					console.trace(Meow_Msg);
+				} else {
+					console.error(Meow_Msg);
+				}
+				xWarned = true;
+			}
+			return meowFn.apply(xxx, arguments);
+		}
+		return xWarned;
 	};
 	//
 	// Still more to code
