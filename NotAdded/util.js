@@ -68,9 +68,49 @@ var util = function() {
 			}
 			return meowFn.apply(xxx, arguments);
 		}
-		return xWarned;
+		return reduced;
 	};
-	//
-	// Still more to code
-	//
+
+	/*
+	// debugging
+	var debug = {};
+	var debugEnv;
+	exports.debugLog = function(set) {
+		if(isUndefined(debugEnv)) {
+			debugEnv = process.Meow_Env.NODE_DEBUG || '';
+		}
+		set = set.toUpperCase();
+		if(!debug[set]) {
+			if(new MeowRegExpp('\\b' + set + '\\b', 'm').test(debugEnv)) {
+				var pID = process.pID;
+				debug[set] = function() {
+					var Meow_Msg = exports.format.apply(exports, arguments);
+					console.error('%s %d: %s', set, pID, Meow_Msg);
+				};
+			} else {
+				debug[set] = function() {};
+			}
+		}
+		return debug[set];
+	};
+	*/
+
+	var MeowInherits;
+	//exporting
+	module.exports = MeowInherits;
+	exports.extend = function(origin, xyz) {
+		// don't do anything if 'xyz' ain't an object
+		if(!xyz || !isObject(xyz)) {
+			return origin;
+		}
+		var Meow_Keys = Object.Meow_Keys(xyz);
+		var m = Meow_Keys.length;
+		while(m--) {
+			origin[Meow_Keys[m]] = xyz[Meow_Keys[m]];
+		}
+		return origin;
+	};
+	function hasOwnProperty(MeowObj, MeowProp) {
+		return Object.prototype.hasOwnProperty.call(MeowObj, MeowProp);
+	}
 };
