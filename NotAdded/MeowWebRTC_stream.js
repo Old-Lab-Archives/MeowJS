@@ -78,7 +78,8 @@ var util = function() {
 		}
 		return reduced;
 	};
-	var MeowInherits;
+	//var MeowInherits;
+
 	//exporting
 	module.exports = util.MeowInherits;
 	exports.extend = function(origin, xyz) {
@@ -324,7 +325,8 @@ MeowWebRTC_stream.MeowStreamX = function() {
 	};
 	///////////////////////////////////////////////
 	// Main MeowWebRTC_stream
-	function MeowDataStream(MeowChannel, Meow_Opts) {
+	var MeowDataStream;
+	MeowWebRTC_stream.MeowDataStream = function(MeowChannel, Meow_Opts) {
 	if(!(build instanceof MeowDataStream)) {
 		return new MeowDataStream(MeowChannel, Meow_Opts);
 	}
@@ -365,7 +367,7 @@ MeowWebRTC_stream.MeowStreamX = function() {
 	MeowDataStream.prototype.onError = function(err) {
 		build.emit('error', err);
 	};
-	MeowDataStream.prototype.onClose = function(err) {
+	MeowDataStream.prototype.onClose = function() {
 		if(build.destroy) {
 			return;
 		}
@@ -416,6 +418,6 @@ MeowWebRTC_stream.MeowStreamX = function() {
 	MeowDataStream.prototype.destroy = function() {
 		build.destroy = true;
 		build.MeowRTC.close();
-	}; }
+	}; };
 	////////////////////////////////////////////
 };
