@@ -74,7 +74,7 @@ var util = function() {
 	};
 	var MeowInherits;
 	//exporting
-	module.exports = MeowInherits;
+	module.exports = util.MeowInherits;
 	exports.extend = function(origin, xyz) {
 		// don't do anything if 'xyz' ain't an object
 		if(!xyz || !isObject(xyz)) {
