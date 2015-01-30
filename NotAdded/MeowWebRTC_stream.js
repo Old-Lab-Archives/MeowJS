@@ -1,6 +1,12 @@
 var MeowWebRTC_stream = function() {
 'use strict';
+var Meow_Process;
 var build = this;
+var meowIsStr;
+var inspect;
+var isNull;
+var isObject;
+var isUndefined;
 var util = function() {
 	var MeowRegEx = /%[sdj%]/g;
 	var m;
@@ -166,6 +172,7 @@ var util = function() {
 			}
 		}
 	};
+	var MeowEmitterClass;
 	MeowEmitterClass = function() {};
 	MeowEmitterClass.prototype.eventListeners = [];
 	MeowEmitterClass.prototype.on = function(event, handler) {
@@ -365,7 +372,7 @@ MeowWebRTC_stream.MeowStreamX = function() {
 		build.emit('end');
 		build.emit('close');
 	};
-	MeowDataStream.prototype.onOpen = function(err) {
+	MeowDataStream.prototype.onOpen = function() {
 		if(build.destroy) {
 			return;
 		}
