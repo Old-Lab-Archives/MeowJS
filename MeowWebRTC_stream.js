@@ -273,11 +273,7 @@ MeowWebRTC_stream.MeowStreamX = function() {
 			}
 		}
 		Meow_dest.on('drain', onDrain);
-		// if end=>not done, then Meow_dest.end() will be called
-		if(!Meow_dest.MeowStdio && (!Meow_Opts || Meow_Opts.end !== false)) {
-			build.on('end', onEnd);
-			build.on('close', onclose);
-		}
+		
 		var ended = false;
 		function onEnd() {
 			if(ended) {
@@ -294,6 +290,12 @@ MeowWebRTC_stream.MeowStreamX = function() {
 				Meow_dest.destroy();
 			}
 		}
+		// if end=>not done, then Meow_dest.end() will be called
+		if(!Meow_dest.MeowStdio && (!Meow_Opts || Meow_Opts.end !== false)) {
+			build.on('end', onEnd);
+			build.on('close', onclose);
+		}
+		
 		function onerror(er) {
 			cleanup();
 			if(!build.hasListeners('error')) {
