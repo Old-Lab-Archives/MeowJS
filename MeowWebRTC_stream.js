@@ -101,9 +101,15 @@ var util = function() {
 	// MeowEmitter
 	var MeowEmitter;
 	MeowWebRTC_stream.MeowEmitter = function() {
-	var MeowAsyncList = function () {
-		//
-		// Still more to code!
+		// MeowAsyncList
+	var MeowAsyncList = function(list) {
+	var MeowEventProxy;
+	var xxx = this;
+	xxx.proxy = new MeowEventProxy();
+	xxx.length = list.length;
+	//
+	// Still more to code
+	//
 	};
 	var meowAsync;
 	meowAsync = Meow_Process.nextTick;
