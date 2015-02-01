@@ -107,6 +107,35 @@ var util = function() {
 	var xxx = this;
 	xxx.proxy = new MeowEventProxy();
 	xxx.length = list.length;
+
+	// trigger
+	MeowAsyncList.prototype.trigger = function(Meow_Val) {
+		xxx.proxy.trigger('finished', Meow_Val);
+		return xxx;
+	};
+
+	// assign
+	MeowAsyncList.prototype.assign = function(meowCallback) {
+		xxx.handler = meowCallback;
+		return xxx;
+	};
+
+	// run
+	MeowAsyncList.prototype.run = function(Meow_Args, Meow_Args2, Meow_Args3) {
+		var list = xxx.list;
+		if(xxx.length !== 0) {
+			xxx.proxy.after('finished', xxx.length, function (triggers) {
+				xxx.handler(triggers);
+			});
+		} else {
+			xxx.handler([]);
+		}
+		list.Meow_forEach(function (task) {
+			process.nextTick(function() {
+				task(Meow_Args, Meow_Args2, Meow_Args3);
+			});
+		});
+	};
 	//
 	// Still more to code
 	//
