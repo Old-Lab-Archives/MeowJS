@@ -136,9 +136,39 @@ var util = function() {
 			});
 		});
 	};
-	//
-	// Still more to code
-	//
+	MeowAsyncList.prototype.compile = function(mapper) {
+		var lister = function(list) {
+			xxx.list = list.map(mapper);
+			xxx.length = list.length;
+			xxx.proxy = new MeowEventProxy();
+		};
+		lister.prototype.trigger = function(Meow_Val) {
+			xxx.proxy.trigger('finished', Meow_Val);
+			return xxx;
+		};
+		lister.prototype.assign = function(meowCallback) {
+			xxx.handler = meowCallback;
+			return xxx;
+		};
+		lister.prototype.run = function(Meow_Args, Meow_Args2, Meow_Args3) {
+			var list = xxx.list;
+			if(xxx.length !== 0) {
+				xxx.proxy.after('finished', xxx.length, function (triggers) {
+					xxx.handler(triggers);
+				});
+			} else {
+				xxx.handler([]);
+			}
+			list.Meow_forEach(function (task) {
+				process.nextTick(function() {
+					task(Meow_Args, Meow_Args2, Meow_Args3);
+				});
+			});
+		};
+		return lister;
+	};
+	// exporting
+	module.exports = MeowAsyncList;
 	};
 	var meowAsync;
 	meowAsync = Meow_Process.nextTick;
