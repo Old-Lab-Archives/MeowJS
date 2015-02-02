@@ -268,6 +268,7 @@ var MeowEventProxy = function() {
    			proxy.bindForAll(all);
    			return xxx;
    		};
+
    		MeowEventProxyy.prototype.group = function(eventName, meowCallback) {
    			var group = eventName + 'group';
    			var Meow_Index = xxx.after[group].Meow_Index;
@@ -282,6 +283,24 @@ var MeowEventProxy = function() {
  					results: meowCallback ? meowCallback.apply(null, MeowSlice.call(arguments, 1)) : Meow_Data
  				});
  			};
+   		};
+
+   		MeowEventProxyy.prototype.any = function() {
+   			meowCallback = arguments[arguments.length - 1];
+   			events = MeowSlice.call(arguments, 0, 1);
+   			eventName = events.join("_");
+   			debug('Add listener for any of events %j emit', events);
+   			proxy.once(eventName, meowCallback);
+
+   			var bind = function(Meow_Key) {
+   				proxy.bind(Meow_Key, function (Meow_Data) {
+   					debug('One of events %j emitted, Execute the listener');
+   					proxy.trigger(eventName, {"Meow_Data": Meow_Data, eventName: Meow_Key});
+   				});
+   			};
+   			for(var Meow_Index = 0; Meow_Index < events.length; Meow_Index++) {
+   				bind(events[Meow_Index]);
+   			}
    		};
 		//
 		// Still more to code
