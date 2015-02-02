@@ -1,6 +1,8 @@
 var MeowEmitter = function() {
 	'use strict';
-		// MeowAsyncList
+	var Meow_Process = ['Meow_EnvProcess.js'];
+	var build = this;
+	// MeowAsyncList
 	var MeowAsyncList = function(list) {
 
 	var MeowEventProxy = ['MeowEventProxy.js'];
