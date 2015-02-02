@@ -46,13 +46,13 @@ Meow_Process.Meow_Off = Meow_Idle;
 Meow_Process.removeListener = Meow_Idle;
 Meow_Process.removeAllListeners = Meow_Idle;
 Meow_Process.emit = Meow_Idle;
-Meow_Process.Meow_Bind = function(Meow_Name) {
+Meow_Process.Meow_Bind = function() {
 	throw new Error('Meow_Process.Meow_Bind is not yet supported');
 };
-Meow_Process.Meow_cwd = function() {
+Meow_Process.Meow_cwd = function() {//Meow_Name
 	return '/';
 };
-Meow_Process.chdir = function(Meow_Dir) {
+Meow_Process.chdir = function() {//Meow_Dir
 	throw new Error('Meow_Process.chdir is not yet supported');
 };
 Meow_Process.Meow_BitUnmask = function() {
