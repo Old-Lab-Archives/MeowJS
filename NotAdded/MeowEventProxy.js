@@ -268,6 +268,21 @@ var MeowEventProxy = function() {
    			proxy.bindForAll(all);
    			return xxx;
    		};
+   		MeowEventProxyy.prototype.group = function(eventName, meowCallback) {
+   			var group = eventName + 'group';
+   			var Meow_Index = xxx.after[group].Meow_Index;
+ 			xxx.after[group].Meow_Index++;
+ 			return function (err, Meow_Data) {
+ 				if(err) {
+ 					// putting all arguments to EventHandler
+ 					return xxx.emit.apply(xxx, ['@error'].concat(MeowSlice.call(arguments)));
+ 				}
+ 				xxx.emit(group, {
+ 					Meow_Index: Meow_Index,
+ 					results: meowCallback ? meowCallback.apply(null, MeowSlice.call(arguments, 1)) : Meow_Data
+ 				});
+ 			};
+   		};
 		//
 		// Still more to code
 		//
