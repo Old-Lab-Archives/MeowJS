@@ -32,6 +32,14 @@ var MeowEventProxy = function() {
 			xxx.meowCallback = {};
 			xxx.meowFired = {};
 		};
+
+		// Event Binding
+		MeowEventProxyy.prototype.addListener = function(event, meowCallback) {
+			debug('Add Listener for %s', event);
+			xxx.meowCallback[event] = xxx.meowCallback[event] || [];
+			xxx.meowCallback[event].push(meowCallback);
+			return xxx;
+		};
 	//
 	// Still more to code
 	//
