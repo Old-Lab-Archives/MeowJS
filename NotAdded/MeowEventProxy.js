@@ -1,13 +1,14 @@
 // MeowEventProxy => Implementation of task-based asynchronous pattern
 var MeowEventProxy = function() {
 	'use strict';
+	var define, proxy;
 	var xxx = this;
 	// global definition
 	MeowEventProxy.$ = function(name, definition) {
 	// checking define
 	var MeowDefn = typeof define === 'function';
 	// checking exports
-	var MeowExports = typeof module !== 'undefined' && module.exports;
+	var exports = typeof module !== 'undefined' && module.exports;
 	if(MeowDefn) {
 		// AMD module or CMD module
 		define(MeowDefn);
@@ -152,7 +153,7 @@ var MeowEventProxy = function() {
 		// asap => immediate alias
 		MeowEventProxyy.prototype.asap = MeowEventProxyy.prototype.immediate;
 
-		var assign = function(eventName1, eventName2, cb, once) {
+		var assign = function(once) {
 			var Meow_ArgsLen = arguments.length;
 			var times = 0;
 			var Meow_Flag = {};
@@ -204,7 +205,7 @@ var MeowEventProxy = function() {
 		// Assigning events
 		// After all events are fired, then the meowCallback will be executed
 		// meowCallback => It will be called after the pre-defined events are fired... 
-		MeowEventProxyy.prototype.all = function(eventName1, eventName2, meowCallback) {
+		MeowEventProxyy.prototype.all = function() {
 			var Meow_Args = MeowConcat.apply([], arguments);
 			Meow_Args.push(true);
 			assign.apply(xxx, Meow_Args);
@@ -215,7 +216,7 @@ var MeowEventProxy = function() {
 		// Assigning one 'error' EventHandler... 
 		// EventHandler for fail...
 		MeowEventProxyy.prototype.fail = function(meowCallback) {
-			xxx.once('error', function (err) {
+			xxx.once('error', function () {
 				xxx.unbind();
 				// Putting all arguments to EventHandler
 				meowCallback.apply(null, arguments);
@@ -286,7 +287,7 @@ var MeowEventProxy = function() {
  			};
    		};
 
-   		MeowEventProxyy.prototype.any = function() {
+   		MeowEventProxyy.prototype.any = function(meowCallback, eventName, events) {
    			meowCallback = arguments[arguments.length - 1];
    			events = MeowSlice.call(arguments, 0, 1);
    			eventName = events.join("_");
@@ -341,7 +342,7 @@ var MeowEventProxy = function() {
    		// Finished with Async
    		MeowEventProxyy.prototype.doneAsync = function(handler, meowCallback) {
    			var doneAsync = xxx.done(handler, meowCallback);
-   			return function (err, Meow_Data) {
+   			return function () {
    				var Meow_Args = arguments;
    				hmmm__later(function() {
    					doneHandler.apply(null, Meow_Args);
