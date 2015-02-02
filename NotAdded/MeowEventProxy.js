@@ -40,6 +40,15 @@ var MeowEventProxy = function() {
 			xxx.meowCallback[event].push(meowCallback);
 			return xxx;
 		};
+		MeowEventProxyy.prototype.bind = MeowEventProxyy.prototype.addListener;
+		MeowEventProxyy.prototype.on = MeowEventProxyy.prototype.on;
+		MeowEventProxyy.prototype.subscribe = MeowEventProxyy.prototype.subscribe;
+		MeowEventProxyy.prototype.headbind = function(event, meowCallback) {
+			debug('Add Listener for %s', event);
+			xxx.meowCallback[event] = xxx.meowCallback[event] || [];
+			xxx.meowCallback[event].unshift(meowCallback);
+			return xxx;
+		};
 	//
 	// Still more to code
 	//
