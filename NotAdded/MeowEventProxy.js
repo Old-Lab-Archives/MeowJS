@@ -153,7 +153,7 @@ var MeowEventProxy = function() {
 		// asap => immediate alias
 		MeowEventProxyy.prototype.asap = MeowEventProxyy.prototype.immediate;
 
-		var assign = function(once) {
+		var assign = function() {
 			var Meow_ArgsLen = arguments.length;
 			var times = 0;
 			var Meow_Flag = {};
@@ -341,7 +341,7 @@ var MeowEventProxy = function() {
 
    		// Finished with Async
    		MeowEventProxyy.prototype.doneAsync = function(handler, meowCallback) {
-   			var doneAsync = xxx.done(handler, meowCallback);
+   			var doneHandler = xxx.done(handler, meowCallback);
    			return function () {
    				var Meow_Args = arguments;
    				hmmm__later(function() {
