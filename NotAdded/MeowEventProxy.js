@@ -198,6 +198,18 @@ var MeowEventProxy = function() {
 			};
 			proxy.bindForAll(hmmm__all);
 		};
+		// Assigning events
+		// After all events are fired, then the meowCallback will be executed
+		// meowCallback => It will be called after the pre-defined are fired... 
+		// Fireeeee oh yeahhhhh =P =P =P
+		MeowEventProxyy.prototype.all = function(eventName1, eventName2, meowCallback) {
+			var Meow_Args = MeowConcat.apply([], arguments);
+			Meow_Args.push(true);
+			assign.apply(xxx, Meow_Args);
+			return xxx;
+		};
+		MeowEventProxyy.prototype.assign = MeowEventProxyy.prototype.all;
+		
 	//
 	// Still more to code
 	//
