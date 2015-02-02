@@ -117,6 +117,20 @@ var MeowEventProxy = function() {
 			}
 			return xxx;
 		};
+		MeowEventProxyy.prototype.emit = MeowEventProxyy.prototype.trigger;
+		MeowEventProxyy.prototype.fire = MeowEventProxyy.prototype.trigger;
+		// Binding event... Listeners removed after it's fired
+		MeowEventProxyy.prototype.once = function(event, meowCallback) {
+			var wrapper = function() {
+				meowCallback.apply(xxx, arguments);
+				xxx.unbind(event, wrapper);
+			};
+			xxx.bind(event, wrapper);
+			return xxx;
+		};
+		var hmmm__later = typeof process !== 'undefined' && process.nextTick || function (meowFn) {
+			setTimeout(meowFn, 0);
+		};
 	//
 	// Still more to code
 	//
