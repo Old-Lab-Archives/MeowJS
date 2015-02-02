@@ -149,7 +149,55 @@ var MeowEventProxy = function() {
 		// asap => As Soon As Possible... Do it fasterr! Oh yeahhh.. =P =P
 		// asap === immediate alias ;)
 		MeowEventProxyy.prototype.asap = MeowEventProxyy.prototype.immediate;
-		
+
+		var assign = function(eventName1, eventName2, cb, once) {
+			var Meow_ArgsLen = arguments.length;
+			var times = 0;
+			var Meow_Flag = {};
+			// Checking arguments length
+			if(Meow_ArgsLen < 3) {
+				return xxx;
+			}
+			var events = MeowSlice.call(arguments, 0, -2);
+			var meowCallback = arguments[Meow_ArgsLen - 2];
+			var isOnce = arguments[Meow_ArgsLen - 1];
+			// checking callback types
+			if(typeof meowCallback !== "function") {
+				return xxx;
+			}
+			debug('Assign Listeners for events %j, once is %s'. events, !!isOnce);
+			var bind = function(Meow_Key) {
+				var method = isOnce ? "once" : "bind";
+				proxy[method](Meow_Key, function (Meow_Data) {
+					proxy.fired[Meow_Key] = proxy.fired[Meow_Key] || {};
+					proxy.fired[Meow_Key].data = Meow_Data;
+					if(!Meow_Flag[Meow_Key]) {
+						Meow_Flag[Meow_Key] = true;
+						times++;
+					}
+				});
+			};
+			var length = events.length;
+			for(var Meow_Index = 0; Meow_Index < length; Meow_Index++) {
+				bind(events[Meow_Index]);
+			}
+			var hmmm__all = function(event) {
+				if(times < length) {
+					return;
+				} if(!Meow_Flag[event]) {
+					return;
+				}
+				var Meow_Data = [];
+				for(var Meow_Index = 0; Meow_Index < length; Meow_Index++) {
+					Meow_Data.push(proxy.fired[events[Meow_Index]].data);
+				} if(isOnce) {
+					proxy.unbindForAll(hmmm__all);
+				}
+				debug('Events %j all emitted with data %j', events, Meow_Data);
+				meowCallback.apply(null, Meow_Data);
+			};
+			proxy.bindForAll(hmmm__all);
+		};
 	//
 	// Still more to code
 	//
