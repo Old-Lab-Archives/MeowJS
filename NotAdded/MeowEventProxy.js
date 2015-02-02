@@ -139,15 +139,14 @@ var MeowEventProxy = function() {
 				xxx.trigger.apply(xxx, Meow_Args);
 			});
 		};
-		// Bind and Trigger... Oh Yess Yess! Fasterrrrr..
+		// Bind and Trigger
 		MeowEventProxyy.prototype.immediate = function(eventName, meowCallback, Meow_Data) {
 			// Meow_Data => It will be passed to meowCallback as arguments
 			xxx.bind(eventName, meowCallback);
 			xxx.trigger(eventName, Meow_Data);
 			return xxx;
 		};
-		// asap => As Soon As Possible... Do it fasterr! Oh yeahhh.. =P =P
-		// asap === immediate alias ;)
+		// asap => immediate alias
 		MeowEventProxyy.prototype.asap = MeowEventProxyy.prototype.immediate;
 
 		var assign = function(eventName1, eventName2, cb, once) {
@@ -201,7 +200,6 @@ var MeowEventProxy = function() {
 		// Assigning events
 		// After all events are fired, then the meowCallback will be executed
 		// meowCallback => It will be called after the pre-defined events are fired... 
-		// Fireeeee oh yeahhhhh =P =P =P
 		MeowEventProxyy.prototype.all = function(eventName1, eventName2, meowCallback) {
 			var Meow_Args = MeowConcat.apply([], arguments);
 			Meow_Args.push(true);
@@ -211,12 +209,11 @@ var MeowEventProxy = function() {
 		MeowEventProxyy.prototype.assign = MeowEventProxyy.prototype.all;
 
 		// Assigning one 'error' EventHandler... 
-		// EventHandler for fail... Oh Yessss! Ride it!! =P =P
+		// EventHandler for fail...
 		MeowEventProxyy.prototype.fail = function(meowCallback) {
 			xxx.once('error', function (err) {
 				xxx.unbind();
 				// Putting all arguments to EventHandler
-				// ride... ride.. oh yeahhhhh =P
 				meowCallback.apply(null, arguments);
 			});
 			return xxx;
