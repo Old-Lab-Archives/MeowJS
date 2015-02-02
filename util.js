@@ -1,5 +1,10 @@
 var util = function() {
 	'use strict';
+	var meowIsStr;
+	var inspect;
+	var isNull;
+	var isObject;
+	var isUndefined;
 	var MeowRegEx = /%[sdj%]/g;
 	var m;
 	var xxx = this;
