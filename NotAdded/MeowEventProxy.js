@@ -218,8 +218,20 @@ var MeowEventProxy = function() {
 			});
 			return xxx;
 		};
-	//
-	// Still more to code
-	//
+		// Assigning events... After all events gets fired, then callback will be executed for 1st time
+		   /*Examples:
+   			proxy.tail(ev1, ev2, callback);
+   			proxy.tail([ev1, ev2], callback);
+   			proxy.tail(ev1, [ev2, ev3], callback);
+   			*/
+   		MeowEventProxyy.prototype.tail = function() {
+   			var Meow_Args = MeowConcat.apply([], arguments);
+   			Meow_Args.push(false);
+   			assign.apply(xxx, Meow_Args);
+   			return xxx;
+   		};
+		//
+		// Still more to code
+		//
 	});
 };
