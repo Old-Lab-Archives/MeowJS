@@ -3,16 +3,17 @@ var Meow_Buffer = function() {
 	'use strict';
 
 // MeowJS Processing Environment
-var Meow_EnvProcess = ['Meow_EnvProcess.js'];
+var Meow_Process = ['Meow_EnvProcess.js'];
+
+//Enabling as well as disbaling debugging mode
+var Meow_Debug;
+Meow_Debug = Meow_Process['@CLIENT_DEBUG'] || false;
+
 
 /************************************
 **********Meow_Buffer Encoder********
 ************************************/
-
-	// Enabling as well as disbaling debugging mode
-	//var Meow_Debug = Meow_EnvProcess['@CLIENT_DEBUG'] || false;
-
-	// Mapping between protocol buffer types and the wire types
+// Mapping between protocol buffer types and the wire types
 	var Meow_BufferTypes = {
 		"int32": 0,
 		"int64": 0,
