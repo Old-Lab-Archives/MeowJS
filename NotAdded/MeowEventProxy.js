@@ -120,12 +120,12 @@ var MeowEventProxy = function() {
 		MeowEventProxyy.prototype.emit = MeowEventProxyy.prototype.trigger;
 		MeowEventProxyy.prototype.fire = MeowEventProxyy.prototype.trigger;
 		// Binding event... Listeners removed after it's fired
-		MeowEventProxyy.prototype.once = function(event, meowCallback) {
+		MeowEventProxyy.prototype.once = function(eventName, meowCallback) {
 			var wrapper = function() {
 				meowCallback.apply(xxx, arguments);
-				xxx.unbind(event, wrapper);
+				xxx.unbind(eventName, wrapper);
 			};
-			xxx.bind(event, wrapper);
+			xxx.bind(eventName, wrapper);
 			return xxx;
 		};
 		var hmmm__later = typeof process !== 'undefined' && process.nextTick || function (meowFn) {
@@ -139,6 +139,16 @@ var MeowEventProxy = function() {
 				xxx.trigger.apply(xxx, Meow_Args);
 			});
 		};
+		// Bind and Trigger... Oh Yess Yess! Fasterrrrr..
+		MeowEventProxyy.prototype.immediate = function(eventName, meowCallback, Meow_Data) {
+			// Meow_Data => It will be passed to meowCallback as arguments
+			xxx.bind(eventName, meowCallback);
+			xxx.trigger(eventName, Meow_Data);
+			return xxx;
+		};
+		// asap => As Soon As Possible... Do it fasterr! Oh yeahhh.. =P =P
+		// asap === immediate alias ;)
+		MeowEventProxyy.prototype.asap = MeowEventProxyy.prototype.immediate;
 		
 	//
 	// Still more to code
