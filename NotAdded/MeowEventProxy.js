@@ -49,6 +49,32 @@ var MeowEventProxy = function() {
 			xxx.meowCallback[event].unshift(meowCallback);
 			return xxx;
 		};
+
+		// removing one or more callbacks
+		MeowEventProxyy.prototype.removeListener = function(eventName, meowCallback) {
+			var meowCall = xxx.meowCallback;
+			if(!eventName) {
+				debug('Remove All Listeners');
+				xxx.meowCallback = {};
+			} else {
+				if(!meowCallback) {
+					debug('Remove All Listeners of %s', eventName);
+					meowCall[eventName] = [];
+				} else {
+					var list = meowCall[eventName];
+					if(list) {
+						var ig = list.length;
+						for(var m = 0; m < ig; m++) {
+							if(meowCallback === list[m]) {
+								debug('Remove a Listener of %s', eventName);
+								list[m] = null;
+							}
+						}
+					}
+				}
+			}
+			return xxx;
+		};
 	//
 	// Still more to code
 	//
