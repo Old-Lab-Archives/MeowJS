@@ -2,8 +2,6 @@
 
 // Main Meow_Process
 
-//module.exports = global.Meow_Process;
-
 var Meow_Process = module.exports = {};
 var Meow_Queue = [];
 var Meow_Drain = false;
