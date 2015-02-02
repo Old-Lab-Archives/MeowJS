@@ -2,7 +2,12 @@ var MeowWebRTC = function() {
 	'use strict';
 	// MeowWebRTC Audio
 	var MeowWebRTC_audio;
-	MeowWebRTC.MeowWebRTC_audio= x(document).ready(function() {
+	var window;
+	var x;
+	var document;
+	var alert, URL;
+	var navigator;
+	MeowWebRTC_audio = x(document).ready(function() {
 	navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 	var MeowStream = function(Meow_Src) {
 	module.exports = MeowStream;
@@ -11,6 +16,7 @@ var MeowWebRTC = function() {
 	};
 	var MeowPeer = {};
 	var MeowCall = {};
+	var MeowPeer1;
 	navigator.getUserMedia( {audio: true},
 		// callback success
 		function(xStream) {
@@ -45,7 +51,8 @@ var MeowWebRTC = function() {
 	 		MeowCall.on('stream', xHandleStream);
 	 	}
 	 });
-	 xHandleStream = function(MeowPeerStream) {
+	 var xHandleStream;
+	MeowWebRTC.xHandleStream = function(MeowPeerStream) {
 	 	x('#connection').text('connected-to-peer');
 	 	var MeowPeerAudio = x('#peer-audio');
 	 	MeowPeerAudio.attr('src', URL.createObjectURL(MeowPeerStream));
