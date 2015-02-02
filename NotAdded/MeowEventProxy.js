@@ -75,6 +75,19 @@ var MeowEventProxy = function() {
 			}
 			return xxx;
 		};
+		// unbind
+		MeowEventProxyy.prototype.unbind = MeowEventProxyy.prototype.removeListener;
+		MeowEventProxyy.prototype.removeListeners = function(event) {
+			return xxx.unbind(event);
+		};
+		// binding all the events
+		MeowEventProxyy.prototype.bindForAll = function(meowCallback) {
+			xxx.bind(MeowAllEvent, meowCallback);
+		};
+		// unbinding all events
+		MeowEventProxyy.prototype.unbindForAll = function(meowCallback) {
+			xxx.unbind(MeowAllEvent, meowCallback);
+		};
 	//
 	// Still more to code
 	//
