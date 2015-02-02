@@ -230,6 +230,44 @@ var MeowEventProxy = function() {
    			assign.apply(xxx, Meow_Args);
    			return xxx;
    		};
+   		MeowEventProxyy.prototype.assignType = MeowEventProxyy.prototype.tail;
+   		MeowEventProxyy.prototype.assignAlways = MeowEventProxyy.prototype.tail;
+   		// meowCallback will be executed after the events gets fired N times
+   		MeowEventProxyy.prototype.after = function(eventName, meowCallback, times) {
+   			if(times === 0) {
+   				meowCallback.call(null, []);
+   				return xxx;
+   			}
+   			var firedData = [];
+   			xxx.after = xxx.after || {};
+   			var group = eventName + 'group';
+   			xxx.after[group] = {
+   				Meow_Index: 0,
+   				results: []
+   			};
+   			debug('After emitting %s times, event %s\'s listener will be executed', times, eventName);
+   			var all = function(name, Meow_Data) {
+   				if(name === eventName) {
+   					times--;
+   					firedData.push(Meow_Data);
+   					if(times < 1) {
+   						debug('Event %s was emit %s and execute the listener', eventName, times);
+   						proxy.unbindForAll(all);
+   						meowCallback.apply(null, [firedData]);
+   					}
+   				} if(name === group) {
+   					times--;
+   					proxy.after[group].results[Meow_Data.Meow_Index] = Meow_Data.results;
+   					if(times < 1) {
+   						debug('Event %s was %s emit and execute listener', eventName, times);
+   						proxy.unbindForAll(all);
+   						meowCallback.call(null, proxy.after[group].results);
+   					}
+   				}
+   			};
+   			proxy.bindForAll(all);
+   			return xxx;
+   		};
 		//
 		// Still more to code
 		//
