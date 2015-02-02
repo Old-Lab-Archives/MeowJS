@@ -131,6 +131,15 @@ var MeowEventProxy = function() {
 		var hmmm__later = typeof process !== 'undefined' && process.nextTick || function (meowFn) {
 			setTimeout(meowFn, 0);
 		};
+
+		// Asynchronous Emitter
+		MeowEventProxyy.prototype.emitAsync = function() {
+			var Meow_Args = arguments;
+			hmmm__later(function() {
+				xxx.trigger.apply(xxx, Meow_Args);
+			});
+		};
+		
 	//
 	// Still more to code
 	//
