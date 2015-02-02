@@ -1,3 +1,4 @@
+// MeowEventProxy => Implementation of task-based asynchronous pattern
 var MeowEventProxy = function() {
 	'use strict';
 	var xxx = this;
@@ -17,6 +18,20 @@ var MeowEventProxy = function() {
 	}('MeowEventProxy', function (debug) {
 		// debugging
 		debug = debug || function() {};
+		//////////////////////////////
+		// declarations
+		var MeowSlice = Array.prototype.slice;
+		var MeowConcat = Array.prototype.concat;
+		var MeowAllEvent = 'all';
+		/////////////////
+		var MeowEventProxyy;
+		MeowEventProxy.MeowEventProxyy = function() {
+			if(!(xxx instanceof MeowEventProxyy)) {
+				return new MeowEventProxyy();
+			}
+			xxx.meowCallback = {};
+			xxx.meowFired = {};
+		};
 	//
 	// Still more to code
 	//
