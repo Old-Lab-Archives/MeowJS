@@ -119,6 +119,7 @@ var MeowEventProxy = function() {
 		};
 		MeowEventProxyy.prototype.emit = MeowEventProxyy.prototype.trigger;
 		MeowEventProxyy.prototype.fire = MeowEventProxyy.prototype.trigger;
+		
 		// Binding event... Listeners removed after it's fired
 		MeowEventProxyy.prototype.once = function(eventName, meowCallback) {
 			var wrapper = function() {
@@ -139,6 +140,7 @@ var MeowEventProxy = function() {
 				xxx.trigger.apply(xxx, Meow_Args);
 			});
 		};
+		
 		// Bind and Trigger
 		MeowEventProxyy.prototype.immediate = function(eventName, meowCallback, Meow_Data) {
 			// Meow_Data => It will be passed to meowCallback as arguments
@@ -146,6 +148,7 @@ var MeowEventProxy = function() {
 			xxx.trigger(eventName, Meow_Data);
 			return xxx;
 		};
+		
 		// asap => immediate alias
 		MeowEventProxyy.prototype.asap = MeowEventProxyy.prototype.immediate;
 
@@ -197,6 +200,7 @@ var MeowEventProxy = function() {
 			};
 			proxy.bindForAll(hmmm__all);
 		};
+		
 		// Assigning events
 		// After all events are fired, then the meowCallback will be executed
 		// meowCallback => It will be called after the pre-defined events are fired... 
@@ -218,12 +222,8 @@ var MeowEventProxy = function() {
 			});
 			return xxx;
 		};
+
 		// Assigning events... After all events gets fired, then callback will be executed for 1st time
-		   /*Examples:
-   			proxy.tail(ev1, ev2, callback);
-   			proxy.tail([ev1, ev2], callback);
-   			proxy.tail(ev1, [ev2, ev3], callback);
-   			*/
    		MeowEventProxyy.prototype.tail = function() {
    			var Meow_Args = MeowConcat.apply([], arguments);
    			Meow_Args.push(false);
@@ -232,6 +232,7 @@ var MeowEventProxy = function() {
    		};
    		MeowEventProxyy.prototype.assignType = MeowEventProxyy.prototype.tail;
    		MeowEventProxyy.prototype.assignAlways = MeowEventProxyy.prototype.tail;
+   		
    		// meowCallback will be executed after the events gets fired N times
    		MeowEventProxyy.prototype.after = function(eventName, meowCallback, times) {
    			if(times === 0) {
@@ -302,8 +303,72 @@ var MeowEventProxy = function() {
    				bind(events[Meow_Index]);
    			}
    		};
-		//
-		// Still more to code
-		//
+
+   		// meowCallback will be executed if the event not equals with the assigned event
+   		MeowEventProxyy.prototype.not = function(eventName, meowCallback) {
+   			debug('Add listener for not event %s', eventName);
+   			proxy.bindForAll(function (name, Meow_Data) {
+   				if(name !== eventName) {
+   					debug('Listener execute of event %s emit, but not event %s', name, eventName);
+   					meowCallback(Meow_Data);
+   				}
+   			});
+   		};
+
+   		// Yuppie!! (^_^)
+   		MeowEventProxyy.prototype.done = function(handler, meowCallback) {
+   			return function (err, Meow_Data) {
+   				if(err) {
+   					// putting all arguments to EventHandler
+   					return xxx.emit.apply(xxx, ['@error'].concat(MeowSlice.call(arguments)));
+   				}
+   				var Meow_Args = MeowSlice.call(arguments, 1);
+   				if(typeof handler === 'string') {
+   					if(meowCallback) {
+   						return xxx.emit(handler, meowCallback.apply(null, Meow_Args));
+   					} else {
+   						return xxx.emit.apply(xxx, [handler].concat(Meow_Args));
+   					}
+   				}
+   				// performance improvement
+   				if(arguments.length <= 2) {
+   					return handler(Meow_Data);
+   				}
+   				handler.apply(null, Meow_Args);
+   			};
+   		};
+
+   		// Finished with Async
+   		MeowEventProxyy.prototype.doneAsync = function(handler, meowCallback) {
+   			var doneAsync = xxx.done(handler, meowCallback);
+   			return function (err, Meow_Data) {
+   				var Meow_Args = arguments;
+   				hmmm__later(function() {
+   					doneHandler.apply(null, Meow_Args);
+   				});
+   			};
+   		};
+
+   		// Creating a new MeowEventProxy
+   		MeowEventProxyy.create = function() {
+   			// ep => EventProxy
+   			var ep = new MeowEventProxyy();
+   			var Meow_Args = MeowConcat.apply([], arguments);
+   			if(Meow_Args.length) {
+   				var errorHandler = Meow_Args[Meow_Args.length - 1];
+   				var meowCallback = Meow_Args[Meow_Args.length - 2];
+   				if(typeof errorHandler === 'function' && typeof meowCallback === 'function') {
+   					Meow_Args.pop();
+   					ep.fail(errorHandler);
+   				}
+   				ep.assign.apply(ep, Meow_Args);
+   			}
+   			return ep;
+   		};
+
+   		// checking backward compatibility
+   		MeowEventProxyy.MeowEventProxyy = MeowEventProxyy;
+
+   		return MeowEventProxyy;
 	});
 };
