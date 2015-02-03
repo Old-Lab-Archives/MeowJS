@@ -37,6 +37,9 @@
     "MeowAudio.js",
     "NotAdded/MeowKernel.js",
     "MeowWebRTC_audio.js",
-    "MeowWebRTC_stream.js"
+    "MeowWebRTC_stream.js",
+    "MeowEmitter.js",
+    "MeowEventProxy.js",
+    "util.js"
   ]
 }
