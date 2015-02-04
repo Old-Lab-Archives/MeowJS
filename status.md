@@ -20,7 +20,7 @@ refer ---> <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/NotA
 
 <b>// Script Loader</b> <br>
 
-	"MeowNinjaX.js"
+	"meowNinja.js"
 <br><br>
 <b>// List of relevant scripts for MeowJS</b><br>
 
@@ -35,4 +35,4 @@ refer ---> <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/NotA
 
 	"Meow_Buffer.js"
 	"MeowStream.js" + "Meow_Buffer.js"
-	"MeowWebRTC_stream.js"
+	"MeowWebRTC_stream.js" (includes MeowEnvProcess, MeowEventProxy, MeowEmitter and util)
