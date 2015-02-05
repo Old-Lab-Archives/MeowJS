@@ -73,13 +73,13 @@ Then, add it's script source.
 ```js
 <script src="MeowFunText.js"></script>
 ```
-<br>Try the example test file --- <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.html">test.html</a>
+<br>
+<b>Testing:-</b><br>
+For testing, Make use of these test files mentioned below. <br>
+Try the example test file --- <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.html">test.html</a>
  and <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.css">test.css</a><br>
  Another test file (WebRTC) --- <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/tests">click here</a>
 <br>
-<br>
-<b>Testing:-</b><br>
-For testing, Make use of test files mentioned above. <br>
 ///////////////////////////////////////<br>
 <br>
 Like this repository? <br>
