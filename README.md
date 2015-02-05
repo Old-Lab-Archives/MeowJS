@@ -26,23 +26,56 @@ Download as per latest release --- <a href="https://github.com/Geek-Research-Lab
 Note:- The repository is active and gets updated everyday. So, everytime, you need to freshly update inorder to keep it updated.<br>
 <br>
 <b>Okay, done! Now, What am i going to do with all these scripts?</b><br>
-<b><i>1. Initialize the script</b></i><br>
+<b><i>1. Initialize the link headers</b> [<a href="http://www.w3.org/Protocols/9707-link-header.html">1</a>, <a href="http://www.w3.org/wiki/LinkHeader">2</a>, <a href="https://github.com/Geek-Research-Lab/polymer-experiments/blob/webcomponents-mix/experiments/tests/preload/specs.md">3</a>]</i><br>
 ```js
-var abcd = document.getElementsByTagName("script");
+    <link rel="stylesheet" href="test.css" as="css">
+    <link rel="script" href="meowNinja.js" as="javascript">
 ```
-<br><b><i>2. Add script loader</b></i><br>
+<br><b><i>2. Add the scripts</b></i><br>
+Build a script loader, Here i have built and named it as <code>meowNinja.js</code> <br>
 ```js
-abcd.src = 'MeowNinjaX.js';
+        var ref = window.document.getElementsByTagName("script")[0];
+		var script = window.document.createElement("script");
+		script.src = src;
+		script.async = true;
+		ref.parentNode.insertBefore(script, ref);
+		if(cb && typeof(cb) === "function") {
+			script.onLoad = cb;
+		}
+		return script;
 ```
+The script loader is already initilized in link header...
+<br>
 <br><b><i>3. Load the scripts</b></i><br>
 Load a main script (meow.js) along with any relevant script from the list of scripts in MeowJS<br>
+```js
+    <script src="meow.js"></script>
+	<script src="Meow_Hello.js"></script>
+	<script src="MeowDOM.js"></script>
+	<script src="MeowString.js"></script>
+	<script src="MeowUTF.js"></script>
+	<script src="HiddenMeow.js"></script>
+	<script src="Meow_HTTP.js"></script>
+	<script src="Meow_IP.js"></script>
+	<script src="Meow_Base.js"></script>
+	<script src="Meow_Base64.js"></script>
+	<script src="Meow_forEach.js"></script>
+	<script src="Meow_Path.js"></script>
+	<script src="Meow_EnvProcess.js"></script>
+```
 To know in detail --> refer <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/status.md">status.md</a><br>
 Let's take MeowFunText.js as an example and see how to load it.<br>
 ```js
-MeowNinja_API.load("meow.js");
-MeowNinja_API.load("MeowFunText.js");
+    meowNinja("meow.js");
+    meowNinja("MeowFunText.js");
 ```
-<br>Try some example test files --- <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/tests">click here</a>
+Then, add it's script source.
+```js
+<script src="MeowFunText.js"></script>
+```
+<br>Try the example test file --- <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.html">test.html</a>
+ and <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.css">test.css</a><br>
+ Another test file (WebRTC) --- <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/tests">click here</a>
 <br>
 <br>
 <b>Testing:-</b><br>
