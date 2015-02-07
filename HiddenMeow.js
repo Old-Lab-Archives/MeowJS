@@ -83,7 +83,7 @@ var HiddenMeow = function() {
       var Meow_Sum, Meow_HelloInput;
       for (m = 0; m < zzz.length; m++) {
         Meow_HelloAlpha[m] = [];
-        Meow_HelloInput = Meow_Power.Meow_Char.Meow_IndexOf(zzz[m]);
+        Meow_HelloInput = Meow_Power.Meow_Char.indexOf(zzz[m]);
         if (Meow_HelloInput === -1) {
           throw new Error('Invalid character: ' + zzz[m]);
         }
