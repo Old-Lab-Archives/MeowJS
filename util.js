@@ -100,7 +100,6 @@ var util = function() {
 	};
 	*/
 
-	var MeowInherits;
 	//exporting
 	module.exports = util.MeowInherits;
 	exports.extend = function(origin, xyz) {
@@ -115,7 +114,10 @@ var util = function() {
 		}
 		return origin;
 	};
+	
+	/*
 	function hasOwnProperty(MeowObj, MeowProp) {
 		return Object.prototype.hasOwnProperty.call(MeowObj, MeowProp);
 	}
+	*/
 };
