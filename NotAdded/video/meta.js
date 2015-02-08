@@ -1,3 +1,4 @@
+var meta;
 meta(function(x, xx) {
 
 	// Value is set, since crash might occur if more uses it.
