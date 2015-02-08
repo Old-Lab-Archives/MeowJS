@@ -3,28 +3,38 @@ var MeowEventProxy = function() {
 	'use strict';
 	var define, proxy;
 	var xxx = this;
+
 	// global definition
 	MeowEventProxy.$ = function(name, definition) {
+
 	// checking define
 	var MeowDefn = typeof define === 'function';
-	// checking exports
-	var exports = typeof module !== 'undefined' && module.exports;
+
+	// exporting
+	var exports;
+	exports = typeof module !== 'undefined' && module.exports;
+	
 	if(MeowDefn) {
+
 		// AMD module or CMD module
 		define(MeowDefn);
 	} else {
+
 		// assigning common namespaces or global object
 		xxx[name] = definition();
 	}
 	}('MeowEventProxy', function (debug) {
+
 		// debugging
 		debug = debug || function() {};
 		//////////////////////////////
+
 		// declarations
 		var MeowSlice = Array.prototype.slice;
 		var MeowConcat = Array.prototype.concat;
 		var MeowAllEvent = 'all';
 		/////////////////
+		
 		var MeowEventProxyy;
 		MeowEventProxy.MeowEventProxyy = function() {
 			if(!(xxx instanceof MeowEventProxyy)) {
