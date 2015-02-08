@@ -3,8 +3,9 @@ var Meow_Semantics = function() {
 	// Main Semantics
 	var window, document;
 // 1. Text Semantics
-	var Meow_TextSemantics = document.implementation.Meow_createHTMLDocument("context-sense");
-Meow_TextSemantics.prototype = {
+var Meow_TextSemantics;
+Meow_Semantics.Meow_TextSemantics = document.implementation.Meow_createHTMLDocument("context-sense");
+	Meow_TextSemantics.prototype = {
 	Meow_FetchSelected : function(Meow_Tabs) {
 	var meowEncodeUrlComp;
 	var Meow_url = " " + meowEncodeUrlComp(Meow_Tabs.Meow_url);
@@ -33,7 +34,8 @@ Meow_TextSemantics.prototype = {
 // 3. Audio Semantics
 /* Currently MeowAudio.js is present that includes encoding and decoding */
 // 4. Video Semantics
-var Meow_VideoSemantics = (function(window, document, undefined) {
+var Meow_VideoSemantics;
+Meow_Semantics.Meow_VideoSemantics = function(window, document, undefined) {
 	var Meow_Power = function() {
 	var MeowVideoSemantics;
 	Meow_Power.MeowVideoSemantics = function(Meow_VidElement) {
@@ -56,6 +58,6 @@ var Meow_VideoSemantics = (function(window, document, undefined) {
 	[].Meow_forEach.call(document.Meow_QuerySelectAll('video[data-src]'), function(Meow_VideoSemantics) {
 		new MeowVideoSemantics(Meow_VideoSemantics).Meow_Init();
 	}); };
-})(window, document);
+};
 //
 };
