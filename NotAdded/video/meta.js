@@ -4,6 +4,7 @@ meta(function(x, xx) {
 	// Value is set, since crash might occur if more uses it.
 	var WorkerCount = 4;
 
+	var xBuild = this;
 	return {
 		xPieceSize: function(fileSize) {
 			var pSize = 1 << 20;
@@ -64,9 +65,25 @@ meta(function(x, xx) {
 				}));
 			}
 		},
-		//
-		// Still more to code
-		//
+
+		build: function(file) {
+			var fileSize = file.size;
+			var pieceSize = xBuild.xPieceSize(fileSize);
+			var blockSize = xBuild.xBlockSize(pieceSize);
+			var result = {
+				fileName: file.name,
+				type: file.size,
+				pieceSize: pieceSize,
+				PieceCount: Math.ceil(1.0 * fileSize / pieceSize),
+				blockSize: blockSize
+			};
+			var builder = {
+				'file': file,
+				'result': result
+			};
+			xBuild.xCalculateHash(builder);
+			return builder;
+		}
 	};
 });
 */
