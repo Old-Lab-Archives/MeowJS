@@ -1,6 +1,7 @@
 var MeowPkg = function() {
 	var format, csv;
-	var Meow_Pkg;
+	var build = this;
+	var Meow_Pkg, n;
 	var Meow_Base = ['Meow_Base.js'];
 	MeowPkg.Meow_Pkg = Meow_Base.Meow_Extend({
 		Meow_Construct: function(_private, _public) {
