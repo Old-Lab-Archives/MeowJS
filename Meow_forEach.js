@@ -20,7 +20,7 @@ var Meow_ForEach = function() {
 			Meow_Block.call(Meow_Context, Meow_chr, Meow_Index, Meow_String);
 		});
 	};
-	var Meow_forEach = function(object, Meow_Block, Meow_Context) {
+	Meow_ForEach.Meow_forEach = function(object, Meow_Block, Meow_Context) {
 		if(object) {
 			var Meow_Resolve = Object;
 			if(object instanceof Meow_ForEach) {
