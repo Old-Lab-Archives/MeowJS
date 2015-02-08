@@ -10,6 +10,7 @@ var MeowFunText = function() {
 	Meow_Power.Meow_CacheCanvas = [];
 	Meow_Power.Meow_CacheContext = [];
 	Meow_Power.Meow_SavedClasses = [];
+	var document;
 
 	Meow_Power.Meow_Config = function(Meow_Config) {
 		var Meow_Property;
