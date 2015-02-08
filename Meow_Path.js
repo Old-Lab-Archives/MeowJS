@@ -4,7 +4,6 @@ var Meow_Path = function() {
 	"use strict";
 	var Meow_isWin = Meow_Process.platform === 'win32';
 	var Meow_PathSplit;
-	var Meow_Args = arguments;
 	Meow_Path.meowArrayNormalize = function(Meow_Parts, Meow_AllowAbvRoot) {
 		var Meow_Up = 0;
 		for(var m = Meow_Parts.length; m >= 0; m--) {
@@ -24,7 +23,7 @@ var Meow_Path = function() {
 		}
 		return Meow_Parts;
 	};
-	var Meow_DirName;
+
 	Meow_Path.Meow_DirName = function(Meow_Path) {
 		var Meow_Dir = Meow_PathSplit.exec(Meow_Path)[1] || '';
 		if(!Meow_Dir) {
@@ -35,7 +34,7 @@ var Meow_Path = function() {
 			return Meow_Dir.substring(0, Meow_Dir.length - 1);
 		}
 	};
-	var Meow_BaseName;
+
 	Meow_Path.Meow_BaseName = function(Meow_Path, Meow_Ext) {
 		var f = Meow_PathSplit.exec(Meow_Path)[2] || '';
 		if(Meow_Ext && f.substr(-1 * Meow_Ext.length) === Meow_Ext) {
@@ -43,19 +42,19 @@ var Meow_Path = function() {
 		}
 		return f;
 	};
-	var Meow_ExtName;
+
 	Meow_Path.Meow_ExtName = function(Meow_Path) {
 		return Meow_PathSplit.exec(Meow_Path)[3] || '';
 	};
-	var Meow_Exist;
+
 	Meow_Path.Meow_Exist = function(Meow_Path, meowCallback) {
-		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err, Meow_Stats) {
+		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err) {
 			if(meowCallback) {
 				meowCallback(err ? false : true);
 			}
 		});
 	};
-	var Meow_ExistSync;
+
 	Meow_Path.Meow_ExistSync = function(Meow_Path) {
 		try {
 			Meow_Process.binding('Meow_Hello').stat(Meow_Path);
