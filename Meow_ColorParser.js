@@ -228,6 +228,7 @@ var Meow_ColorParser = function() {
 			return '#' + r + g + b;
 		};
 		
+		/*
 		Meow_Power.getHelpXML = function() {
 			var Meow_Array, document;
 			var examples = new Meow_Array();
@@ -257,5 +258,6 @@ var Meow_ColorParser = function() {
 			}
 			return xml;
 		};
+		*/
 	}
 };
