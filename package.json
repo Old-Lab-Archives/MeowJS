@@ -43,6 +43,7 @@
     "NotAdded/MeowWebRTC_video.js",
     "MeowPkg.js",
     "NotAdded/video/meta.js",
-    "NotAdded/video/xxWorker.js"
+    "NotAdded/video/xxWorker.js",
+    "NotAdded/video/xx.js"
   ]
 }
