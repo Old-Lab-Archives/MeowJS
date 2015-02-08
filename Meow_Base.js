@@ -9,7 +9,7 @@ var MeowBase = function() {
 	var meowArray, Meow_array;
 	var Meow_Slice;
 	var Meow_Global;
-	var n, js, MeowJS;
+	var js, n;
 	var Meow_Base;
 	MeowBase.Meow_Base = function() {
 	Meow_Base.Meow_Extend = function(Meow_Instance) {
@@ -207,7 +207,8 @@ var Meow_Extend = (Array.prototype, {
 
 	// Meow_Init
     var Meow_Init = function() {
-    	var Meow_Pkg, meowCopy;
+    var Meow_Pkg = ['MeowPkg.js'];
+    var meowCopy;
 	Meow_Init = Meow_Global.Meow_Init = new Meow_Pkg(build, Meow_Init);
 	Meow_Init.toString = n("[Meow_Init]");
 	var exports = build.exports;
