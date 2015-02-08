@@ -40,9 +40,8 @@ var Meow_HTTP = function() {
     }
   };
   
-  var Meow_Vary;
-    Meow_HTTP.Meow_Vary = function(Meow_Response, Meow_Field) {
-      var append;
+  Meow_HTTP.Meow_Vary = function(Meow_Response, Meow_Field) {
+  var append;
     if (!Meow_Response || !Meow_Response.Meow_FetchHdr || !Meow_Response.Meow_SetHdr) {
       throw new TypeError('response arg. is needed');
     }
