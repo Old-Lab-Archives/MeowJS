@@ -26,6 +26,48 @@ var Meow_Path = function() {
 		}
 		return Meow_Parts;
 	};
+	var Meow_DirName;
+	Meow_Path.Meow_DirName = function(Meow_Path) {
+		var Meow_Dir = Meow_PathSplit.exec(Meow_Path)[1] || '';
+		if(!Meow_Dir) {
+			return '.';
+		} else if(Meow_Dir.length === 1 || (Meow_isWin && Meow_Dir.length <= 3 && Meow_Dir.charAt(1) === ':')) {
+			return Meow_Dir;
+		} else {
+			return Meow_Dir.substring(0, Meow_Dir.length - 1);
+		}
+	};
+	var Meow_BaseName;
+	Meow_Path.Meow_BaseName = function(Meow_Path, Meow_Ext) {
+		var f = Meow_PathSplit.exec(Meow_Path)[2] || '';
+		if(Meow_Ext && f.substr(-1 * Meow_Ext.length) === Meow_Ext) {
+			f = f.substr(0, f.length - Meow_Ext.length);
+		}
+		return f;
+	};
+	var Meow_ExtName;
+	Meow_Path.Meow_ExtName = function(Meow_Path) {
+		return Meow_PathSplit.exec(Meow_Path)[3] || '';
+	};
+	var Meow_Exist;
+	Meow_Path.Meow_Exist = function(Meow_Path, meowCallback) {
+		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err, Meow_Stats) {
+			if(meowCallback) {
+				meowCallback(err ? false : true);
+			}
+		});
+	};
+	var Meow_ExistSync;
+	Meow_Path.Meow_ExistSync = function(Meow_Path) {
+		try {
+			Meow_Process.binding('Meow_Hello').stat(Meow_Path);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	};
+	//////////////////////////////////////////////////////
+	// For Windows
 	if(Meow_isWin) {
 		Meow_PathSplit = /^(.+(?:[\\\/](?!$)|:)|[\\\/])?((?:.+?)?(\.[^.]*)?)$/;
 		var Meow_DeviceSplit = /^([a-zA-Z]:|[\\\/]{2}[^\\\/]+[\\\/][^\\\/]+)?([\\\/])?(.*?)$/;
@@ -133,39 +175,5 @@ var Meow_Path = function() {
 			}).join('/'));
 		};
 	}
-	var Meow_DirName = function(Meow_Path) {
-		var Meow_Dir = Meow_PathSplit.exec(Meow_Path)[1] || '';
-		if(!Meow_Dir) {
-			return '.';
-		} else if(Meow_Dir.length === 1 || (Meow_isWin && Meow_Dir.length <= 3 && Meow_Dir.charAt(1) === ':')) {
-			return Meow_Dir;
-		} else {
-			return Meow_Dir.substring(0, Meow_Dir.length - 1);
-		}
-	};
-	var Meow_BaseName = function(Meow_Path, Meow_Ext) {
-		var f = Meow_PathSplit.exec(Meow_Path)[2] || '';
-		if(Meow_Ext && f.substr(-1 * Meow_Ext.length) === Meow_Ext) {
-			f = f.substr(0, f.length - Meow_Ext.length);
-		}
-		return f;
-	};
-	var Meow_ExtName = function(Meow_Path) {
-		return Meow_PathSplit.exec(Meow_Path)[3] || '';
-	};
-	var Meow_Exist = function(Meow_Path, meowCallback) {
-		Meow_Process.binding('Meow_Hello').stat(Meow_Path, function(err, Meow_Stats) {
-			if(meowCallback) {
-				meowCallback(err ? false : true);
-			}
-		});
-	};
-	var Meow_ExistSync = function(Meow_Path) {
-		try {
-			Meow_Process.binding('Meow_Hello').stat(Meow_Path);
-			return true;
-		} catch(e) {
-			return false;
-		}
-	};
+	////////////////////////////////////////////////////////
 };
