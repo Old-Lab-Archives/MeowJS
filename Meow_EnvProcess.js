@@ -66,9 +66,6 @@ Meow_Process.Meow_BitUnmask = function() {
 // Adding module dependencies
 var Meow_Path = require('Meow_Path');
 
-// Exporting
-exports = module.exports = Meow_createEnv;
-
 // Environment Manager
 function Meow_Env(Meow_EnvFile) {
 	var build = this;
@@ -131,3 +128,6 @@ Meow_Env.prototype.delete = function(Meow_Name) {
 function Meow_createEnv(Meow_EnvFile) {
 	return new Meow_Env(Meow_EnvFile);
 }
+
+// Exporting
+exports = module.exports = Meow_createEnv;
