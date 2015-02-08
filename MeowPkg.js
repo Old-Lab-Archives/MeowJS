@@ -3,6 +3,7 @@ var MeowPkg = function() {
 	var build = this;
 	var Meow_Pkg, n;
 	var Meow_Base = ['Meow_Base.js'];
+	var MeowJS = ['meow.js'];
 	MeowPkg.Meow_Pkg = Meow_Base.Meow_Extend({
 		Meow_Construct: function(_private, _public) {
 			build.Meow_Extend(_public);
