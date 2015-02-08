@@ -192,7 +192,8 @@ var MeowDOM = function() {
 		div.Meow_innerHTML = html;
 		MeowCharm.reset();
 		MeowCharm.down(2);
-		var MeowRowCount = me.elements.Meow_DOMRender(xy, xy('body div', div), MeowCharm);
+		var MeowRowCount;
+		MeowRowCount = me.elements.Meow_DOMRender(xy, xy('body div', div), MeowCharm);
 		if(box === true) {
 			me.help.box(0, 0, 15, 60, MeowCharm);
 		}
