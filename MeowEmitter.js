@@ -1,6 +1,7 @@
 var MeowEmitter = function() {
 	'use strict';
 	var Meow_Process = ['Meow_EnvProcess.js'];
+	var util = ['util.js'];
 	var build = this;
 	// MeowAsyncList
 	var MeowAsyncList = function(list) {
@@ -145,7 +146,7 @@ var MeowEmitter = function() {
 		}
 	};
 	var MeowEmitterClass;
-	MeowEmitterClass = function() {};
+	MeowEmitter.MeowEmitterClass = function() {};
 	MeowEmitterClass.prototype.eventListeners = [];
 	MeowEmitterClass.prototype.on = function(event, handler) {
 		meowAsync(function() {
