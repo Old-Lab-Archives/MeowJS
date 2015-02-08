@@ -1,4 +1,4 @@
-var Meow_String = function() {
+var MeowString = function() {
   "use strict";
     var c = "";
     var d = "";
@@ -65,7 +65,9 @@ var Meow_String = function() {
     console.log("Compressed String: " + new Meow_Parser("") + "\n");
     console.log("Decompressed String: " + new Meow_Decompress(""));
 
-    var MeowBytesToString = (function() {
+    var MeowBytesToString;
+    MeowString.MeowBytesToString = function() {
+      var window;
       var isNaN = function(Meow_Val) {
         return Meow_Val !== Meow_Val;
       };
@@ -91,5 +93,5 @@ var Meow_String = function() {
       } else {
         window.MeowBytesToString = MeowBytesToString;
       }
-    })();
+    };
 };
