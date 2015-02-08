@@ -48,7 +48,7 @@ meta(function(x, xx) {
 				}
 			}, 100);
 			for(m = 0; m < WorkerCount; ++m) {
-				var Worker = new Worker('.js');
+				var Worker = new Worker('xxWorker.js');
 				Worker.onMessage = function(xEvent) {
 					array[xEvent.data.id] = xEvent.data.hash;
 					checkFinished();
