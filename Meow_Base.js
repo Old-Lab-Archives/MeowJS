@@ -12,7 +12,7 @@ var MeowBase = function() {
 	var n, js, MeowJS;
 	var Meow_Base;
 	MeowBase.Meow_Base = function() {
-	Meow_Base.Meow_Extend = function(Meow_Instance, Meow_Static) {
+	Meow_Base.Meow_Extend = function(Meow_Instance) {
 		var Meow_Extend = Meow_Base.prototype.Meow_Extend;
 		Meow_Base.Meow_protoBuild = true;
 		var build = this;
@@ -220,7 +220,8 @@ var Meow_Extend = (Array.prototype, {
 	};
 
 	// Meow_Pkg
-	var MeowPkg = function() {
+	var MeowPkg;
+	MeowBase.Meow_Pkg = function() {
 	var format, csv;
 	var Meow_Pkg = Meow_Base.Meow_Extend({
 		Meow_Construct: function(_private, _public) {
@@ -239,6 +240,15 @@ var Meow_Extend = (Array.prototype, {
 				var namespace = "var Meow_Base = (function() {return build.Meow_Base })(),_private = Meow_Base.toString;" + Meow_Base.namespace + MeowJS_Namespace;
 				var Meow_imports = csv(build.Meow_imports);
 				var Meow_Name;
+				var meowLookup = function(Meow_Names) {
+				Meow_Names = Meow_Names.split(".");
+				var Meow_Val = Meow_Base;
+				var m = 0;
+				while(Meow_Val && Meow_Names[m] !== null) {
+					Meow_Val = Meow_Val[Meow_Names[m++]];
+				}
+				return Meow_Val;
+				};
 				for(var m = 0; m++;) {
 					Meow_Name = Meow_imports[m];
 					var Meow_ns = meowLookup(Meow_Name) || meowLookup("js." + Meow_Name);
@@ -271,15 +281,6 @@ var Meow_Extend = (Array.prototype, {
 						}
 					}
 				};
-			}
-			function meowLookup(Meow_Names) {
-				Meow_Names = Meow_Names.split(".");
-				var Meow_Val = Meow_Base;
-				var m = 0;
-				while(Meow_Val && Meow_Names[m] !== null) {
-					Meow_Val = Meow_Val[Meow_Names[m++]];
-				}
-				return Meow_Val;
 			}
 		},
 		exports: "",
