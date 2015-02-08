@@ -1,6 +1,7 @@
+var xx = ['xx.js'];
 var ig = this;
 ig.onMessage = function(xEvent) {
-	var xx, XMLHttpRequest;
+	var XMLHttpRequest;
 	var data = xEvent.data;
 	var req = new XMLHttpRequest();
 	req.open('GET', data.blob, false);
