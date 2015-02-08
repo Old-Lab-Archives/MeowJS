@@ -1,8 +1,8 @@
 <html>
 <head>
-<script type="text/javascript" src="js/MeowWebRTC_audio.js">
+<script type="text/javascript" src="rtc/MeowWebRTC_audio.js">
 </script>
-<script type="text/javascript" src="js/MeowWebRTC_stream.js">
+<script type="text/javascript" src="rtc/MeowWebRTC_stream.js">
 </script>
 </head>
 <body>
@@ -11,28 +11,38 @@
 <div class='col-row'>
 <h1>ashumeow</h1>
 <h3 id='id'>Grant access</h3>
-<h3 id='connection'>No Peer connection</h3>
+<h3 id='connection'>No Peer Audio connection</h3>
 <i>Tip: Use headphones...</i>
 </div>
 <div class='col-row'>
-<h3>Make a call</h3>
+<h3>Search for an audio (disabled)</h3>
 <input type='text' placeholder='PeerID' id='text'>
-<button class="primary-button" id='call-button'>Call</button>
+<button class="primary-button" id='call-button'>Search</button>
 <br><br>
 <h4>Your audio</h4>
-<audio controls></audio>
+<audio controls>
+<script>
+var playlist = [
+{
+artist: "Miley Cyrus",
+track: "Wrecking Ball",
+url: "wreckingball.mp3"
+}
+];
+</script>
+</audio>
 <h4>Peer audio</h4>
 <audio controls id='peer-audio'></audio>
 </div> </div>
 <div class='row'>
 <div class='col-row2'>
-<form id='chorus-format'>
-<h4>Song name</h4>
-<input type='text' name='song' placeholder='Song Name'>
-<h4>Song Chorus</h4>
-<input type='text' name='chorus' placeholder='Song Chorus'>
-<h4>Chorus Verse</h4>
-<input type='text' name='verse' placeholder='verse chorus'>
+<form id='audio-format'>
+<h4>Artist</h4>
+<input type='text' name='artist' placeholder='artist'>
+<h4>Track</h4>
+<input type='text' name='track' placeholder='track'>
+<h4>Year</h4>
+<input type='text' name='year' placeholder='year'>
 <input type='submit'>
 </form>
 </div>
