@@ -1,6 +1,6 @@
 var MeowWebRTC_stream = function() {
 'use strict';
-var Meow_Process = ['Meow_EnvProcess.js'];
+//var Meow_Process = ['Meow_EnvProcess.js'];
 var build = this;
 var util = ['util.js'];
 var MeowEmitter = ['MeowEmitter.js'];
