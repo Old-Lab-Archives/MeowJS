@@ -40,6 +40,7 @@
     "MeowWebRTC_stream.js",
     "MeowEmitter.js",
     "MeowEventProxy.js",
-    "util.js"
+    "util.js",
+    "NotAdded/MeowWebRTC_video.js"
   ]
 }
