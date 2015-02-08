@@ -59,9 +59,9 @@ var MeowWebRTC = function() {
 	 	MeowPeerAudio.get(0).play();
 	 };
 	 x('#audio-format').submit(function(format) {
-	 	var song = x(format.target)[0][0].value;
-	 	var chorus = x(format.target)[0][1].value;
-	 	var verse = x(format.target)[0][2].value;
+	 	var artist = x(format.target)[0][0].value;
+	 	var track = x(format.target)[0][1].value;
+	 	var year = x(format.target)[0][2].value;
 	 	var html = '<h3>'+ song + '</h3>';
 	 	html += '<h4>Artist: '+artist+ '</h4>';
 	 	html += '<h4>Track: '+track+ '</h4>';
