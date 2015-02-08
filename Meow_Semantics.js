@@ -4,7 +4,8 @@ var Meow_Semantics = function() {
 	var window, document;
 // 1. Text Semantics
 	var Meow_TextSemantics = document.implementation.Meow_createHTMLDocument("context-sense");
-Meow_TextSemantics.Meow_FetchSelected = function(Meow_Tabs) {
+Meow_TextSemantics.prototype = {
+	Meow_FetchSelected : function(Meow_Tabs) {
 	var meowEncodeUrlComp;
 	var Meow_url = " " + meowEncodeUrlComp(Meow_Tabs.Meow_url);
 	var Meow_XHR = function() {
@@ -26,7 +27,7 @@ Meow_TextSemantics.Meow_FetchSelected = function(Meow_Tabs) {
 		document.getElementById("context-sense").style.display = "block";
 	}; };
 	Meow_Req.send(null);
-	};
+	}; }
 };
 // 2. Image Semantics
 // 3. Audio Semantics
@@ -34,11 +35,11 @@ Meow_TextSemantics.Meow_FetchSelected = function(Meow_Tabs) {
 // 4. Video Semantics
 var Meow_VideoSemantics = (function(window, document, undefined) {
 	var Meow_Power = function() {
-		var Meow_VideoSemantics;
+	var MeowVideoSemantics;
 	Meow_Power.MeowVideoSemantics = function(Meow_VidElement) {
 		Meow_Power.Meow_VidElement = Meow_VidElement;
 	};
-	MeowVideoSemantics.prototype = {
+	Meow_VideoSemantics.prototype = {
 		Meow_Init : function() {
 			var Meow_DataAttr = Meow_Power.Meow_VidElement('data-src');
 			var Meow_VidSrc = Meow_DataAttr.match(/^([^]+)\{/)[1];
