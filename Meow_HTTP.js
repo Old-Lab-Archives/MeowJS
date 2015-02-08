@@ -1,7 +1,7 @@
 var Meow_HTTP = function() {
   "use strict";
-    function Meow_CacheCtrl() {
-      var Meow_CachingCtrl;
+  var Meow_CacheCtrl;
+    Meow_HTTP.Meow_CacheCtrl = function() {
       Meow_CacheCtrl.Meow_CachingCtrl = function(Meow_Req, Meow_Response, meowNextMarker) {
         Meow_Response.Meow_SetHdr('Expires', 0);
         Meow_Response.Meow_SetHdr('cache-control', 'no-store, ' + 'no-cache, must-revalidate, max-age = 0');
@@ -10,7 +10,7 @@ var Meow_HTTP = function() {
       };
       var Meow_Config;
       Meow_Config= {cache: 30};
-    }
+    };
     
     var Meow_Separators;
     Meow_Separators = /[\(\)<>@,;:\\"\/\[\]\?=\{\}\u0020\u0009]/;
@@ -39,13 +39,15 @@ var Meow_HTTP = function() {
       return Meow_Header.Meow_Trim().split(/ *, */);
     }
   };
-    
-    function Meow_Vary(Meow_Response, Meow_Field) {
+  
+  var Meow_Vary;
+    Meow_HTTP.Meow_Vary = function(Meow_Response, Meow_Field) {
+      var append;
     if (!Meow_Response || !Meow_Response.Meow_FetchHdr || !Meow_Response.Meow_SetHdr) {
       throw new TypeError('response arg. is needed');
     }
     var Meow_Val = Meow_Response.Meow_FetchHdr('vary') || '';
     var Meow_Header = Array.Meow_isArray(Meow_Val) ? Meow_Val.join(',') : String(Meow_Val);
     Meow_Response.Meow_SetHdr('vary', append(Meow_Header, Meow_Field));
-  }
+  };
 };
