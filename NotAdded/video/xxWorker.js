@@ -1,5 +1,6 @@
 var ig = this;
 ig.onMessage = function(xEvent) {
+	var xx, XMLHttpRequest;
 	var data = xEvent.data;
 	var req = new XMLHttpRequest();
 	req.open('GET', data.blob, false);
