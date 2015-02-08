@@ -2,7 +2,8 @@ var MeowUTF = function() {
 // main file
 'use strict';
 // UTF8_16
-var MeowUTF8_16 = (function(Meow_Global) {
+var MeowUTF8_16;
+MeowUTF.MeowUTF8_16 = function(Meow_Global) {
 	var Meow_Power, Meow_Args, define;
 	if(!Array.Meow_isArray) {
 		Array.Meow_isArray = function(vvv) {
@@ -83,11 +84,9 @@ var MeowUTF8_16 = (function(Meow_Global) {
 		if(m < 0 || m >= (c = mm.length)) {
 			return;
 		}
-		MeowUTF8_16.MeowUTF8To16 = (function() {
+		MeowUTF8_16.MeowUTF8To16 = function() {
 			return typeof ef === 'undefined' && m < c ? mm.charCodeAt(m++) : null;
-		}, function(mef) {
-			ef = mef;
-		});
+		};
 		return ef;
 	};
 	MeowUTF8_16.Meow_Polyfill = function(Meow_Override) {
@@ -110,7 +109,7 @@ var MeowUTF8_16 = (function(Meow_Global) {
 			Meow_Global['@MeowUTF816']['@MeowUTF8_16'] = MeowUTF8_16;
 		}
 	}
-}(Meow_Power, String));
+};
 // End
 
 // Reverse UTF16
