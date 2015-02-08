@@ -23,6 +23,7 @@ meta(function(x, xx) {
 
 		xCalculateHash: function(builder) {
 			var m;
+			var window;
 			var workers = [];
 			var file = builder.file;
 			var pieceSize = builder.result.pieceSize;
@@ -45,10 +46,27 @@ meta(function(x, xx) {
 					}
 				}
 			}, 100);
+			for(m = 0; m < WorkerCount; ++m) {
+				var Worker = new Worker('.js');
+				Worker.onMessage = function(xEvent) {
+					array[xEvent.data.id] = xEvent.data.hash;
+					checkFinished();
+					window.URL.revokeObjectURL(xEvent.data.blob);
+				};
+				workers.push(Worker);
+			}
+			for(m = 0; m < totalPieces; ++m) {
+				var blob = file.slice(pieceSize * m, pieceSize * (m + 1));
+				var blobUrl = window.URL.createObjectURL(blob);
+				workers[m % WorkerCount].postMessage(x.clone({
+					id: m,
+					blob: blobUrl
+				}));
+			}
+		},
 		//
 		// Still more to code
 		//
-		}
 	};
 });
 */
