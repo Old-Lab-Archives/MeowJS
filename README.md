@@ -1,7 +1,7 @@
 <b>MeowJS</b> --- <i>A simple fast JavaScript Library that does not require any built-in framework... it all runs through scripts. An user just requires any web browser with javascript enabled.</i> <br>
 Licensed under "GNU GPL v2.0".<br>
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Geek-Research-Lab/MeowJS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)    [![Build Status](https://snap-ci.com/snap-ci/docs.snap-ci.com/branch/master/build_image)](https://snap-ci.com/Geek-Research-Lab/MeowJS/branch/master)
-<a href="https://codeclimate.com/github/Geek-Research-Lab/MeowJS"><img src="https://codeclimate.com/github/Geek-Research-Lab/MeowJS/badges/gpa.svg" /></a> [![Build Status][travis-image]][travis-url]
+[![Code Climate](https://codeclimate.com/github/Geek-Research-Lab/MeowJS.svg)](https://codeclimate.com/github/Geek-Research-Lab/MeowJS) [![Build Status][travis-image]][travis-url]
 [travis-url]: https://travis-ci.org/Geek-Research-Lab/MeowJS
 [travis-image]: https://travis-ci.org/Geek-Research-Lab/MeowJS.svg?branch=master
 <br>
