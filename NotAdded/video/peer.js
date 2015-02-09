@@ -3,6 +3,7 @@ define(function() {
 	var browser = null;
 	var window;
 	var ig = this;
+	var x, JSON;
 	if(window.mozRTCPeerConnection) {
 		browser = 'moz';
 		window.RTCPeerConnection = mozRTCPeerConnection;
@@ -133,8 +134,26 @@ define(function() {
 				ig.onCloseOnce();
 			}
 		},
+		onReady: function() {},
+		onClose: function() {},
+		onMessage: function() {},
+		OutTransformSdp: function(sdp) {
+			// sdp => Session Description Protocol
+			/* refer
+			http://tools.ietf.org/html/rfc4566
+			*/
+			var spiltted = sdp.split("b=AS:30");
+			var newSdp = spiltted[0] + "b=AS:1638400" + spiltted[1];
+			return newSdp;
+		},
+		wsSend: function(obj) {
+			if(!x.isString(obj)) {
+				obj = JSON.stringify(obj);
+			}
+			ig.ws.send(obj);
+		},
 		//
-		// Still more to code!
+		// Still more to code
 		//
 	};
 });
