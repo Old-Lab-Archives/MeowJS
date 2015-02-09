@@ -1,3 +1,5 @@
+var define;
+define(function() {
 if(window.WebKitRequestFileSystem) {
 	window.reqFileSys = window.WebKitRequestFileSystem;
 }
@@ -129,6 +131,8 @@ sysFile.prototype = {
 return {
 	File: sysFile
 };
+
+});
 
 //////////////////////////////////////////////////
 
