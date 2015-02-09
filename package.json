@@ -40,7 +40,6 @@
     "MeowEmitter.js",
     "MeowEventProxy.js",
     "util.js",
-    "NotAdded/MeowWebRTC_video.js",
     "MeowPkg.js",
     "NotAdded/video/meta.js",
     "NotAdded/video/xxWorker.js",
