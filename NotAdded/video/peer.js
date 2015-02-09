@@ -104,6 +104,35 @@ define(function() {
 			ig.peerConnection.createOffer(x.bind(ig.onOffer, ig), null, constraints);
 		},
 		listen: function() {},
+		send: function(obj) {
+			if(ig.peerConnection && ig.peerConnection.iceConnectState === 'disconnected') {
+				ig.close();
+			} if(ig.closed) {
+				return;
+			} if(x.isObject(obj)) {
+				obj = JSON.stringify(obj);
+			} if(ig.peerConnection && !ig.ready) {
+				x.delay(x.bind(ig.send, ig), 2000, obj);
+			} else {
+				ig.sent += obj.length;
+				ig.dataChannel.send(obj);
+			}
+		},
+		close: function() {
+			if(ig.dataChannel) {
+				ig.dataChannel.close();
+				ig.dataChannel = null;
+			} if(ig.peerConnection) {
+				ig.peerConnection.close();
+				ig.peerConnection = null;
+			}
+			ig.ready = true;
+			ig.closed = true;
+			if(x.isFunction(ig.onClose)) {
+				ig.onCloseOnce = ig.onCloseOnce || x.once(ig, onClose);
+				ig.onCloseOnce();
+			}
+		},
 		//
 		// Still more to code!
 		//
