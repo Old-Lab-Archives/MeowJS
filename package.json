@@ -45,6 +45,7 @@
     "NotAdded/video/xxWorker.js",
     "NotAdded/video/xx.js",
     "NotAdded/video/sys.js",
-    "NotAdded/video/httpPeer.js"
+    "NotAdded/video/httpPeer.js",
+    "NotAdded/video/wsPeer.js"
   ]
 }
