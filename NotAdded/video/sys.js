@@ -1,3 +1,6 @@
+if(window.WebKitRequestFileSystem) {
+	window.reqFileSys = window.WebKitRequestFileSystem;
+}
 function sysFile(size, callback) {
 	// fs => file system
 	// fe => file entry
