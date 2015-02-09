@@ -193,12 +193,42 @@ define(function() {
 			}
 		},
 		onAddStream: function() {},
-		onRemoveStream: function() {}
-
-		//
-		// Still more to code
-		//
+		onRemoveStream: function() {},
+		onDataChannel: function(xEvent) {
+			console.debug('Data channel is created.');
+			ig.dataChannel = xEvent.channel;
+			ig.bindChannelEvt();
+			ig.ready = true;
+			if(x.isFunction(ig.onReady)) {
+				ig.onReady();
+			}
+		},
+		bindChannelEvt: function() {
+			ig.dataChannel.onOpen = x.bind(ig.onDataChannelOpen, ig);
+			ig.dataChannel.onMessage = x.bind(ig.onDataChannelMsg, ig);
+			ig.dataChannel.onClose = x.bind(ig.onDataChannelClose, ig);
+		},
+		onDataChannelOpen: function() {
+			console.debug('Data channel opened');
+			ig.bindChannelEvt();
+			ig.ready = true;
+			if(x.isFunction(ig.onReady)) {
+				ig.onReady();
+			}
+		},
+		onDataChannelMsg: function(xEvent) {
+			ig.received += xEvent.data.length;
+			if(ig.onMessage) {
+				ig.onMessage(xEvent.data);
+			}
+		},
+		onDataChannelClose: function() {
+			ig.close();
+		}
 	};
+	//
+	// Still more to code
+	//
 });
 
 /*
