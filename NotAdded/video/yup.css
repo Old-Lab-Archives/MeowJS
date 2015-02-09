@@ -1,0 +1,13 @@
+@import 'stupid.css';
+
+.hidden {
+	display: none;
+}
+
+video {
+	max-width: 100%;
+}
+
+span-error {
+	color: #c0392b;
+}
