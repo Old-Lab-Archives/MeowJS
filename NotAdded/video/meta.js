@@ -47,13 +47,13 @@ meta(function(x, xx) {
 					}
 				}
 			}, 100);
+			var Worker = new Worker('xxWorker.js');
+			Worker.onMessage = function(xEvent) {
+				array[xEvent.data.id] = xEvent.data.hash;
+				checkFinished();
+				window.URL.revokeObjectURL(xEvent.data.blob);
+			};
 			for(m = 0; m < WorkerCount; ++m) {
-				var Worker = new Worker('xxWorker.js');
-				Worker.onMessage = function(xEvent) {
-					array[xEvent.data.id] = xEvent.data.hash;
-					checkFinished();
-					window.URL.revokeObjectURL(xEvent.data.blob);
-				};
 				workers.push(Worker);
 			}
 			for(m = 0; m < totalPieces; ++m) {
