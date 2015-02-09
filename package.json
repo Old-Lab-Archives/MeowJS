@@ -44,6 +44,7 @@
     "MeowPkg.js",
     "NotAdded/video/meta.js",
     "NotAdded/video/xxWorker.js",
-    "NotAdded/video/xx.js"
+    "NotAdded/video/xx.js",
+    "NotAdded/video/sys.js"
   ]
 }
