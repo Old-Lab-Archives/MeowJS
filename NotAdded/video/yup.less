@@ -1,0 +1,25 @@
+@import 'stupid.css';
+@import 'ui.less';
+
+.hidden {
+	display: none;
+}
+
+.clearfix() {
+	&:before,
+	&:after {
+	content: " ";
+	display: table;
+	}
+	&:after {
+	clear: both;
+	}
+}
+
+video {
+	max-width: 100%;
+}
+
+span.error {
+	color: @red;
+}
