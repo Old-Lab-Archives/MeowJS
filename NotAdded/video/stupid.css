@@ -1,0 +1,231 @@
+/* CSS Import dictionary */
+
+/* IE */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
+
+/* inline-block */
+audio,
+canvas,
+video {
+	display: inline-block;
+}
+
+/* audio display without controls */
+audio:not([controls]) {
+	display: none;
+	height: 0;
+}
+
+/* Style addressing */
+[hidden] {
+	display: none;
+}
+
+/* Fun time */
+html {
+	background: #fff;
+	color: #000;
+	font-family: serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+
+/* Removing default margin */
+body {
+	margin: 0;
+}
+
+/* focus - outline */
+a:focus {
+	outline: thin dotted;
+}
+
+/* Enpowering readability */
+a:active,
+a:hover {
+	outline: 0;
+}
+
+/* Typography */
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+b,
+
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+
+hr {
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+	height: 0;
+}
+
+mark {
+	background: #ff0;
+	color: #000;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace, serif;
+	font-size: 1em;
+}
+
+/* Readability for pre-formatted text */
+pre {
+	white-space: pre-wrap;
+}
+
+/* quotes */
+q {
+	quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+/* small */
+small {
+	font-size: 80%
+}
+
+/* line-height */
+sub,
+sup {
+	font-size: 75%,
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+
+/* Embedded */
+img {
+	border: 0;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+
+/* figures */
+figure {
+	margin: 0;
+}
+
+/* forms */
+fieldset {
+	border: 1px solid #c0c0c0;
+	margin: 0 2px;
+	padding: 0.35em 0.625em 0.75em;
+}
+
+legend {
+	border: 0;
+	padding: 0;
+}
+
+/* margins */
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+	font-size: 100%;
+	margin: 0;
+}
+
+/* line-height for UA */
+button,
+input {
+	line-height: normal;
+}
+
+/* text-transform */
+button,
+select {
+	text-transform: none;
+}
+
+/* cursor style */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	-webkit-appearance: button;
+	cursor: pointer;
+}
+
+/* Resetting */
+button[disabled],
+html input[disabled] {
+	cursor: default;
+}
+
+/* Removing excess padding */
+input[type="checkbox"],
+input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+/* adding some more... */
+input[type="search"] {
+	-webkit-appearance: textfield;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+/* Removing inner padding */
+input[type="search"]::-webkit-search-cancel-button;
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+button::-moz-focus-inner;
+inout::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+
+/* Improving readability --- alignment */
+textarea {
+	overflow: auto;
+	vertical-align: top;
+}
+
+/* tables */
+/* Removing spacing in between table cells thingy */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
