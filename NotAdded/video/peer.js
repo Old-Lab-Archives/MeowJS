@@ -152,6 +152,49 @@ define(function() {
 			}
 			ig.ws.send(obj);
 		},
+		onWsMessage: function(data) {
+			if(data.type === 'candidate') {
+				var candidate = new RTCIceCandidate(data.candidate);
+				ig.peerConnection.addIceCandidate(candidate);
+			} else if(data.type === 'offer') {
+				ig.peerConnection.setRemoteDescription(new RTCSessionDescription(data.desc));
+				if(ig.peerConnection.remoteDescription && ig.peerConnection.remoteDescription.type === 'offer') {
+					ig.peerConnection.createAnswer(x.bind(ig.onOffer, ig));
+				}
+			}
+		},
+		onIceCandidate: function(xEvent) {
+			if(!xEvent.candidate) {
+				return;
+			}
+			ig.wsSend({
+				type: 'candidate',
+				candidate: xEvent.candidate,
+				target: ig.target,
+				origin: ig.origin
+			});
+		},
+		onOffer: function(desc) {
+			desc.sdp = ig.OutTransformSdp(desc.sdp);
+			ig.peerConnection.setLocalDescription(desc);
+			ig.wsSend({
+				type: 'offer',
+				desc: desc,
+				target: ig.target,
+				origin: ig.origin
+			});
+		},
+		onIceConnectStateChange: function(xEvent) {
+			switch(xEvent.target.iceConnectState) {
+				case 'disconnected':
+				case 'failed':
+				case 'closed':
+				ig.close();
+			}
+		},
+		onAddStream: function() {},
+		onRemoveStream: function() {}
+
 		//
 		// Still more to code
 		//
