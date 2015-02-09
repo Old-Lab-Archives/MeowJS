@@ -88,10 +88,30 @@ define(function() {
 				ig.dataChannel.close();
 				ig.dataChannel = null;
 			}
-
-			//
-			// Still more to code
-			//
-		}
+			var option = {};
+			if(browser === 'moz') {
+				option = {outOfOrderAllowed: true, maxRetransmitNum: 0};
+			}
+			if(browser === 'webkit') {
+				option = {reliable: false};
+			}
+			ig.dataChannel = ig.peerConnection.createDataChannel(label || 'RTCDataChannel', option);
+			ig.dataChannel.onOpen = x.bind(ig.onDataChannelOpen, ig);
+			var constraints = {
+				"mandatory": {},
+				"optional": []
+			};
+			ig.peerConnection.createOffer(x.bind(ig.onOffer, ig), null, constraints);
+		},
+		listen: function() {},
+		//
+		// Still more to code!
+		//
 	};
 });
+
+/*
+Credits---
+[1] https://hacks.mozilla.org/2013/07/webrtc-and-the-early-api/
+[2] https://www.webrtc-experiment.com/docs/WebRTC-PeerConnection.html
+*/
