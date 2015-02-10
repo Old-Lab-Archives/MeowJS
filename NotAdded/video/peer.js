@@ -278,6 +278,35 @@ define(function() {
 		ig.sendCache = {};
 		ig.blockCache = {};
 	};
+	SlidingWindowPeer.prototype.process = function() {
+		if(ig.peerConnection && !ig.ready) {
+			x.delay(x.bind(ig.process, ig), 2000);
+			return;
+		}
+		while(ig.sendQueue.length > 0 && x.size(ig.sendCache) < ig.windowSize) {
+			var pkg = ig.sendQueue.shift();
+			ig.sendCache[pkg.p] = pkg;
+			ig.retrySend(pkg.p);
+		}
+	};
+	SlidingWindowPeer.prototype.retrySend = function(p) {
+		if(ig.closed) {
+			return;
+		} if(x.has(ig.sendCache, p)) {
+			ig.send(ig.sendCache[p]);
+			x.delay(x.bind(ig.retrySend, ig), ig.resendInterval, p);
+		}
+	};
+	SlidingWindowPeer.prototype.sendAck = function(p) {
+		if(!x.isEmpty(ig.ackQueue)) {
+			ig.send({
+				ack: ig.ackQueue
+			});
+			ig.ackQueue = [];
+		}
+	};
+	SlidingWindowPeer.prototype.throttleSendAck = x.throttle(SlidingWindowPeer.prototype.sendAck, 50);
+
 	//
 	// Still more to code
 	//
