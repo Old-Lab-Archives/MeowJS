@@ -1,6 +1,6 @@
 {
   "name": "MeowJS",
-  "version": "v0.5.2",
+  "version": "v0.5.3",
   "description": "Simple Fast Javascript Library",
   "license": "GNU GPL v2.0",
   "repository": "Geek-Research-Lab/MeowJS",
@@ -48,6 +48,7 @@
     "NotAdded/video/httpPeer.js",
     "NotAdded/video/wsPeer.js",
     "NotAdded/video/peer.js",
-    "NotAdded/video/p2p.js"
+    "NotAdded/video/p2p.js",
+    "NotAdded/video/util.js"
   ]
 }
