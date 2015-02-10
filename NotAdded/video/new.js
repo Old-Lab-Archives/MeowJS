@@ -51,10 +51,47 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 					client.updateBitmap();
 					xConsole.append('<li>Link created: <a href="/link/'+meta.hash+'" target=blank' + location.href.replace(/link\/new.*$/i, 'link/'+meta.hash)+'</a>');
 					xConsole.append('<li><dl class=info>'+'<dt>strength</dt><dd id=xStrength>100%</dd>'+'<dt>peers</dt><dd id=xPeers>1</dd>'+'<dt>Connected</dt><dd id=xConnect>0</dd>'+'<dt>upload</dt><dd id=xUploads>0B/s</dd><dd id=xUpload>0B</dd>'+'<dt>download</dt><dd id=xDownloads>0B/s</dd><dd id=xDownload>0B</dd>'+'</dl><button id=xRefreshPeerList>refresh</button>');
+					z('#xRefreshPeerList').on('click', function() {
+						x.bind(client.updatePeerList, client)();
+					});
+					client.updatePeerList();
+					setInterval(x.bind(client.updatePeerList, client), 60 * 1000);
+					xConsole.append('<li>Add httpPeer: <input id=xHttpPeer />'+'<span id=xHttpPeerResult></span>'+'<a id=xHttpPeerAdd href=#>add</a>');
+					z('#xHttpPeerAdd').on('click', function (xEvent) {
+						xEvent.preventDefault();
+						var url = z('#xHttpPeer').val();
+						if(url !== '') {
+							var peer = client.ensureConnect(url, false);
 
-					//
-					// Still more to code
-					//
+							peer.onMessage = function(data) {
+								var xData, piece, block;
+								if(x.isObject(data) || data.indexOf('{') === 0) {
+									var msg = x.isObject(data) ? data : JSON.parse(data);
+									if(msg.cmd === 'request block') {}
+									else if(msg.cmd === 'block') {
+										piece = msg.piece;
+										block = msg.block;
+										xData = msg.data;
+									} else {
+										var pieceBlock = data.slice(0, data.indexOf('|')).split(',');
+										piece = parseInt(pieceBlock[0], 10);
+										block = parseInt(pieceBlock[1], 10);
+										xData = data.slice(data.indexOf('|')+1);
+									} if(xData.byteLength) {
+										var result = '';
+										xData = new Uint8Array(xData);
+										for(var m = 0; m < xData.length; m++) {
+											result += String.fromCharCode(xData[m]);
+										}
+										xData = result;
+									}
+									//
+									// Still more to code
+									//
+								} 
+							};
+						}
+					});
 				});
 			};
 		});
