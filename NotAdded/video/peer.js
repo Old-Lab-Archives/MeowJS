@@ -329,8 +329,8 @@ define(function() {
 		var msg = JSON.parse(xEvent.data);
 		if(x.has(msg, 'ack')) {
 			x.each(msg.ack, function(p) {
-				if(x.has(x.sendCache, p)) {
-					delete x.sendCache[p];
+				if(x.has(ig.sendCache, p)) {
+					delete ig.sendCache[p];
 				}
 			});
 			ig.process();
@@ -341,8 +341,8 @@ define(function() {
 			}
 			ig.blockCache[msg.b][msg.m] = msg.d;
 
-			if(msg.t === x.size(x.blockCache[msg.b])) {
-				if(x.isFunction(x.onMessage)) {
+			if(msg.t === x.size(ig.blockCache[msg.b])) {
+				if(x.isFunction(ig.onMessage)) {
 					var data = atob(x.value(ig.blockCache[msg.b]).join(''));
 					ig.onMessage(data);
 				}
