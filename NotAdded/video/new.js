@@ -128,7 +128,20 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 			};
 		});
 	};
-	//
-	// Still more to code
-	//
+	client.onPeerList = function(peerList) {
+		z('#xStrength').text(''+(client.strength() * 100).toFixed() + '%');
+		z('#xPeers').text(x.size(peerList));
+	};
+	client.onPeerConnect = function(peer) {
+		z('#xConnect').text(x.size(client.peers));
+	};
+	client.onSpeedReport = function(report) {
+		z('#xUploads').text(util.formatSize(report.send)+'/s');
+		z('#xDownloads').text(util.formatSize(report.receive)+'/s');
+		z('#xUpload').text(util.formatSize(report.sent));
+		z('#xDownload').text(util.formatSize(report.received));
+	};
+	return {
+		client: client
+	};
 });
