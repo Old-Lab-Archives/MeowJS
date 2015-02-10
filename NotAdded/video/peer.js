@@ -4,6 +4,14 @@ define(function() {
 	var window;
 	var ig = this;
 	var x, JSON;
+	var mozRTCPeerConnection;
+	var mozRTCSessionDescription;
+	var mozRTCIceCandidate;
+	var webkitRTCPeerConnection;
+	var RTCPeerConnection;
+	var navigator;
+	var onClose;
+	var btoa, atob;
 	if(window.mozRTCPeerConnection) {
 		browser = 'moz';
 		window.RTCPeerConnection = mozRTCPeerConnection;
@@ -239,7 +247,7 @@ define(function() {
 	SlidingWindowPeer.prototype.send = SlidingWindowPeer.prototype.send;
 	SlidingWindowPeer.prototype.close = SlidingWindowPeer.prototype.close;
 	
-	SlidingWindowPeer.prototype.init = function(data) {
+	SlidingWindowPeer.prototype.init = function() {
 		ig.init();
 		ig.blockNum = 1;
 		ig.pktNum = 1;
@@ -297,7 +305,7 @@ define(function() {
 			x.delay(x.bind(ig.retrySend, ig), ig.resendInterval, p);
 		}
 	};
-	SlidingWindowPeer.prototype.sendAck = function(p) {
+	SlidingWindowPeer.prototype.sendAck = function() {
 		if(!x.isEmpty(ig.ackQueue)) {
 			ig.send({
 				ack: ig.ackQueue
