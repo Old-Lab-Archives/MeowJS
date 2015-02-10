@@ -226,6 +226,58 @@ define(function() {
 			ig.close();
 		}
 	};
+	function SlidingWindowPeer(ws, target, origin) {
+		ig.constructor = peer;
+		ig.constructor(ws, target, origin);
+		delete ig.constructor;
+		ig.chunkSize = 800;
+		ig.windowSize = 100;
+		ig.resendInterval = 10000;
+	}
+	SlidingWindowPeer.prototype = x.clone(peer.prototype);
+	SlidingWindowPeer.prototype.init = SlidingWindowPeer.prototype.init;
+	SlidingWindowPeer.prototype.send = SlidingWindowPeer.prototype.send;
+	SlidingWindowPeer.prototype.close = SlidingWindowPeer.prototype.close;
+	
+	SlidingWindowPeer.prototype.init = function(data) {
+		ig.init();
+		ig.blockNum = 1;
+		ig.pktNum = 1;
+		ig.sendQueue = [];
+		ig.ackQueue = [];
+		ig.sendCache = {};
+		ig.blockCache = {};
+	};
+
+	SlidingWindowPeer.prototype.send = function(data) {
+		if(x.isObject(data)) {
+			data = JSON.stringify(data);
+		}
+		data = btoa(data);
+		var dataSize = data.length;
+		var totalPkts = Math.ceil(1.0 * dataSize/ig.chunkSize);
+		for(var m = 0; m < totalPkts; ++m) {
+			ig.sendQueue.push({
+				b: ig.blockNum,
+				p: ig.pktNum,
+				m: m,
+				t: totalPkts,
+				d: data.slice(ig.chunkSize * m, ig.chunkSize * (m + 1))
+			});
+			ig.pktNum++;
+		} 
+		ig.blockNum++;
+		ig.process();
+	};
+	SlidingWindowPeer.prototype.close = function() {
+		ig.close();
+		ig.blockNum = 1;
+		ig.pktNum = 1;
+		ig.sendQueue = [];
+		ig.ackQueue = [];
+		ig.sendCache = {};
+		ig.blockCache = {};
+	};
 	//
 	// Still more to code
 	//
