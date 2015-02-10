@@ -73,53 +73,62 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 										piece = msg.piece;
 										block = msg.block;
 										xData = msg.data;
-									} else {
+									} 
+								} else {
 										var pieceBlock = data.slice(0, data.indexOf('|')).split(',');
 										piece = parseInt(pieceBlock[0], 10);
 										block = parseInt(pieceBlock[1], 10);
 										xData = data.slice(data.indexOf('|')+1);
-									} if(xData.byteLength) {
-										var result = '';
-										xData = new Uint8Array(xData);
-										for(var m = 0; m < xData.length; m++) {
-											result += String.fromCharCode(xData[m]);
-										}
-										xData = result;
+								} if(xData.byteLength) {
+									var result = '';
+									xData = new Uint8Array(xData);
+									for(var m = 0; m < xData.length; m++) {
+										result += String.fromCharCode(xData[m]);
 									}
-									var start = client.meta.pieceSize * piece + client.meta.blockSize * block;
-									var end = start + client.meta.blockSize;
-									client.file.readAsBinaryString(start, end, function (fData) {
-										if(fData === xData) {
-											z('#xHttpPeerResult').text('testing address.....');
-											z('#xHttpPeer').attr('disabled', false);
-											z('#xHttpPeerAdd').attr('disabled', false);
-											z('#xHttpPeerResult').text('ok');
-											client.xHttpPeerAdd(url);
-										} else {
-											peer.close();
-											z('#xHttpPeer').attr('disabled', false);
-											z('xHttpPeerAdd').attr('disabled', false);
-											z('xHttpPeerResult').text('data different');
-										}
-									});
+									xData = result;
 								}
-								peer.onClose = peer.onClose;
-								peer.onClose = function() {
-									z('#xHttpPeer').attr('disabled', false);
-									z('#xHttpPeerAdd').attr('disabled', false);
-									z('#xHttpPeerResult').text('error');
-									if(x.isFunction(peer.onClose)) {
-										peer.onClose();
+								var start = client.meta.pieceSize * piece + client.meta.blockSize * block;
+								var end = start + client.meta.blockSize;
+								client.file.readAsBinaryString(start, end, function (fData) {
+									if(fData === xData) {
+										z('#xHttpPeerResult').text('testing address.....');
+										z('#xHttpPeer').attr('disabled', false);
+										z('#xHttpPeerAdd').attr('disabled', false);
+										z('#xHttpPeerResult').text('ok');
+										client.xHttpPeerAdd(url);
+									} else {
+									peer.close();
+										z('#xHttpPeer').attr('disabled', false);
+										z('xHttpPeerAdd').attr('disabled', false);
+										z('xHttpPeerResult').text('data different');
 									}
-								};
-								//
-								// Still more to code
-								//
+								});
 							};
+							peer.onClose = peer.onClose;
+							peer.onClose = function() {
+								z('#xHttpPeer').attr('disabled', false);
+								z('#xHttpPeerAdd').attr('disabled', false);
+								z('#xHttpPeerResult').text('error');
+								if(x.isFunction(peer.onClose)) {
+									peer.onClose();
+								}
+							};
+							peer.send({
+								cmd: 'request block',
+								piece: x.random(client.meta.pieceCount),
+								block: x.random(client.meta.pieceSize / client.meta.blockSize)
+							});
+							z('#xHttpPeer').attr('disabled', true);
+							z('#xHttpPeerAdd').attr('disabled', true);
+							z('#xHttpPeerResult').text('testing address....');
 						}
+						return false;
 					});
 				});
 			};
 		});
 	};
+	//
+	// Still more to code
+	//
 });
