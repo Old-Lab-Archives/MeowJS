@@ -132,7 +132,7 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 		z('#xStrength').text(''+(client.strength() * 100).toFixed() + '%');
 		z('#xPeers').text(x.size(peerList));
 	};
-	client.onPeerConnect = function(peers) {
+	client.onPeerConnect = function() {
 		z('#xConnect').text(x.size(client.peers));
 	};
 	client.onSpeedReport = function(report) {
