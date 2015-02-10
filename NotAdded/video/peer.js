@@ -343,7 +343,7 @@ define(function() {
 
 			if(msg.t === x.size(x.blockCache[msg.b])) {
 				if(x.isFunction(x.onMessage)) {
-					var data = atob(x.values(ig.blockCache[msg.b]).join(''));
+					var data = atob(x.value(ig.blockCache[msg.b]).join(''));
 					ig.onMessage(data);
 				}
 				delete ig.blockCache[msg.b];
