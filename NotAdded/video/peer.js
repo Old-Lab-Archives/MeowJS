@@ -306,10 +306,43 @@ define(function() {
 		}
 	};
 	SlidingWindowPeer.prototype.throttleSendAck = x.throttle(SlidingWindowPeer.prototype.sendAck, 50);
+	SlidingWindowPeer.prototype.ack = function(p) {
+		ig.ackQueue.push(p);
+		if(x.size(ig.ackQueue) >= 10) {
+			ig.sendAck();
+		} else {
+			ig.throttleSendAck();
+		}
+	};
+	SlidingWindowPeer.prototype.onDataChannelMsg = function(xEvent) {
+		ig.received += xEvent.data.length;
+		var msg = JSON.parse(xEvent.data);
+		if(x.has(msg, 'ack')) {
+			x.each(msg.ack, function(p) {
+				if(x.has(x.sendCache, p)) {
+					delete x.sendCache[p];
+				}
+			});
+			ig.process();
+		} else {
+			ig.ack(msg.p);
+			if(!x.has(ig.blockCache, msg.b)) {
+				ig.blockCache[msg.b] = {};
+			}
+			ig.blockCache[msg.b][msg.m] = msg.d;
 
-	//
-	// Still more to code
-	//
+			if(msg.t === x.size(x.blockCache[msg.b])) {
+				if(x.isFunction(x.onMessage)) {
+					var data = atob(x.values(ig.blockCache[msg.b]).join(''));
+					ig.onMessage(data);
+				}
+				delete ig.blockCache[msg.b];
+			}
+		}
+	};
+	return {
+		peer: SlidingWindowPeer
+	};
 });
 
 /*
