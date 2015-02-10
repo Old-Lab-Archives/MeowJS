@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>upload</title>
+<!-- IE>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="stupid.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<section class="main">
+<section>
+<dt id="xConsole">
+</dt>
+</section>
+</section>
+<footer>
+</footer>
+<script data-main="app.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js"></script>
+<script>
+require.config({
+
+baseUrl: '/NotAdded/video',
+paths: {
+jquery: 'http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min',
+underscore: 'http://lib.sinaapp.com/js/underscore/1.4.4/underscore-min'
+}
+});
+window.console = window.console || {log: function(){}, debug: function(){}};
+</script>
+
+<script>
+require(['new'], function(room) {
+window.client = room.client;
+});
+</script>
+</body>
+</html>
