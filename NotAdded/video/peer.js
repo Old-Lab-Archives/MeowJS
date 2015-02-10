@@ -12,6 +12,8 @@ define(function() {
 	var navigator;
 	var onClose;
 	var btoa, atob;
+	var RTCIceCandidate;
+	var RTCSessionDescription;
 	if(window.mozRTCPeerConnection) {
 		browser = 'moz';
 		window.RTCPeerConnection = mozRTCPeerConnection;
