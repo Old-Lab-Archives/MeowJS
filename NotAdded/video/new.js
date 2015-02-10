@@ -16,6 +16,7 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 	'RTCSessionDescription'];
 	var misfeature = false;
 	var x, window;
+	var location;
 	x.each(feature, function (f) {
 		if(!window[f]) {
 			misfeature = true;
@@ -85,10 +86,35 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 										}
 										xData = result;
 									}
-									//
-									// Still more to code
-									//
-								} 
+									var start = client.meta.pieceSize * piece + client.meta.blockSize * block;
+									var end = start + client.meta.blockSize;
+									client.file.readAsBinaryString(start, end, function (fData) {
+										if(fData === xData) {
+											z('#xHttpPeerResult').text('testing address.....');
+											z('#xHttpPeer').attr('disabled', false);
+											z('#xHttpPeerAdd').attr('disabled', false);
+											z('#xHttpPeerResult').text('ok');
+											client.xHttpPeerAdd(url);
+										} else {
+											peer.close();
+											z('#xHttpPeer').attr('disabled', false);
+											z('xHttpPeerAdd').attr('disabled', false);
+											z('xHttpPeerResult').text('data different');
+										}
+									});
+								}
+								peer.onClose = peer.onClose;
+								peer.onClose = function() {
+									z('#xHttpPeer').attr('disabled', false);
+									z('#xHttpPeerAdd').attr('disabled', false);
+									z('#xHttpPeerResult').text('error');
+									if(x.isFunction(peer.onClose)) {
+										peer.onClose();
+									}
+								};
+								//
+								// Still more to code
+								//
 							};
 						}
 					});
