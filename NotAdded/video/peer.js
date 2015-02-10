@@ -328,9 +328,10 @@ define(function() {
 		ig.received += xEvent.data.length;
 		var msg = JSON.parse(xEvent.data);
 		if(x.has(msg, 'ack')) {
+			var y = this;
 			x.each(msg.ack, function(p) {
-				if(x.has(ig.sendCache, p)) {
-					delete ig.sendCache[p];
+				if(x.has(y.sendCache, p)) {
+					delete y.sendCache[p];
 				}
 			});
 			ig.process();
@@ -351,7 +352,7 @@ define(function() {
 		}
 	};
 	return {
-		peer: SlidingWindowPeer
+		Peer: SlidingWindowPeer
 	};
 });
 
