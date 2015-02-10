@@ -44,7 +44,7 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 			};
 			xConsole.append('<li>Calculating xx hash: <span id=xHash>0%</span>');
 			client.onMeta = function(meta) {
-				client.file.write(file, 0, function (xEvent) {
+				client.file.write(file, 0, function () {
 					client.pieceQueue = [];
 					client.finishedPiece = x.map(client.finishedPiece, function() {
 						return 1;
@@ -132,7 +132,7 @@ define(['meta', 'p2p', 'util'], function (z, meta, p2p, util) {
 		z('#xStrength').text(''+(client.strength() * 100).toFixed() + '%');
 		z('#xPeers').text(x.size(peerList));
 	};
-	client.onPeerConnect = function(peer) {
+	client.onPeerConnect = function(peers) {
 		z('#xConnect').text(x.size(client.peers));
 	};
 	client.onSpeedReport = function(report) {
