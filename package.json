@@ -49,6 +49,7 @@
     "NotAdded/video/wsPeer.js",
     "NotAdded/video/peer.js",
     "NotAdded/video/p2p.js",
-    "NotAdded/video/util.js"
+    "NotAdded/video/util.js",
+    "meowFrames.js"
   ]
 }
