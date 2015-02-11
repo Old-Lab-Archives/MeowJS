@@ -1,14 +1,9 @@
 // states
-var isMeowFrameReady = false;
+var isMeowFrameReady;
+isMeowFrameReady = false;
 
 // variables
 var meowNotifyBundle;
-
-// inner frame 
-var meowInnerFrames;
-
-// init
-meowExternalFrames(); // loads
 
 // declarations
 var window, document;
@@ -56,7 +51,8 @@ window.onMessage = function(message) {
 		//meowNotifyInnerClient();
 	} else {
 		// JSON parsing
-		var data = JSON.parse(message.data); // data handling
+		var data;
+		data = JSON.parse(message.data); // data handling
 	}
 };
 
