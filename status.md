@@ -30,6 +30,7 @@ refer ---> <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/NotA
 	"MeowAudio.js"
 	"meowSVG_Loader.js"
 	"MeowWebRTC_audio.js"
+	"meowFrames.js"
 <br><br>
 <b>// Special scripts for MeowJS </b><br>
 
