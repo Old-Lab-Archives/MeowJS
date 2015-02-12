@@ -11,7 +11,7 @@ define(function() {
 	var RTCPeerConnection;
 	var navigator;
 	var onClose;
-	var btoa, atob;
+	var btoa;
 	var RTCIceCandidate;
 	var RTCSessionDescription;
 	if(window.mozRTCPeerConnection) {
@@ -313,15 +313,6 @@ define(function() {
 				ack: ig.ackQueue
 			});
 			ig.ackQueue = [];
-		}
-	};
-	SlidingWindowPeer.prototype.throttleSendAck = x.throttle(SlidingWindowPeer.prototype.sendAck, 50);
-	SlidingWindowPeer.prototype.ack = function(p) {
-		ig.ackQueue.push(p);
-		if(x.size(ig.ackQueue) >= 10) {
-			ig.sendAck();
-		} else {
-			ig.throttleSendAck();
 		}
 	};
 	return {
