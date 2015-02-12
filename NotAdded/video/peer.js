@@ -324,32 +324,6 @@ define(function() {
 			ig.throttleSendAck();
 		}
 	};
-	SlidingWindowPeer.prototype.onDataChannelMsg = function(xEvent) {
-		ig.received += xEvent.data.length;
-		var msg = JSON.parse(xEvent.data);
-		if(x.has(msg, 'ack')) {
-			x.each(msg.ack, function(p) {
-				if(x.has(ig.sendCache, p)) {
-					delete ig.sendCache[p];
-				}
-			});
-			ig.process();
-		} else {
-			ig.ack(msg.p);
-			if(!x.has(ig.blockCache, msg.b)) {
-				ig.blockCache[msg.b] = {};
-			}
-			ig.blockCache[msg.b][msg.m] = msg.d;
-
-			if(msg.t === x.size(ig.blockCache[msg.b])) {
-				if(x.isFunction(ig.onMessage)) {
-					var data = atob(x.value(ig.blockCache[msg.b]).join(''));
-					ig.onMessage(data);
-				}
-				delete ig.blockCache[msg.b];
-			}
-		}
-	};
 	return {
 		Peer: SlidingWindowPeer
 	};
