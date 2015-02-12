@@ -78,7 +78,7 @@ Then, add it's script source.
 For testing, Make use of these test files mentioned below. <br>
 Try the example test file --- <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.html">test.html</a>
  and <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/test.css">test.css</a><br>
- Another test file (WebRTC) --- <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/tests">click here</a>
+ Other test files (WebRTC) --- <a href="https://github.com/Geek-Research-Lab/MeowJS/tree/master/tests">click here</a> and <a href="https://github.com/Geek-Research-Lab/MeowJS/blob/master/tests2/frames.html">frames</a>
 <br>
 ///////////////////////////////////////<br>
 <br>
