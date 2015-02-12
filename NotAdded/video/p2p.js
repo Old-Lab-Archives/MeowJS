@@ -186,8 +186,35 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 				block: block
 			});
 		},
-		//
-		// Still more to code!
-		//
+		speedReport: function() {
+			x.map(x.value(this.peers), function (peer) {
+				ig.peerTrans[peer.peerTransID] = {
+					sent: peer.sent(),
+					received: peer.received()
+				};
+			});
+			var sent = sum(x.pluck(x.value(ig.peerTrans), 'sent')) || 0;
+			var received = sum(x.pluck(x.value(ig.peerTrans), 'received')) || 0;
+			if(x.isFunction(ig.onSpeedReport)) {
+				var elapsed = (now() - ig.lastSpeedReport) / 1000;
+				ig.onSpeedReport({
+					send: (sent - ig.sent) / elapsed,
+					sent: sent,
+					receive: (received - ig.received) / elapsed,
+					received: received
+				});
+			}
+			ig.sent = sent;
+			ig.received = received;
+			ig.lastSpeedReport = now();
+		},
+		pickupBlock: function() {
+			if(x.isEmpty(ig.pieceQueue)) {
+				return null;
+			}
+			//
+			// Still more to code!
+			//
+		},
 	};
 });
