@@ -37,7 +37,8 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			ig.received = 0;
 			ig.peerTrans = {};
 			ig.lastSpeedReport = now();
-			var speedReportInterval = setInterval(x.bind(ig.speedReport, ig), 1000);
+			var speedReportInterval;
+			speedReportInterval = setInterval(x.bind(ig.speedReport, ig), 1000);
 			ig.ws = new WebSocket((location.protocol === 'https:' ? 'wss://': 'ws://')+location.host+'/room/ws');
 			ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
 			ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
@@ -136,7 +137,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 				p.onMessage = x.bind(function (data) {
 					if(x.isObject(data) || data.indexOf('{') === 0) {
 						var msg = x.isObject(data) ? data : JSON.parse(data);
-						if(msg.cmd === 'request block') {
+						if(msg.cmd === 'requestBlock') {
 							ig.sendBlock(p, msg.piece, msg.block);
 						} else if(msg.cmd === 'block') {
 							ig.receiveBlock(p, msg.piece, msg.block, msg.data);
@@ -164,6 +165,26 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 				}
 				return p;
 			}
+		},
+		sendBlock: function(peer, piece, block) {
+			if(!ig.file) {
+				return;
+			} if(ig.finishedPiece[piece] !== 1) {
+				return;
+			}
+			var start = ig.meta.pieceSize * piece + ig.meta.blockSize * block;
+			ig.file.readAsBinaryString(start, start+ig.meta.blockSize, function (data) {
+				peer.send(''+piece+','+block+'|'+data);
+			});
+		},
+		requestBlock: function(peer, piece, block) {
+			ig.inUsePeer[peer.id] += 1;
+			ig.pendingBlock[piece][block] = peer.id;
+			peer.send({
+				cmd: 'requestBlock',
+				piece: piece,
+				block: block
+			});
 		},
 		//
 		// Still more to code!
