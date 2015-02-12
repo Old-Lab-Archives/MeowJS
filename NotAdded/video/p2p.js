@@ -42,7 +42,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
 			ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
 		},
-		newLink: function(meta, callback) {
+		newLink: function(meta) {
 			ig.ws.send(JSON.stringify({
 				cmd: 'newLink',
 				meta: meta
@@ -76,12 +76,12 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			if(!ig.meta) {
 				return 0;
 			}
-			var i;
+			var m;
 			var temp = [];
 			for(m = 0; m < ig.meta.pieceCount; m++) {
 				temp.push(0);
 			}
-			x.each(this.peerList, function (value, key) {
+			x.each(this.peerList, function (value) {
 				for(m = 0; m < ig.meta.pieceCount; m++) {
 					temp[m] += (value.bitmap[m] === '1' ? 1 : 0);
 				}
