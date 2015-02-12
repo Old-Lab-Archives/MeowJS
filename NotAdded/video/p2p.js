@@ -116,6 +116,55 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 		onSpeedReport: function(report) {
 			console.log('onSpeedReport', report);
 		},
+		ensureConnection: function(peerID, connect) {
+			if(ig.peers[peerID]) {
+				return ig.peers[peerID];
+			} else {
+				var p;
+				if(peerID.indexOf('http:') === 0 || peerID.indexOf('https:') === 0) {
+					p = new hpeer.peer(peerID, ig);
+				} else if(peerID.indexOf('ws:') === 0 || peerID.indexOf('wss:') === 0) {
+					p = new wsPeer.peer(peerID, ig);
+				} else {
+					p = new peer.peer(ig.ws, ig.peerID, peerID);
+				}
+				p.peerTransID = x.uniqueID('peer');
+
+				ig.inUsePeer[peerID] = 0;
+				ig.peers[peerID] = p;
+
+				p.onMessage = x.bind(function (data) {
+					if(x.isObject(data) || data.indexOf('{') === 0) {
+						var msg = x.isObject(data) ? data : JSON.parse(data);
+						if(msg.cmd === 'request block') {
+							ig.sendBlock(p, msg.piece, msg.block);
+						} else if(msg.cmd === 'block') {
+							ig.receiveBlock(p, msg.piece, msg.block, msg.data);
+						}
+					} else {
+						var pieceBlock = data.slice(0, data.indexOf('|')).split(',');
+						data = data.slice(data.indexOf('|')+1);
+						ig.receiveBlock(p, parseInt(pieceBlock[0], 10), parseInt(pieceBlock[1], 10), data);
+					}
+				}, ig);
+				p.onClose = x.bind(function() {
+					console.log('peer connect with '+peerID+' disconnected;');
+					ig.removePending(peerID);
+					delete ig.peers[peerID];
+					if(x.isFunction(ig.onPeerDisconnect)) {
+						ig.onPeerDisconnect(p);
+					}
+				}, ig);
+				if(connect) {
+					p.connect();
+				}
+				if(x.isFunction(ig.onPeerConnect)) {
+					console.log('new connect to '+peerID);
+					ig.onPeerConnect(p);
+				}
+				return p;
+			}
+		},
 		//
 		// Still more to code!
 		//
