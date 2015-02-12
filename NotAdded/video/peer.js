@@ -12,6 +12,7 @@ define(function() {
 	var navigator;
 	var onClose;
 	var btoa;
+	//var atob;
 	var RTCIceCandidate;
 	var RTCSessionDescription;
 	if(window.mozRTCPeerConnection) {
@@ -315,6 +316,45 @@ define(function() {
 			ig.ackQueue = [];
 		}
 	};
+	// complexity = 121
+	/*
+	SlidingWindowPeer.prototype.throttleSendAck = x.throttle(SlidingWindowPeer.prototype.sendAck, 50);
+	SlidingWindowPeer.prototype.ack = function(p) {
+		ig.ackQueue.push(p);
+		if(x.size(ig.ackQueue) >= 10) {
+			ig.sendAck();
+		} else {
+			ig.throttleSendAck();
+		}
+	};
+	SlidingWindowPeer.prototype.onDataChannelMsg = function(xEvent) {
+		ig.received += xEvent.data.length;
+		var msg = JSON.parse(xEvent.data);
+		if(x.has(msg, 'ack')) {
+			x.each(msg.ack, function(p) {
+				if(x.has(ig.sendCache, p)) {
+					delete ig.sendCache[p];
+				}
+			});
+			ig.process();
+		} else {
+			ig.ack(msg.p);
+			if(!x.has(ig.blockCache, msg.b)) {
+				ig.blockCache[msg.b] = {};
+			}
+			ig.blockCache[msg.b][msg.m] = msg.d;
+
+			if(msg.t === x.size(ig.blockCache[msg.b])) {
+				if(x.isFunction(ig.onMessage)) {
+					var data = atob(x.value(ig.blockCache[msg.b]).join(''));
+					ig.onMessage(data);
+				}
+				delete ig.blockCache[msg.b];
+			}
+		}
+	};
+	// including these lines => complexity = 139
+	*/
 	return {
 		Peer: SlidingWindowPeer
 	};
