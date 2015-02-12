@@ -1,6 +1,6 @@
 {
   "name": "MeowJS",
-  "version": "v0.5.3",
+  "version": "v0.5.4",
   "description": "Simple Fast Javascript Library",
   "license": "GNU GPL v2.0",
   "repository": "Geek-Research-Lab/MeowJS",
@@ -41,15 +41,6 @@
     "MeowEventProxy.js",
     "util.js",
     "MeowPkg.js",
-    "NotAdded/video/meta.js",
-    "NotAdded/video/xxWorker.js",
-    "NotAdded/video/xx.js",
-    "NotAdded/video/sys.js",
-    "NotAdded/video/httpPeer.js",
-    "NotAdded/video/wsPeer.js",
-    "NotAdded/video/peer.js",
-    "NotAdded/video/p2p.js",
-    "NotAdded/video/util.js",
     "meowFrames.js"
   ]
 }
