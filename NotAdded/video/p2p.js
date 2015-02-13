@@ -329,6 +329,7 @@ p2p(function() {
 				}
 			}
 		},
+		/*
 		onBlockFinished: function(piece) {
 			// finished piece
 			if(x.all(ig.finishedBlock[piece])) {
@@ -355,6 +356,7 @@ p2p(function() {
 			}
 			x.defer(x.bind(ig.startProcess, ig));
 		},
+		*/
 		onWsOpen: function() {},
 		onWsMessage: function(xEvent) {
 			var msg = JSON.parse(xEvent.data);
