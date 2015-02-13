@@ -266,9 +266,28 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			{}
 		}, 100),
 		startProgress: function() {
-			//
-			// Still more to code!
-			//
+			// pickup block
+			var pieceBlock = ig.pickupBlock();
+			if(pieceBlock === null) {
+				return false;
+			}
+			var piece = pieceBlock[0];
+			block = pieceBlock[1];
+			// finding available peer
+			var bestPeer = ig.findAvailablePeer(piece);
+			if(bestPeer === null) {
+				return false;
+			}
+			var peer = ig.ensureConnection(bestPeer, true);
+			// marking
+			ig.requestBlock(peer, piece, block);
+			// Setting timeout for block
+			//abandon all pending block when one is timeout
+			x.delay(x.bind(ig.chkPending, ig, bestPeer, piece, block, peer.received(), ig.received, now()), ig.chkPendingInterval * 2);
+			return true;
 		},
+		//
+		// Still more to code!
+		//
 	};
 });
