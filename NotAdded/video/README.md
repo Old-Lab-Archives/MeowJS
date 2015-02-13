@@ -1,5 +1,5 @@
 <b>About:</b><br>
-A WebRTC peer-to-peer mechanism that makes easy transferring/receiving of any files (text or image or audio or video). <br>
+A WebRTC peer-to-peer mechanism that makes easy transferring/receiving of any files (text or image or audio or video) faster. <br>
 <br>Currently, it can only work with Chrome... [In-development] <br>
 It will not work in Firefox (though it's functionalities are added). <br>
 But, it will 100% never works in IE... [sad] <br>
