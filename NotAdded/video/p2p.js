@@ -19,6 +19,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 	}
 	client.prototype = {
 		init: function() {
+			/*
 			ig.peerID = null;
 			ig.meta = null;
 			ig.file = null;
@@ -42,6 +43,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			ig.ws = new WebSocket((location.protocol === 'https:' ? 'wss://': 'ws://')+location.host+'/link/ws');
 			ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
 			ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
+			*/
 		},
 		newLink: function(meta) {
 			ig.ws.send(JSON.stringify({
@@ -319,7 +321,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 				}
 			}
 		},
-		onBlockFinished: function(piece, block) {
+		onBlockFinished: function(piece) {
 			// finished piece
 			if(x.all(ig.finishedBlock[piece])) {
 				var Blob;
