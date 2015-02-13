@@ -39,7 +39,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			ig.lastSpeedReport = now();
 			var speedReportInterval;
 			speedReportInterval = setInterval(x.bind(ig.speedReport, ig), 1000);
-			ig.ws = new WebSocket((location.protocol === 'https:' ? 'wss://': 'ws://')+location.host+'/room/ws');
+			ig.ws = new WebSocket((location.protocol === 'https:' ? 'wss://': 'ws://')+location.host+'/link/ws');
 			ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
 			ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
 		},
@@ -212,9 +212,31 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			if(x.isEmpty(ig.pieceQueue)) {
 				return null;
 			}
-			//
-			// Still more to code!
-			//
+			var m, m2;
+			var blockCount = Math.ceil(1.0 * ig.meta.pieceSize / ig.meta.blockSize);
+			for(m = 0; m < ig.pieceQueue.length; m++) {
+				var piece = ig.pieceQueue[m];
+				// initiating if it's a new piece
+				if(ig.blockChunks[piece] === undefined) {
+					ig.blockChunks[piece] = [];
+					ig.finishedBlock[piece] = [];
+					ig.pendingBlock[piece] = [];
+					for(m = 0; m < blockCount; ++m) {
+						ig.finishedBlock[piece][m] = 0;
+						ig.pendingBlock[piece][m] = 0;
+					}
+				}
+				for(m2 = 0; m2 < blockCount; ++m2) {
+					if(ig.finishedBlock[piece][m2] || ig.pendingBlock[piece][m2]) {
+						continue;
+					}
+					return [piece, m2];
+				}
+			}
+			return null;
 		},
+		//
+		// Still more to code!
+		//
 	};
 });
