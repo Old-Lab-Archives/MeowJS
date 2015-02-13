@@ -352,6 +352,7 @@ p2p(function() {
 			x.defer(x.bind(ig.startProcess, ig));
 		},
 		onWsOpen: function() {},
+		/*
 		onWsMessage: function(xEvent) {
 			var msg = JSON.parse(xEvent.data);
 			if(!msg.cmd && msg.type && msg.origin) {
@@ -393,6 +394,7 @@ p2p(function() {
 				}
 			}
 		}
+		*/
 	};
 	return {
 		client: client
