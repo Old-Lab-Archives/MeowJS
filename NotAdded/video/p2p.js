@@ -346,8 +346,49 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			x.defer(x.bind(ig.startProcess, ig));
 		},
 		onWsOpen: function() {},
-		//
-		// Still more to code
-		//
+		onWsMessage: function(xEvent) {
+			var msg = JSON.parse(xEvent.data);
+			if(!msg.cmd && msg.type && msg.origin) {
+				var peer = ig.ensureConnection(msg.origin, false);
+				peer.onWsMessage(msg);
+			} else if(msg.cmd) {
+				console.debug('p2p:', msg);
+				switch (msg.cmd) {
+					case 'peerID':
+					ig.peerID = msg.peerID;
+					ig.ready = true;
+					if(x.isFunction(ig.onReady)) {
+						ig.onReady();
+					}
+					break;
+					case 'meta':
+					if(ig.meta !== null) {
+						break;
+					}
+					ig.meta = msg.meta;
+					for(var m = 0; m < ig.meta.pieceCount; ++m) {
+						ig.finishedPiece[m] = 0;
+						ig.pieceQueue.push(m);
+					}
+					ig.file = new sys.file(ig.meta.size, function() {
+						if(x.isFunction(ig.onMeta)) {
+							ig.onMeta(ig.meta);
+						}
+					});
+					break;
+					case 'peerList':
+					ig.peerList = msg.peerList;
+					if(x.isFunction(ig.onPeerList)) {
+						ig.onPeerList(ig.peerList);
+					}
+					break;
+					default:
+					break;
+				}
+			}
+		}
+	};
+	return {
+		client: client
 	};
 });
