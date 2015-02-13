@@ -49,6 +49,7 @@ p2p(function() {
 			ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
 			ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
 		},
+		/*
 		newLink: function(meta) {
 			ig.ws.send(JSON.stringify({
 				cmd: 'newLink',
@@ -79,6 +80,7 @@ p2p(function() {
 				bitmap: client.finishedPiece.join('')
 			}));
 		},
+		*/
 		strength: function() {
 			if(!ig.meta) {
 				return 0;
