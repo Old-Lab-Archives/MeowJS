@@ -82,7 +82,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			for(m = 0; m < ig.meta.pieceCount; m++) {
 				temp.push(0);
 			}
-			x.each(this.peerList, function (value) {
+			x.each(ig.peerList, function (value) {
 				for(m = 0; m < ig.meta.pieceCount; m++) {
 					temp[m] += (value.bitmap[m] === '1' ? 1 : 0);
 				}
@@ -187,7 +187,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			});
 		},
 		speedReport: function() {
-			x.map(x.value(this.peers), function (peer) {
+			x.map(x.value(ig.peers), function (peer) {
 				ig.peerTrans[peer.peerTransID] = {
 					sent: peer.sent(),
 					received: peer.received()
@@ -319,8 +319,35 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 				}
 			}
 		},
+		onBlockFinished: function(piece, block) {
+			// finished piece
+			if(x.all(ig.finishedBlock[piece])) {
+				var Blob;
+				var blob = new Blob(ig.blockChunks[piece]);
+				ig.file.write(blob, ig.meta.pieceSize * piece, function() {
+					if(x.isFunction(ig.onPiece)) {
+						ig.onPiece(piece);
+					}
+					x.defer(x.bind(ig.updateBitmap, ig));
+					// check finished
+					if(x.all(ig.finishedPiece) && x.isEmpty(ig.pieceQueue) && x.isFunction(ig.onFinished)) {
+						ig.finishOnce = ig.finishOnce || x.once(ig.onFinished);
+						ig.finishOnce();
+					}
+				});
+				ig.finishedPiece[piece] = 1;
+				if(ig.pieceQueue.indexOf(piece) !== -1) {
+					ig.pieceQueue.splice(ig.pieceQueue.indexOf(piece), 1);
+				}
+				delete ig.blockChunks[piece];
+				delete ig.finishedBlock[piece];
+				delete ig.pendingBlock[piece];
+			}
+			x.defer(x.bind(ig.startProcess, ig));
+		},
+		onWsOpen: function() {},
 		//
-		// Still more to code!
+		// Still more to code
 		//
 	};
 });
