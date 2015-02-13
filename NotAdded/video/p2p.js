@@ -1,7 +1,11 @@
-var define;
-define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer, sys) {
+var p2p;
+p2p(function() {
+	var peer = ['peer.js'];
+	var hpeer = ['httpPeer.js']; 
+	var wsPeer = ['wsPeer.js']; 
+	var sys = ['sys.js'];
 	var ig = this;
-	var x;
+	var x = ['xx.js'];
 	function sum(list) {
 		return x.reduce(list, function (memo, num) {
 			return memo + num;
@@ -37,6 +41,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			ig.received = 0;
 			ig.peerTrans = {};
 			*/
+			var location, WebSocket;
 			ig.lastSpeedReport = now();
 			var speedReportInterval;
 			speedReportInterval = setInterval(x.bind(ig.speedReport, ig), 1000);
