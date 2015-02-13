@@ -249,8 +249,25 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			} else if(peers.length === 1) {
 				return peers[0];
 			}
+			var peersScore = x.map(peers, function (key) {
+				return (ig.badPeer[key] || 0) * 1000 + (ig.peers[key] ? 0 : 1) * 100 + (ig.inUsePeer[key] || 0) * 10;
+			});
+			var temp = [];
+			var minScore = x.min(peersScore);
+			for(var m = 0; m < peers.length; m++) {
+				if(peersScore[m] === minScore) {
+					temp.push(peers[m]);
+				}
+			}
+			return temp[x.random(temp.length-1)];
+		},
+		startProcess: x.throttle(function() {
+			while(x.size(ig.inUsePeer) < ig.connectLimit && ig.startProgress())
+			{}
+		}, 100),
+		startProgress: function() {
 			//
-			// Still more to code
+			// Still more to code!
 			//
 		},
 	};
