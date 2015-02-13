@@ -2,15 +2,6 @@ var define;
 define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer, sys) {
 	var ig = this;
 	var x;
-	var WebSocket, location;
-	function sum(list) {
-		return x.reduce(list, function (memo, num) {
-			return memo + num;
-		}, 0);
-	}
-	function now() {
-		return (new Date()).getTime();
-	}
 	function client() {
 		ig.blockPerConnect = 1;
 		ig.connectLimit = 20;
@@ -18,8 +9,16 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 		ig.init();
 	}
 	client.prototype = {
+		sum: function(list) {
+			return x.reduce(list, function (memo, num) {
+			return memo + num;
+			}, 0);
+		},
+		now: function() {
+			return (new Date()).getTime();
+		},
 		init: function() {
-			/*
+			var WebSocket, location;
 			ig.peerID = null;
 			ig.meta = null;
 			ig.file = null;
@@ -43,7 +42,6 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			ig.ws = new WebSocket((location.protocol === 'https:' ? 'wss://': 'ws://')+location.host+'/link/ws');
 			ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
 			ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
-			*/
 		},
 		newLink: function(meta) {
 			ig.ws.send(JSON.stringify({
