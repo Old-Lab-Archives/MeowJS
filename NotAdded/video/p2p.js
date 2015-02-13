@@ -265,7 +265,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			while(x.size(ig.inUsePeer) < ig.connectLimit && ig.startProgress())
 			{}
 		}, 100),
-		startProgress: function() {
+		startProgress: function(block) {
 			// pickup block
 			var pieceBlock = ig.pickupBlock();
 			if(pieceBlock === null) {
