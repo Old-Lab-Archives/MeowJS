@@ -46,8 +46,8 @@ p2p(function() {
 			var speedReportInterval;
 			speedReportInterval = setInterval(x.bind(ig.speedReport, ig), 1000);
 			ig.ws = new WebSocket((location.protocol === 'https:' ? 'wss://': 'ws://')+location.host+'/link/ws');
-			ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
-			ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
+			//ig.ws.onOpen = x.bind(ig.onWsOpen, ig);
+			//ig.ws.onMessage = x.bind(ig.onWsMessage, ig);
 		},
 		/*
 		newLink: function(meta) {
@@ -357,6 +357,7 @@ p2p(function() {
 			x.defer(x.bind(ig.startProcess, ig));
 		},
 		*/
+		/*
 		onWsOpen: function() {},
 		onWsMessage: function(xEvent) {
 			var msg = JSON.parse(xEvent.data);
@@ -398,7 +399,7 @@ p2p(function() {
 					break;
 				}
 			}
-		}
+		} */
 	};
 	return {
 		client: client
