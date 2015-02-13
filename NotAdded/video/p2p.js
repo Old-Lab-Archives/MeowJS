@@ -99,7 +99,7 @@ p2p(function() {
 				return num > min;
 			}).length / temp.length);
 		},
-		
+
 		// exporting
 		onReady: function() {
 			console.log('onReady');
@@ -270,10 +270,11 @@ p2p(function() {
 			}
 			return temp[x.random(temp.length-1)];
 		},
-		startProcess: x.throttle(function() {
+		startProcess: function() {
+			// x.throttle(function() {...}, 100),
 			while(x.size(ig.inUsePeer) < ig.connectLimit && ig.startProgress())
 			{}
-		}, 100),
+		},
 		startProgress: function(block) {
 			// pickup block
 			var pieceBlock = ig.pickupBlock();
