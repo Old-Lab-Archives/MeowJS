@@ -235,8 +235,23 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			}
 			return null;
 		},
-		//
-		// Still more to code!
-		//
+		findAvailablePeer: function(piece) {
+			var peers = [];
+			for(var key in ig.peerList) {
+				if(key === ig.peerID) {
+					continue;
+				} if(ig.peerList[key].bitmap[piece] && (!x.has(ig.inUsePeer, key) || ig.inUsePeer[key] < ig.blockPerConnect) && !x.blockedPeer[key]) {
+					peers.push(key);
+				}
+			}
+			if(peers.length === 0) {
+				return null;
+			} else if(peers.length === 1) {
+				return peers[0];
+			}
+			//
+			// Still more to code
+			//
+		},
 	};
 });
