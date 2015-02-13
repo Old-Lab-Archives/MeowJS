@@ -3,7 +3,7 @@ p2p(function() {
 	var peer = ['peer.js'];
 	var hpeer = ['httpPeer.js']; 
 	var wsPeer = ['wsPeer.js']; 
-	var sys = ['sys.js'];
+	//var sys = ['sys.js'];
 	var ig = this;
 	var x = ['xx.js'];
 	function sum(list) {
