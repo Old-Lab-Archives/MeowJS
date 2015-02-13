@@ -2,6 +2,14 @@ var define;
 define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer, sys) {
 	var ig = this;
 	var x;
+	function sum(list) {
+		return x.reduce(list, function (memo, num) {
+			return memo + num;
+		}, 0);
+	}
+	function now() {
+		return (new Date()).getTime();
+	}
 	function client() {
 		ig.blockPerConnect = 1;
 		ig.connectLimit = 20;
@@ -9,16 +17,8 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 		ig.init();
 	}
 	client.prototype = {
-		sum: function(list) {
-			return x.reduce(list, function (memo, num) {
-			return memo + num;
-			}, 0);
-		},
-		now: function() {
-			return (new Date()).getTime();
-		},
 		init: function() {
-			var WebSocket, location;
+			/*
 			ig.peerID = null;
 			ig.meta = null;
 			ig.file = null;
@@ -36,6 +36,7 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			ig.sent = 0;
 			ig.received = 0;
 			ig.peerTrans = {};
+			*/
 			ig.lastSpeedReport = now();
 			var speedReportInterval;
 			speedReportInterval = setInterval(x.bind(ig.speedReport, ig), 1000);
