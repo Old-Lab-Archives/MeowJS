@@ -3,7 +3,7 @@ p2p(function() {
 	var peer = ['peer.js'];
 	var hpeer = ['httpPeer.js']; 
 	var wsPeer = ['wsPeer.js']; 
-	var sys = ['sys.js'];
+	//var sys = ['sys.js'];
 	var ig = this;
 	var x = ['xx.js'];
 	function sum(list) {
@@ -324,7 +324,7 @@ p2p(function() {
 					}
 				}
 			}
-		},
+		}/*,
 		onBlockFinished: function(piece) {
 			// finished piece
 			if(x.all(ig.finishedBlock[piece])) {
@@ -352,7 +352,6 @@ p2p(function() {
 			x.defer(x.bind(ig.startProcess, ig));
 		},
 		onWsOpen: function() {},
-		/*
 		onWsMessage: function(xEvent) {
 			var msg = JSON.parse(xEvent.data);
 			if(!msg.cmd && msg.type && msg.origin) {
@@ -393,8 +392,7 @@ p2p(function() {
 					break;
 				}
 			}
-		}
-		*/
+		} */
 	};
 	return {
 		client: client
