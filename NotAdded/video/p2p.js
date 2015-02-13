@@ -286,6 +286,39 @@ define(['peer', 'wsPeer', 'httpPeer', 'sys', 'xx'], function(peer, hpeer, wsPeer
 			x.delay(x.bind(ig.chkPending, ig, bestPeer, piece, block, peer.received(), ig.received, now()), ig.chkPendingInterval * 2);
 			return true;
 		},
+		chkPending: function(peerID, piece, block, lastReceived, totalReceived, lastTime) {
+			if(ig.pendingBlock[piece] && ig.pendingBlock[piece][block] === peerID && ig.peers[peerID]) {
+				var received = ig.peers[peerID].received();
+				var speed = (received - lastReceived) / (now() - lastTime) * 1000;
+				var globalSpeed = (ig.received - totalReceived) / (now() - lastTime) * 1000;
+				if(speed > globalSpeed / x.size(ig.peers) / 4) {
+					// quarter of the average speed
+					x.delay(x.bind(ig.chkPending, ig, peerID, piece, block, received, ig.received, now()), ig.chkPendingInterval);
+				} else {
+					// timeout
+					console.log('low download speed from '+peerID+'...', speed, globalSpeed);
+					ig.badPeer[peerID] = ig.badPeer[peerID] || 0;
+					ig.badPeer[peerID] += 1;
+					// closing and blocking the peer for one block time
+					ig.peers[peerID].close();
+					ig.blockedPeer[peerID] = 998;
+					x.delay(x.bind(function() {
+						delete ig.blockedPeer[peerID];
+						delete ig.inUsePeer[peerID];
+						x.defer(x.bind(ig.startProcess, ig));
+					}, ig), (ig.meta.blockSize / speed > 120 ? 120: ig.meta.blockSize / speed) * 1000);
+				}
+			}
+		},
+		removePending: function(peerID) {
+			for(var p in ig.pendingBlock) {
+				for(var b = 0; b < ig.pendingBlock[p].length; b++) {
+					if(ig.pendingBlock[p][b] === peerID) {
+						ig.pendingBlock[p][b] = 0;
+					}
+				}
+			}
+		},
 		//
 		// Still more to code!
 		//
