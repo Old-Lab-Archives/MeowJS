@@ -80,7 +80,6 @@ p2p(function() {
 				bitmap: client.finishedPiece.join('')
 			}));
 		},
-		*/
 		strength: function() {
 			if(!ig.meta) {
 				return 0;
@@ -100,7 +99,7 @@ p2p(function() {
 				return num > min;
 			}).length / temp.length);
 		},
-		/*
+		
 		// exporting
 		onReady: function() {
 			console.log('onReady');
