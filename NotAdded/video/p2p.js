@@ -98,6 +98,7 @@ p2p(function() {
 				return num > min;
 			}).length / temp.length);
 		},
+		/*
 		// exporting
 		onReady: function() {
 			console.log('onReady');
@@ -123,6 +124,7 @@ p2p(function() {
 		onSpeedReport: function(report) {
 			console.log('onSpeedReport', report);
 		},
+		*/
 		ensureConnection: function(peerID, connect) {
 			if(ig.peers[peerID]) {
 				return ig.peers[peerID];
