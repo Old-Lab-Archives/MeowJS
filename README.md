@@ -17,7 +17,8 @@ Install XCode along with Git and node.</p>
     sudo apt-get install git-core<br>
 Then, install node.<br><br>
 <b> Then, Clone the repository using this command:</b><br>
-$git clone https://github.com/Geek-Research-Lab/MeowJS.git<br>
+
+    $git clone https://github.com/Geek-Research-Lab/MeowJS.git
 <br>
 <b>Alright, i don't use node, what to do? </b><br>
 Then, directly download --- <a href="https://github.com/Geek-Research-Lab/MeowJS/archive/master.zip">click here</a><br>
@@ -97,7 +98,10 @@ Then, open an issue.<br>
 <br>
 Currently, MeowJS is in-development and non-production ready.
 <br><br>
-A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided and the documentation will be updated soon. <br>
+A common <a href="https://github.com/Geek-Research-Lab/MeowJS/wiki">wiki</a> is also provided and the documentation is updated at most times. <br>
+<b>--- Cloning the wiki ---</b><br>
+
+    $git clone https://github.com/Geek-Research-Lab/MeowJS.wiki.git
 <br>
 <b>About:</b><br>
 This is a <a href="http://geekresearchlab.net/mtechproject/">project</a> done by an individual. <br>
