@@ -3,7 +3,8 @@ Licensed under "GNU GPL v2.0".<br>
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Geek-Research-Lab/MeowJS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)    [![Build Status](https://snap-ci.com/snap-ci/docs.snap-ci.com/branch/master/build_image)](https://snap-ci.com/Geek-Research-Lab/MeowJS/branch/master)
 [![Code Climate](https://codeclimate.com/github/Geek-Research-Lab/MeowJS.svg)](https://codeclimate.com/github/Geek-Research-Lab/MeowJS) [![Build Status][travis-image]][travis-url]
 [travis-url]: https://travis-ci.org/Geek-Research-Lab/MeowJS
-[travis-image]: https://travis-ci.org/Geek-Research-Lab/MeowJS.svg?branch=master
+[travis-image]: https://travis-ci.org/Geek-Research-Lab/MeowJS.svg?branch=master 
+[![Coverage Status](https://coveralls.io/repos/Geek-Research-Lab/MeowJS/badge.svg)](https://coveralls.io/r/Geek-Research-Lab/MeowJS)
 <br>
 <br>
 <b>How-To clone the repository?</b><br><p>
