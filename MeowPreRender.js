@@ -1,4 +1,3 @@
-// JavaScript Document
 var window, document, writeToHeader;
 window.onload = function( ) {
 var allLinks = document.getElementsByTagName("a");
